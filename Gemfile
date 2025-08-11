@@ -71,3 +71,8 @@ gem "tailwindcss-ruby", "~> 4.1"
 gem "tailwindcss-rails", "~> 4.3"
 
 gem "slim-rails", "~> 3.7"
+
+gem "devise"
+gem 'foreman'
+gem "view_component"
+
