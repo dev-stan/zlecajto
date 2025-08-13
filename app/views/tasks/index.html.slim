@@ -1,0 +1,16 @@
+
+.max-w-7xl.mx-auto.px-4.sm:px-6.lg:px-8.pt-24
+  header.mb-12.text-center
+    h1.text-4xl.font-extrabold.text-gray-900.mb-4 zlecajto.pl
+    p.text-lg.text-gray-600 Wykonuj zadania prosto i po sąsiedzku 💸
+  .flex.items-center.justify-center
+    = render(SearchComponent.new())
+      = render ButtonComponent.new(text: 'Wykonuj zlecenia', path: tasks_path)
+  p.text-xl.font-bold.text-gray-700.pt-12.pb-4 Oferty
+  main.grid.grid-cols-1.md:grid-cols-3.gap-8
+    - @tasks.each do |task|
+      .py-8
+        = render(CardComponent.new(title: task.title, text: task.description, image_link: 'https://i.imgur.com/iyJqQH3.jpeg', image_alt: 'Placeholder Image', price: '💵 70PLN')) do
+          .flex.flex-wrap.gap-2
+              = render BadgeComponent.new(text: 'Zweryfikowany uzytkownik', variant: :green)
+    

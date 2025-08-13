@@ -1,0 +1,19 @@
+/- Shared classes
+- label_classes = 'mb-1 block text-sm font-medium text-gray-700'
+- base_classes = 'block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder-gray-400 shadow-sm transition focus:border-violet-500 focus:ring focus:ring-violet-200 focus:ring-opacity-50 focus:outline-none disabled:bg-gray-100 disabled:cursor-not-allowed'
+- input_classes = base_classes
+- disabled_attr = @disabled ? true : nil
+- required_attr = @required ? true : nil
+
+.flex.flex-col
+  - if @label.present?
+    label for=@id class=label_classes
+      = @label
+      - if @required
+        span.text-red-500.ml-0.5 *
+  - value_attr = @value.present? ? @value : nil
+  - if @type == 'textarea'
+    textarea id=@id name=@name placeholder=@placeholder rows=@rows class=input_classes disabled=disabled_attr required=required_attr
+      = value_attr
+  - else
+    input type=@type name=@name id=@id placeholder=@placeholder value=value_attr class=input_classes disabled=disabled_attr required=required_attr

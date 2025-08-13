@@ -1,0 +1,16 @@
+/ Accessible accordion component
+div data-controller="accordion" class="w-full max-w-3xl mx-auto"
+  .border.border-gray-200.divide-y.divide-gray-200.rounded-lg.shadow-sm.bg-white
+    - @items.each_with_index do |item, i|
+      - open = (i == 0)
+      div
+        button.w-full.text-left.flex.items-center.justify-between.px-4.py-3.font-medium.transition class="#{open ? 'text-indigo-700' : 'text-gray-800 hover:text-indigo-700'}" id=item_button_id(i) type="button" aria-expanded=open aria-controls=item_panel_id(i) data-action="accordion#toggle" data-accordion-target="button" data-accordion-index=i
+          span = item[:title]
+          span.ml-3.transition-transform.duration-200[data-expanded-value="rotate-180"]
+            svg.h-4.w-4.text-gray-500 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+              path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"
+        / Panel container (no padding so collapsed state is fully hidden)
+        div id=item_panel_id(i) class="overflow-hidden transition-all duration-300 ease-out" role="region" aria-labelledby=item_button_id(i) data-accordion-target="panel" data-accordion-index=i data-initial-open=open style="max-height: #{open ? '200px' : '0'}"
+          / Inner content wrapper holds spacing
+          div.px-4.pb-4.pt-1.text-sm.text-gray-700
+            = item[:content]

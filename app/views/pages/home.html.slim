@@ -1,6 +1,9 @@
-div class="flex items-center justify-center"
-  h1 class="text-3xl font-semibold text-gray-900"
-    | Home Page
-p.text-xl.font-bold.text-gray-700.pt-12.pb-4 Button components
-main.grid.grid-cols-1.md:grid-cols-3.gap-8
-= render ButtonComponent.new(text: "Button 1")
+
+.max-w-7xl.mx-auto.px-4.sm:px-6.lg:px-8.pt-24
+    header.mb-12.text-center
+        h1.text-4xl.font-extrabold.text-gray-900.mb-4 Zlecajto
+        p.text-lg.text-gray-600 Wykonuj zadania po sąsiedzku 💸
+
+    main.grid.grid-cols-2.gap-8
+        = render ButtonComponent.new(text: 'Zlecaj', path: new_task_path)
+        = render ButtonComponent.new(text: 'Wykonuj zlecenia', path: tasks_path)
