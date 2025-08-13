@@ -1,12 +1,8 @@
 class AlertComponent < ViewComponent::Base
-  # Simple alert banner with success (green) and error (red) variants.
-  # Usage: render AlertComponent.new(message: "Saved!", variant: :success)
-  # Params:
-  #  message: String (required)
-  #  variant: Symbol/String (:success or :error) defaults to :success
-  def initialize(message:, variant: :success)
+  def initialize(message:, variant: :success, auto_dismiss: true)
     @message = message
     @variant = variant.to_sym
+    @auto_dismiss = auto_dismiss
   end
 
   def variant_classes
@@ -16,5 +12,9 @@ class AlertComponent < ViewComponent::Base
     else # success default
       "bg-green-50 border-green-200 text-green-800"
     end
+  end
+
+  def auto_dismiss?
+    @auto_dismiss
   end
 end

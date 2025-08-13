@@ -1,11 +1,9 @@
 import { Controller } from "@hotwired/stimulus"
 
-// Animated accordion using max-height transitions. Single panel open at a time.
 export default class extends Controller {
   static targets = ["panel", "button"]
 
   connect() {
-    // Normalize initial state (panels with data-initial-open="true" are expanded)
     this.panelTargets.forEach((panel, i) => {
       const button = this.buttonTargets[i]
       const open = panel.dataset.initialOpen === 'true'
@@ -22,12 +20,10 @@ export default class extends Controller {
     const button = this.buttonTargets[index]
     const isExpanded = button.getAttribute('aria-expanded') === 'true'
 
-    // Close all others
     this.buttonTargets.forEach((_, i) => {
       if (i !== index) this.setExpanded(i, false)
     })
 
-    // Toggle clicked one
     this.setExpanded(index, !isExpanded)
   }
 
@@ -38,7 +34,6 @@ export default class extends Controller {
 
     if (expand) {
       button.setAttribute('aria-expanded', 'true')
-      // Measure inner content height
       const inner = panel.firstElementChild
       const targetHeight = inner ? inner.scrollHeight : panel.scrollHeight
       if (!animate) {

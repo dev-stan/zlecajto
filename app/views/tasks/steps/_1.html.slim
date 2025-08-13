@@ -1,0 +1,17 @@
+p.text-sm.text-gray-500.text-center.mb-6 Step 1 of 2
+
+= form_with url: new_task_path, method: :get, data: { turbo_frame: "task_wizard" }, html: { class: 'space-y-8 bg-white/70 backdrop-blur rounded-xl p-8 shadow-sm border border-violet-100' } do |f|
+  fieldset.space-y-4
+    legend.text-sm.font-semibold.tracking-wide.uppercase.text-violet-700.mb-2.text-center Category
+    ul.grid.grid-cols-2.gap-3
+      - categories.each do |cat|
+        - id = "cat_#{cat.parameterize}"
+        li
+          label.flex.cursor-pointer.items-center.gap-2.rounded-lg.border.border-gray-300.bg-white.px-3.py-2.text-sm.font-medium.text-gray-700.shadow-sm.hover:border-violet-400.hover:bg-violet-50.transition for=id
+            = radio_button_tag 'task[category]', cat, task.category == cat, id: id, class: 'text-violet-600 focus:ring-violet-500'
+            span= cat
+
+  = render InputComponent.new(name: 'task[title]', label: 'Title', placeholder: 'Short title', required: true, value: task.title)
+  = hidden_field_tag :step, 2
+  div.pt-2.flex.justify-end
+    = render ButtonComponent.new(text: 'Next', submit: true)

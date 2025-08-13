@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :authenticate_user!, only: %i[new create]
+  before_action :authenticate_user!, only: %i[create create_from_session]
 
   def index
     @tasks = Task.all
@@ -10,39 +10,70 @@ class TasksController < ApplicationController
   end
 
   def new
+    @step = params[:step].presence&.to_i || 1
     @task = Task.new(wizard_params)
+    @categories = Task::CATEGORIES
   end
 
   def create
-    @task = Task.new(task_params)
-    @task.user ||= current_user
-    unless @task.user
-      redirect_to tasks_path, alert: 'You must be signed in to create a task.' and return
+    @task = current_user.tasks.build(task_params)
+    
+    if @task.save
+      redirect_to root_path, notice: 'Pomyślnie utworzono zadanie'
+    else
+      @step = 2
+      @categories = Task::CATEGORIES
+      render :new, status: :unprocessable_entity
     end
-    respond_to do |format|
-      if @task.save
-        format.html { redirect_to @task, notice: 'Task created.' }
-        format.turbo_stream
-      else
-        Rails.logger.info('Task did not save to db')
-  Rails.logger.debug { "Task errors: #{@task.errors.full_messages.join(', ')}" }
-  format.html { render :new, status: :unprocessable_content }
-  format.turbo_stream { render :new, status: :unprocessable_content }
-      end
+  end
+
+  def authenticate_and_create
+    # Store task data in session before redirecting to authentication
+    if params[:task].present?
+      Rails.logger.debug "Storing task data: #{params[:task].inspect}"
+      session[:pending_task_data] = task_params
+      session[:return_to] = create_from_session_tasks_path # Use dedicated route after login
+      Rails.logger.debug "Session data stored: #{session[:pending_task_data].inspect}"
+    end
+    
+    redirect_to new_user_session_path
+  end
+  
+  def create_from_session
+    create_pending_task
+    # If no pending task or creation failed, redirect to index
+    redirect_to tasks_path unless performed?
+  end
+
+  private
+
+  def create_pending_task
+    return unless session[:pending_task_data].present?
+    
+    Rails.logger.debug "Creating pending task with data: #{session[:pending_task_data].inspect}"
+    @task = current_user.tasks.build(session[:pending_task_data])
+    
+    if @task.save
+      Rails.logger.debug "Task created successfully: #{@task.inspect}"
+      session.delete(:pending_task_data)
+      redirect_to root_path, notice: 'Pomyślnie utworzono zadanie i zalogowano!'
+      return
+    else
+      Rails.logger.debug "Task creation failed: #{@task.errors.full_messages.inspect}"
+      # If task creation fails, redirect to form with errors
+      session.delete(:pending_task_data) # Clean up bad data
+      redirect_to new_task_path(step: 2), alert: 'Wystąpił problem z utworzeniem zadania. Spróbuj ponownie.'
+      return
     end
   end
 
   def task_params
-    params.require(:task).permit(:title, :description, :salary, :user_id, :status, :category)
+    return {} unless params[:task].present?
+    params.require(:task).permit(:title, :description, :salary, :status, :category)
   end
 
   def wizard_params
     return {} unless params[:task].present?
-    # Use strong parameters to avoid ActiveModel::ForbiddenAttributesError when passing to Task.new
-    if params[:task].is_a?(ActionController::Parameters)
-      params.require(:task).permit(:category, :title)
-    else
-      params[:task].slice(:category, :title)
-    end
+    params[:task].permit(:category, :title, :description, :salary)
   end
 end

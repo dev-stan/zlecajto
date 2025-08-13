@@ -1,0 +1,36 @@
+.max-w-7xl.mx-auto.px-4.sm:px-6.lg:px-8.pt-24
+  .max-w-md.mx-auto.bg-white.rounded-xl.shadow-lg.p-8
+    header.mb-8.text-center
+      h1.text-3xl.font-extrabold.text-gray-900.mb-2 Zmień hasło
+      p.text-gray-600 Ustaw nowe hasło dla swojego konta
+    
+    = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: "space-y-6" }) do |f|
+      = render "devise/shared/error_messages", resource: resource
+      = f.hidden_field :reset_password_token
+      
+      .space-y-4
+        .flex.flex-col
+          = f.label :password, "Nowe hasło #{'(' + @minimum_password_length.to_s + ' znaków minimum)' if @minimum_password_length}", class: "mb-1 block text-sm font-medium text-gray-700"
+          span.text-red-500.ml-0.5 *
+          = f.password_field :password, 
+              autofocus: true,
+              autocomplete: "new-password",
+              placeholder: "Wpisz nowe hasło",
+              class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder-gray-400 shadow-sm transition focus:border-violet-500 focus:ring focus:ring-violet-200 focus:ring-opacity-50 focus:outline-none"
+        
+        .flex.flex-col
+          = f.label :password_confirmation, "Potwierdź nowe hasło", class: "mb-1 block text-sm font-medium text-gray-700"
+          span.text-red-500.ml-0.5 *
+          = f.password_field :password_confirmation, 
+              autocomplete: "new-password",
+              placeholder: "Powtórz nowe hasło",
+              class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder-gray-400 shadow-sm transition focus:border-violet-500 focus:ring focus:ring-violet-200 focus:ring-opacity-50 focus:outline-none"
+      
+      .pt-4
+        = render ButtonComponent.new(text: "Zmień hasło", submit: true)
+    
+    .mt-8.pt-6.border-t.border-gray-200
+      .text-center.space-y-3.text-sm
+        - if controller_name != 'sessions'
+          p.text-gray-600
+            = link_to "Powrót do logowania", new_session_path(resource_name), class: "text-violet-600 hover:text-violet-500 font-medium"

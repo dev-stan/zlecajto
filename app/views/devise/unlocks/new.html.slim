@@ -1,0 +1,24 @@
+.max-w-7xl.mx-auto.px-4.sm:px-6.lg:px-8.pt-24
+  .max-w-md.mx-auto.bg-white.rounded-xl.shadow-lg.p-8
+    header.mb-8.text-center
+      h1.text-3xl.font-extrabold.text-gray-900.mb-2 Odblokuj konto
+      p.text-gray-600 Wyślemy ponownie instrukcje odblokowania konta
+    
+    = form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post, class: "space-y-6" }) do |f|
+      = render "devise/shared/error_messages", resource: resource
+      
+      .space-y-4
+        .flex.flex-col
+          = f.label :email, "Adres email", class: "mb-1 block text-sm font-medium text-gray-700"
+          span.text-red-500.ml-0.5 *
+          = f.email_field :email, 
+              autofocus: true, 
+              autocomplete: "email",
+              placeholder: "Wpisz swój adres email",
+              class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder-gray-400 shadow-sm transition focus:border-violet-500 focus:ring focus:ring-violet-200 focus:ring-opacity-50 focus:outline-none"
+      
+      .pt-4
+        = render ButtonComponent.new(text: "Wyślij instrukcje odblokowania", submit: true)
+    
+    .mt-8.pt-6.border-t.border-gray-200
+      = render "devise/shared/links"

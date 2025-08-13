@@ -9,5 +9,10 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "pages#home"
-  resources :tasks, only: [:index, :create, :show, :new]
+  resources :tasks, only: [:index, :create, :show, :new] do
+    collection do
+      post :authenticate_and_create
+      get :create_from_session, as: :create_from_session
+    end
+  end
 end

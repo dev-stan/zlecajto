@@ -1,41 +1,7 @@
-- step = params[:step].to_i
-- step = 1 if step.zero?
-
 div class="min-h-[60vh] flex items-center justify-center py-10 px-4"
   div class="max-w-xl w-full"
     header.mb-8.text-center
       h1.text-3xl.font-bold.tracking-tight.text-gray-800.mb-2 Create a New Task
-      p.text-sm.text-gray-500 Step #{step} of 2
 
-    turbo-frame#task_wizard
-      - if step == 1
-        = form_with model: @task, url: new_task_path, method: :get, local: true, html: { class: 'space-y-8 bg-white/70 backdrop-blur rounded-xl p-8 shadow-sm border border-violet-100' } do |f|
-          - categories = %w[Design Development Writing Other]
-          fieldset.space-y-4
-            legend.text-sm.font-semibold.tracking-wide.uppercase.text-violet-700.mb-2.text-center Category
-            ul.grid.grid-cols-2.gap-3
-              - categories.each do |cat|
-                - id = "cat_#{cat.parameterize}"
-                li
-                  label.flex.cursor-pointer.items-center.gap-2.rounded-lg.border.border-gray-300.bg-white.px-3.py-2.text-sm.font-medium.text-gray-700.shadow-sm.hover:border-violet-400.hover:bg-violet-50.transition for=id
-                    = radio_button_tag 'task[category]', cat, (@task.category == cat), id: id, class: 'text-violet-600 focus:ring-violet-500'
-                    span= cat
-
-          = render InputComponent.new(name: 'task[title]', label: 'Title', placeholder: 'Short title', required: true, value: @task.title)
-          = hidden_field_tag :step, 2
-          div.pt-2.flex.justify-end
-            = render ButtonComponent.new(text: 'Next', submit: true)
-
-      - else
-        = form_with model: @task, url: tasks_path, local: true, html: { class: 'space-y-8 bg-white/70 backdrop-blur rounded-xl p-8 shadow-sm border border-violet-100' } do |f|
-          = f.hidden_field :category, value: @task.category
-          = f.hidden_field :title, value: @task.title
-          = render InputComponent.new(name: 'task[description]', type: 'textarea', label: 'Description', placeholder: 'Describe the task', required: true, value: @task.description, rows: 6)
-          = render InputComponent.new(name: 'task[salary]', type: 'number', label: 'Salary (PLN)', placeholder: '150')
-          = f.hidden_field :status, value: 'draft'
-          div.pt-2.flex.items-center.justify-between.gap-4
-            = render ButtonComponent.new(text: 'Back', path: new_task_path(step: 1, 'task[category]': @task.category, 'task[title]': @task.title))
-            = render ButtonComponent.new(text: 'Submit Task', submit: true)
-
-    div.mt-8.text-center
-      = render ButtonComponent.new(text: 'Cancel', path: tasks_path)
+    = turbo_frame_tag "task_wizard" do
+      = render "tasks/steps/#{@step}", task: @task, categories: @categories, step: @step

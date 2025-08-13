@@ -1,0 +1,22 @@
+doctype html
+html
+  head
+    title Zlecajto
+    meta name="viewport" content="width=device-width,initial-scale=1"
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag "tailwind", "data-turbo-track": "reload"
+    = stylesheet_link_tag "application", "data-turbo-track": "reload"
+    = javascript_importmap_tags
+
+  body
+    main.container.mx-auto.mt-28.px-5
+      = render Shared::NavbarComponent.new(nav_items: [{ text: 'Zleć zadanie', href: new_task_path }, { text: 'Ogłoszenia', href: tasks_path }])
+
+      - if notice
+        = render AlertComponent.new(message: notice, variant: :success)
+      
+      - if alert
+        = render AlertComponent.new(message: alert, variant: :error)
+      
+      = yield
