@@ -7,7 +7,7 @@ export default class extends Controller {
     if (this.autoDismissValue) {
       this.timeout = setTimeout(() => {
         this.dismiss()
-      }, 5000) // 5 seconds till alert disappears
+      }, 50000) // 5 seconds till alert disappears
     }
   }
 

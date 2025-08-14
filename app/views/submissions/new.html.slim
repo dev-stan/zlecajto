@@ -1,0 +1,19 @@
+.max-w-2xl.mx-auto.px-4.py-8
+  .bg-white.rounded-lg.shadow-md.p-8
+    header.mb-8
+      h1.text-3xl.font-bold.text-gray-900.mb-2 Aplikuj na zadanie
+      h2.text-xl.text-gray-700 = @task.title
+      p.text-gray-600.mt-2 = @task.description
+
+    = form_with model: [@task, @submission], local: true, class: "space-y-6" do |form|
+      .bg-gray-50.p-4.rounded-lg
+        h3.text-lg.font-semibold.text-gray-800.mb-2 Podsumowanie
+        p.text-gray-600.mb-4 Kliknij "Aplikuj" aby zgłosić się do tego zadania. Właściciel zadania zostanie powiadomiony o Twojej aplikacji.
+        
+        .flex.justify-between.items-center.text-sm.text-gray-600
+          span Kategoria: #{@task.category}
+          span Utworzone: #{@task.created_at.strftime("%d.%m.%Y")}
+
+      .flex.gap-4
+        = render Ui::ButtonComponent.new(text: 'Aplikuj', submit: true, variant: :primary)
+        = render Ui::ButtonComponent.new(text: 'Anuluj', path: @task, variant: :secondary)

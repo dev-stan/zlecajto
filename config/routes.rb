@@ -14,5 +14,9 @@ Rails.application.routes.draw do
       post :authenticate_and_create
       get :create_from_session, as: :create_from_session
     end
+    
+    resources :submissions, only: [:new, :create]
   end
+  
+  resources :submissions, only: [:index, :show, :edit, :update, :destroy]
 end

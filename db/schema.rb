@@ -14,16 +14,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_12_150000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "applications", force: :cascade do |t|
-    t.string "status"
-    t.bigint "task_id", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["task_id"], name: "index_applications_on_task_id"
-    t.index ["user_id"], name: "index_applications_on_user_id"
-  end
-
   create_table "reviews", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -38,6 +28,16 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_12_150000) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_roles_on_name", unique: true
+  end
+
+  create_table "submissions", force: :cascade do |t|
+    t.string "status"
+    t.bigint "task_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_submissions_on_task_id"
+    t.index ["user_id"], name: "index_submissions_on_user_id"
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -78,9 +78,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_12_150000) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "applications", "tasks"
-  add_foreign_key "applications", "users"
   add_foreign_key "reviews", "tasks"
+  add_foreign_key "submissions", "tasks"
+  add_foreign_key "submissions", "users"
   add_foreign_key "tasks", "users"
   add_foreign_key "user_roles", "roles"
   add_foreign_key "user_roles", "users"

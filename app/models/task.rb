@@ -3,7 +3,7 @@ class Task < ApplicationRecord
   CATEGORIES = %w[Design Development Writing Other].freeze
 
   belongs_to :user
-  has_many :applications, dependent: :destroy
+  has_many :submissions, dependent: :destroy
   has_many :reviews, dependent: :destroy
 
   validates :title, :description, :category, :user, presence: true

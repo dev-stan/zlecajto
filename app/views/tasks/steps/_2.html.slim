@@ -6,8 +6,8 @@ p.text-sm.text-gray-500.text-center.mb-6 Step 2 of 2
     = f.hidden_field :category
     = f.hidden_field :title
     
-    = render InputComponent.new(name: 'task[description]', type: 'textarea', label: 'Description', placeholder: 'Describe the task in detail...', required: true, value: task.description, rows: 6)
-    = render InputComponent.new(name: 'task[salary]', type: 'number', label: 'Salary (PLN)', placeholder: '150', value: task.salary)
+    = render Ui::InputComponent.new(name: 'task[description]', type: 'textarea', label: 'Description', placeholder: 'Describe the task in detail...', required: true, value: task.description, rows: 6)
+    = render Ui::InputComponent.new(name: 'task[salary]', type: 'number', label: 'Salary (PLN)', placeholder: '150', value: task.salary)
     
     div.pt-2.flex.items-center.justify-between.gap-4
       = link_to new_task_path(step: 1, task: { category: task.category, title: task.title }), 
@@ -15,7 +15,7 @@ p.text-sm.text-gray-500.text-center.mb-6 Step 2 of 2
                 class: "inline-flex items-center justify-center px-6 py-3 bg-violet-100 hover:bg-violet-200 text-violet-700 font-semibold rounded-lg shadow-sm focus:outline-none transition" do
         | Back
       
-      = render ButtonComponent.new(text: 'Create Task', submit: true)
+      = render Ui::ButtonComponent.new(text: 'Create Task', submit: true)
 
 - else
   / User is not logged in - save data and redirect to auth
@@ -23,8 +23,8 @@ p.text-sm.text-gray-500.text-center.mb-6 Step 2 of 2
     = f.hidden_field :category
     = f.hidden_field :title
     
-    = render InputComponent.new(name: 'task[description]', type: 'textarea', label: 'Description', placeholder: 'Describe the task in detail...', required: true, value: task.description, rows: 6)
-    = render InputComponent.new(name: 'task[salary]', type: 'number', label: 'Salary (PLN)', placeholder: '150', value: task.salary)
+    = render Ui::InputComponent.new(name: 'task[description]', type: 'textarea', label: 'Description', placeholder: 'Describe the task in detail...', required: true, value: task.description, rows: 6)
+    = render Ui::InputComponent.new(name: 'task[salary]', type: 'number', label: 'Salary (PLN)', placeholder: '150', value: task.salary)
     
     div.bg-blue-50.border.border-blue-200.rounded-lg.p-4.text-sm.text-blue-800
       p.mb-0 
@@ -37,4 +37,4 @@ p.text-sm.text-gray-500.text-center.mb-6 Step 2 of 2
                 class: "inline-flex items-center justify-center px-6 py-3 bg-violet-100 hover:bg-violet-200 text-violet-700 font-semibold rounded-lg shadow-sm focus:outline-none transition" do
         | Back
       
-      = render ButtonComponent.new(text: 'Sign In & Create Task', submit: true)
+      = render Ui::ButtonComponent.new(text: 'Sign In & Create Task', submit: true)

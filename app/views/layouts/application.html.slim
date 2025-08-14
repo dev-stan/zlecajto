@@ -10,13 +10,13 @@ html
     = javascript_importmap_tags
 
   body
+    = render Layout::NavbarComponent.new(nav_items: [{ text: 'Zleć zadanie', href: new_task_path }, { text: 'Ogłoszenia', href: tasks_path }])
+    
     main.container.mx-auto.mt-28.px-5
-      = render Shared::NavbarComponent.new(nav_items: [{ text: 'Zleć zadanie', href: new_task_path }, { text: 'Ogłoszenia', href: tasks_path }])
-
       - if notice
-        = render AlertComponent.new(message: notice, variant: :success)
+        = render Ui::AlertComponent.new(message: notice, variant: :success)
       
       - if alert
-        = render AlertComponent.new(message: alert, variant: :error)
+        = render Ui::AlertComponent.new(message: alert, variant: :error)
       
       = yield

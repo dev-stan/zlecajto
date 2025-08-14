@@ -5,5 +5,5 @@
         p.text-lg.text-gray-600 Wykonuj zadania po sąsiedzku 💸
 
     main.grid.grid-cols-2.gap-8
-        = render ButtonComponent.new(text: 'Zlecaj', path: new_task_path)
-        = render ButtonComponent.new(text: 'Wykonuj zlecenia', path: tasks_path)
+        = render Ui::ButtonComponent.new(text: 'Zlecaj', path: new_task_path)
+        = render Ui::ButtonComponent.new(text: 'Wykonuj zlecenia', path: tasks_path)

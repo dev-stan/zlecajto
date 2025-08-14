@@ -1,0 +1,11 @@
+div class=accordion_classes data-controller="accordion"
+  - items.each_with_index do |item, index|
+    .accordion-item
+      button class=item_header_classes data-action="click->accordion#toggle" data-accordion-target="trigger" data-index=index
+        .flex.items-center.justify-between
+          span = item[:title]
+          svg.w-5.h-5.transition-transform data-accordion-target="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"
+      
+      div class=item_content_classes data-accordion-target="content" data-index=index style="display: none;"
+        = item[:content]

@@ -7,6 +7,7 @@ class TasksController < ApplicationController
 
   def show
     @task = Task.find(params[:id])
+    @existing_submission = current_user.submissions.find_by(task: @task) if user_signed_in?
   end
 
   def new

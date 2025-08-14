@@ -1,0 +1,32 @@
+nav.fixed.top-0.left-0.right-0.bg-white.backdrop-blur.border-b.shadow-sm.z-50 role="navigation" aria-label="Main navigation"
+  .max-w-7xl.mx-auto.h-16.flex.items-center.justify-between.gap-4.px-4.sm:px-6.lg:px-8
+    / Left side - Navigation items
+    .flex.items-center.gap-2
+      - if left_nav_items.any?
+        ul.hidden.md:flex.items-center.gap-2
+          - left_nav_items.each do |item|
+            li
+              = link_to item[:href], class: 'inline-flex items-center rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:text-violet-600 hover:bg-violet-50 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 transition-colors' do
+                = item[:text]
+    
+    / Center - Logo
+    .absolute.left-1/2.transform.-translate-x-1/2
+      = link_to '/', class: 'flex items-center font-extrabold text-lg sm:text-xl text-violet-600 tracking-tight hover:text-violet-500 transition-colors' do
+        span zlecajto.pl
+    
+    / Right side - Authentication links
+    .flex.items-center.gap-1.sm:gap-2
+      - if user_signed_in?
+        .flex.items-center.gap-2.sm:gap-3
+          - auth_items.each do |item|
+            - if item[:classes].include?('cursor-default')
+              span class=item[:classes]
+                = item[:text]
+            - else
+              = link_to item[:text], item[:href], class: item[:classes]
+          = button_to "Wyloguj", helpers.destroy_user_session_path, method: :delete, class: logout_button_classes, data: { turbo_method: :delete }
+      - else
+        ul.flex.items-center.gap-1.sm:gap-2
+          - auth_items.each do |item|
+            li
+              = link_to item[:text], item[:href], class: item[:classes]

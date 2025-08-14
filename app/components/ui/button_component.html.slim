@@ -1,0 +1,11 @@
+- if submit?
+  button class=button_classes type="submit"
+    = text
+- elsif button?
+  button class=button_classes type="button"
+    = text
+- elsif path
+  = link_to text, path, link_options
+- else
+  button class=button_classes type=html_options[:type] || 'button'
+    = text

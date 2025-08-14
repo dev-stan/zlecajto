@@ -4,4 +4,4 @@
     - errors_word = pluralize_polish(error_count, 'błąd', 'błędy', 'błędów')
     - prevented_word = error_count == 1 ? 'uniemożliwił' : 'uniemożliwiły'
     - error_message = "#{error_count} #{errors_word} #{prevented_word} zapisanie: #{resource.errors.full_messages.join(', ')}"
-    = render AlertComponent.new(message: error_message, variant: :error, auto_dismiss: false)
+    = render Ui::AlertComponent.new(message: error_message, variant: :error, auto_dismiss: false)

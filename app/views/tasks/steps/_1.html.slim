@@ -11,7 +11,7 @@ p.text-sm.text-gray-500.text-center.mb-6 Step 1 of 2
             = radio_button_tag 'task[category]', cat, task.category == cat, id: id, class: 'text-violet-600 focus:ring-violet-500'
             span= cat
 
-  = render InputComponent.new(name: 'task[title]', label: 'Title', placeholder: 'Short title', required: true, value: task.title)
+  = render Ui::InputComponent.new(name: 'task[title]', label: 'Title', placeholder: 'Short title', required: true, value: task.title)
   = hidden_field_tag :step, 2
   div.pt-2.flex.justify-end
-    = render ButtonComponent.new(text: 'Next', submit: true)
+    = render Ui::ButtonComponent.new(text: 'Next', submit: true)

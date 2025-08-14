@@ -5,7 +5,7 @@ class User < ApplicationRecord
   has_many :user_roles
   has_many :roles, through: :user_roles
   has_many :tasks
-  has_many :applications
+  has_many :submissions
   has_many :reviews, through: :tasks
 
   def has_role?(role_name)
