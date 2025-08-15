@@ -7,9 +7,7 @@ p.text-sm.text-gray-500.text-center.mb-6 Step 1 of 2
       - categories.each do |cat|
         - id = "cat_#{cat.parameterize}"
         li
-          label.flex.cursor-pointer.items-center.gap-2.rounded-lg.border.border-gray-300.bg-white.px-3.py-2.text-sm.font-medium.text-gray-700.shadow-sm.hover:border-violet-400.hover:bg-violet-50.transition for=id
-            = radio_button_tag 'task[category]', cat, task.category == cat, id: id, class: 'text-violet-600 focus:ring-violet-500'
-            span= cat
+          = render Ui::RadioButtonComponent.new(name: 'task[category]', value: cat, checked: task.category == cat, id: id, label: cat)
 
   = render Ui::InputComponent.new(name: 'task[title]', label: 'Title', placeholder: 'Short title', required: true, value: task.title)
   = hidden_field_tag :step, 2

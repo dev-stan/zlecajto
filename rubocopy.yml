@@ -1,0 +1,11 @@
+require:
+  - rubocop-rails
+
+AllCops:
+  NewCops: disable
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/ParameterLists:
+  Enabled: false

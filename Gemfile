@@ -76,4 +76,6 @@ gem "slim-rails", "~> 3.7"
 gem "devise"
 gem 'foreman'
 gem "view_component"
-
+gem 'rubocop'
+gem 'rubocop-rails'
+gem 'ruby-lsp'
