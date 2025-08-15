@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_08_15_140000) do
+ActiveRecord::Schema[7.1].define(version: 2025_08_15_130001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -80,7 +80,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_15_140000) do
     t.datetime "due_at"
     t.string "location"
     t.index ["category"], name: "index_tasks_on_category"
-    t.index ["location"], name: "index_tasks_on_location"
+    t.index ["due_at"], name: "index_tasks_on_due_at"
     t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
