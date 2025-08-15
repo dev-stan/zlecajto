@@ -1,0 +1,14 @@
+div.space-y-8.bg-white/70.backdrop-blur.rounded-xl.p-8.shadow-sm.border.border-violet-100
+  = form_with url: wizard_tasks_path, method: :post, data: { turbo_frame: 'task_wizard' }, html: { class: 'space-y-6' } do |f|
+    = hidden_field_tag :step, 3
+    = hidden_field_tag 'task[category]', task.category
+    = hidden_field_tag 'task[title]', task.title
+    = hidden_field_tag 'task[description]', task.description if task.description.present?
+    = hidden_field_tag 'task[salary]', task.salary if task.salary.present?
+    = hidden_field_tag 'task[due_date]', task.due_date if task.due_date.present?
+    = hidden_field_tag 'task[due_time_slot]', task.due_time_slot if task.due_time_slot.present?
+    h2.text-lg.font-semibold.mb-4 Extra Info
+    p.text-sm.text-gray-600 This is a placeholder (step 3). Add more fields later.
+    div.pt-2.flex.items-center.justify-between.gap-4
+      = render Ui::ButtonComponent.new(text: 'Back', path: new_task_path(step: 2, task: { category: task.category, title: task.title, description: task.description, salary: task.salary, due_date: task.due_date, due_time_slot: task.due_time_slot }), variant: :ghost, size: :md, html_options: { data: { turbo_frame: 'task_wizard' } })
+      = render Ui::ButtonComponent.new(text: 'Next', submit: true, variant: :secondary, size: :md)

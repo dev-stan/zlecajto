@@ -1,11 +1,8 @@
 - if submit?
-  button class=button_classes type="submit"
-    = text
+  = content_tag :button, text, merged_button_options('submit')
 - elsif button?
-  button class=button_classes type="button"
-    = text
+  = content_tag :button, text, merged_button_options('button')
 - elsif path
   = link_to text, path, link_options
 - else
-  button class=button_classes type=html_options[:type] || 'button'
-    = text
+  = content_tag :button, text, merged_button_options('button')

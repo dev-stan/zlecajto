@@ -1,3 +1,6 @@
-label.flex.cursor-pointer.items-center.gap-2.rounded-lg.border.border-gray-300.bg-white.px-3.py-2.text-sm.font-medium.text-gray-700.shadow-sm.hover:border-violet-400.hover:bg-violet-50.transition for=id
-  = radio_button_tag name, value, checked, id: id, class: 'text-violet-600 focus:ring-violet-500', **@options
+- base_classes = 'relative flex cursor-pointer items-center gap-2 border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:border-violet-400 hover:bg-violet-50 transition peer-checked:border-violet-500 peer-checked:bg-violet-100 peer-checked:text-violet-900 peer-checked:shadow peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-violet-500'
+- shape_classes = style == :square ? 'rounded-md aspect-square justify-center' : 'rounded-lg'
+- layout_classes = style == :square ? 'flex-col w-full h-full text-center' : ''
+= radio_button_tag name, value, checked, id: id, class: 'peer absolute opacity-0 w-0 h-0 -m-px overflow-hidden pointer-events-none appearance-none', **@options
+label for=id class="#{[base_classes, shape_classes, layout_classes].reject(&:blank?).join(' ')}"
   span= label

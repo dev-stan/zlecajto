@@ -1,0 +1,20 @@
+nav aria-label="Task creation steps" class="md:w-64 mb-6 md:mb-0"
+    ol.space-y-3
+        - steps.each_with_index do |label, idx|
+            - number = idx + 1
+            - status = step_status(number)
+            li
+                - if [:available, :completed].include?(status)
+                    = link_to step_path(number), data: { turbo_frame: 'task_wizard' }, class: status_item_classes(status), aria: { current: (status == :active ? 'step' : nil) }
+                        span class=status_badge_classes(status)
+                            = number
+                        div
+                            p.text-sm.uppercase.tracking-wide.font-semibold.mb-0.5 class=(status == :active ? 'text-violet-600' : 'text-gray-400') Step #{number}
+                            p.text-sm.font-medium = label
+                - else
+                    div class=status_item_classes(status) aria-current=(status == :active ? 'step' : nil) aria-disabled=(status == :locked ? 'true' : nil)
+                        span class=status_badge_classes(status)
+                            = number
+                        div
+                            p.text-sm.uppercase.tracking-wide.font-semibold.mb-0.5 class=(status == :active ? 'text-violet-600' : 'text-gray-400') Step #{number}
+                            p.text-sm.font-medium class=(status == :locked ? 'text-gray-400' : nil) = label

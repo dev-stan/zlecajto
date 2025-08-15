@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Ability
   include CanCan::Ability
 
@@ -16,8 +18,8 @@ class Ability
       can :manage, Application, user_id: user.id
     end
 
-    if user.has_role?('admin')
-      can :manage, :all
-    end
+    return unless user.has_role?('admin')
+
+    can :manage, :all
   end
 end

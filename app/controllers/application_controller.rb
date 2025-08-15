@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   protected
 
@@ -11,7 +13,7 @@ class ApplicationController < ActionController::Base
       super
     end
   end
-  
+
   # Also handle after_sign_up_path for new registrations
   def after_sign_up_path_for(resource)
     if session[:return_to]

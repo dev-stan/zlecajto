@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Submission < ApplicationRecord
   # Associations
   belongs_to :task
@@ -5,7 +7,7 @@ class Submission < ApplicationRecord
 
   # Validations
   validates :status, presence: true
-  validates :user_id, uniqueness: { scope: :task_id, message: "has already applied to this task" }
+  validates :user_id, uniqueness: { scope: :task_id, message: 'has already applied to this task' }
 
   # Constants
   STATUSES = %w[pending accepted rejected].freeze

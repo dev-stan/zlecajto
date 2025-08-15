@@ -9,3 +9,6 @@ Style/Documentation:
 
 Metrics/ParameterLists:
   Enabled: false
+
+Link/MissingSuper:
+  Enabled: false

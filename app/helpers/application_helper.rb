@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ApplicationHelper
   # Polish pluralization helper
   def pluralize_polish(count, singular, few, many)

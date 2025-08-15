@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class TasksController < ApplicationController
   before_action :authenticate_user!, only: %i[create create_from_session]
 
   def index
-    @tasks = Task.all
+    @tasks = Task.with_attached_photos
   end
 
   def show
@@ -10,39 +12,63 @@ class TasksController < ApplicationController
     @existing_submission = current_user.submissions.find_by(task: @task) if user_signed_in?
   end
 
+  # POST /tasks/wizard progresses from step 1 -> 2 while retaining entered fields
+  def wizard
+    @categories = Task::CATEGORIES
+    @time_slots = { 'Rano' => '8-11', 'popoludnie' => '12-16', 'wieczor' => '13-22' }
+
+    current_step = (params[:step] || 1).to_i
+
+    if request.post?
+      # Build task with accumulated params submitted from current step
+      @task = Task.new(wizard_params)
+      @task.due_date = params.dig(:task, :due_date)
+      @task.due_time_slot = params.dig(:task, :due_time_slot)
+      # Advance unless already at last step
+      @step = [current_step + 1, 4].min
+    else
+      # Initial GET render of a specific step (navigation via sidebar)
+      @task = Task.new(wizard_params)
+      @task.due_date = params.dig(:task, :due_date)
+      @task.due_time_slot = params.dig(:task, :due_time_slot)
+      @step = current_step
+    end
+
+    render :new
+  end
+
   def new
     @step = params[:step].presence&.to_i || 1
     @task = Task.new(wizard_params)
+    @task.due_date = params.dig(:task, :due_date)
+    @task.due_time_slot = params.dig(:task, :due_time_slot)
     @categories = Task::CATEGORIES
+    @time_slots = { 'Rano' => '8-11', 'popoludnie' => '12-16', 'wieczor' => '13-22' }
   end
 
   def create
     @task = current_user.tasks.build(task_params)
-    
     if @task.save
       redirect_to root_path, notice: 'Pomyślnie utworzono zadanie'
     else
       @step = 2
       @categories = Task::CATEGORIES
+      @time_slots = { 'Rano' => '8-11', 'popoludnie' => '12-16', 'wieczor' => '13-22' }
       render :new, status: :unprocessable_entity
     end
   end
 
   def authenticate_and_create
-    # Store task data in session before redirecting to authentication
     if params[:task].present?
-      Rails.logger.debug "Storing task data: #{params[:task].inspect}"
       session[:pending_task_data] = task_params
       session[:return_to] = create_from_session_tasks_path # Use dedicated route after login
-      Rails.logger.debug "Session data stored: #{session[:pending_task_data].inspect}"
     end
-    
+
     redirect_to new_user_session_path
   end
-  
+
   def create_from_session
     create_pending_task
-    # If no pending task or creation failed, redirect to index
     redirect_to tasks_path unless performed?
   end
 
@@ -50,31 +76,28 @@ class TasksController < ApplicationController
 
   def create_pending_task
     return unless session[:pending_task_data].present?
-    
-    Rails.logger.debug "Creating pending task with data: #{session[:pending_task_data].inspect}"
+
     @task = current_user.tasks.build(session[:pending_task_data])
-    
+
     if @task.save
-      Rails.logger.debug "Task created successfully: #{@task.inspect}"
-      session.delete(:pending_task_data)
       redirect_to root_path, notice: 'Pomyślnie utworzono zadanie i zalogowano!'
-      return
     else
-      Rails.logger.debug "Task creation failed: #{@task.errors.full_messages.inspect}"
-      # If task creation fails, redirect to form with errors
-      session.delete(:pending_task_data) # Clean up bad data
       redirect_to new_task_path(step: 2), alert: 'Wystąpił problem z utworzeniem zadania. Spróbuj ponownie.'
-      return
     end
+    session.delete(:pending_task_data)
+    nil
   end
 
   def task_params
     return {} unless params[:task].present?
-    params.require(:task).permit(:title, :description, :salary, :status, :category)
+
+    params.require(:task).permit(:title, :description, :salary, :status, :category, :due_date, :due_time_slot,
+                                 photos: [])
   end
 
   def wizard_params
     return {} unless params[:task].present?
-    params[:task].permit(:category, :title, :description, :salary)
+
+    params[:task].permit(:category, :title, :description, :salary, :due_date, :due_time_slot)
   end
 end

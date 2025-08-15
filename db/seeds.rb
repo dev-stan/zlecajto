@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'faker'
 
 puts 'Seeding database with random data...'

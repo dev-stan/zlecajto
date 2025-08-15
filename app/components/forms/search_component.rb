@@ -1,27 +1,31 @@
-class Forms::SearchComponent < ApplicationComponent
-  def initialize(placeholder: 'Szukaj zadań...', action: nil, method: :get, html_options: {})
-    @placeholder = placeholder
-    @action = action
-    @method = method
-    @html_options = html_options
-  end
+# frozen_string_literal: true
 
-  private
+module Forms
+  class SearchComponent < ApplicationComponent
+    def initialize(placeholder: 'Szukaj zadań...', action: nil, method: :get, html_options: {})
+      @placeholder = placeholder
+      @action = action
+      @method = method
+      @html_options = html_options
+    end
 
-  attr_reader :placeholder, :action, :method, :html_options
+    private
 
-  def form_classes
-    merge_classes(
-      'flex items-center w-full max-w-md mx-auto bg-white rounded-lg shadow-sm border border-gray-300 focus-within:ring-2 focus-within:ring-violet-500 focus-within:border-violet-500',
-      html_options[:class]
-    )
-  end
+    attr_reader :placeholder, :action, :method, :html_options
 
-  def input_classes
-    'flex-1 px-4 py-2 text-sm text-gray-900 bg-transparent border-none outline-none placeholder-gray-500'
-  end
+    def form_classes
+      merge_classes(
+        'flex items-center w-full max-w-md mx-auto bg-white rounded-lg shadow-sm border border-gray-300 focus-within:ring-2 focus-within:ring-violet-500 focus-within:border-violet-500',
+        html_options[:class]
+      )
+    end
 
-  def button_classes
-    'px-4 py-2 text-violet-600 hover:text-violet-700 focus:outline-none'
+    def input_classes
+      'flex-1 px-4 py-2 text-sm text-gray-900 bg-transparent border-none outline-none placeholder-gray-500'
+    end
+
+    def button_classes
+      'px-4 py-2 text-violet-600 hover:text-violet-700 focus:outline-none'
+    end
   end
 end

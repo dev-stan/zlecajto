@@ -1,14 +1,15 @@
+# frozen_string_literal: true
+
 class SubmissionsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_task, only: [:new, :create]
-  before_action :set_submission, only: [:show, :edit, :update, :destroy]
+  before_action :set_task, only: %i[new create]
+  before_action :set_submission, only: %i[show edit update destroy]
 
   def index
     @submissions = current_user.submissions.includes(:task)
   end
 
-  def show
-  end
+  def show; end
 
   def new
     # Check if user has already applied to this task
@@ -39,8 +40,7 @@ class SubmissionsController < ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @submission.update(submission_params)

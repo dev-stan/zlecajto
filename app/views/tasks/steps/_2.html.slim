@@ -1,25 +1,13 @@
-p.text-sm.text-gray-500.text-center.mb-6 Step 2 of 2
-
-- if user_signed_in?
-  = form_with model: task, url: tasks_path, data: { turbo_frame: "_top" }, html: { class: 'space-y-8 bg-white/70 backdrop-blur rounded-xl p-8 shadow-sm border border-violet-100' } do |f|
-    = f.hidden_field :category
-    = f.hidden_field :title
-    
-    = render Ui::InputComponent.new(name: 'task[description]', type: 'textarea', label: 'Description', placeholder: 'Describe the task in detail...', required: true, value: task.description, rows: 6)
+div.space-y-8.bg-white/70.backdrop-blur.rounded-xl.p-8.shadow-sm.border.border-violet-100
+  = form_with url: wizard_tasks_path, method: :post, data: { turbo_frame: 'task_wizard' }, html: { class: 'space-y-6' } do |f|
+    = hidden_field_tag :step, 2
+    = hidden_field_tag 'task[category]', task.category
+    = hidden_field_tag 'task[title]', task.title
+    = hidden_field_tag 'task[due_date]', task.due_date if task.due_date.present?
+    = hidden_field_tag 'task[due_time_slot]', task.due_time_slot if task.due_time_slot.present?
+    h2.text-lg.font-semibold.mb-4 Details
+    = render Ui::InputComponent.new(name: 'task[description]', type: 'textarea', label: 'Description', placeholder: 'Describe the task in detail...', required: false, value: task.description, rows: 6)
     = render Ui::InputComponent.new(name: 'task[salary]', type: 'number', label: 'Salary (PLN)', placeholder: '150', value: task.salary)
-    
     div.pt-2.flex.items-center.justify-between.gap-4
-      = render Ui::ButtonComponent.new(text: 'Back', path: new_task_path(step: 1, task: { category: task.category, title: task.title }), variant: :ghost, size: :lg, html_options: { data: { turbo_frame: "task_wizard" }, class: "inline-flex items-center justify-center px-6 py-3 bg-violet-100 hover:bg-violet-200 text-violet-700 font-semibold rounded-lg shadow-sm focus:outline-none transition" })
-      = render Ui::ButtonComponent.new(text: 'Create Task', submit: true)
-
-- else
-  = form_with model: task, url: authenticate_and_create_tasks_path, local: true, data: { turbo: "false" }, html: { class: 'space-y-8 bg-white/70 backdrop-blur rounded-xl p-8 shadow-sm border border-violet-100' } do |f|
-    = f.hidden_field :category
-    = f.hidden_field :title
-    
-    = render(Ui::InputComponent.new(name: 'task[description]', type: 'textarea', label: 'Description', placeholder: 'Describe the task in detail...', required: true, value: task.description, rows: 6))
-    = render(Ui::InputComponent.new(name: 'task[salary]', type: 'number', label: 'Salary (PLN)', placeholder: '150', value: task.salary))
-    
-    div.pt-2.flex.items-center.justify-between.gap-4
-      = render(Ui::ButtonComponent.new(text: 'Back',path: new_task_path(step: 1, task: { category: task.category, title: task.title }),variant: :ghost,size: :lg,html_options: { data: { turbo_frame: "task_wizard" }, class: "inline-flex items-center justify-center px-6 py-3 bg-violet-100 hover:bg-violet-200 text-violet-700 font-semibold rounded-lg shadow-sm focus:outline-none transition" }))
-      = render(Ui::ButtonComponent.new(text: 'Sign In & Create Task', submit: true))
+      = render Ui::ButtonComponent.new(text: 'Back', path: new_task_path(step: 1, task: { category: task.category, title: task.title, due_date: task.due_date, due_time_slot: task.due_time_slot }), variant: :ghost, size: :md, html_options: { data: { turbo_frame: 'task_wizard' } })
+      = render Ui::ButtonComponent.new(text: 'Next', submit: true, size: :md)

@@ -1,0 +1,8 @@
+# frozen_string_literal: true
+
+class AddDueAtToTasks < ActiveRecord::Migration[7.1]
+  def change
+    add_column :tasks, :due_at, :datetime
+    add_index :tasks, :due_at
+  end
+end
