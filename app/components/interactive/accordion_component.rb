@@ -20,7 +20,8 @@ module Interactive
     end
 
     def item_header_classes
-      'w-full flex items-center justify-between text-left text-sm font-medium text-gray-800 rounded-xl bg-green-50/70 hover:bg-green-50 border border-green-400/70 px-6 py-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 transition-colors'
+      # Button inside the accordion container (container now provides border, background, rounding)
+      'w-full flex items-center justify-between text-left text-sm font-medium text-gray-800 px-6 py-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 transition-colors'
     end
 
     def item_content_classes
