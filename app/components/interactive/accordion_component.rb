@@ -3,6 +3,7 @@
 module Interactive
   class AccordionComponent < ApplicationComponent
     def initialize(items: [], html_options: {})
+      super()
       @items = items
       @html_options = html_options
     end
@@ -13,17 +14,17 @@ module Interactive
 
     def accordion_classes
       merge_classes(
-        'divide-y divide-gray-200 border border-gray-200 rounded-lg',
+        'space-y-4',
         html_options[:class]
       )
     end
 
     def item_header_classes
-      'w-full px-4 py-3 text-left text-sm font-medium text-gray-900 bg-gray-50 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-violet-500'
+      'w-full flex items-center justify-between text-left text-sm font-medium text-gray-800 rounded-xl bg-green-50/70 hover:bg-green-50 border border-green-400/70 px-6 py-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 transition-colors'
     end
 
     def item_content_classes
-      'px-4 py-3 text-sm text-gray-700 bg-white'
+      'px-6 pt-2 pb-6 text-sm text-gray-700'
     end
   end
 end

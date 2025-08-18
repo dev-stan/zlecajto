@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["panel", "button"]
+  static targets = ["panel", "button", "icon"]
 
   connect() {
     this.panelTargets.forEach((panel, i) => {
@@ -16,14 +16,13 @@ export default class extends Controller {
   }
 
   toggle(event) {
-    const index = parseInt(event.currentTarget.dataset.accordionIndex, 10)
+    const indexAttr = event.currentTarget.dataset.accordionIndex
+    if (indexAttr === undefined) return
+    const index = parseInt(indexAttr, 10)
+    if (Number.isNaN(index) || !this.buttonTargets[index]) return
     const button = this.buttonTargets[index]
     const isExpanded = button.getAttribute('aria-expanded') === 'true'
-
-    this.buttonTargets.forEach((_, i) => {
-      if (i !== index) this.setExpanded(i, false)
-    })
-
+    this.buttonTargets.forEach((_, i) => { if (i !== index) this.setExpanded(i, false) })
     this.setExpanded(index, !isExpanded)
   }
 
@@ -36,18 +35,12 @@ export default class extends Controller {
       button.setAttribute('aria-expanded', 'true')
       const inner = panel.firstElementChild
       const targetHeight = inner ? inner.scrollHeight : panel.scrollHeight
-      if (!animate) {
-        panel.style.maxHeight = targetHeight + 'px'
-      } else {
-        panel.style.maxHeight = targetHeight + 'px'
-      }
+      panel.style.maxHeight = targetHeight + 'px'
+      if (this.hasIconTarget && this.iconTargets[index]) this.iconTargets[index].classList.add('rotate-180')
     } else {
       button.setAttribute('aria-expanded', 'false')
-      if (!animate) {
-        panel.style.maxHeight = '0px'
-      } else {
-        panel.style.maxHeight = '0px'
-      }
+      panel.style.maxHeight = '0px'
+      if (this.hasIconTarget && this.iconTargets[index]) this.iconTargets[index].classList.remove('rotate-180')
     }
   }
 }

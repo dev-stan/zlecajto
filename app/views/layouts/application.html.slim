@@ -12,7 +12,7 @@ html
   body
     = render Layout::NavbarComponent.new(nav_items: [{ text: 'Zleć zadanie', href: new_task_path }, { text: 'Ogłoszenia', href: tasks_path }])
     
-    main.container.mx-auto.mt-28.px-5
+    main.pt-25
       - if notice
         = render Ui::AlertComponent.new(message: notice, variant: :success)
       

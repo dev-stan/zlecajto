@@ -6,7 +6,8 @@ module Ui
       primary: 'bg-violet-600 hover:bg-violet-700 text-white',
       secondary: 'bg-white hover:bg-gray-50 text-gray-900 border border-gray-300',
       danger: 'bg-red-600 hover:bg-red-700 text-white',
-      ghost: 'bg-transparent hover:bg-gray-100 text-gray-900'
+      ghost: 'bg-transparent hover:bg-gray-100 text-gray-900',
+      success: 'bg-green-600 hover:bg-green-700 text-white'
     }.freeze
 
     SIZES = {
