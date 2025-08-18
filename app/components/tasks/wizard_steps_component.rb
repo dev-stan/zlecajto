@@ -19,10 +19,10 @@ module Tasks
 
     def default_steps
       [
-        'Category & Title',
-        'Details',
-        'Extra Info',
-        'Photos'
+        'Tytuł i kategoria',
+        'Opis',
+        'Budżet',
+        'Zdjęcia'
       ]
     end
 
@@ -45,40 +45,6 @@ module Tasks
         prerequisites_met?(3)
       else
         true
-      end
-    end
-
-    def status_item_classes(status)
-      base = 'flex items-center gap-3 rounded-lg border px-4 py-3 transition shadow-sm'
-      case status
-      when :active
-        merge_classes(base, 'border-violet-200 bg-violet-50 text-violet-700 font-medium')
-      when :completed
-        merge_classes(base,
-                      'border-gray-200 bg-white text-gray-600 cursor-pointer hover:border-violet-300 hover:bg-violet-50')
-      when :available
-        merge_classes(base,
-                      'border-gray-200 bg-white text-gray-600 cursor-pointer hover:border-violet-300 hover:bg-violet-50')
-      when :locked
-        merge_classes(base, 'border-gray-200 bg-gray-50 text-gray-400 opacity-60 cursor-not-allowed')
-      else
-        merge_classes(base, 'border-gray-200 bg-white text-gray-600')
-      end
-    end
-
-    def status_badge_classes(status)
-      base = 'flex h-8 w-8 items-center justify-center rounded-full text-sm font-semibold'
-      case status
-      when :active
-        merge_classes(base, 'bg-violet-600 text-white')
-      when :completed
-        merge_classes(base, 'bg-violet-100 text-violet-600')
-      when :available
-        merge_classes(base, 'bg-gray-100 text-gray-500')
-      when :locked
-        merge_classes(base, 'bg-gray-200 text-gray-400')
-      else
-        merge_classes(base, 'bg-gray-100 text-gray-500')
       end
     end
 

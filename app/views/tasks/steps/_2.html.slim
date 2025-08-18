@@ -1,13 +1,13 @@
-div.space-y-8.bg-white/70.backdrop-blur.rounded-xl.p-8.shadow-sm.border.border-violet-100
-  = form_with url: wizard_tasks_path, method: :post, data: { turbo_frame: 'task_wizard' }, html: { class: 'space-y-6' } do |f|
-    = hidden_field_tag :step, 2
-    = hidden_field_tag 'task[category]', task.category
-    = hidden_field_tag 'task[title]', task.title
-    = hidden_field_tag 'task[due_date]', task.due_date if task.due_date.present?
-    = hidden_field_tag 'task[due_time_slot]', task.due_time_slot if task.due_time_slot.present?
-    h2.text-lg.font-semibold.mb-4 Details
-    = render Ui::InputComponent.new(name: 'task[description]', type: 'textarea', label: 'Description', placeholder: 'Describe the task in detail...', required: false, value: task.description, rows: 6)
-    = render Ui::InputComponent.new(name: 'task[salary]', type: 'number', label: 'Salary (PLN)', placeholder: '150', value: task.salary)
-    div.pt-2.flex.items-center.justify-between.gap-4
-      = render Ui::ButtonComponent.new(text: 'Back', path: new_task_path(step: 1, task: { category: task.category, title: task.title, due_date: task.due_date, due_time_slot: task.due_time_slot }), variant: :ghost, size: :md, html_options: { data: { turbo_frame: 'task_wizard' } })
-      = render Ui::ButtonComponent.new(text: 'Next', submit: true, size: :md)
+= form_with url: wizard_tasks_path, method: :post, data: { turbo_frame: 'task_wizard' }, html: { id: 'task_step_form' } do |f|
+
+  h1.text-2xl.font-bold.mb-4 Opis zadania
+  p.text-sm.text-gray-600.mb-2.font-bold Dodaj więcej szczegółów
+
+  = render Ui::InputComponent.new(name: 'task[description]', type: 'textarea', placeholder: 'Opisz dokładnie zadanie...', required: false, value: task.description, rows: 6)
+
+  / Hidden fields to persist previous data
+  = hidden_field_tag :step, 2
+  = hidden_field_tag 'task[category]', task.category
+  = hidden_field_tag 'task[title]', task.title
+  = hidden_field_tag 'task[due_date]', task.due_date if task.due_date.present?
+  = hidden_field_tag 'task[due_time_slot]', task.due_time_slot if task.due_time_slot.present?

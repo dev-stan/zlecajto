@@ -3,7 +3,7 @@
 module Ui
   class ButtonComponent < ApplicationComponent
     VARIANTS = {
-      primary: 'bg-violet-600 hover:bg-violet-700 text-white',
+      primary: 'bg-green-600 hover:bg-green-700 text-white',
       secondary: 'bg-white hover:bg-gray-50 text-gray-900 border border-gray-300',
       danger: 'bg-red-600 hover:bg-red-700 text-white',
       ghost: 'bg-transparent hover:bg-gray-100 text-gray-900',
@@ -41,7 +41,7 @@ module Ui
 
     def button_classes
       merge_classes(
-        'inline-flex items-center justify-center rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed',
+        'inline-flex items-center justify-center rounded-3xl font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed',
         VARIANTS[variant],
         SIZES[size],
         html_options[:class]

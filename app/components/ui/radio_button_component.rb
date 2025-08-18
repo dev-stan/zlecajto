@@ -2,6 +2,19 @@
 
 module Ui
   class RadioButtonComponent < ApplicationComponent
+    CATEGORY_EMOJIS = {
+      'Sprzątanie' => '🧹',
+      'Development' => '💻',
+      'Writing' => '✍️',
+      'Other' => '✨'
+    }.freeze
+
+    TIMESLOT_EMOJIS = {
+      'rano' => '🌅',
+      'godziny_pracy' => '☀️',
+      'popoludnie' => '🕓',
+      'wieczor' => '🌙'
+    }.freeze
     def initialize(name:, value:, checked: false, id: nil, label: nil, style: :default,
                    html_options: {})
       super()
@@ -20,6 +33,15 @@ module Ui
 
     def generate_id
       "#{name.to_s.parameterize}_#{value.to_s.parameterize}"
+    end
+
+    def display_emoji
+      # Category label match (exact)
+      return CATEGORY_EMOJIS[label] if CATEGORY_EMOJIS.key?(label)
+      # Timeslot by value key
+      return TIMESLOT_EMOJIS[value.to_s] if TIMESLOT_EMOJIS.key?(value.to_s)
+
+      '✅'
     end
   end
 end

@@ -3,6 +3,12 @@
 class Task < ApplicationRecord
   STATUSES   = %w[draft open in_progress completed cancelled].freeze
   CATEGORIES = %w[Sprzątanie Development Writing Other].freeze
+  TIMESLOTS  = {
+    'rano' => 'Przed 8:00',
+    'godziny_pracy' => '08:00–16:00',
+    'popoludnie' => '16:00–18:00',
+    'wieczor' => 'Po 18:00'
+  }.freeze
 
   attr_accessor :due_date, :due_time_slot
 
@@ -35,12 +41,8 @@ class Task < ApplicationRecord
     end
     return unless date
 
-    hour = case due_time_slot
-           when 'rano' then 8
-           when 'popoludnie' then 12
-           when 'wieczor' then 13
-           else 9
-           end
+    slot_hours = { 'rano' => 8, 'godziny_pracy' => 10, 'popoludnie' => 16, 'wieczor' => 19 }
+    hour = slot_hours.fetch(due_time_slot.to_s, 9)
     self.due_at = begin
       Time.zone.local(date.year, date.month, date.day, hour, 0, 0)
     rescue StandardError

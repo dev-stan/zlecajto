@@ -1,20 +1,17 @@
-nav aria-label="Task creation steps" class="md:w-64 mb-6 md:mb-0"
-    ol.space-y-3
+nav aria-label="Task creation steps" class="md:w-56 mb-6 md:mb-0"
+    h2.text-sm.font-semibold.uppercase.tracking-wider.text-gray-500.mb-4 Dodaj zlecenie
+    ol.space-y-2
         - steps.each_with_index do |label, idx|
             - number = idx + 1
             - status = step_status(number)
+            - active = (status == :active)
             li
+                - indicator = active ? content_tag(:span, '|', class: 'mr-2 text-green-600') : content_tag(:span, ' ', class: 'mr-2')
                 - if [:available, :completed].include?(status)
-                    = link_to step_path(number), data: { turbo_frame: 'task_wizard' }, class: status_item_classes(status), aria: { current: (status == :active ? 'step' : nil) }
-                        span class=status_badge_classes(status)
-                            = number
-                        div
-                            p.text-sm.uppercase.tracking-wide.font-semibold.mb-0.5 class=(status == :active ? 'text-violet-600' : 'text-gray-400') Step #{number}
-                            p.text-sm.font-medium = label
+                    = link_to step_path(number), data: { turbo_frame: 'task_wizard' }, class: merge_classes('flex items-center transition', active ? 'text-green-600 font-semibold' : 'text-gray-700 hover:text-green-600'), aria: { current: (active ? 'step' : nil) }
+                        == indicator
+                        span = label
                 - else
-                    div class=status_item_classes(status) aria-current=(status == :active ? 'step' : nil) aria-disabled=(status == :locked ? 'true' : nil)
-                        span class=status_badge_classes(status)
-                            = number
-                        div
-                            p.text-sm.uppercase.tracking-wide.font-semibold.mb-0.5 class=(status == :active ? 'text-violet-600' : 'text-gray-400') Step #{number}
-                            p.text-sm.font-medium class=(status == :locked ? 'text-gray-400' : nil) = label
+                    span class=merge_classes('flex items-center', active ? 'text-green-600 font-semibold' : 'text-gray-400 cursor-not-allowed') aria-current=(active ? 'step' : nil) aria-disabled=(status == :locked ? 'true' : nil)
+                        == indicator
+                        span = label

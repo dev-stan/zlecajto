@@ -1,8 +1,11 @@
-= form_with url: wizard_tasks_path, method: :post, data: { turbo_frame: "task_wizard" }, html: { class: 'space-y-8 bg-white/70 backdrop-blur rounded-xl p-8 shadow-sm border border-violet-100', multipart: true } do |f|
+= form_with url: wizard_tasks_path, method: :post, data: { turbo_frame: "task_wizard" }, html: { multipart: true, id: 'task_step_form' } do |f|
 
-  = render Ui::InputComponent.new(name: 'task[title]', label: 'Title', placeholder: 'Short title', required: true, value: task.title)
-  fieldset.space-y-4
-    legend.text-sm.font-semibold.tracking-wide.uppercase.text-violet-700.mb-2.text-center Category
+  h1.text-2xl.font-bold.mb-4 Z czym potrzebujesz pomocy?
+  p.text-sm.text-gray-600.mb-2.font-bold Nadaj krótki tytuł swojemu zleceniu
+
+  = render Ui::InputComponent.new(name: 'task[title]', placeholder: 'Short title', required: true, value: task.title)
+  fieldset.pt-5
+    p.text-sm.text-gray-600.mb-2.font-bold Nadaj krótki tytuł swojemu zleceniu
     ul.grid.grid-cols-4.gap-3
       - categories.each do |cat|
         - id = "cat_#{cat.parameterize}"
@@ -10,18 +13,16 @@
           = render Ui::RadioButtonComponent.new(name: 'task[category]', value: cat, checked: task.category == cat, id: id, label: cat, style: :square)
 
   / Due date picker
-  = render Ui::DatePickerComponent.new(name: 'task[due_date]', label: 'Preferred Date', value: task.due_at&.to_date || params.dig(:task, :due_date))
+  p.text-sm.text-gray-600.mb-2.font-bold.pt-5 Nadaj krótki tytuł swojemu zleceniu
+  = render Ui::DatePickerComponent.new(name: 'task[due_date]', value: task.due_at&.to_date || params.dig(:task, :due_date), html_options: { class: 'w-35'})
 
 
   / Time slot radios
-  fieldset.space-y-3
-    legend.text-sm.font-semibold.tracking-wide.uppercase.text-violet-700.mb-2.text-center Preferred Time
-
+  fieldset.space-y-3.pt-5
+    p.text-sm.text-gray-600.mb-2.font-bold Nadaj krótki tytuł swojemu zleceniu
     ul.grid.grid-cols-1.sm:grid-cols-3.gap-3
       - @time_slots.each do |key, window|
         li
-          = render Ui::RadioButtonComponent.new(name: 'task[due_time_slot]', value: key, checked: params.dig(:task, :due_time_slot) == key || task.due_time_slot == key, label: "#{key.humanize} (#{window})")
+            = render Ui::RadioButtonComponent.new(name: 'task[due_time_slot]', value: key, checked: params.dig(:task, :due_time_slot) == key || task.due_time_slot == key, label: "#{key.humanize} (#{window})", style: :square)
   / current step hidden so controller advances correctly
   = hidden_field_tag :step, 1
-  div.pt-2.flex.justify-end
-    = render Ui::ButtonComponent.new(text: 'Next', submit: true)

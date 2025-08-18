@@ -15,7 +15,7 @@ class TasksController < ApplicationController
   # POST /tasks/wizard progresses from step 1 -> 2 while retaining entered fields
   def wizard
     @categories = Task::CATEGORIES
-    @time_slots = { 'Rano' => '8-11', 'popoludnie' => '12-16', 'wieczor' => '13-22' }
+    @time_slots = { 'rano' => '8-11', 'popoludnie' => '12-16', 'wieczor' => '13-22' }
 
     current_step = (params[:step] || 1).to_i
 
