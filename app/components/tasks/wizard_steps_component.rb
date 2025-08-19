@@ -6,7 +6,7 @@ module Tasks
     # current_step: Integer (1-based)
     # steps: Array of label strings (optional override)
     # task: current (unsaved) Task instance to preserve entered data when navigating
-    def initialize(current_step:, task:, steps: default_steps)
+    def initialize(current_step:, task:, steps:)
       super()
       @current_step = current_step.to_i
       @task = task
@@ -16,15 +16,6 @@ module Tasks
     private
 
     attr_reader :current_step, :steps, :task
-
-    def default_steps
-      [
-        'Tytuł i kategoria',
-        'Opis',
-        'Budżet',
-        'Zdjęcia'
-      ]
-    end
 
     # Unified status for a step: :active, :completed (past), :available (future & unlocked), :locked (future & blocked)
     def step_status(number)
@@ -36,35 +27,24 @@ module Tasks
     end
 
     def prerequisites_met?(number)
-      case number
-      when 2
-        task_wizard_params[:category].present? && task_wizard_params[:title].present?
-      when 3
-        prerequisites_met?(2) # could add more specific checks later
-      when 4
-        prerequisites_met?(3)
-      else
-        true
-      end
-    end
+      return true if number <= 1
+      return false unless task&.category.present? && task.title.present?
 
-    def task_wizard_params
-      return {} unless task
-
-      {
-        category: task.category,
-        title: task.title,
-        description: task.description,
-        salary: task.salary
-      }.compact
+      true
     end
 
     def step_path(number)
-      helpers.new_task_path(step: number, task: task_wizard_params)
+      helpers.new_task_path(step: number, task: preserved_params)
     end
 
     def previous_step_path
       step_path(current_step - 1) if current_step > 1
+    end
+
+    def preserved_params
+      return {} unless task
+
+      task.slice(:category, :title, :description, :salary, :due_date, :timeslot, :payment_method).compact
     end
   end
 end

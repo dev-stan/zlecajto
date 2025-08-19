@@ -21,7 +21,9 @@ module Ui
       'popoludnie' => '🕓',
       'wieczor' => '🌙'
     }.freeze
-    def initialize(name:, value:, checked: false, id: nil, label: nil, style: :default,
+
+    def initialize(name:, value:, checked:
+                    false, id: nil, label: nil, style: :default,
                    html_options: {})
       super()
       @name = name
@@ -42,12 +44,8 @@ module Ui
     end
 
     def display_emoji
-      # Category label match (exact)
       return CATEGORY_EMOJIS[label] if CATEGORY_EMOJIS.key?(label)
-      # Timeslot by value key
       return TIMESLOT_EMOJIS[value.to_s] if TIMESLOT_EMOJIS.key?(value.to_s)
-
-      # Payment method by label
       return PAYMENT_METHODS_EMOJIS[label] if PAYMENT_METHODS_EMOJIS.key?(label)
 
       '✅'

@@ -81,7 +81,7 @@
         div
           dt.font-medium.text-gray-600 Aplikacje
           dd.text-gray-800 = @task.submissions.count
-  - if @task.due_date.present?
+        - if @task.due_date.present?
           div
             dt.font-medium.text-gray-600 Data
             dd.text-gray-800 = @task.due_date.strftime('%d.%m.%Y')

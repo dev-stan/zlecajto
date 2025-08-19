@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
-  before_action :authenticate_user!, only: %i[create create_from_session]
+  before_action :authenticate_user!, only: %i[new create wizard create_from_session]
+  before_action :load_wizard_collections, only: %i[new wizard create]
 
   def index
     @tasks = Task.with_attached_photos
@@ -12,36 +13,15 @@ class TasksController < ApplicationController
     @existing_submission = current_user.submissions.find_by(task: @task) if user_signed_in?
   end
 
-  # POST /tasks/wizard progresses from step 1 -> 2 while retaining entered fields
-  def wizard
-    @task = Task.new(wizard_params)
-
-    @categories = Task::CATEGORIES
-    @time_slots = Task::TIMESLOTS
-    @payment_methods = Task::PAYMENT_METHODS
-
-    current_step = (params[:step] || 1).to_i
-
-    @task.due_date = params.dig(:task, :due_date)
-    @task.timeslot = params.dig(:task, :timeslot)
-
-    @step = if request.post?
-              [current_step + 1, 4].min
-            else
-              current_step
-            end
-
-    render :new
+  # GET /tasks/new (step-driven wizard entry)
+  def new
+    init_wizard(advance: false)
   end
 
-  def new
-    @step = params[:step].presence&.to_i || 1
-    @task = Task.new(wizard_params)
-    @task.due_date = params.dig(:task, :due_date)
-    @task.timeslot = params.dig(:task, :timeslot)
-    @categories = Task::CATEGORIES
-    @time_slots = Task::TIMESLOTS
-    @payment_methods = Task::PAYMENT_METHODS
+  # GET/POST /tasks/wizard (progress wizard via Turbo)
+  def wizard
+    init_wizard(advance: request.post?)
+    render :new
   end
 
   def create
@@ -49,10 +29,8 @@ class TasksController < ApplicationController
     if @task.save
       redirect_to root_path, notice: 'Pomyślnie utworzono zadanie'
     else
-      @step = 2
-      @categories = Task::CATEGORIES
-      @time_slots = Task::TIMESLOTS
-      @payment_methods = Task::PAYMENT_METHODS
+      @wizard = TaskWizard.new(step: 2, params: task_params)
+      @step   = @wizard.current_step
       render :new, status: :unprocessable_entity
     end
   end
@@ -74,29 +52,33 @@ class TasksController < ApplicationController
   private
 
   def create_pending_task
-    return unless session[:pending_task_data].present?
+    data = session.delete(:pending_task_data)
+    return unless data.present?
 
-    @task = current_user.tasks.build(session[:pending_task_data])
-
+    @task = current_user.tasks.build(data)
     if @task.save
       redirect_to root_path, notice: 'Pomyślnie utworzono zadanie i zalogowano!'
     else
       redirect_to new_task_path(step: 2), alert: 'Wystąpił problem z utworzeniem zadania. Spróbuj ponownie.'
     end
-    session.delete(:pending_task_data)
-    nil
   end
 
   def task_params
-    return {} unless params[:task].present?
+    return {} unless params[:task]
 
-    params.require(:task).permit(:title, :description, :salary, :status, :category, :due_date, :timeslot, :payment_method,
-                                 photos: [])
+    params.require(:task).permit(:title, :description, :salary, :status, :category, :due_date, :timeslot,
+                                 :payment_method, photos: [])
   end
 
-  def wizard_params
-    return {} unless params[:task].present?
+  def load_wizard_collections
+    @categories       = Task::CATEGORIES
+    @time_slots       = Task::TIMESLOTS
+    @payment_methods  = Task::PAYMENT_METHODS
+  end
 
-    params[:task].permit(:category, :title, :description, :salary, :due_date, :timeslot, :payment_method)
+  def init_wizard(advance: false)
+    @wizard = TaskWizard.new(step: params[:step], params: task_params, advance: advance)
+    @task   = @wizard.task
+    @step   = @wizard.current_step
   end
 end

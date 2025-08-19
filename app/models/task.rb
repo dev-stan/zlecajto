@@ -11,7 +11,6 @@ class Task < ApplicationRecord
   has_many :reviews, dependent: :destroy
   has_many_attached :photos
 
-  validates :title, :description, :category, :user, presence: true
   validates :status, inclusion: { in: STATUSES }, allow_blank: true
   validates :category, inclusion: { in: CATEGORIES }, allow_blank: true
   validates :timeslot, inclusion: { in: TIMESLOTS }, allow_blank: true
