@@ -14,25 +14,22 @@ class TasksController < ApplicationController
 
   # POST /tasks/wizard progresses from step 1 -> 2 while retaining entered fields
   def wizard
+    @task = Task.new(wizard_params)
+
     @categories = Task::CATEGORIES
-    @time_slots = { 'rano' => '8-11', 'popoludnie' => '12-16', 'wieczor' => '13-22' }
+    @time_slots = Task::TIMESLOTS
+    @payment_methods = Task::PAYMENT_METHODS
 
     current_step = (params[:step] || 1).to_i
 
-    if request.post?
-      # Build task with accumulated params submitted from current step
-      @task = Task.new(wizard_params)
-      @task.due_date = params.dig(:task, :due_date)
-      @task.due_time_slot = params.dig(:task, :due_time_slot)
-      # Advance unless already at last step
-      @step = [current_step + 1, 4].min
-    else
-      # Initial GET render of a specific step (navigation via sidebar)
-      @task = Task.new(wizard_params)
-      @task.due_date = params.dig(:task, :due_date)
-      @task.due_time_slot = params.dig(:task, :due_time_slot)
-      @step = current_step
-    end
+    @task.due_date = params.dig(:task, :due_date)
+    @task.timeslot = params.dig(:task, :timeslot)
+
+    @step = if request.post?
+              [current_step + 1, 4].min
+            else
+              current_step
+            end
 
     render :new
   end
@@ -41,9 +38,10 @@ class TasksController < ApplicationController
     @step = params[:step].presence&.to_i || 1
     @task = Task.new(wizard_params)
     @task.due_date = params.dig(:task, :due_date)
-    @task.due_time_slot = params.dig(:task, :due_time_slot)
+    @task.timeslot = params.dig(:task, :timeslot)
     @categories = Task::CATEGORIES
-    @time_slots = { 'Rano' => '8-11', 'popoludnie' => '12-16', 'wieczor' => '13-22' }
+    @time_slots = Task::TIMESLOTS
+    @payment_methods = Task::PAYMENT_METHODS
   end
 
   def create
@@ -53,7 +51,8 @@ class TasksController < ApplicationController
     else
       @step = 2
       @categories = Task::CATEGORIES
-      @time_slots = { 'Rano' => '8-11', 'popoludnie' => '12-16', 'wieczor' => '13-22' }
+      @time_slots = Task::TIMESLOTS
+      @payment_methods = Task::PAYMENT_METHODS
       render :new, status: :unprocessable_entity
     end
   end
@@ -91,13 +90,13 @@ class TasksController < ApplicationController
   def task_params
     return {} unless params[:task].present?
 
-    params.require(:task).permit(:title, :description, :salary, :status, :category, :due_date, :due_time_slot,
+    params.require(:task).permit(:title, :description, :salary, :status, :category, :due_date, :timeslot, :payment_method,
                                  photos: [])
   end
 
   def wizard_params
     return {} unless params[:task].present?
 
-    params[:task].permit(:category, :title, :description, :salary, :due_date, :due_time_slot)
+    params[:task].permit(:category, :title, :description, :salary, :due_date, :timeslot, :payment_method)
   end
 end

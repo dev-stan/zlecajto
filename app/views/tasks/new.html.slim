@@ -1,22 +1,20 @@
 div class="min-h-[60vh] py-10 px-4"
-  div.max-w-6xl.mx-auto
+  div class="mx-auto w-full max-w-6xl"
     = turbo_frame_tag "task_wizard" do
-      / Grid: 1 column on mobile, 4 columns on md+, wizard spans 1, content spans 3
-      div.grid.grid-cols-1.md:grid-cols-4.gap-12.items-start
-        aside.md:col-span-1
+      / Two-column responsive layout: fixed sidebar, fluid main content
+      div class="flex flex-col md:flex-row gap-10 items-start"
+        aside class="md:w-48 md:flex-shrink-0"
           = render Tasks::WizardStepsComponent.new(current_step: @step, task: @task)
-        section.md:col-span-3
-          div.w-full.max-w-4xl
-            = render "tasks/steps/#{@step}", task: @task, categories: @categories, step: @step
+        section class="flex-1 max-w-3xl w-full"
+          = render "tasks/steps/#{@step}", task: @task, categories: @categories, step: @step
 
-            / Centralized navigation
-            - nav_task_params = { category: @task.category, title: @task.title, description: @task.description, salary: @task.salary, due_date: @task.due_date, due_time_slot: @task.due_time_slot }
-            div.mt-6.flex.items-center.justify-between.gap-4
-              - if @step > 1
-                = render Ui::ButtonComponent.new(text: 'Cofnij', path: new_task_path(step: @step - 1, task: nav_task_params), variant: :ghost, size: :md, html_options: { data: { turbo_frame: 'task_wizard' } })
-              - else
-                div
-              - if @step < 4
-                = render Ui::ButtonComponent.new(text: 'Dalej', submit: true, size: :md, html_options: { form: 'task_step_form' })
-              - else
-                = render Ui::ButtonComponent.new(text: 'Utwórz zlecenie', submit: true, size: :md, html_options: { form: 'task_step_form' })
+          - nav_task_params = { category: @task.category, title: @task.title, description: @task.description, salary: @task.salary, payment_method: @task.payment_method, due_date: @task.due_date, timeslot: @task.timeslot }
+          div.mt-6.flex.items-center.justify-between.gap-4
+            - if @step > 1
+              = render Ui::ButtonComponent.new(text: 'Cofnij', path: new_task_path(step: @step - 1, task: nav_task_params), variant: :ghost, size: :md, html_options: { data: { turbo_frame: 'task_wizard' } })
+            - else
+              div
+            - if @step < 4
+              = render Ui::ButtonComponent.new(text: 'Dalej', submit: true, size: :md, html_options: { form: 'task_step_form' })
+            - else
+              = render Ui::ButtonComponent.new(text: 'Utwórz zlecenie', submit: true, size: :md, html_options: { form: 'task_step_form' })

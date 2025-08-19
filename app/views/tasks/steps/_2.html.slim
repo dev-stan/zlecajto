@@ -10,4 +10,5 @@
   = hidden_field_tag 'task[category]', task.category
   = hidden_field_tag 'task[title]', task.title
   = hidden_field_tag 'task[due_date]', task.due_date if task.due_date.present?
-  = hidden_field_tag 'task[due_time_slot]', task.due_time_slot if task.due_time_slot.present?
+  = hidden_field_tag 'task[timeslot]', task.timeslot if task.respond_to?(:timeslot) && task.timeslot.present?
+  = hidden_field_tag 'task[payment_method]', task.payment_method if task.respond_to?(:payment_method) && task.payment_method.present?

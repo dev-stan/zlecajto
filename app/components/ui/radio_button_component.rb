@@ -9,6 +9,12 @@ module Ui
       'Other' => '✨'
     }.freeze
 
+    PAYMENT_METHODS_EMOJIS = {
+      'Przelew' => '💳',
+      'Blik' => '📱',
+      'Gotówka' => '💵'
+    }.freeze
+
     TIMESLOT_EMOJIS = {
       'rano' => '🌅',
       'godziny_pracy' => '☀️',
@@ -40,6 +46,9 @@ module Ui
       return CATEGORY_EMOJIS[label] if CATEGORY_EMOJIS.key?(label)
       # Timeslot by value key
       return TIMESLOT_EMOJIS[value.to_s] if TIMESLOT_EMOJIS.key?(value.to_s)
+
+      # Payment method by label
+      return PAYMENT_METHODS_EMOJIS[label] if PAYMENT_METHODS_EMOJIS.key?(label)
 
       '✅'
     end

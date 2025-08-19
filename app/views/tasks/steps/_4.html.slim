@@ -16,11 +16,12 @@
   = f.hidden_field :title
   = f.hidden_field :description
   = f.hidden_field :salary
+  = f.hidden_field :payment_method
   - if task.respond_to?(:due_date) && task.due_date.present?
     = hidden_field_tag 'task[due_date]', task.due_date
   - elsif params.dig(:task, :due_date).present?
     = hidden_field_tag 'task[due_date]', params.dig(:task, :due_date)
-  - if task.respond_to?(:due_time_slot) && task.due_time_slot.present?
-    = hidden_field_tag 'task[due_time_slot]', task.due_time_slot
-  - elsif params.dig(:task, :due_time_slot).present?
-    = hidden_field_tag 'task[due_time_slot]', params.dig(:task, :due_time_slot)
+  - if task.respond_to?(:timeslot) && task.timeslot.present?
+    = hidden_field_tag 'task[timeslot]', task.timeslot
+  - elsif params.dig(:task, :timeslot).present?
+    = hidden_field_tag 'task[timeslot]', params.dig(:task, :timeslot)

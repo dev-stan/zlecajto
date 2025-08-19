@@ -5,11 +5,24 @@
 
   = render Ui::InputComponent.new(name: 'task[salary]', type: 'number', placeholder: '150', value: task.salary)
 
-  / Hidden fields to persist previous data
+  / Payment method selection
+  fieldset.space-y-3.pt-5
+    p.text-sm.text-gray-600.mb-2.font-bold Wybierz metodę płatności
+    ul.grid.grid-cols-1.sm:grid-cols-3.gap-3
+      - @payment_methods.each do |method|
+        li
+          = render Ui::RadioButtonComponent.new(name: 'task[payment_method]',
+            value: method,
+            checked: params.dig(:task, :payment_method) == method || task.payment_method == method,
+            label: method,
+            style: :square)
+
+
   = hidden_field_tag :step, 3
   = hidden_field_tag 'task[category]', task.category
   = hidden_field_tag 'task[title]', task.title
   = hidden_field_tag 'task[description]', task.description if task.description.present?
   = hidden_field_tag 'task[due_date]', task.due_date if task.due_date.present?
-  = hidden_field_tag 'task[due_time_slot]', task.due_time_slot if task.due_time_slot.present?
+  = hidden_field_tag 'task[timeslot]', task.timeslot if task.respond_to?(:timeslot) && task.timeslot.present?
+  = hidden_field_tag 'task[payment_method]', task.payment_method if task.respond_to?(:payment_method) && task.payment_method.present?
 
