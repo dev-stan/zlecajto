@@ -1,0 +1,6 @@
+-# Generic Card Component
+- wrapper_opts = html_options.merge(class: wrapper_classes)
+div class=wrapper_opts[:class]
+  - if title.present?
+    h3.text-base.font-semibold.text-gray-900.mb-3 = title
+  = content

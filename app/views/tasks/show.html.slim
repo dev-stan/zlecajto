@@ -1,158 +1,22 @@
-/. Task show page redesigned (Airbnb‑style layout)
 .max-w-6xl.mx-auto.px-6.py-10
-  - existing_submission = (user_signed_in? ? current_user.submissions.find_by(task: @task) : nil)
+  - existing_submission = user_signed_in? ? current_user.submissions.find_by(task: @task) : nil
   - placeholder = 'https://i.imgur.com/iyJqQH3.jpeg'
   - photos = @task.photos.attachments
+  - multiple = photos.size > 1
+
   .flex.flex-col.md:flex-row.md:items-start.gap-10
-    / LEFT COLUMN: media + content
     .flex-1.min-w-0
-      / Title & meta (moved below image visually, but defined first for a11y)
-      h1.text-2xl.font-semibold.text-gray-900.mb-4 = @task.title
-      / Media (single image small; multiple => carousel)
-      - if photos.any?
-        .relative.mb-6
-          - multiple = photos.size > 1
-          / Wrapper needs explicit height because slides are absolutely positioned
-          .relative.rounded-xl.overflow-hidden.bg-gray-100.border.border-gray-200.h-64.md:h-72 data-controller=(multiple ? 'carousel' : nil) data-carousel-index-value="0"
-            - if multiple
-              - photos.each_with_index do |photo, i|
-                - visible = i == 0
-                .absolute.inset-0.transition-opacity.duration-300.opacity-0 data-carousel-target="slide" class=(visible ? 'opacity-100' : '')
-                  - if photo.variable? && photo.content_type.start_with?('image/')
-                    = image_tag photo.variant(resize_to_fill: [900, 600]), class: 'w-full h-64 md:h-72 object-cover select-none', alt: @task.title
-                  - else
-                    = image_tag placeholder, class: 'w-full h-64 md:h-72 object-cover select-none', alt: @task.title
-              / Prev / Next controls
-              - if photos.size > 1
-                button.absolute.left-2.top-1/2.-translate-y-1/2.bg-white/80.hover:bg-white.text-gray-700.rounded-full.h-9.w-9.flex.items-center.justify-center.shadow data-action="click->carousel#prev" aria-label="Poprzednie zdjęcie"
-                  span.font-semibold ←
-                button.absolute.right-2.top-1/2.-translate-y-1/2.bg-white/80.hover:bg-white.text-gray-700.rounded-full.h-9.w-9.flex.items-center.justify-center.shadow data-action="click->carousel#next" aria-label="Następne zdjęcie"
-                  span.font-semibold →
-                / Indicators
-                .absolute.bottom-2.left-0.right-0.flex.items-center.justify-center.gap-1
-                  - photos.each_with_index do |photo, i|
-                    button.h-2.w-2.rounded-full.bg-white/50.border.border-white.transition data-carousel-target="indicator" data-action="click->carousel#go" data-carousel-index-param=i aria-label="Przejdź do zdjęcia #{i + 1}"
-            - else
-              - photo = photos.first
-              - if photo&.variable? && photo.content_type.start_with?('image/')
-                = image_tag photo.variant(resize_to_fill: [900, 600]), class: 'w-full h-64 md:h-72 object-cover rounded-xl border border-gray-200', alt: @task.title
-              - else
-                = image_tag placeholder, class: 'w-full h-64 md:h-72 object-cover rounded-xl border border-gray-200', alt: @task.title
-      - else
-        .mb-6
-          = image_tag placeholder, class: 'w-full h-64 md:h-72 object-cover rounded-xl border border-gray-200', alt: @task.title
+      = render 'tasks/show/media', photos: photos, multiple: multiple, placeholder: placeholder, task: @task
+      = render 'tasks/show/badges', task: @task
+      = render 'tasks/show/owner', task: @task
+      = render 'tasks/show/description', task: @task
+      = render 'tasks/show/timing_location', task: @task
+      = render 'tasks/show/info_card'
+      = render 'tasks/show/reviews', task: @task
 
-      / Top badges (keep only category near title for compactness)
-      .flex.flex-wrap.items-center.gap-2.mb-4
-        = render Ui::BadgeComponent.new(text: @task.category, variant: :violet) if @task.category.present?
-        = render Ui::BadgeComponent.new(text: @task.payment_method, variant: :green) if @task.payment_method.present?
+    .w-full.md:w-72.flex-shrink-0.md:sticky.md:top-24.md:self-start.space-y-6
+      = render 'tasks/show/apply_card', task: @task, existing_submission: existing_submission
+      = render 'tasks/show/support_card'
 
-      p.text-sm.text-gray-600.mb-4 Właściciel: #{@task.user.email}
-      - if @task.description.present?
-        h2.text-lg.font-semibold.text-gray-900.mb-2 Co dokładnie trzeba zrobić?
-        .prose.prose-sm.max-w-none.text-gray-700 = simple_format(@task.description)
-
-      - if @task.due_date.present? || @task.timeslot.present? || @task.location.present?
-        section.mt-8
-          .flex.flex-wrap.gap-16.md:gap-24.items-start
-            / Left column: Czas i data
-            .flex.flex-col.items-start.min-w-[160px]
-              h3.text-base.font-semibold.text-gray-900.mb-1 Czas i data
-              .space-y-1.text-sm
-                - if @task.due_date.present?
-                  div.flex.items-center.gap-1
-                    span.text-gray-400
-                      i.fa.fa-calendar.text-xs aria-hidden="true"
-                    span.text-gray-900 = @task.due_date.strftime('%d.%m.%Y')
-                - if @task.timeslot.present?
-                  div.flex.items-center.gap-1
-                    span.text-gray-400
-                      i.fa.fa-clock-o.text-xs aria-hidden="true"
-                    span.text-gray-900 = @task.timeslot.humanize
-            - if @task.location.present?
-              / Right column: Lokalizacja
-              .flex.flex-col.items-start.min-w-[160px]
-                h3.text-base.font-semibold.text-gray-900.mb-1 Lokalizacja
-                .text-sm.flex.items-center.gap-1
-                  span.text-gray-400
-                    i.fa.fa-map-marker.text-xs aria-hidden="true"
-                  span.text-gray-900 = @task.location
-
-      / Green info card (basic information)
-      section.mt-6
-        .rounded-xl.bg-green-50.border.border-green-200.p-4
-          h4.text-sm.font-semibold.text-green-900.mb-1 Jak to działa?
-          p.text-sm.text-green-800.leading-relaxed
-            | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur euismod, nunc at facilisis facilisis, lectus orci posuere urna, et laoreet risus dolor sed quam.
-
-      / Additional info blocks below main content
-      .space-y-12.mt-10
-        - if @task.reviews.any?
-          section
-            h3.text-lg.font-semibold.text-gray-900.mb-4 Opinie (#{@task.reviews.count})
-            ul.space-y-4
-              - @task.reviews.limit(5).each do |review|
-                li
-                  p.font-medium.text-gray-800.mb-1 = review.title
-                  p.text-sm.text-gray-600.mb-1 = truncate(review.description, length: 200)
-                  span.text-xs.text-gray-500 = review.created_at.strftime('%d.%m.%Y')
-
-    / RIGHT COLUMN: sticky apply card (make the column itself sticky on md+)
-    .w-full.md:w-72.flex-shrink-0.md:sticky.md:top-24.md:self-start
-      .bg-white.rounded-2xl.border.border-gray-200.shadow-sm.p-5.flex.flex-col.gap-4
-        - if @task.salary.present?
-          p.text-2xl.font-semibold.text-gray-900 = number_to_currency(@task.salary, unit: 'PLN ', precision: 0)
-        - else
-          p.text-xl.font-semibold.text-gray-900 Wynagrodzenie do ustalenia
-        p.text-xs.text-gray-500.leading-snug
-          | Aplikując wysyłasz krótką ofertę. Właściciel otrzyma powiadomienie i może się z Tobą skontaktować.
-        .text-xs.text-green-600.font-medium = pluralize(@task.submissions.count, 'Oferta', 'Oferty', 'Ofert') rescue "#{@task.submissions.count} ofert"
-        - if user_signed_in?
-          - if existing_submission
-            .inline-flex.items-center.px-3.py-2.rounded-md.text-sm.font-medium.bg-green-100.text-green-800 ✓ Już aplikowałeś
-          - elsif current_user == @task.user
-            .inline-flex.items-center.px-3.py-2.rounded-md.text-sm.font-medium.bg-blue-100.text-blue-800 Twoje zadanie
-          - else
-            = render Ui::ButtonComponent.new(text: 'Aplikuj', path: new_task_submission_path(@task), variant: :primary, size: :lg)
-        - else
-          = render Ui::ButtonComponent.new(text: 'Zaloguj się aby aplikować', path: new_user_session_path, variant: :primary, size: :lg)
-      / Support info card
-      .bg-white.rounded-2xl.border.border-gray-200.shadow-sm.p-5.mt-6.flex.flex-col.gap-4
-        h3.text-lg.font-semibold.text-gray-900 Masz pytania?
-        p.text-xs.text-gray-500.leading-snug
-          | Skontaktuj się z nami – odpowiadamy szybko i chętnie pomożemy.
-        ul.space-y-3.text-sm
-          -# E-mail
-          li.flex.items-start.gap-3
-            span.text-gray-400
-              i.fa.fa-envelope-o.text-xs aria-hidden="true"
-            div
-              span.font-medium.text-gray-700 E‑mail
-              br
-              a.text-green-700.hover:underline href="mailto:wsparcie@zlecajto.pl" wsparcie@zlecajto.pl
-          -# Telefon
-          li.flex.items-start.gap-3
-            span.text-gray-400
-              i.fa.fa-phone.text-xs aria-hidden="true"
-            div
-              span.font-medium.text-gray-700 Telefon
-              br
-              a.text-green-700.hover:underline href="tel:+48123456789" +48 123 456 789
-
-  / Mobile floating apply bar
-  - unless current_user == @task.user
-    .fixed.bottom-0.inset-x-0.z-40.md:hidden.bg-white/95.backdrop-blur.border-t.border-gray-200
-      .max-w-6xl.mx-auto.flex.items-center.gap-4.px-4.py-3
-        - if @task.salary.present?
-          span.text-sm.font-semibold.text-gray-900 = number_to_currency(@task.salary, unit: 'PLN ', precision: 0)
-        - else
-          span.text-sm.font-medium.text-gray-700 Wynagrodzenie: ustalenia
-        .ml-auto
-          - if user_signed_in?
-            - if existing_submission
-              span.inline-flex.items-center.px-3.py-2.rounded-full.text-xs.font-medium.bg-green-100.text-green-700 ✓ Aplikowano
-            - else
-              = render Ui::ButtonComponent.new(text: 'Aplikuj', path: new_task_submission_path(@task), variant: :primary, size: :md, html_options: { class: 'shadow-md' })
-          - else
-            = render Ui::ButtonComponent.new(text: 'Zaloguj się', path: new_user_session_path, variant: :primary, size: :md, html_options: { class: 'shadow-md' })
+  = render 'tasks/show/mobile_apply_bar', task: @task, existing_submission: existing_submission
     

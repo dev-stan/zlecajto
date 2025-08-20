@@ -14,7 +14,7 @@
 
   / Due date picker
   p.text-sm.text-gray-600.mb-2.font-bold.pt-5 Nadaj krótki tytuł swojemu zleceniu
-  = render Ui::DatePickerComponent.new(name: 'task[due_date]', value: task.due_date&.to_date || params.dig(:task, :due_date), html_options: { class: 'w-35'})
+  = render Input::DatePickerComponent.new(name: 'task[due_date]', value: task.due_date&.to_date || params.dig(:task, :due_date), html_options: { class: 'w-35'})
 
 
   / Timeslot radios (simple stored string)

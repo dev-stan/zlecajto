@@ -1,0 +1,5 @@
+/ Green info card (using Ui::CardComponent, styling preserved)
+section.mt-6
+  = render Cards::CardComponent.new(padding: 'p-4', shadow: false, html_options: { class: 'rounded-xl bg-green-50 border border-green-200' }) do
+    h4.text-sm.font-semibold.text-green-900.mb-1 Jak to działa?
+    p.text-sm.text-green-800.leading-relaxed Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur euismod, nunc at facilisis facilisis, lectus orci posuere urna, et laoreet risus dolor sed quam.

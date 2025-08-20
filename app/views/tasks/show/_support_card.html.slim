@@ -1,0 +1,19 @@
+/ Support contact card
+= render Cards::CardComponent.new do
+  h3.text-lg.font-semibold.text-gray-900 Masz pytania?
+  p.text-xs.text-gray-500.leading-snug.pb-5 Skontaktuj się z nami - odpowiadamy szybko i chętnie pomożemy.
+  ul.space-y-3.text-sm
+    li.flex.items-start.gap-3
+      span.text-gray-400
+        i.fa.fa-envelope-o.text-xs aria-hidden="true"
+      div
+        span.font-medium.text-gray-700 E-mail
+        br
+        a.text-green-700.hover:underline href="mailto:wsparcie@zlecajto.pl" wsparcie@zlecajto.pl
+    li.flex.items-start.gap-3
+      span.text-gray-400
+        i.fa.fa-phone.text-xs aria-hidden="true"
+      div
+        span.font-medium.text-gray-700 Telefon
+        br
+        a.text-green-700.hover:underline href="tel:+48123456789" +48 123 456 789

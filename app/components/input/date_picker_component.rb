@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Ui
+module Input
   class DatePickerComponent < ApplicationComponent
     def initialize(name:, label: nil, value: nil, required: false, disabled: false, html_options: {})
       super()

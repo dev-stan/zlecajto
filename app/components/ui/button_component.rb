@@ -16,7 +16,16 @@ module Ui
       lg: 'px-6 py-3 text-base'
     }.freeze
 
-    def initialize(text:, path: nil, variant: :primary, size: :md, submit: false, button: false, html_options: {})
+    WIDTHS = {
+      nil => nil,
+      25 => 'w-1/4',
+      50 => 'w-1/2',
+      75 => 'w-3/4',
+      100 => 'w-full'
+    }.freeze
+
+    def initialize(text:, path: nil, variant: :primary, size: :md, submit: false, button: false, width: nil,
+                   html_options: {})
       super()
       @text = text
       @path = path
@@ -24,6 +33,7 @@ module Ui
       @size = size.to_sym
       @submit = submit
       @button = button
+      @width = width
       @html_options = html_options
     end
 
@@ -37,13 +47,14 @@ module Ui
 
     private
 
-    attr_reader :text, :path, :variant, :size, :html_options
+    attr_reader :text, :path, :variant, :size, :width, :html_options
 
     def button_classes
       merge_classes(
-        'inline-flex items-center justify-center rounded-3xl font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed',
+        'inline-flex items-center justify-center text-center rounded-3xl font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed',
         VARIANTS[variant],
         SIZES[size],
+        WIDTHS[width],
         html_options[:class]
       )
     end

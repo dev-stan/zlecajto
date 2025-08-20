@@ -1,0 +1,35 @@
+/ Media (carousel or single image)
+- photos      ||= []
+- multiple    ||= photos.size > 1
+- placeholder ||= 'https://i.imgur.com/iyJqQH3.jpeg'
+- task        ||= @task
+
+h1.text-2xl.font-semibold.text-gray-900.mb-4 = task.title
+
+- if photos.any?
+  .relative.mb-6
+    .relative.rounded-xl.overflow-hidden.bg-gray-100.border.border-gray-200.h-64.md:h-72 data-controller=(multiple ? 'carousel' : nil) data-carousel-index-value="0"
+      - if multiple
+        - photos.each_with_index do |photo, i|
+          - visible = i.zero?
+          .absolute.inset-0.transition-opacity.duration-300.opacity-0 data-carousel-target="slide" class=(visible ? 'opacity-100' : '')
+            - if photo.variable? && photo.content_type.start_with?('image/')
+              = image_tag photo.variant(resize_to_fill: [900, 600]), class: 'w-full h-64 md:h-72 object-cover select-none', alt: task.title
+            - else
+              = image_tag placeholder, class: 'w-full h-64 md:h-72 object-cover select-none', alt: task.title
+        button.absolute.left-2.top-1/2.-translate-y-1/2.bg-white/80.hover:bg-white.text-gray-700.rounded-full.h-9.w-9.flex.items-center.justify-center.shadow data-action="click->carousel#prev" aria-label="Poprzednie zdjęcie"
+          span.font-semibold ←
+        button.absolute.right-2.top-1/2.-translate-y-1/2.bg-white/80.hover:bg-white.text-gray-700.rounded-full.h-9.w-9.flex.items-center.justify-center.shadow data-action="click->carousel#next" aria-label="Następne zdjęcie"
+          span.font-semibold →
+        .absolute.bottom-2.left-0.right-0.flex.items-center.justify-center.gap-1
+          - photos.each_with_index do |_, i|
+            button.h-2.w-2.rounded-full.bg-white/50.border.border-white.transition data-carousel-target="indicator" data-action="click->carousel#go" data-carousel-index-param=i aria-label="Przejdź do zdjęcia #{i + 1}"
+      - else
+        - photo = photos.first
+        - if photo&.variable? && photo.content_type.start_with?('image/')
+          = image_tag photo.variant(resize_to_fill: [900, 600]), class: 'w-full h-64 md:h-72 object-cover rounded-xl border border-gray-200', alt: task.title
+        - else
+          = image_tag placeholder, class: 'w-full h-64 md:h-72 object-cover rounded-xl border border-gray-200', alt: task.title
+- else
+  .mb-6
+    = image_tag placeholder, class: 'w-full h-64 md:h-72 object-cover rounded-xl border border-gray-200', alt: task.title
