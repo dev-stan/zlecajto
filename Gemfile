@@ -82,3 +82,4 @@ gem 'rubocop'
 gem 'rubocop-rails'
 gem 'ruby-lsp'
 gem 'view_component'
+gem "font-awesome-rails"

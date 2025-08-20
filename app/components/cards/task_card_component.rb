@@ -15,7 +15,7 @@ module Cards
 
     def card_classes
       merge_classes(
-        'bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-200',
+        'group bg-gray-200 rounded-2xl border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-200',
         html_options[:class]
       )
     end
@@ -24,12 +24,12 @@ module Cards
       task.title
     end
 
-    def description
-      task.description
-    end
-
     def price
-      "💵 #{task.salary}PLN" if task.salary.present?
+      return unless task.salary.present?
+
+      # Display without emoji, green color handled in template. Avoid Kernel#format name clash.
+      value = task.salary.to_f
+      "#{value.round}PLN"
     end
 
     def image_url
@@ -62,14 +62,94 @@ module Cards
     end
 
     def badges
-      badges = []
-      badges << { text: 'Zweryfikowany użytkownik', variant: :green } if task.user&.verified?
-      badges << { text: task.category, variant: :violet } if task.category.present?
-      badges
+      list = []
+      list << payment_method_badge if payment_method_badge
+      list << category_badge if category_badge
+      list
     end
 
     def show_actions?
       show_actions
+    end
+
+    # --- New UI helpers ---
+
+    def payment_method_badge
+      return unless task.payment_method.present?
+
+      variant = case task.payment_method.downcase
+                when 'blik' then :blue
+                when 'gotówka', 'gotowka' then :yellow
+                else :green
+                end
+      { text: task.payment_method, variant: variant }
+    end
+
+    def category_badge
+      return unless task.category.present?
+
+      { text: task.category, variant: :red }
+    end
+
+    def location
+      task.location.presence
+    end
+
+    def formatted_due_date
+      return unless task.due_date.present?
+
+      I18n.with_locale(:pl) do
+        # Abbrev weekday with capital first letter + date
+        wday = I18n.l(task.due_date.to_date, format: '%a')
+        wday_cap = wday[0].upcase + wday[1..]
+        "#{wday_cap}, #{task.due_date.strftime('%d.%m')}"
+      end
+    rescue StandardError
+      task.due_date.strftime('%d.%m')
+    end
+
+    TIMESLOT_RANGES = {
+      'rano' => '8:00 - 12:00',
+      'popoludnie' => '12:00 - 16:00',
+      'wieczor' => '16:00 - 20:00'
+    }.freeze
+
+    def timeslot_range
+      return unless task.timeslot.present?
+
+      TIMESLOT_RANGES[task.timeslot] || task.timeslot
+    end
+
+    def offers_count_text
+      count = task.submissions.size
+      "#{count} ofert"
+    end
+
+    def user_display_name
+      return 'Anonim' unless task.user
+
+      fn = task.user.first_name.to_s.strip
+      ln = task.user.last_name.to_s.strip
+      if fn.present? && ln.present?
+        "#{fn} #{ln.first}."
+      elsif fn.present?
+        fn
+      elsif ln.present?
+        ln
+      else
+        task.user.email.split('@').first
+      end
+    end
+
+    def user_initials
+      return '?' unless task.user
+
+      initials = [task.user.first_name, task.user.last_name].compact.map { |n| n[0] }.join
+      initials.presence || 'U'
+    end
+
+    def reviews_count
+      task.reviews.size
     end
   end
 end
