@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class TaskWizard
-  STEPS      = ['Tytuł i kategoria', 'Opis', 'Budżet', 'Zdjęcia'].freeze
-  PERMITTED  = %i[category title description salary due_date timeslot payment_method].freeze
+  STEPS      = ['Tytuł i kategoria', 'Opis', 'Lokalizacja', 'Budżet', 'Zdjęcia'].freeze
+  PERMITTED  = %i[category title description salary due_date timeslot payment_method location].freeze
 
   attr_reader :current_step, :params_hash
 

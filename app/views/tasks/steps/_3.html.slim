@@ -1,22 +1,15 @@
+//= Location selection step (new step 3)
 = form_with url: wizard_tasks_path, method: :post, data: { turbo_frame: 'task_wizard' }, html: { id: 'task_step_form' } do |f|
 
-  h1.text-2xl.font-bold.mb-4 Budżet
-  p.text-sm.text-gray-600.mb-2.font-bold Ustal budżet lub widełki
+  h1.text-2xl.font-bold.mb-4 Gdzie wykonać zadanie?
+  p.text-sm.text-gray-600.mb-2.font-bold Wybierz lokalizację
 
-  = render Ui::InputComponent.new(name: 'task[salary]', type: 'number', placeholder: '150', value: task.salary)
-
-  / Payment method selection
-  fieldset.space-y-3.pt-5
-    p.text-sm.text-gray-600.mb-2.font-bold Wybierz metodę płatności
-    ul.grid.grid-cols-1.sm:grid-cols-3.gap-3
-      - @payment_methods.each do |method|
+  fieldset.space-y-3
+    ul.grid.grid-cols-2.sm:grid-cols-4.gap-3
+      - @locations.each do |loc|
+        - id = "loc_#{loc.parameterize}"
         li
-          = render Ui::RadioButtonComponent.new(name: 'task[payment_method]',
-            value: method,
-            checked: params.dig(:task, :payment_method) == method || task.payment_method == method,
-            label: method,
-            style: :square)
-
+          = render Ui::RadioButtonComponent.new(name: 'task[location]', value: loc, checked: params.dig(:task, :location) == loc || task.location == loc, id: id, label: loc)
 
   = hidden_field_tag :step, 3
   = hidden_field_tag 'task[category]', task.category
@@ -25,4 +18,5 @@
   = hidden_field_tag 'task[due_date]', task.due_date if task.due_date.present?
   = hidden_field_tag 'task[timeslot]', task.timeslot if task.respond_to?(:timeslot) && task.timeslot.present?
   = hidden_field_tag 'task[payment_method]', task.payment_method if task.respond_to?(:payment_method) && task.payment_method.present?
+  = hidden_field_tag 'task[location]', task.location if task.respond_to?(:location) && task.location.present?
 

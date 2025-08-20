@@ -44,7 +44,7 @@ module Tasks
     def preserved_params
       return {} unless task
 
-      task.slice(:category, :title, :description, :salary, :due_date, :timeslot, :payment_method).compact
+      task.slice(:category, :title, :description, :salary, :due_date, :timeslot, :payment_method, :location).compact
     end
   end
 end

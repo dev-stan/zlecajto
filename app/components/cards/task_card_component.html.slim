@@ -1,10 +1,10 @@
-/. Entire card container now includes image so top corners are rounded
-.bg-gray-100.rounded-2xl.overflow-hidden
+/. Entire card is now an anchor linking to the task show page so the whole surface is clickable
+= link_to helpers.task_path(task), class: "bg-gray-100 rounded-2xl overflow-hidden flex flex-col h-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow hover:shadow-md" do
   - if image_url.present?
     img.w-full.h-64.object-cover src=image_url alt=title loading="lazy"
 
   / Body
-  .p-6.pb-4
+  .p-6.pb-4.flex-1
     .flex.justify-between.gap-6
       / Left column
       .flex-1

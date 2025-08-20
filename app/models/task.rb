@@ -5,6 +5,7 @@ class Task < ApplicationRecord
   CATEGORIES      = %w[Sprzątanie Development Writing Other].freeze
   TIMESLOTS       = %w[rano popoludnie wieczor].freeze
   PAYMENT_METHODS = %w[Przelew Blik Gotówka].freeze
+  LOCATIONS       = ['Stary Strzeszyn', 'Osiedle Literackie', 'Strzeszyn Grecki', 'Osiedle Wojskowe'].freeze
 
   belongs_to :user
   has_many :submissions, dependent: :destroy
@@ -14,6 +15,7 @@ class Task < ApplicationRecord
   validates :status, inclusion: { in: STATUSES }, allow_blank: true
   validates :category, inclusion: { in: CATEGORIES }, allow_blank: true
   validates :timeslot, inclusion: { in: TIMESLOTS }, allow_blank: true
+  validates :location, inclusion: { in: LOCATIONS }, allow_blank: true
 
   before_validation :set_default_status
 

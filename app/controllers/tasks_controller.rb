@@ -67,13 +67,14 @@ class TasksController < ApplicationController
     return {} unless params[:task]
 
     params.require(:task).permit(:title, :description, :salary, :status, :category, :due_date, :timeslot,
-                                 :payment_method, photos: [])
+                                 :payment_method, :location, photos: [])
   end
 
   def load_wizard_collections
     @categories       = Task::CATEGORIES
     @time_slots       = Task::TIMESLOTS
     @payment_methods  = Task::PAYMENT_METHODS
+    @locations = Task::LOCATIONS
   end
 
   def init_wizard(advance: false)

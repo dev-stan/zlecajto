@@ -1,31 +1,28 @@
-= form_with model: task, url: tasks_path, data: { turbo_frame: '_top' }, html: { multipart: true, id: 'task_step_form' } do |f|
+= form_with url: wizard_tasks_path, method: :post, data: { turbo_frame: 'task_wizard' }, html: { id: 'task_step_form' } do |f|
 
-  h1.text-2xl.font-bold.mb-4 Zdjęcia
-  p.text-sm.text-gray-600.mb-2.font-bold Dodaj zdjęcia (opcjonalnie)
+  h1.text-2xl.font-bold.mb-4 Budżet
+  p.text-sm.text-gray-600.mb-2.font-bold Ustal budżet lub widełki
 
-  .space-y-3 data-controller='photos'
-    = file_field_tag 'task[photos][]', multiple: true, direct_upload: true, class: 'hidden', id: 'task_photos_input', data: { photos_target: 'input', action: 'change->photos#changed' }
-    .flex.flex-wrap.gap-3
-      / Add button tile (persists)
-      button.group.relative.w-20.h-20.rounded-md.bg-gray-100.hover:bg-gray-200.flex.items-center.justify-center.border.border-dashed.border-gray-300.text-gray-500.hover:text-gray-700.transition.mr-1.mb-1 type='button' data-action='photos#pick'
-        span.text-3xl.leading-none +
-        span class="absolute.bottom-1.left-1/2.-translate-x-1/2.text-[10px].font-medium.opacity-0.group-hover:opacity-100.text-gray-600"
-      / Preview list (inserts after button)
-      .flex.flex-wrap.gap-3 data-photos-target='list'
-    span.text-xs.text-gray-600 data-photos-target='count'
+  = render Ui::InputComponent.new(name: 'task[salary]', type: 'number', placeholder: '150', value: task.salary)
 
-  / Hidden fields to persist previous data
+  / Payment method selection
+  fieldset.space-y-3.pt-5
+    p.text-sm.text-gray-600.mb-2.font-bold Wybierz metodę płatności
+    ul.grid.grid-cols-1.sm:grid-cols-3.gap-3
+      - @payment_methods.each do |method|
+        li
+          = render Ui::RadioButtonComponent.new(name: 'task[payment_method]',
+            value: method,
+            checked: params.dig(:task, :payment_method) == method || task.payment_method == method,
+            label: method,
+            style: :square)
+
+
   = hidden_field_tag :step, 4
-  = f.hidden_field :category
-  = f.hidden_field :title
-  = f.hidden_field :description
-  = f.hidden_field :salary
-  = f.hidden_field :payment_method
-  - if task.respond_to?(:due_date) && task.due_date.present?
-    = hidden_field_tag 'task[due_date]', task.due_date
-  - elsif params.dig(:task, :due_date).present?
-    = hidden_field_tag 'task[due_date]', params.dig(:task, :due_date)
-  - if task.respond_to?(:timeslot) && task.timeslot.present?
-    = hidden_field_tag 'task[timeslot]', task.timeslot
-  - elsif params.dig(:task, :timeslot).present?
-    = hidden_field_tag 'task[timeslot]', params.dig(:task, :timeslot)
+  = hidden_field_tag 'task[category]', task.category
+  = hidden_field_tag 'task[title]', task.title
+  = hidden_field_tag 'task[description]', task.description if task.description.present?
+  = hidden_field_tag 'task[due_date]', task.due_date if task.due_date.present?
+  = hidden_field_tag 'task[timeslot]', task.timeslot if task.respond_to?(:timeslot) && task.timeslot.present?
+  = hidden_field_tag 'task[payment_method]', task.payment_method if task.respond_to?(:payment_method) && task.payment_method.present?
+  = hidden_field_tag 'task[location]', task.location if task.respond_to?(:location) && task.location.present?

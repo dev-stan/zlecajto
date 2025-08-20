@@ -48,7 +48,7 @@ module Ui
       return TIMESLOT_EMOJIS[value.to_s] if TIMESLOT_EMOJIS.key?(value.to_s)
       return PAYMENT_METHODS_EMOJIS[label] if PAYMENT_METHODS_EMOJIS.key?(label)
 
-      '✅'
+      ''
     end
   end
 end

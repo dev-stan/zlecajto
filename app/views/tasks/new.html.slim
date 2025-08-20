@@ -1,21 +1,20 @@
 div class="min-h-[60vh] py-10 px-4"
   div class="mx-auto w-full max-w-6xl"
     = turbo_frame_tag "task_wizard" do
-      / Two-column responsive layout: fixed sidebar, fluid main content
       div class="flex flex-col md:flex-row gap-10 items-start"
         aside class="md:w-48 md:flex-shrink-0"
-          - wizard_steps = ['Tytuł i kategoria', 'Opis', 'Budżet', 'Zdjęcia']
+          - wizard_steps = ['Tytuł i kategoria', 'Opis', 'Lokalizacja', 'Budżet', 'Zdjęcia']
           = render Tasks::WizardStepsComponent.new(current_step: @step, task: @task, steps: wizard_steps)
         section class="flex-1 max-w-3xl w-full"
           = render "tasks/steps/#{@step}", task: @task, categories: @categories, step: @step
 
-          - nav_task_params = { category: @task.category, title: @task.title, description: @task.description, salary: @task.salary, payment_method: @task.payment_method, due_date: @task.due_date, timeslot: @task.timeslot }
+          - nav_task_params = { category: @task.category, title: @task.title, description: @task.description, salary: @task.salary, payment_method: @task.payment_method, due_date: @task.due_date, timeslot: @task.timeslot, location: @task.location }
           div.mt-6.flex.items-center.justify-between.gap-4
             - if @step > 1
               = render Ui::ButtonComponent.new(text: 'Cofnij', path: new_task_path(step: @step - 1, task: nav_task_params), variant: :ghost, size: :md, html_options: { data: { turbo_frame: 'task_wizard' } })
             - else
               div
-            - if @step < 4
+            - if @step < 5
               = render Ui::ButtonComponent.new(text: 'Dalej', submit: true, size: :md, html_options: { form: 'task_step_form' })
-            - else
+            - elsif @step == 5
               = render Ui::ButtonComponent.new(text: 'Utwórz zlecenie', submit: true, size: :md, html_options: { form: 'task_step_form' })
