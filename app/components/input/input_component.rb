@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Ui
+module Input
   class InputComponent < ApplicationComponent
     def initialize(name:, type: 'text', label: nil, placeholder: nil, required: false, disabled: false, value: nil,
                    rows: 5, html_options: {})

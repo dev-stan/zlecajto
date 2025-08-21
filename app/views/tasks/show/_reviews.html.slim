@@ -7,5 +7,5 @@
       - task.reviews.limit(5).each do |review|
         li
           p.font-medium.text-gray-800.mb-1 = review.title
-          p.text-sm.text-gray-600.mb-1      = truncate(review.description, length: 200)
-          span.text-xs.text-gray-500        = review.created_at.strftime('%d.%m.%Y')
+          p.text-sm.text-gray-600.mb-1 = truncate(review.description, length: 200)
+          span.text-xs.text-gray-500 = review.created_at.strftime('%d.%m.%Y')

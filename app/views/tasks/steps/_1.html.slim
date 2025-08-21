@@ -3,7 +3,7 @@
   h1.text-2xl.font-bold.mb-4 Z czym potrzebujesz pomocy?
   p.text-sm.text-gray-600.mb-2.font-bold Nadaj krótki tytuł swojemu zleceniu
 
-  = render Ui::InputComponent.new(name: 'task[title]', placeholder: 'Short title', required: true, value: task.title)
+  = render Input::InputComponent.new(name: 'task[title]', placeholder: 'Short title', required: true, value: task.title)
   fieldset.pt-5
     p.text-sm.text-gray-600.mb-2.font-bold Nadaj krótki tytuł swojemu zleceniu
     ul.grid.grid-cols-4.gap-3
@@ -12,12 +12,9 @@
         li
           = render Ui::RadioButtonComponent.new(name: 'task[category]', value: cat, checked: task.category == cat, id: id, label: cat, style: :square)
 
-  / Due date picker
   p.text-sm.text-gray-600.mb-2.font-bold.pt-5 Nadaj krótki tytuł swojemu zleceniu
   = render Input::DatePickerComponent.new(name: 'task[due_date]', value: task.due_date&.to_date || params.dig(:task, :due_date), html_options: { class: 'w-35'})
 
-
-  / Timeslot radios (simple stored string)
   fieldset.space-y-3.pt-5
     p.text-sm.text-gray-600.mb-2.font-bold Kiedy najlepiej wykonać zadanie?
     ul.grid.grid-cols-1.sm:grid-cols-3.gap-3
@@ -25,5 +22,5 @@
         - id = "slot_#{slot}"
         li
           = render Ui::RadioButtonComponent.new(name: 'task[timeslot]', value: slot, checked: params.dig(:task, :timeslot) == slot || task.timeslot == slot, id: id, label: slot.humanize, style: :square)
-  / current step hidden so controller advances correctly
+
   = hidden_field_tag :step, 1

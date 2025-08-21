@@ -3,9 +3,8 @@
   h1.text-2xl.font-bold.mb-4 Opis zadania
   p.text-sm.text-gray-600.mb-2.font-bold Dodaj więcej szczegółów
 
-  = render Ui::InputComponent.new(name: 'task[description]', type: 'textarea', placeholder: 'Opisz dokładnie zadanie...', required: false, value: task.description, rows: 6)
+  = render Input::InputComponent.new(name: 'task[description]', type: 'textarea', placeholder: 'Opisz dokładnie zadanie...', required: false, value: task.description, rows: 6)
 
-  / Hidden fields to persist previous data
   = hidden_field_tag :step, 2
   = hidden_field_tag 'task[category]', task.category
   = hidden_field_tag 'task[title]', task.title
