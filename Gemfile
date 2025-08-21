@@ -76,10 +76,10 @@ gem 'tailwindcss-rails', '~> 4.3'
 gem 'slim-rails', '~> 3.7'
 
 gem 'devise'
+gem 'font-awesome-rails'
 gem 'foreman'
 gem 'image_processing', '~> 1.2'
 gem 'rubocop'
 gem 'rubocop-rails'
 gem 'ruby-lsp'
 gem 'view_component'
-gem "font-awesome-rails"
