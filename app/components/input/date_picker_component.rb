@@ -2,12 +2,11 @@
 
 module Input
   class DatePickerComponent < ApplicationComponent
-    def initialize(name:, label: nil, value: nil, required: false, disabled: false, html_options: {})
+    def initialize(name:, label: nil, value: nil, disabled: false, html_options: {})
       super()
       @name = name
       @label = label
       @value = value
-      @required = required
       @disabled = disabled
       @html_options = html_options
       @id = generate_id
@@ -15,7 +14,7 @@ module Input
 
     private
 
-    attr_reader :name, :label, :value, :required, :disabled, :html_options, :id
+    attr_reader :name, :label, :value, :disabled, :html_options, :id
 
     def generate_id
       "datepicker_#{name.to_s.parameterize(separator: '_')}"
@@ -40,8 +39,7 @@ module Input
         type: 'date',
         value: formatted_value,
         class: input_classes,
-        disabled: disabled || nil,
-        required: required || nil
+        disabled: disabled || nil
       }.merge(html_options.except(:class))
     end
 

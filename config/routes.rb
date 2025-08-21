@@ -22,4 +22,5 @@ Rails.application.routes.draw do
   end
 
   resources :submissions, only: %i[index show edit update destroy]
+  resource :dashboard, only: :show, controller: 'dashboards'
 end

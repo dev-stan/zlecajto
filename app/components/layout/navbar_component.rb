@@ -32,7 +32,7 @@ module Layout
           },
           {
             text: 'Moje aplikacje',
-            href: helpers.submissions_path,
+            href: dashboard_path,
             classes: 'inline-flex items-center rounded-md px-2 sm:px-3 py-2 text-xs sm:text-sm font-medium text-slate-700 hover:text-violet-600 hover:bg-violet-50 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 transition-colors'
           },
           {

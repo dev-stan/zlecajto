@@ -2,16 +2,17 @@
 
 module Cards
   class TaskCardComponent < ApplicationComponent
-    def initialize(task:, show_actions: true, html_options: {})
+    def initialize(task:, show_actions: true, show_image: true, html_options: {})
       super()
       @task = task
       @show_actions = show_actions
+      @show_image = show_image
       @html_options = html_options
     end
 
     private
 
-    attr_reader :task, :show_actions, :html_options
+    attr_reader :task, :show_actions, :show_image, :html_options
 
     def card_classes
       merge_classes(
@@ -70,6 +71,10 @@ module Cards
 
     def show_actions?
       show_actions
+    end
+
+    def show_image?
+      !!show_image
     end
 
     # --- New UI helpers ---

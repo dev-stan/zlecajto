@@ -22,8 +22,7 @@ module Ui
       'wieczor' => '🌙'
     }.freeze
 
-    def initialize(name:, value:, checked:
-                    false, id: nil, label: nil, style: :default,
+    def initialize(name:, value:, checked: false, id: nil, label: nil, style: :default,
                    html_options: {})
       super()
       @name = name

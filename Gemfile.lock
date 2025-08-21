@@ -382,6 +382,7 @@ DEPENDENCIES
   faker
   font-awesome-rails
   foreman
+  i18n
   image_processing (~> 1.2)
   importmap-rails
   jbuilder

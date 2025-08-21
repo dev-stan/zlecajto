@@ -2,13 +2,13 @@
 
 module Input
   class InputComponent < ApplicationComponent
-    def initialize(name:, type: 'text', label: nil, placeholder: nil, required: false, disabled: false, value: nil,
+    def initialize(name:, type: 'text', label: nil, placeholder: nil, disabled: false, value: nil,
                    rows: 5, html_options: {})
+      super()
       @name = name
       @type = type
       @label = label
       @placeholder = placeholder
-      @required = required
       @disabled = disabled
       @value = value
       @rows = rows
@@ -18,7 +18,7 @@ module Input
 
     private
 
-    attr_reader :name, :type, :label, :placeholder, :required, :disabled, :value, :rows, :html_options, :id
+    attr_reader :name, :type, :label, :placeholder, :disabled, :value, :rows, :html_options, :id
 
     def render_input
       if type == 'textarea'
@@ -51,8 +51,7 @@ module Input
         name: name,
         placeholder: placeholder,
         class: input_classes,
-        disabled: disabled || nil,
-        required: required || nil
+        disabled: disabled || nil
       }.merge(html_options.except(:class))
     end
   end

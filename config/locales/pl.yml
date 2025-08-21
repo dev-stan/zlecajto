@@ -17,3 +17,22 @@ pl:
     attributes:
       task:
         due_date: "Termin"
+  dashboard:
+    title: "Panel"
+    subtitle: "Twoje zadania i aplikacje w jednym miejscu"
+    my_tasks:
+      title: "Moje zadania"
+      empty: "Nie masz jeszcze żadnych zadań."
+      new: "Dodaj zadanie"
+    my_submissions:
+      title: "Moje aplikacje"
+      empty: "Nie aplikowałeś jeszcze na żadne zadania."
+    browse_tasks: "Przeglądaj zadania"
+  submissions:
+    applied_at: "Aplikowano %{date}"
+    owner: "Właściciel: %{email}"
+    view_task: "Zobacz zadanie"
+    status:
+      pending: "Oczekuje"
+      accepted: "Zaakceptowano"
+      rejected: "Odrzucono"

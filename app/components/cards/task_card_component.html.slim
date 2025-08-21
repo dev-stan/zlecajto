@@ -1,6 +1,6 @@
 /. Entire card is now an anchor linking to the task show page so the whole surface is clickable
 = link_to helpers.task_path(task), class: "bg-gray-100 rounded-2xl overflow-hidden flex flex-col h-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow hover:shadow-md" do
-  - if image_url.present?
+  - if show_image? && image_url.present?
     / Reduced height from h-64 to h-48 for a less tall image
     img.w-full.h-48.object-cover src=image_url alt=title loading="lazy"
 

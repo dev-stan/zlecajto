@@ -1,9 +1,9 @@
-= form_with url: wizard_tasks_path, method: :post, data: { turbo_frame: 'task_wizard' }, html: { id: 'task_step_form' } do |f|
+= form_with url: wizard_tasks_path, method: :post, data: { turbo_frame: 'task_wizard', controller: 'form-validation', action: 'submit->form-validation#validate' }, html: { id: 'task_step_form', novalidate: true } do |f|
 
   h1.text-2xl.font-bold.mb-4 Opis zadania
   p.text-sm.text-gray-600.mb-2.font-bold Dodaj więcej szczegółów
 
-  = render Input::InputComponent.new(name: 'task[description]', type: 'textarea', placeholder: 'Opisz dokładnie zadanie...', required: false, value: task.description, rows: 6)
+  = render Input::InputComponent.new(name: 'task[description]', type: 'textarea', placeholder: 'Opisz dokładnie zadanie...', value: task.description, rows: 6, html_options: { class: 'required' })
 
   = hidden_field_tag :step, 2
   = hidden_field_tag 'task[category]', task.category

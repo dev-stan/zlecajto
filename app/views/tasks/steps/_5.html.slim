@@ -1,4 +1,4 @@
-= form_with model: task, url: tasks_path, data: { turbo_frame: '_top' }, html: { multipart: true, id: 'task_step_form' } do |f|
+= form_with model: task, url: tasks_path, data: { turbo_frame: '_top', controller: 'form-validation', action: 'submit->form-validation#validate' }, html: { multipart: true, id: 'task_step_form', novalidate: true } do |f|
 
   h1.text-2xl.font-bold.mb-4 Zdjęcia
   p.text-sm.text-gray-600.mb-2.font-bold Dodaj zdjęcia
