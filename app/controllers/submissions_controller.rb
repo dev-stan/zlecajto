@@ -68,6 +68,7 @@ class SubmissionsController < ApplicationController
   def submission_params
     # Currently only status is available in the schema
     # In a real app, you might want to add fields like message, proposed_price
-    params.require(:submission).permit(:status)
+    # Use fetch instead of require so submitting an empty form (no fields) won't raise.
+    params.fetch(:submission, {}).permit(:status, :note)
   end
 end

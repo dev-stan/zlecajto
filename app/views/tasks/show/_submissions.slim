@@ -1,0 +1,13 @@
+/ Reviews list (conditionally rendered by presence in parent)
+- task ||= @task
+- if task.submissions.any?
+  section.space-y-4.mt-10
+    h3.text-lg.font-semibold.text-gray-900 Oferty (#{task.submissions.count})
+    ul.space-y-4
+      - task.submissions.limit(5).each do |submission|
+        li
+          = render Cards::CardComponent.new(padding: 'p-4', shadow: false, html_options: { class: 'rounded-xl bg-yellow-50 border border-yellow-200' }) do
+            p.font-medium.text-gray-800.mb-1 = submission.user.email
+            p.text-sm.text-gray-600.mb-1 = truncate(submission.note, length: 200)
+            - created_at = submission.created_at.in_time_zone('Europe/Warsaw')
+            span.text-xs.text-gray-500 = "#{created_at.strftime('%d.%m.%Y, %H:%M')}"
