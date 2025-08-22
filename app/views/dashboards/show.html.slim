@@ -4,7 +4,8 @@
     p.text-gray-600 = t('dashboard.subtitle', default: 'Twoje zadania i aplikacje w jednym miejscu')
 
   / Tabs
-  - active_tab = @tasks.any? ? 'tasks' : 'submissions'
+  - requested_tab = params[:tab].presence
+  - active_tab = requested_tab || (@tasks.any? ? 'tasks' : 'submissions')
   div data-controller="tabs"
     nav.flex role="tablist"
       button.py-3.px-6.text-sm.font-medium.transition data-action="tabs#show" data-tabs-target="tab" data-tab="tasks" role="tab" aria-selected=(active_tab == 'tasks') class=(active_tab == 'tasks' ? 'text-primary border-b-2 border-green-600 bg-white' : 'text-gray-500')
@@ -33,7 +34,8 @@
         - if @submissions.any?
           .grid.grid-cols-1.md:grid-cols-2.lg:grid-cols-3.gap-6
             - @submissions.each do |submission|
-              = render Cards::TaskCardComponent.new(task: submission.task, show_image: false)
+              - highlight = (submission.status == 'accepted')
+              = render Cards::TaskCardComponent.new(task: submission.task, show_image: false, highlight: highlight)
         - else
           .text-center.py-12
             p.text-gray-500.mb-4 = t('dashboard.my_submissions.empty', default: 'Nie aplikowałeś jeszcze na żadne zadania.')

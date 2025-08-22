@@ -2,17 +2,24 @@
 
 module Cards
   class TaskCardComponent < ApplicationComponent
-    def initialize(task:, show_actions: true, show_image: true, html_options: {})
+    def initialize(task:, show_actions: true, show_image: true, highlight: false, html_options: {})
       super()
       @task = task
       @show_actions = show_actions
       @show_image = show_image
+      @highlight = highlight
       @html_options = html_options
     end
 
     private
 
-    attr_reader :task, :show_actions, :show_image, :html_options
+    attr_reader :task, :show_actions, :show_image, :highlight, :html_options
+
+    def container_classes
+      base = 'rounded-2xl overflow-hidden flex flex-col h-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow hover:shadow-md'
+      bg = highlight ? 'bg-red-100 border border-red-200' : 'bg-secondary'
+      merge_classes(bg, base)
+    end
 
     def card_classes
       merge_classes(

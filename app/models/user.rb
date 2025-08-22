@@ -13,4 +13,16 @@ class User < ApplicationRecord
   def has_role?(role_name)
     roles.exists?(name: role_name)
   end
+
+  def has_unseen_accepted_submissions?
+    latest = submissions.accepted.maximum(:updated_at)
+    return false unless latest
+
+    last_seen = last_seen_accepted_submission_at
+    last_seen.nil? || latest > last_seen
+  end
+
+  def mark_accepted_submissions_seen!
+    update_column(:last_seen_accepted_submission_at, Time.current)
+  end
 end
