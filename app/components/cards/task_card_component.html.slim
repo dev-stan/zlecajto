@@ -1,5 +1,5 @@
 /. Entire card is now an anchor linking to the task show page so the whole surface is clickable
-= link_to helpers.task_path(task), class: "bg-gray-100 rounded-2xl overflow-hidden flex flex-col h-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow hover:shadow-md" do
+= link_to helpers.task_path(task), class: "bg-secondary rounded-2xl overflow-hidden flex flex-col h-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow hover:shadow-md" do
   - if show_image? && image_url.present?
     / Reduced height from h-64 to h-48 for a less tall image
     img.w-full.h-48.object-cover src=image_url alt=title loading="lazy"
@@ -35,7 +35,7 @@
       / Right column (price + user)
       div class="flex flex-col items-end gap-3 min-w-[110px]"
         - if price.present?
-          .text-xl.font-medium.text-green-600.whitespace-nowrap = price
+          .text-xl.font-medium.text-primary.whitespace-nowrap = price
         / User block: vertical stack (avatar, name, reviews) centered
         .flex.flex-col.items-center.text-center.text-xs.text-gray-600.gap-1.mt-3
           .w-12.h-12.rounded-full.bg-blue-100.flex.items-center.justify-center.text-blue-700.font-semibold.text-sm = user_initials

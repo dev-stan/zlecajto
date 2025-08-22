@@ -3,7 +3,8 @@
 class SubmissionsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_task, only: %i[new create]
-  before_action :set_submission, only: %i[show edit update destroy]
+  before_action :set_submission, only: %i[show edit update destroy accept reject]
+  before_action :authorize_task_owner!, only: %i[accept reject]
 
   def index
     @submissions = current_user.submissions.includes(:task)
@@ -55,6 +56,22 @@ class SubmissionsController < ApplicationController
     redirect_to submissions_path, notice: 'Aplikacja została usunięta'
   end
 
+  def accept
+    if @submission.update(status: 'accepted')
+      redirect_back fallback_location: @submission.task, notice: I18n.t('submissions.flash.accepted')
+    else
+      redirect_back fallback_location: @submission.task, alert: @submission.errors.full_messages.to_sentence
+    end
+  end
+
+  def reject
+    if @submission.update(status: 'rejected')
+      redirect_back fallback_location: @submission.task, notice: I18n.t('submissions.flash.rejected')
+    else
+      redirect_back fallback_location: @submission.task, alert: @submission.errors.full_messages.to_sentence
+    end
+  end
+
   private
 
   def set_task
@@ -62,7 +79,8 @@ class SubmissionsController < ApplicationController
   end
 
   def set_submission
-    @submission = current_user.submissions.find(params[:id])
+    # For owner moderation allow finding among task submissions
+    @submission = Submission.find(params[:id])
   end
 
   def submission_params
@@ -70,5 +88,11 @@ class SubmissionsController < ApplicationController
     # In a real app, you might want to add fields like message, proposed_price
     # Use fetch instead of require so submitting an empty form (no fields) won't raise.
     params.fetch(:submission, {}).permit(:status, :note)
+  end
+
+  def authorize_task_owner!
+    return if @submission.task.user_id == current_user.id
+
+    redirect_back fallback_location: root_path, alert: I18n.t('unauthorized')
   end
 end

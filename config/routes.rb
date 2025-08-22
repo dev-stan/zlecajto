@@ -18,9 +18,19 @@ Rails.application.routes.draw do
       get :create_from_session, as: :create_from_session
     end
 
-    resources :submissions, only: %i[new create]
+    resources :submissions, only: %i[new create] do
+      member do
+        patch :accept
+        patch :reject
+      end
+    end
   end
 
-  resources :submissions, only: %i[index show edit update destroy]
+  resources :submissions, only: %i[index show edit update destroy] do
+    member do
+      patch :accept
+      patch :reject
+    end
+  end
   resource :dashboard, only: :show, controller: 'dashboards'
 end

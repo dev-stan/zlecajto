@@ -13,8 +13,8 @@ export default class extends Controller {
   activate(tabValue) {
     this.tabTargets.forEach(btn => {
       const active = btn.dataset.tab === tabValue
-      btn.classList.toggle('text-violet-700', active)
-      btn.classList.toggle('border-violet-600', active)
+      btn.classList.toggle('text-green-600', active)
+      btn.classList.toggle('border-green-600', active)
       btn.classList.toggle('border-b-2', active)
       btn.classList.toggle('bg-white', active)
       btn.setAttribute('aria-selected', active ? 'true' : 'false')

@@ -3,6 +3,7 @@
 module Forms
   class SearchComponent < ApplicationComponent
     def initialize(placeholder: 'Szukaj zadań...', action: nil, method: :get, html_options: {})
+      super()
       @placeholder = placeholder
       @action = action
       @method = method
@@ -15,7 +16,7 @@ module Forms
 
     def form_classes
       merge_classes(
-        'flex items-center w-full max-w-md mx-auto bg-white rounded-lg shadow-sm border border-gray-300 focus-within:ring-2 focus-within:ring-violet-500 focus-within:border-violet-500',
+        'flex items-center w-full max-w-md mx-auto bg-secondary rounded-lg shadow-sm border border-gray-300 focus-within:ring-2 focus-within:ring-violet-500 focus-within:border-violet-500',
         html_options[:class]
       )
     end

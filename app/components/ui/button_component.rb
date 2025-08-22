@@ -3,11 +3,11 @@
 module Ui
   class ButtonComponent < ApplicationComponent
     VARIANTS = {
-      primary: 'bg-green-600 hover:bg-green-700 text-white',
-      secondary: 'bg-white hover:bg-gray-50 text-gray-900 border border-gray-300',
+      primary: 'bg-primary text-primary',
+      secondary: 'bg-secondary text-secondary border border-gray-300',
       danger: 'bg-red-600 hover:bg-red-700 text-white',
-      ghost: 'bg-transparent hover:bg-gray-100 text-gray-900',
-      success: 'bg-green-600 hover:bg-green-700 text-white'
+      ghost: 'bg-transparent hover:bg-secondary text-primary',
+      success: 'bg-primary text-primary'
     }.freeze
 
     SIZES = {

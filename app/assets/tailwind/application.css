@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+/* Minimal semantic color utilities – kept intentionally tiny. */
+@layer utilities {
+	.bg-primary { background-color: #ffffff; }
+	.bg-secondary { background-color: #f3f4f6; } /* gray-100 */
+	.text-primary { color: #16a34a; } /* green-200 */
+	.text-secondary { color: #fef08a; } /* yellow-200 */
+}

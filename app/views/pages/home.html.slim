@@ -32,7 +32,7 @@ div.max-w-7xl.mx-auto.px-4.sm:px-6.lg:px-8.pt-16.pb-24.space-y-24
             .space-y-4
                 h2.text-6xl.font-extrabold.leading-none Kategorie
                 p.text-sm.text-gray-600 Zobacz w jaki sposób oszczędzisz swój czas
-            = link_to 'Zobacz wszystkie →', tasks_path, class: 'inline-flex items-center px-3 py-1.5 text-xs font-medium border border-gray-300 rounded-md bg-white hover:bg-gray-50 text-gray-700'
+            = link_to 'Zobacz wszystkie →', tasks_path, class: 'inline-flex items-center px-3 py-1.5 text-xs font-medium border border-gray-300 rounded-md bg-secondary hover:bg-secondary text-primary'
 
         - categories = Task::CATEGORIES * 4 # temporary repetition for visual density
         ul.grid.grid-cols-3.sm:grid-cols-6.md:grid-cols-8.gap-4

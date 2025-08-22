@@ -27,7 +27,7 @@ class TasksController < ApplicationController
   def create
     @task = current_user.tasks.build(task_params)
     if @task.save
-      redirect_to root_path, notice: 'Pomyślnie utworzono zadanie'
+      redirect_to @task, notice: 'Pomyślnie utworzono zadanie'
     else
       @wizard = TaskWizard.new(step: 2, params: task_params)
       @step   = @wizard.current_step

@@ -36,3 +36,7 @@ pl:
       pending: "Oczekuje"
       accepted: "Zaakceptowano"
       rejected: "Odrzucono"
+    flash:
+      accepted: "Oferta została zaakceptowana"
+      rejected: "Oferta została odrzucona"
+  unauthorized: "Brak uprawnień"
