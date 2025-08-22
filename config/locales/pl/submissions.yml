@@ -1,0 +1,12 @@
+pl:
+  submissions:
+    applied_at: "Aplikowano %{date}"
+    owner: "Właściciel: %{email}"
+    view_task: "Zobacz zadanie"
+    status:
+      pending: "Oczekuje"
+      accepted: "Zaakceptowano"
+      rejected: "Odrzucono"
+    flash:
+      accepted: "Oferta została zaakceptowana"
+      rejected: "Oferta została odrzucona"

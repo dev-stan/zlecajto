@@ -1,0 +1,9 @@
+pl:
+  unauthorized: "Brak uprawnień"
+  nav:
+    apps: "Moje aplikacje"
+    profile: "Profil"
+    login: "Zaloguj"
+    register: "Zarejestruj"
+    logout: "Wyloguj"
+    greeting: "Witaj, %{name}!"
