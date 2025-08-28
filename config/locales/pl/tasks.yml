@@ -1,0 +1,22 @@
+pl:
+  tasks:
+    # Teksty kreatora tworzenia zadania
+    wizard:
+      steps:
+        1: "Tytuł i kategoria"
+        2: "Opis"
+        3: "Lokalizacja"
+        4: "Budżet"
+        5: "Zdjęcia"
+      back: "Cofnij"
+      next: "Dalej"
+      create: "Utwórz zlecenie"
+    flash:
+      created: "Pomyślnie utworzono zadanie"
+      created_after_login: "Pomyślnie utworzono zadanie i zalogowano!"
+      creation_error: "Wystąpił problem z utworzeniem zadania. Spróbuj ponownie."
+    show:
+      submissions: "Oferty"
+    form:
+      title_placeholder: "Krótki tytuł"
+      description_placeholder: "Opisz dokładnie zadanie..."

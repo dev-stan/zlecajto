@@ -27,7 +27,7 @@ class TasksController < ApplicationController
   def create
     @task = current_user.tasks.build(task_params)
     if @task.save
-      redirect_to @task, notice: 'Pomyślnie utworzono zadanie'
+      redirect_to @task, notice: t('tasks.flash.created')
     else
       @wizard = TaskWizard.new(step: 2, params: task_params)
       @step   = @wizard.current_step
@@ -57,9 +57,9 @@ class TasksController < ApplicationController
 
     @task = current_user.tasks.build(data)
     if @task.save
-      redirect_to root_path, notice: 'Pomyślnie utworzono zadanie i zalogowano!'
+      redirect_to root_path, notice: t('tasks.flash.created_after_login')
     else
-      redirect_to new_task_path(step: 2), alert: 'Wystąpił problem z utworzeniem zadania. Spróbuj ponownie.'
+      redirect_to new_task_path(step: 2), alert: t('tasks.flash.creation_error')
     end
   end
 

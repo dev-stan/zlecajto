@@ -1,0 +1,16 @@
+div.max-w-7xl.mx-auto.px-4.sm:px-6.lg:px-8.pb-32
+    .grid.grid-cols-1.md:grid-cols-2.gap-14.items-start
+        / Image / mockup placeholder
+        .flex.justify-center
+            .w-72.h-72.rounded-xl.bg-gray-200.border.border-gray-300.shadow-inner.flex.items-center.justify-center.overflow-hidden
+                / Replace with real mockup later
+                .w-full.h-full.flex.items-center.justify-center
+                    span.text-xs.text-gray-500 Opisz swoje zlecenie
+        / Right content
+        .space-y-8
+            h2.text-2xl.font-bold Jak zaoszczędzać czas ze ZlecajTo?
+            - 3.times do
+                .space-y-1
+                    h3.font-semibold Zaoszczędzaj czas i nerwy
+                    p.text-xs.text-gray-600.leading-relaxed Ogólnie znana teza głosi, iż użytkownika może rozpraszać zrozumiała zawartość strony, kiedy ten chce zobaczyć sam jej wygląd.
+            = render Ui::ButtonComponent.new(text: 'Zleć zadanie', path: new_task_path, variant: :success, size: :md, html_options: { class: 'rounded-full px-8' })

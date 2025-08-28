@@ -2,8 +2,8 @@
 
 /* Minimal semantic color utilities – kept intentionally tiny. */
 @layer utilities {
-	.bg-primary { background-color: #ffffff; }
+	.bg-primary { background-color: #16a34a; }
 	.bg-secondary { background-color: #f3f4f6; } /* gray-100 */
-	.text-primary { color: #16a34a; } /* green-200 */
+	.text-primary { color: #e7e7e7; } /* green-200 */
 	.text-secondary { color: #fef08a; } /* yellow-200 */
 }

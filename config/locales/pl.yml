@@ -40,3 +40,26 @@ pl:
       accepted: "Oferta została zaakceptowana"
       rejected: "Oferta została odrzucona"
   unauthorized: "Brak uprawnień"
+  home:
+    team:
+      title: "Kim jesteśmy?"
+      subtitle: "Zespół, który buduje prostszy sposób na odzyskanie Twojego czasu."
+      cta: "Poznaj nas bliżej"
+      members:
+        stan:
+          name: "Stanisław"
+          role: "Założyciel"
+        anna:
+          name: "Anna"
+          role: "Produkt"
+        piotr:
+          name: "Piotr"
+          role: "Technologia"
+    app:
+      title: "Aplikacja"
+      subtitle: "Zlecaj, odpowiadaj i śledź postęp z dowolnego miejsca (wersja mobilna w przygotowaniu)."
+      features:
+        post: "Dodawaj zlecenia w kilka sekund"
+        chat: "Komunikuj się błyskawicznie"
+        track: "Śledź postęp i historię"
+      cta: "Pobierz (wkrótce)"

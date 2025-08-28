@@ -1,7 +1,9 @@
 import { Controller } from "@hotwired/stimulus"
 
 const ERROR_CLASS = 'border-red-400'
-const ERROR_CLASSES = ['border', ERROR_CLASS]
+// Only toggle the error color class. Removing the generic 'border' class caused
+// radio labels to lose border width, so peer-checked:* color utilities had no visible effect.
+const ERROR_CLASSES = [ERROR_CLASS]
 
 export default class extends Controller {
   connect() {
@@ -71,6 +73,8 @@ export default class extends Controller {
 
   markInvalid(field) {
     const label = this.labelFor(field)
+    // Ensure border width exists on label so color changes are visible
+    if (label && !label.classList.contains('border')) label.classList.add('border')
     ;[field, label].filter(Boolean).forEach(el => ERROR_CLASSES.forEach(c => el.classList.add(c)))
   }
 

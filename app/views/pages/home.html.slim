@@ -1,90 +1,9 @@
 /- Home page redesigned to match provided visual: hero with two columns (copy + image placeholder), steps, CTA, categories grid.
-div.max-w-7xl.mx-auto.px-4.sm:px-6.lg:px-8.pt-16.pb-24.space-y-24
-    / Hero Section
-    .grid.grid-cols-1.lg:grid-cols-2.gap-16.items-start
-        .space-y-10
-            h1.text-5xl.font-extrabold.leading-tight
-                | Odblokuj swój czas z 
-                span.text-green-600 ZlecajTo
-            p.text-gray-700.font-medium To banalnie proste
-
-            / Steps list
-            ol.space-y-6
-                - [['Opisz z czym potrzebujesz pomocy', '1'],['Zdefiniuj cenę usługi', '2'],['Otrzymaj oferty i wybierz tą która tobie odpowiada', '3']].each do |text, number|
-                    li.flex.items-start.gap-4
-                        .flex-shrink-0
-                            span.flex.items-center.justify-center.w-8.h-8.rounded-full.bg-green-50.text-green-600.font-semibold.border.border-green-200 = number
-                        p.text-sm.text-gray-600.leading-relaxed = text
-
-            .pt-4
-                = render Ui::ButtonComponent.new(text: 'Zleć zadanie', path: new_task_path, variant: :success, size: :lg, html_options: { class: 'w-60 rounded-full font-semibold tracking-wide' })
-                .mt-4
-                    = link_to 'Dowiedz się więcej o ZlecajTo →', "#", class: 'text-xs text-gray-500 hover:text-gray-700 underline-offset-2'
-
-        / Right side visual placeholder (could be replaced with illustration / carousel later)
-        .hidden.lg:block
-            .w-full.h-100.rounded-2xl.bg-gray-200.border.border-gray-300.shadow-inner.flex.items-center.justify-center.text-gray-400.text-sm
-                | (Miejsce na obraz / wideo)
-
-    / Categories Section
-    .space-y-14
-        .flex.items-end.justify-between
-            .space-y-4
-                h2.text-6xl.font-extrabold.leading-none Kategorie
-                p.text-sm.text-gray-600 Zobacz w jaki sposób oszczędzisz swój czas
-            = link_to 'Zobacz wszystkie →', tasks_path, class: 'inline-flex items-center px-3 py-1.5 text-xs font-medium border border-gray-300 rounded-md bg-secondary hover:bg-secondary text-primary'
-
-        - categories = Task::CATEGORIES * 4 # temporary repetition for visual density
-        ul.grid.grid-cols-3.sm:grid-cols-6.md:grid-cols-8.gap-4
-            - categories.each do |cat|
-                li
-                    .flex.flex-col.items-center.gap-2.p-4.border.border-amber-200.bg-amber-50/60.rounded-md.hover:bg-amber-50.transition.shadow-sm
-                        / Placeholder icon logic (simple emoji rotation)
-                        - icon = cat.include?('Sprząt') ? '🧹' : (cat.include?('Dev') ? '💻' : '🐝')
-                        span.text-2xl = icon
-                        span.text-xs.font-medium.text-gray-700 = cat.gsub('Other', 'Inne')
-
-    / How it saves time Section (image left, text right)
-div.max-w-7xl.mx-auto.px-4.sm:px-6.lg:px-8.pb-32
-    .grid.grid-cols-1.md:grid-cols-2.gap-14.items-start
-        / Image / mockup placeholder
-        .flex.justify-center
-            .w-72.h-72.rounded-xl.bg-gray-200.border.border-gray-300.shadow-inner.flex.items-center.justify-center.overflow-hidden
-                / Replace with real mockup later
-                .w-full.h-full.flex.items-center.justify-center
-                    span.text-xs.text-gray-500 Opisz swoje zlecenie
-        / Right content
-        .space-y-8
-            h2.text-2xl.font-bold Jak zaoszczędzać czas ze ZlecajTo?
-            - 3.times do
-                .space-y-1
-                    h3.font-semibold Zaoszczędzaj czas i nerwy
-                    p.text-xs.text-gray-600.leading-relaxed Ogólnie znana teza głosi, iż użytkownika może rozpraszać zrozumiała zawartość strony, kiedy ten chce zobaczyć sam jej wygląd.
-            = render Ui::ButtonComponent.new(text: 'Zleć zadanie', path: new_task_path, variant: :success, size: :md, html_options: { class: 'rounded-full px-8' })
-
-/ Earnings (green band) Section
-section.bg-green-600.py-32.text-white
-    .max-w-7xl.mx-auto.px-4.sm:px-6.lg:px-8
-        .grid.grid-cols-1.lg:grid-cols-2.gap-20.items-start
-            .space-y-10.max-w-xl
-                h2.text-5xl.font-extrabold.leading-tight Chcesz zarobić ze ZlecajTo?
-                - 2.times do
-                    p.text-sm.leading-relaxed
-                        | Nieważne czy jesteś mistrzem excela, miłośnikiem sportu lub studentem matematyki, znajdź zlecenie dla siebie na 
-                        span.font-semibold underline ZlecajTo!
-                ul.space-y-2.text-sm
-                    - ['Darmowy dostęp do lokalnych ogłoszeń','Darmowa komunikacja','Zadbaj o dodatkowy przychód','Doskonal swoje umiejętności'].each do |benefit|
-                        li.flex.items-start.gap-2
-                            span.text-base.mt-0.5 ✅
-                            span = benefit
-                p.text-xs.mt-8 Zostań wykonawcą i zacznij zarabiać po swojemu!
-            / Placeholder visual on right
-            .hidden.lg:flex.justify-center
-                .w-80.h-96.rounded-lg.bg-gray-200/80.border.border-gray-300.shadow-inner.flex.items-center.justify-center.text-gray-600.text-sm
-                    | (Wizualizacja / statystyki)
-
-/ FAQ Section
-div.max-w-4xl.mx-auto.px-4.sm:px-6.lg:px-8.py-28
-    h2.text-xl.font-bold.mb-10 FAQ
-    - faq_items = [{ title: 'Jak zlecić zadanie?', content: 'Kliknij przycisk "Zleć zadanie", wypełnij krótki formularz i poczekaj na oferty wykonawców.' },{ title: 'Dlaczego warto wybrać ZlecajTo.pl?', content: 'Łatwo porównujesz oferty, oszczędzasz czas i masz dostęp do lokalnych, zweryfikowanych wykonawców.' },{ title: 'Czy ZlecajTo.pl coś kosztuje?', content: 'Rejestracja jest darmowa. Płacisz jedynie za zrealizowane zlecenia według uzgodnionej ceny.' },{ title: 'Jak zostać wykonawcą?', content: 'Załóż konto wykonawcy, uzupełnij profil i zacznij odpowiadać na dostępne ogłoszenia w swojej okolicy.' }]
-    = render Interactive::AccordionComponent.new(items: faq_items)
+div
+    = render 'pages/home/hero'
+    = render 'pages/home/categories'
+    = render 'pages/home/save_time'
+    = render 'pages/home/make_money'
+    = render 'pages/home/team'
+    = render 'pages/home/app'
+    = render 'pages/home/faq'
