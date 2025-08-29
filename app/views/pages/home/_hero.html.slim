@@ -9,7 +9,7 @@ section.py-20
 
                 / Steps list
                 ol.space-y-6
-                    - [['Opisz z czym potrzebujesz pomocy', '1'],['Zdefiniuj cenę usługi', '2'],['Otrzymaj oferty i wybierz tą która tobie odpowiada', '3']].each do |text, number|
+                    - @accordion_elements.each do |text, number|
                         li.flex.items-start.gap-4
                             .flex-shrink-0
                                 span.flex.items-center.justify-center.w-8.h-8.rounded-full.bg-green-50.text-green-600.font-semibold.border.border-green-200 = number
