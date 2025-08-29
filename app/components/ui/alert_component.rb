@@ -30,7 +30,7 @@ module Ui
 
     def alert_classes
       merge_classes(
-        'fixed top-20 right-4 z-50 max-w-sm w-full border rounded-lg p-4 text-sm leading-relaxed shadow-lg transition-all duration-500 ease-in-out',
+        'fixed top-20 right-4 z-50 max-w-sm w-full border rounded-lg p-4 text-base leading-relaxed shadow-lg transition-all duration-500 ease-in-out',
         variant_classes,
         html_options[:class]
       )

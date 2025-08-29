@@ -1,5 +1,8 @@
-/- Home page redesigned to match provided visual: hero with two columns (copy + image placeholder), steps, CTA, categories grid.
 div
+    / Convention:
+    / - Each partial starts with a full-width <section>.
+    / - Inside it, if content should be constrained, the partial adds: .max-w-7xl.mx-auto.px-6.lg:px-12 (or container).
+    / - Sections with colored backgrounds stay full-bleed; only their inner content is constrained.
     = render 'pages/home/hero'
     = render 'pages/home/categories'
     = render 'pages/home/save_time'

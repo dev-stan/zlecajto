@@ -22,7 +22,7 @@ module Forms
     end
 
     def input_classes
-      'flex-1 px-4 py-2 text-sm text-gray-900 bg-transparent border-none outline-none placeholder-gray-500'
+      'flex-1 px-4 py-2 text-base text-gray-900 bg-transparent border-none outline-none placeholder-gray-500'
     end
 
     def button_classes

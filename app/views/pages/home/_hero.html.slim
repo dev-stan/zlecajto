@@ -1,24 +1,26 @@
-.grid.grid-cols-1.lg:grid-cols-2.gap-16.items-start
-    .space-y-10
-        h1.text-5xl.font-extrabold.leading-tight
-            | Odblokuj swój czas z 
-            span.text-green-600 ZlecajTo
-        p.text-gray-700.font-medium To banalnie proste
+section.py-20
+    .max-w-7xl.mx-auto.px-6.lg:px-12
+        .grid.grid-cols-1.lg:grid-cols-2.gap-16.items-start
+            .space-y-10
+                h1.text-5xl.font-extrabold.leading-tight
+                    | Odblokuj swój czas z 
+                    span.text-green-600 ZlecajTo
+                p.text-gray-700.font-medium To banalnie proste
 
-        / Steps list
-        ol.space-y-6
-            - [['Opisz z czym potrzebujesz pomocy', '1'],['Zdefiniuj cenę usługi', '2'],['Otrzymaj oferty i wybierz tą która tobie odpowiada', '3']].each do |text, number|
-                li.flex.items-start.gap-4
-                    .flex-shrink-0
-                        span.flex.items-center.justify-center.w-8.h-8.rounded-full.bg-green-50.text-green-600.font-semibold.border.border-green-200 = number
-                    p.text-sm.text-gray-600.leading-relaxed = text
+                / Steps list
+                ol.space-y-6
+                    - [['Opisz z czym potrzebujesz pomocy', '1'],['Zdefiniuj cenę usługi', '2'],['Otrzymaj oferty i wybierz tą która tobie odpowiada', '3']].each do |text, number|
+                        li.flex.items-start.gap-4
+                            .flex-shrink-0
+                                span.flex.items-center.justify-center.w-8.h-8.rounded-full.bg-green-50.text-green-600.font-semibold.border.border-green-200 = number
+                            p.text-base.text-gray-600.leading-relaxed = text
 
-        .pt-4
-            = render Ui::ButtonComponent.new(text: 'Zleć zadanie', path: new_task_path, variant: :success, size: :lg, html_options: { class: 'w-60 rounded-full font-semibold tracking-wide' })
-            .mt-4
-                = link_to 'Dowiedz się więcej o ZlecajTo →', "#", class: 'text-xs text-gray-500 hover:text-gray-700 underline-offset-2'
-                
-    / Right side visual placeholder (could be replaced with illustration / carousel later)
-    .hidden.lg:block
-        .w-full.h-100.rounded-2xl.bg-gray-200.border.border-gray-300.shadow-inner.flex.items-center.justify-center.text-gray-400.text-sm
-            | (Miejsce na obraz / wideo)
+                .pt-4
+                    = render Ui::ButtonComponent.new(text: 'Zleć zadanie', path: new_task_path, variant: :success, size: :lg, html_options: { class: 'w-60 rounded-full font-semibold tracking-wide' })
+                    .mt-4
+                        = link_to 'Dowiedz się więcej o ZlecajTo →', "#", class: 'text-base text-gray-500 hover:text-gray-700 underline-offset-2'
+                        
+            / Right side visual placeholder (could be replaced with illustration / carousel later)
+            .hidden.lg:block
+                .w-full.h-100.rounded-2xl.bg-gray-200.border.border-gray-300.shadow-inner.flex.items-center.justify-center.text-gray-400.text-base
+                    | (Miejsce na obraz / wideo)

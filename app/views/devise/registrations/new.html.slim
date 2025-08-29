@@ -9,35 +9,35 @@
       
       .space-y-4
         .flex.flex-col
-          = f.label :email, "Adres email", class: "mb-1 block text-sm font-medium text-gray-700"
+          = f.label :email, "Adres email", class: "mb-1 block text-base font-medium text-gray-700"
           span.text-red-500.ml-0.5 *
           = f.email_field :email, 
               autofocus: true, 
               autocomplete: "email",
               placeholder: "twoj.email@example.com",
-              class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder-gray-400 shadow-sm transition focus:border-violet-500 focus:ring focus:ring-violet-200 focus:ring-opacity-50 focus:outline-none"
+              class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base placeholder-gray-400 shadow-sm transition focus:border-violet-500 focus:ring focus:ring-violet-200 focus:ring-opacity-50 focus:outline-none"
         
         .flex.flex-col
-          = f.label :password, "Hasło #{'(' + @minimum_password_length.to_s + ' znaków minimum)' if @minimum_password_length}", class: "mb-1 block text-sm font-medium text-gray-700"
+          = f.label :password, "Hasło #{'(' + @minimum_password_length.to_s + ' znaków minimum)' if @minimum_password_length}", class: "mb-1 block text-base font-medium text-gray-700"
           span.text-red-500.ml-0.5 *
           = f.password_field :password, 
               autocomplete: "new-password",
               placeholder: "Wybierz silne hasło",
-              class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder-gray-400 shadow-sm transition focus:border-violet-500 focus:ring focus:ring-violet-200 focus:ring-opacity-50 focus:outline-none"
+              class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base placeholder-gray-400 shadow-sm transition focus:border-violet-500 focus:ring focus:ring-violet-200 focus:ring-opacity-50 focus:outline-none"
         
         .flex.flex-col
-          = f.label :password_confirmation, "Potwierdź hasło", class: "mb-1 block text-sm font-medium text-gray-700"
+          = f.label :password_confirmation, "Potwierdź hasło", class: "mb-1 block text-base font-medium text-gray-700"
           span.text-red-500.ml-0.5 *
           = f.password_field :password_confirmation, 
               autocomplete: "new-password",
               placeholder: "Powtórz hasło",
-              class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder-gray-400 shadow-sm transition focus:border-violet-500 focus:ring focus:ring-violet-200 focus:ring-opacity-50 focus:outline-none"
+              class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base placeholder-gray-400 shadow-sm transition focus:border-violet-500 focus:ring focus:ring-violet-200 focus:ring-opacity-50 focus:outline-none"
       
       .pt-4
         = render Ui::ButtonComponent.new(text: "Utwórz konto", submit: true)
     
     .mt-8.pt-6.border-t.border-gray-200
-      .text-center.space-y-3.text-sm
+      .text-center.space-y-3.text-base
         - if controller_name != 'sessions'
           p.text-gray-600
             | Masz już konto? 

@@ -6,12 +6,12 @@
     p.text-2xl.font-semibold.text-gray-900 = number_to_currency(task.salary, unit: 'PLN ', precision: 0)
   - else
     p.text-xl.font-semibold.text-gray-900 Wynagrodzenie do ustalenia
-  p.text-xs.text-gray-500.leading-snug.pb-5 Aplikując wysyłasz krótką ofertę. Właściciel otrzyma powiadomienie i może się z Tobą skontaktować.
+  p.text-base.text-gray-500.leading-snug.pb-5 Aplikując wysyłasz krótką ofertę. Właściciel otrzyma powiadomienie i może się z Tobą skontaktować.
   - if user_signed_in?
     - if existing_submission
-      .inline-flex.items-center.justify-center.w-full.px-3.py-2.rounded-md.text-sm.font-medium.bg-green-100.text-green-800 ✓ Już aplikowałeś
+      .inline-flex.items-center.justify-center.w-full.px-3.py-2.rounded-md.text-base.font-medium.bg-green-100.text-green-800 ✓ Już aplikowałeś
     - elsif current_user == task.user
-      .inline-flex.items-center.justify-center.w-full.px-3.py-2.rounded-md.text-sm.font-medium.bg-blue-100.text-blue-800 Twoje zadanie
+      .inline-flex.items-center.justify-center.w-full.px-3.py-2.rounded-md.text-base.font-medium.bg-blue-100.text-blue-800 Twoje zadanie
     - else
       = render Ui::ButtonComponent.new(text: 'Aplikuj', path: new_task_submission_path(task), variant: :primary, size: :lg, width: 100)
   - else

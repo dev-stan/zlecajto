@@ -7,30 +7,30 @@
     = form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "space-y-6" }) do |f|
       .space-y-4
         .flex.flex-col
-          = f.label :email, "Adres email", class: "mb-1 block text-sm font-medium text-gray-700"
+          = f.label :email, "Adres email", class: "mb-1 block text-base font-medium text-gray-700"
           = f.email_field :email, 
               autofocus: true, 
               autocomplete: "email",
               placeholder: "twoj.email@example.com",
-              class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder-gray-400 shadow-sm transition focus:border-violet-500 focus:ring focus:ring-violet-200 focus:ring-opacity-50 focus:outline-none"
+              class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base placeholder-gray-400 shadow-sm transition focus:border-violet-500 focus:ring focus:ring-violet-200 focus:ring-opacity-50 focus:outline-none"
         
         .flex.flex-col
-          = f.label :password, "Hasło", class: "mb-1 block text-sm font-medium text-gray-700"
+          = f.label :password, "Hasło", class: "mb-1 block text-base font-medium text-gray-700"
           = f.password_field :password, 
               autocomplete: "current-password",
               placeholder: "Twoje hasło",
-              class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder-gray-400 shadow-sm transition focus:border-violet-500 focus:ring focus:ring-violet-200 focus:ring-opacity-50 focus:outline-none"
+              class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base placeholder-gray-400 shadow-sm transition focus:border-violet-500 focus:ring focus:ring-violet-200 focus:ring-opacity-50 focus:outline-none"
         
         - if devise_mapping.rememberable?
           .flex.items-center
             = f.check_box :remember_me, class: "h-4 w-4 text-violet-600 focus:ring-violet-500 border-gray-300 rounded"
-            = f.label :remember_me, "Zapamiętaj mnie", class: "ml-2 text-sm text-gray-700"
+            = f.label :remember_me, "Zapamiętaj mnie", class: "ml-2 text-base text-gray-700"
       
       .pt-4
         = render Ui::ButtonComponent.new(text: "Zaloguj się", submit: true)
     
     .mt-8.pt-6.border-t.border-gray-200
-      .text-center.space-y-3.text-sm
+      .text-center.space-y-3.text-base
         - if devise_mapping.registerable? && controller_name != 'registrations'
           p.text-gray-600
             | Nie masz konta? 

@@ -34,12 +34,12 @@ module Input
     end
 
     def label_classes
-      'mb-1 block text-sm font-medium text-gray-700'
+      'mb-1 block text-base font-medium text-gray-700'
     end
 
     def input_classes
       merge_classes(
-        'block w-full rounded-lg bg-gray-100 px-3 py-3 text-sm placeholder-gray-400 transition focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 focus:outline-none',
+        'block w-full rounded-lg bg-gray-100 px-3 py-3 text-base placeholder-gray-400 transition focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 focus:outline-none',
         disabled ? 'bg-gray-100 cursor-not-allowed' : nil,
         html_options[:class]
       )

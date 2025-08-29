@@ -1,5 +1,5 @@
 / Shared links for Devise views
-.text-center.space-y-3.text-sm
+.text-center.space-y-3.text-base
   - if controller_name != 'sessions'
     p.text-gray-600
       = link_to "Zaloguj się", new_session_path(resource_name), class: "text-violet-600 hover:text-violet-500 font-medium"
@@ -25,4 +25,4 @@
       p
         = button_to "Zaloguj się przez #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), 
             data: { turbo: false }, 
-            class: "inline-flex items-center justify-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-semibold rounded-lg shadow-sm focus:outline-none transition"
+            class: "inline-flex items-center justify-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-base font-semibold rounded-lg shadow-sm focus:outline-none transition"

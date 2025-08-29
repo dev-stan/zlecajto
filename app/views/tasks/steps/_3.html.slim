@@ -1,7 +1,7 @@
 = form_with url: wizard_tasks_path, method: :post, data: { turbo_frame: 'task_wizard', controller: 'form-validation', action: 'submit->form-validation#validate' }, html: { id: 'task_step_form', novalidate: true } do |f|
 
   h1.text-2xl.font-bold.mb-4 Gdzie wykonać zadanie?
-  p.text-sm.text-gray-600.mb-2.font-bold Wybierz lokalizację
+  p.text-base.text-gray-600.mb-2.font-bold Wybierz lokalizację
 
   fieldset.space-y-3
     ul.grid.grid-cols-2.sm:grid-cols-4.gap-3

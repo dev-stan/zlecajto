@@ -1,22 +1,22 @@
 = form_with url: wizard_tasks_path, method: :post, data: { turbo_frame: "task_wizard", controller: 'form-validation', action: 'submit->form-validation#validate' }, html: { multipart: true, id: 'task_step_form', novalidate: true } do |f|
 
   h1.text-2xl.font-bold.mb-4 Z czym potrzebujesz pomocy?
-  p.text-sm.text-gray-600.mb-2.font-bold Nadaj krótki tytuł swojemu zleceniu
+  p.text-base.text-gray-600.mb-2.font-bold Nadaj krótki tytuł swojemu zleceniu
 
   = render Input::InputComponent.new(name: 'task[title]', placeholder: 'Short title', value: task.title, html_options: { class: 'required' })
   fieldset.pt-5
-    p.text-sm.text-gray-600.mb-2.font-bold Nadaj krótki tytuł swojemu zleceniu
+    p.text-base.text-gray-600.mb-2.font-bold Nadaj krótki tytuł swojemu zleceniu
     ul.grid.grid-cols-4.gap-3
       - categories.each do |cat|
         - id = "cat_#{cat.parameterize}"
         li
           = render Ui::RadioButtonComponent.new(name: 'task[category]', value: cat, checked: task.category == cat, id: id, label: cat, style: :square, html_options: { class: 'required' })
 
-  p.text-sm.text-gray-600.mb-2.font-bold.pt-5 Nadaj krótki tytuł swojemu zleceniu
+  p.text-base.text-gray-600.mb-2.font-bold.pt-5 Nadaj krótki tytuł swojemu zleceniu
   = render Input::DatePickerComponent.new(name: 'task[due_date]', value: task.due_date&.to_date || params.dig(:task, :due_date), html_options: { class: 'w-35 required' })
 
   fieldset.space-y-3.pt-5
-    p.text-sm.text-gray-600.mb-2.font-bold Kiedy najlepiej wykonać zadanie?
+    p.text-base.text-gray-600.mb-2.font-bold Kiedy najlepiej wykonać zadanie?
     ul.grid.grid-cols-1.sm:grid-cols-3.gap-3
       - @time_slots.each do |slot|
         - id = "slot_#{slot}"

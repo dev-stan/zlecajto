@@ -1,7 +1,7 @@
 = form_with model: task, url: tasks_path, data: { turbo_frame: '_top', controller: 'form-validation', action: 'submit->form-validation#validate' }, html: { multipart: true, id: 'task_step_form', novalidate: true } do |f|
 
   h1.text-2xl.font-bold.mb-4 Zdjęcia
-  p.text-sm.text-gray-600.mb-2.font-bold Dodaj zdjęcia
+  p.text-base.text-gray-600.mb-2.font-bold Dodaj zdjęcia
 
   .space-y-3 data-controller='photos'
     = file_field_tag 'task[photos][]', multiple: true, direct_upload: true, class: 'hidden', id: 'task_photos_input', data: { photos_target: 'input', action: 'change->photos#changed' }
@@ -10,7 +10,7 @@
         span.text-3xl.leading-none +
         span class="absolute.bottom-1.left-1/2.-translate-x-1/2.text-[10px].font-medium.opacity-0.group-hover:opacity-100.text-gray-600"
       .flex.flex-wrap.gap-3 data-photos-target='list'
-    span.text-xs.text-gray-600 data-photos-target='count'
+    span.text-base.text-gray-600 data-photos-target='count'
 
   = hidden_field_tag :step, 5
   = f.hidden_field :category

@@ -12,7 +12,7 @@ html
   body
     = render Layout::NavbarComponent.new(nav_items: [{ text: 'Zleć zadanie', href: new_task_path }, { text: 'Ogłoszenia', href: tasks_path }])
     
-    main.pt-25
+    main.pt-20
       - if notice
         = render Ui::AlertComponent.new(message: notice, variant: :success)
       

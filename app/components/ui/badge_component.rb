@@ -23,7 +23,7 @@ module Ui
 
     def badge_classes
       merge_classes(
-        'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border',
+        'inline-flex items-center px-2.5 py-0.5 rounded-full text-base font-medium border',
         VARIANTS[variant] || VARIANTS[:gray],
         html_options[:class]
       )

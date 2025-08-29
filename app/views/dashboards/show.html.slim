@@ -8,14 +8,14 @@
   - active_tab = requested_tab || (@tasks.any? ? 'tasks' : 'submissions')
   div data-controller="tabs"
     nav.flex role="tablist"
-      button.py-3.px-6.text-sm.font-medium.transition data-action="tabs#show" data-tabs-target="tab" data-tab="tasks" role="tab" aria-selected=(active_tab == 'tasks') class=(active_tab == 'tasks' ? 'text-primary border-b-2 border-green-600 bg-white' : 'text-gray-500')
+      button.py-3.px-6.text-base.font-medium.transition data-action="tabs#show" data-tabs-target="tab" data-tab="tasks" role="tab" aria-selected=(active_tab == 'tasks') class=(active_tab == 'tasks' ? 'text-primary border-b-2 border-green-600 bg-white' : 'text-gray-500')
         = t('dashboard.my_tasks.title', default: 'Moje zadania')
         - if @tasks.any?
-          span.ml-2.inline-flex.items-center.justify-center.text-xs.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @tasks.size
-      button.py-3.px-6.text-sm.font-medium.transition data-action="tabs#show" data-tabs-target="tab" data-tab="submissions" role="tab" aria-selected=(active_tab == 'submissions') class=(active_tab == 'submissions' ? 'text-primary border-b-2 border-green-600 bg-white' : 'text-gray-500')
+          span.ml-2.inline-flex.items-center.justify-center.text-base.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @tasks.size
+      button.py-3.px-6.text-base.font-medium.transition data-action="tabs#show" data-tabs-target="tab" data-tab="submissions" role="tab" aria-selected=(active_tab == 'submissions') class=(active_tab == 'submissions' ? 'text-primary border-b-2 border-green-600 bg-white' : 'text-gray-500')
         = t('dashboard.my_submissions.title', default: 'Moje aplikacje')
         - if @submissions.any?
-          span.ml-2.inline-flex.items-center.justify-center.text-xs.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @submissions.size
+          span.ml-2.inline-flex.items-center.justify-center.text-base.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @submissions.size
 
     .p-6.space-y-10
       / Tasks panel

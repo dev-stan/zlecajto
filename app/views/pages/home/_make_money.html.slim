@@ -4,16 +4,16 @@ section.bg-green-600.py-32.text-white
             .space-y-10.max-w-xl
                 h2.text-5xl.font-extrabold.leading-tight Chcesz zarobić ze ZlecajTo?
                 - 2.times do
-                    p.text-sm.leading-relaxed
+                    p.text-base.leading-relaxed
                         | Nieważne czy jesteś mistrzem excela, miłośnikiem sportu lub studentem matematyki, znajdź zlecenie dla siebie na 
                         span.font-semibold underline ZlecajTo!
-                ul.space-y-2.text-sm
+                ul.space-y-2.text-base
                     - ['Darmowy dostęp do lokalnych ogłoszeń','Darmowa komunikacja','Zadbaj o dodatkowy przychód','Doskonal swoje umiejętności'].each do |benefit|
                         li.flex.items-start.gap-2
                             span.text-base.mt-0.5 ✅
                             span = benefit
-                p.text-xs.mt-8 Zostań wykonawcą i zacznij zarabiać po swojemu!
+                p.text-base.mt-8 Zostań wykonawcą i zacznij zarabiać po swojemu!
             / Placeholder visual on right
             .hidden.lg:flex.justify-center
-                .w-80.h-96.rounded-lg.bg-gray-200/80.border.border-gray-300.shadow-inner.flex.items-center.justify-center.text-gray-600.text-sm
+                .w-80.h-96.rounded-lg.bg-gray-200/80.border.border-gray-300.shadow-inner.flex.items-center.justify-center.text-gray-600.text-base
                     | (Wizualizacja / statystyki)
