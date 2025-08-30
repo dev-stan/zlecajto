@@ -3,10 +3,12 @@
 module Ui
   class ButtonComponent < ApplicationComponent
     VARIANTS = {
-      primary: 'bg-primary text-primary',
-      secondary: 'bg-secondary text-secondary border border-gray-300',
+      primary: 'bg-primary text-white',
+      glowing: 'bg-primary text-white glowing-btn',
+      secondary: 'bg-secondary text-white',
       danger: 'bg-red-600 hover:bg-red-700 text-white',
-      ghost: 'bg-transparent hover:bg-secondary text-primary',
+      ghost: 'bg-transparent text-black hover:bg-green-600 hover:text-white',
+      text: 'bg-transparent text-black',
       success: 'bg-primary text-primary'
     }.freeze
 
@@ -51,7 +53,7 @@ module Ui
 
     def button_classes
       merge_classes(
-        'inline-flex items-center justify-center text-center rounded-3xl font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed',
+        'inline-flex items-center justify-center text-center rounded-3xl font-medium transition-colors duration-700 outline-none',
         VARIANTS[variant],
         SIZES[size],
         WIDTHS[width],

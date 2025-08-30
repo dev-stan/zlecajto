@@ -10,7 +10,7 @@ html
     = javascript_importmap_tags
 
   body
-    = render Layout::NavbarComponent.new(nav_items: [{ text: 'Zleć zadanie', href: new_task_path }, { text: 'Ogłoszenia', href: tasks_path }])
+    = render Layout::NavbarComponent.new()
     
     main.pt-20
       - if notice

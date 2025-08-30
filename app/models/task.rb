@@ -2,7 +2,9 @@
 
 class Task < ApplicationRecord
   STATUSES        = %w[draft open in_progress completed cancelled].freeze
-  CATEGORIES      = %w[Sprzątanie Development Writing Other].freeze
+  CATEGORIES      = %w[Sprzątanie Zakupy Montaż Transport Przeprowadzki Opieka
+                       Naprawianie Ogrodnictwo].freeze
+
   TIMESLOTS       = %w[rano popoludnie wieczor].freeze
   PAYMENT_METHODS = %w[Przelew Blik Gotówka].freeze
   LOCATIONS       = ['Stary Strzeszyn', 'Osiedle Literackie', 'Strzeszyn Grecki', 'Osiedle Wojskowe'].freeze

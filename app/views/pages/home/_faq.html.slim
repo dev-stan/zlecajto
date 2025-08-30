@@ -3,5 +3,4 @@
     .max-w-7xl.mx-auto.px-6.lg:px-12
         div
             h2.text-xl.font-bold.mb-10 FAQ
-            - faq_items = [{ title: 'Jak zlecić zadanie?', content: 'Kliknij przycisk "Zleć zadanie", wypełnij krótki formularz i poczekaj na oferty wykonawców.' },{ title: 'Dlaczego warto wybrać ZlecajTo.pl?', content: 'Łatwo porównujesz oferty, oszczędzasz czas i masz dostęp do lokalnych, zweryfikowanych wykonawców.' },{ title: 'Czy ZlecajTo.pl coś kosztuje?', content: 'Rejestracja jest darmowa. Płacisz jedynie za zrealizowane zlecenia według uzgodnionej ceny.' },{ title: 'Jak zostać wykonawcą?', content: 'Załóż konto wykonawcy, uzupełnij profil i zacznij odpowiadać na dostępne ogłoszenia w swojej okolicy.' }]
-            = render Interactive::AccordionComponent.new(items: faq_items)
+            = render Interactive::AccordionComponent.new(items: @faq_items)

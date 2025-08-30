@@ -2,8 +2,20 @@
 
 /* Minimal semantic color utilities – kept intentionally tiny. */
 @layer utilities {
-	.bg-primary { background-color: #16a34a; }
-	.bg-secondary { background-color: #f3f4f6; } /* gray-100 */
-	.text-primary { color: #e7e7e7; } /* green-200 */
+	.bg-primary { background-color: oklch(62.7% 0.194 149.214)}
+	.bg-secondary { background-color: oklch(92.5% 0.084 155.995); } /* gray-100 */
+	.text-primary { color: #ffffff; } /* green-200 */
 	.text-secondary { color: #fef08a; } /* yellow-200 */
+
+	/* Glowing button effect */
+	.glowing-btn {
+	box-shadow: 0 0 20px 6px oklch(62.7% 0.194 149.214 / 0.25);
+	transition: box-shadow 1s cubic-bezier(0.4,0,0.2,1);
+	}
+
+	.glowing-btn:hover,
+	.glowing-btn:focus {
+	box-shadow: 0 0 50px 20px oklch(88.861% 0.16777 153.447 / 0.55);
+	}
+
 }

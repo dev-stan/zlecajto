@@ -1,32 +1,24 @@
-nav.fixed.top-0.left-0.right-0.bg-white/80.backdrop-blur-md.shadow-sm.z-50 role="navigation" aria-label="Main navigation"
-  .max-w-7xl.mx-auto.h-16.flex.items-center.justify-between.gap-4.px-4.sm:px-6.lg:px-8
+nav.fixed.top-0.left-0.right-0.bg-white.shadow-sm.z-50
+  .max-w-7xl.mx-auto.h-16.flex.items-center.justify-between.gap-4.px-24
     / Left side - Navigation items
     .flex.items-center.gap-2
-      ul.hidden.md:flex.items-center.gap-2
-        - left_nav_items.each do |item|
-          li
-            = link_to item[:href], class: nav_link_classes, data: { tw: nav_link_classes } do
-              = item[:text]
-  
-    / Center - Logo
-    .absolute.left-1/2.transform.-translate-x-1/2
-      = link_to '/', class: 'flex items-center font-extrabold text-lg sm:text-xl text-violet-600 tracking-tight hover:text-violet-500 transition-colors', data: { tw: 'flex items-center font-extrabold text-lg sm:text-xl text-violet-600 tracking-tight hover:text-violet-500 transition-colors' } do
-        span zlecajto.pl
+      = link_to root_path, class: 'flex items-center font-extrabold text-xl text-green-600' do
+        span 🛩️ ZlecajTo
     
     / Right side - Authentication links
-    .flex.items-center.gap-1.sm:gap-2
+    .flex.items-center.gap-1
+      = render(Ui::ButtonComponent.new(text: 'Dodaj zlecenie', path: new_task_path, size: :sm))
+      = render(Ui::ButtonComponent.new(text: 'Zacznij Zarabiać', path: tasks_path, size: :sm, variant: :ghost))
       - if user_signed_in?
-        .flex.items-center.gap-2.sm:gap-3
-          - if greeting_text
-            span.hidden.lg:block.text-base.text-gray-600.cursor-default = greeting_text
-          = link_to dashboard_path(tab: 'submissions'), class: nav_link_classes, data: { tw: nav_link_classes } do
-            | Moje aplikacje
-            - if accepted_submissions?
-              span.ml-1.inline-block.w-2.h-2.rounded-full.bg-red-500 aria-label="Powiadomienie"
-          = link_to helpers.edit_user_registration_path, class: nav_link_classes, data: { tw: nav_link_classes } do
-            | Profil
-          = button_to "Wyloguj", helpers.destroy_user_session_path, method: :delete, class: logout_button_classes, data: { tw: logout_button_classes, turbo_method: :delete }
+        = render(Ui::ButtonComponent.new(text: 'Panel', path: dashboard_path, size: :sm, variant: :text)) do
+          - if has_accepted_submissions?
+            span.ml-1.inline-block.w-2.h-2.rounded-full.bg-red-500
+        / Profile picture placeholder
+        .ml-4.flex.items-center
+          .rounded-full.bg-gray-200.w-10.h-10.flex.items-center.justify-center.overflow-hidden.border.border-gray-300
+            span.sr-only Profile picture
+            img.w-full.h-full.object-cover src="https://via.placeholder.com" alt="Profile" loading="lazy"
       - else
         .flex.items-center.gap-2
-          = link_to 'Zaloguj', helpers.new_user_session_path, class: nav_link_classes, data: { tw: nav_link_classes }
-          = link_to 'Zarejestruj', helpers.new_user_registration_path, class: primary_action_link_classes, data: { tw: primary_action_link_classes }
+          = link_to 'Zaloguj', helpers.new_user_session_path
+          = link_to 'Zarejestruj', helpers.new_user_registration_path

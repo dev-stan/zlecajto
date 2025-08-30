@@ -1,4 +1,3 @@
-/ Constrained section (standard padding & max width)
 .py-20
     .max-w-7xl.mx-auto.px-6.lg:px-12
         .space-y-14
@@ -6,9 +5,9 @@
                 .space-y-4
                     h2.text-6xl.font-extrabold.leading-none Kategorie
                     p.text-base.text-gray-600 Zobacz w jaki sposób oszczędzisz swój czas
-                = link_to 'Zobacz wszystkie →', tasks_path, class: 'inline-flex items-center px-3 py-1.5 text-base font-medium border border-gray-300 rounded-md bg-secondary hover:bg-secondary text-primary'
+                = render(Ui::ButtonComponent.new(text: 'Zobacz wszystkie', path: tasks_path))
 
-            - categories = Task::CATEGORIES * 4 # temporary repetition for visual density
+            - categories = Task::CATEGORIES
             ul.grid.grid-cols-3.sm:grid-cols-6.md:grid-cols-8.gap-4
                 - categories.each do |cat|
                     li
