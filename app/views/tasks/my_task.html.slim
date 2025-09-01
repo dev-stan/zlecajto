@@ -1,0 +1,49 @@
+.max-w-5xl.mx-auto.px-4.py-10.space-y-10
+  / --- New Offers Banner ---
+  .bg-stone-200.rounded-xl.p-6.flex.flex-col.md:flex-row.items-center.space-y-4.md:space-y-0.md:space-x-8
+    .flex-1.relative
+        .absolute.-top-8
+            .inline-block.bg-green-100.text-green-700.text-xs.font-semibold.px-3.py-1.rounded.mb-2 New oferty!
+        .flex.flex-col.justify-center.h-full
+            h2.text-5xl.font-bold.text-gray-900.mb-2 Masz 1 ofertę!
+            p.text-gray-700.mb-0 Twoje zlecenie otrzymało właśnie nowe oferty! Przejrzyj profil wykonawcy i zaakceptuj zlecenie gdy będziesz gotowy
+
+    .flex-1
+      .bg-white.rounded-xl.p-5.flex.flex-col.space-y-2
+        h3.font-bold.text-gray-900.text-xl.mb-1 = @task.title
+        p.text-gray-700.text-sm.mb-2 = @task.description
+        .flex.items-center.text-gray-500.text-sm.space-x-2
+          i.fa.fa-map-marker.fa-fw.text-base
+          span = @task.location
+        .flex.items-center.text-gray-500.text-sm.space-x-2
+          i.fa.fa-calendar.fa-fw.text-base
+          span = @task.timeslot
+        .flex.items-center.text-gray-500.text-sm.space-x-2
+          i.fa.fa-usd.fa-fw.text-base
+          span = @task.salary
+        .mt-2
+          a.inline-block.bg-green-100.text-green-700.text-xs.font-semibold.px-3.py-1.rounded Edituj
+
+  / --- Submissions List ---
+  .mt-10
+    h2.text-2xl.font-bold.text-gray-900.mb-2 Twoje oferty
+    span.text-gray-500.text-base.ml-2= @task.submissions.count
+    .space-y-4.mt-6
+      - @task.submissions.each do |submission|
+        .flex.items-stretch.space-x-8
+          / Left column: profile, email, stars, button
+          .flex.flex-col.justify-center.w-48
+            .flex.flex-row.items-start.space-x-4
+              .w-16.h-16.bg-gray-200.rounded-full.flex-shrink-0
+                / Avatar placeholder
+              .flex.flex-col.justify-center
+                span.font-bold.text-black.text-lg= submission.user.email
+                .flex.items-center.space-x-1.mt-1
+                  span.font-bold.text-black.text-base 5.0
+                  span.text-yellow-500.text-base ★
+                  span.text-gray-400.text-sm (11)
+            a.mt-6.inline-block.bg-green-100.text-green-700.text-base.font-semibold.px-8.py-2.rounded-full Akceptuj
+          / Right column: note
+          .flex-1.flex.items-center
+            .bg-gray-50.rounded-2xl.p-6.w-full
+              p.text-black.text-lg.font-medium.whitespace-pre-line= submission.note

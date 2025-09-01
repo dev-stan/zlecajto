@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
+  # GET /my_tasks/:id
+  def my_task
+    @task = current_user.tasks.find(params[:id])
+    # Add any additional logic here if needed
+  end
   before_action :authenticate_user!, only: %i[new create wizard create_from_session]
   before_action :load_wizard_collections, only: %i[new wizard create]
 

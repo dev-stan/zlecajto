@@ -33,4 +33,7 @@ Rails.application.routes.draw do
     end
   end
   resource :dashboard, only: :show, controller: 'dashboards'
+
+  # Custom route for user's own task view
+  get 'my_tasks/:id', to: 'tasks#my_task', as: :my_task
 end
