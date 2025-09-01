@@ -22,3 +22,9 @@ nav.fixed.top-0.left-0.right-0.bg-white.shadow-sm.z-50
         .flex.items-center.gap-2
           = link_to 'Zaloguj', helpers.new_user_session_path
           = link_to 'Zarejestruj', helpers.new_user_registration_path
+
+  .bg-pink-700/80.py-1.text-center.relative.transition-all.duration-500.ease-in-out data-controller="dismiss"
+    .w-full.flex.items-center.justify-center.gap-2
+      span.text-white Nasza sąsiedzka platforma obejmuje zlecenia w Suchym Lesie i na Strzeszynie
+      button.text-white.text-lg.font-bold.bg-transparent.border-0.cursor-pointer aria-label="Zamknij" data-action="dismiss#close" type="button"
+        | ×

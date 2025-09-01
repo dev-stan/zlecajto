@@ -1,15 +1,15 @@
 .max-w-5xl.mx-auto.px-4.py-10.space-y-10
   / --- New Offers Banner ---
-  .bg-emerald-800.rounded-2xl.p-6.flex.flex-col.md:flex-row.items-center.space-y-4.md:space-y-0.md:space-x-8
+  .bg-blue-900.rounded-2xl.p-6.flex.flex-col.md:flex-row.items-center.space-y-4.md:space-y-0.md:space-x-8
     .flex-1.relative
         .absolute.-top-8
-            .inline-block.bg-green-100.text-green-700.text-xs.font-semibold.px-3.py-1.rounded.mb-2 Nowa oferta!
+            .inline-block.bg-pink-100.text-pink-700.text-xs.font-semibold.px-3.py-1.rounded.mb-2 Nowa oferta!
         .flex.flex-col.justify-center.h-full
             h2.text-5xl.font-bold.text-white.mb-2 Masz 1 ofertę!
             p.text-white.mb-0 Twoje zlecenie otrzymało właśnie nowe oferty! Przejrzyj profil wykonawcy i zaakceptuj zlecenie gdy będziesz gotowy
 
     .flex-1
-      .bg-white.rounded-2xl.p-5.flex.flex-col.space-y-2
+      .bg-blue-50.rounded-2xl.p-5.flex.flex-col.space-y-2
         h3.font-bold.text-black.text-xl.mb-1 = @task.title
         p.text-black.text-sm.mb-4 = @task.description
         .flex.items-center.text-gray-500.text-sm.space-x-2
@@ -22,7 +22,7 @@
           i.fa.fa-usd.fa-fw.text-base
           span = formatted_salary(@task)
         .mt-2
-          a.inline-block.bg-green-100.text-green-700.text-xs.font-semibold.px-3.py-1.rounded Edytuj
+          a.inline-block.bg-pink-100.text-pink-700.text-xs.font-semibold.px-3.py-1.rounded Edytuj
 
   .mt-10
     .flex.items-center.gap-2
@@ -44,5 +44,5 @@
             = render Ui::ButtonComponent.new(text: "Akceptuj", path: accept_submission_path(submission), method: :patch, variant: :primary, size: :sm, html_options: { class: 'w-full' })
           / Right column: note
           .flex-1.flex.items-center
-            .bg-orange-100.rounded-2xl.p-4.h-full.w-3/4
+            .bg-blue-100.border-2.border-blue-200.rounded-2xl.p-4.h-full.w-3/4
               p.text-black.text-base.whitespace-pre-line= submission.note
