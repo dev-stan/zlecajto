@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class Task < ApplicationRecord
-  STATUSES        = %w[draft open in_progress completed cancelled].freeze
+  STATUSES        = ['draft', 'Otwarte', 'W trakcie', 'Zakończone', 'Anulowane'].freeze
   CATEGORIES      = %w[Sprzątanie Zakupy Montaż Transport Przeprowadzki Opieka
-                       Naprawianie Ogrodnictwo].freeze
+                       Naprawy Ogrodnictwo].freeze
 
   TIMESLOTS       = %w[Rano Popołudnie Wieczór].freeze
   PAYMENT_METHODS = %w[Przelew Blik Gotówka].freeze
@@ -24,6 +24,6 @@ class Task < ApplicationRecord
   private
 
   def set_default_status
-    self.status ||= 'draft'
+    self.status ||= 'Otwarte'
   end
 end

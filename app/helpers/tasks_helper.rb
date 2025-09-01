@@ -3,7 +3,7 @@
 module TasksHelper
   def formatted_due_date(task)
     I18n.with_locale(:pl) do
-      wday = I18n.l(task.due_date.to_date, format: '%a')
+      wday = I18n.l(task.due_date.to_date, format: '%A')
       wday_cap = wday[0].upcase + wday[1..]
       "#{wday_cap}, #{task.due_date.strftime('%d.%m')}"
     end

@@ -1,19 +1,15 @@
 .max-w-7xl.mx-auto.px-4.py-10.space-y-8
-  header.mb-4
-    h1.text-3xl.font-bold.text-gray-900.mb-2 = t('dashboard.title', default: 'Panel')
-    p.text-gray-600 = t('dashboard.subtitle', default: 'Twoje zadania i aplikacje w jednym miejscu')
-
   / Tabs
   - requested_tab = params[:tab].presence
   - active_tab = requested_tab || (@tasks.any? ? 'tasks' : 'submissions')
   div data-controller="tabs"
     nav.flex role="tablist"
-      button.py-3.px-6.text-base.font-medium.transition data-action="tabs#show" data-tabs-target="tab" data-tab="tasks" role="tab" aria-selected=(active_tab == 'tasks') class=(active_tab == 'tasks' ? 'text-primary border-b-2 border-green-600 bg-white' : 'text-gray-500')
-        = t('dashboard.my_tasks.title', default: 'Moje zadania')
+      button.py-3.px-6.text-xl.font-semibold.transition data-action="tabs#show" data-tabs-target="tab" data-tab="tasks" role="tab" aria-selected=(active_tab == 'tasks') class=(active_tab == 'tasks' ? 'text-black border-b-2 border-black bg-white' : 'text-gray-500')
+        = 'Panel zleceń'
         - if @tasks.any?
           span.ml-2.inline-flex.items-center.justify-center.text-base.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @tasks.size
-      button.py-3.px-6.text-base.font-medium.transition data-action="tabs#show" data-tabs-target="tab" data-tab="submissions" role="tab" aria-selected=(active_tab == 'submissions') class=(active_tab == 'submissions' ? 'text-primary border-b-2 border-green-600 bg-white' : 'text-gray-500')
-        = t('dashboard.my_submissions.title', default: 'Moje aplikacje')
+      button.py-3.px-6.text-xl.font-semibold.transition data-action="tabs#show" data-tabs-target="tab" data-tab="submissions" role="tab" aria-selected=(active_tab == 'submissions') class=(active_tab == 'submissions' ? 'text-black border-b-2 border-black bg-white' : 'text-gray-500')
+        = 'Panel wykonawcy'
         - if @submissions.any?
           span.ml-2.inline-flex.items-center.justify-center.text-base.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @submissions.size
 
@@ -21,7 +17,7 @@
       / Tasks panel
       .space-y-6 data-tabs-target="panel" data-tab="tasks" class=(active_tab == 'tasks' ? '' : 'hidden')
         - if @tasks.any?
-          .grid.grid-cols-1.md:grid-cols-3.gap-6
+          .grid.grid-cols-1.lg:grid-cols-2.gap-6
             - @tasks.each do |task|
               = render Cards::MyTaskCardComponent.new(task: task)
         - else

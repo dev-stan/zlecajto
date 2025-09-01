@@ -1,6 +1,6 @@
 .max-w-5xl.mx-auto.px-4.py-10.space-y-10
   / --- New Offers Banner ---
-  .bg-gray-200.rounded-2xl.p-6.flex.flex-col.md:flex-row.items-center.space-y-4.md:space-y-0.md:space-x-8
+  .bg-orange-100.rounded-2xl.p-6.flex.flex-col.md:flex-row.items-center.space-y-4.md:space-y-0.md:space-x-8
     .flex-1.relative
         .absolute.-top-8
             .inline-block.bg-green-100.text-green-700.text-xs.font-semibold.px-3.py-1.rounded.mb-2 Nowa oferta!
@@ -34,11 +34,7 @@
           / Left column: profile, email, stars, button
           .flex.flex-col.justify-center.w-48.space-y-4
             .flex.flex-row.items-start.space-x-4
-              .w-16.h-16.bg-gray-200.rounded-full.flex-shrink-0.overflow-hidden.border.border-gray-300.flex.items-center.justify-center
-                - if submission.user.profile_picture&.attached?
-                  = image_tag submission.user.profile_picture.variant(resize_to_fill: [64, 64]), class: "w-full h-full object-cover", alt: t('activerecord.attributes.user.profile_picture', default: 'Zdjęcie profilowe'), loading: "lazy"
-                - else
-                  img.w-full.h-full.object-cover src="https://via.placeholder.com/64x64?text=U" alt="Profile" loading="lazy"
+              = render(Profile::ProfilePictureComponent.new(user: submission.user))
               .flex.flex-col.justify-center.text-left.h-full
                 span.font-semibold.text-black.text-lg= submission.user.first_name
                 .flex.items-center.space-x-1
@@ -48,5 +44,5 @@
             = render Ui::ButtonComponent.new(text: "Akceptuj", path: accept_submission_path(submission), method: :patch, variant: :primary, size: :sm, html_options: { class: 'w-full' })
           / Right column: note
           .flex-1.flex.items-center
-            .bg-gray-200.rounded-2xl.p-4.w-full.h-full
+            .bg-gray-50.rounded-2xl.p-4.w-full.h-full
               p.text-black.text-base.whitespace-pre-line= submission.note

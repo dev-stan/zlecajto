@@ -1,0 +1,5 @@
+.rounded-full.bg-gray-200.flex.items-center.justify-center.overflow-hidden.border.border-gray-300
+  - if @user&.profile_picture&.attached?
+    = image_tag @user.profile_picture.variant(resize_to_fill: image_size), class: "w-full h-full object-cover", alt: t('activerecord.attributes.user.profile_picture', default: 'Zdjęcie profilowe'), loading: "lazy"
+  - else
+    img.w-full.h-full.object-cover src="https://via.placeholder.com/#{image_size[0]}x#{image_size[1]}?text=U" alt="Profile" loading="lazy"

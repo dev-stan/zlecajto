@@ -15,12 +15,7 @@ nav.fixed.top-0.left-0.right-0.bg-white.shadow-sm.z-50
             span.ml-1.inline-block.w-2.h-2.rounded-full.bg-red-500
         / Profile picture placeholder
         .ml-4.flex.items-center
-          .rounded-full.bg-gray-200.w-10.h-10.flex.items-center.justify-center.overflow-hidden.border.border-gray-300
-            span
-            - if current_user&.profile_picture&.attached?
-              = image_tag current_user.profile_picture.variant(resize_to_fill: [40, 40]), class: "w-full h-full object-cover", alt: t('activerecord.attributes.user.profile_picture', default: 'Zdjęcie profilowe'), loading: "lazy"
-            - else
-              img.w-full.h-full.object-cover src="https://via.placeholder.com/40x40?text=U" alt="Profile" loading="lazy"
+          = render(Profile::ProfilePictureComponent.new(user: current_user))
       - else
         .flex.items-center.gap-2
           = link_to 'Zaloguj', helpers.new_user_session_path

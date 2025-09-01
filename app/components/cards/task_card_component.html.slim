@@ -1,43 +1,34 @@
 /. Entire card is now an anchor linking to the task show page so the whole surface is clickable
-= link_to helpers.task_path(task), class: container_classes do
-  - if show_image? && image_url.present?
-    / Reduced height from h-64 to h-48 for a less tall image
-    img.w-full.h-48.object-cover src=image_url alt=title loading="lazy"
+= link_to helpers.task_path(@task), class: 'rounded-2xl overflow-hidden flex flex-col h-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow hover:shadow-md' do
+  - if show_image && @task.photos.attached?
+    img.w-full.h-48.object-cover src=helpers.url_for(@task.photos.first.variant(resize_to_fill: [640, 360])) alt=@task.title loading="lazy"
 
   / Body
-  .p-6.pb-4.flex-1
+  .p-6.pb-4.flex-1.bg-gray-100
     .flex.justify-between.gap-6
       / Left column
       .flex-1
-        h3.text-xl.font-semibold.text-gray-900.leading-snug.mb-1 = title
-        - if badges.any?
-          .flex.flex-wrap.gap-2.mb-6.me-3
-            - badges.each do |badge|
-              = render Ui::BadgeComponent.new(text: badge[:text], variant: badge[:variant])
-        / Meta info rows
-        .space-y-2.text-gray-600.text-base
-          .flex.items-center.gap-2
-            span.text-gray-400 
-              i.fa.fa-map-marker.text-base
-            span = location
+        h3.text-xl.font-semibold.text-gray-900.leading-snug = @task.title
+        .flex.gap-3.mb-4.mt-1
+          = render(Ui::BadgeComponent.new(text: @task.category, variant: :blue))
+          = render(Ui::BadgeComponent.new(text: @task.payment_method, variant: :green))
+        .space-y-1.text-gray-600.text-base.items-center
           .flex.items-center.gap-2
             span.text-gray-400
-              i.fa.fa-calendar.text-base
-            span = formatted_due_date
+              i.fa.fa-map-marker.fa-fw.text-base
+            span = @task.location
           .flex.items-center.gap-2
             span.text-gray-400
-              i.fa.fa-clock-o.text-base
-            span = timeslot_range
+              i.fa.fa-calendar.fa-fw.text-base
+            span = formatted_due_date(@task)
+          .flex.items-center.gap-2
+            span.text-gray-400
+              i.fa.fa-clock-o.fa-fw.text-base
+            span = @task.timeslot
 
       / Right column (price + user)
       div class="flex flex-col items-end gap-3 min-w-[110px]"
-        .bg-green-50.border.border-green-200.px-3.py-1.rounded-lg
-          .text-lg.font-medium.text-primary.whitespace-nowrap = price
-        / User block: vertical stack (avatar, name, reviews) centered
-        .flex.flex-col.items-center.text-center.text-base.text-gray-600.gap-1.mt-3
-          .w-12.h-12.rounded-full.bg-blue-100.flex.items-center.justify-center.text-blue-700.font-semibold.text-base = user_initials
-          .font-semibold.text-gray-800.text-base = user_display_name
-          div class="flex items-center gap-1 text-[11px]"
-            span.font-semibold.text-gray-800 5.0
-            span class="text-yellow-500 text-[11px]" ★
-            span.text-gray-400 = "(#{reviews_count})"
+        .text-lg.font-extrabold.text-black.whitespace-nowrap.mt-1 = formatted_salary(@task)
+        .flex.flex-col.items-center.text-center.text-base.text-gray-600.mt-3
+          = render(Profile::ProfilePictureComponent.new(user: @task.user))
+          = render(Profile::ProfileReviewsComponent.new(user: @task.user))
