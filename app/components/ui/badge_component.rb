@@ -12,6 +12,7 @@ module Ui
     }.freeze
 
     def initialize(text:, variant: :gray, html_options: {})
+      super()
       @text = text
       @variant = variant.to_sym
       @html_options = html_options

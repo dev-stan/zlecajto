@@ -1,5 +1,5 @@
-.max-w-7xl.mx-auto.px-4.sm:px-6.lg:px-8.pt-24
-  .max-w-md.mx-auto.bg-secondary.rounded-xl.shadow-lg.p-8
+.max-w-7xl.mx-auto.px-4.sm:px-6.lg:px-8
+  .max-w-md.mx-auto.rounded-xl.p-8
     header.mb-8.text-center
       h1.text-3xl.font-extrabold.text-gray-900.mb-2 Dołącz do nas
       p.text-gray-600 Stwórz konto w zlecajto.pl
@@ -7,10 +7,9 @@
     = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "space-y-6" }) do |f|
       = render "devise/shared/error_messages", resource: resource
       
-      .space-y-4
+      .grid.grid-cols-2.gap-4
         .flex.flex-col
           = f.label :first_name, t('activerecord.attributes.user.first_name', default: 'Imię'), class: "mb-1 block text-base font-medium text-gray-700"
-          span.text-red-500.ml-0.5 *
           = f.text_field :first_name,
               autocomplete: "given-name",
               placeholder: "Jan",
@@ -18,15 +17,14 @@
 
         .flex.flex-col
           = f.label :last_name, t('activerecord.attributes.user.last_name', default: 'Nazwisko'), class: "mb-1 block text-base font-medium text-gray-700"
-          span.text-red-500.ml-0.5 *
           = f.text_field :last_name,
               autocomplete: "family-name",
               placeholder: "Kowalski",
               class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base placeholder-gray-400 shadow-sm transition focus:border-violet-500 focus:ring focus:ring-violet-200 focus:ring-opacity-50 focus:outline-none"
 
+      .grid.grid-cols-2.gap-4
         .flex.flex-col
           = f.label :email, "Adres email", class: "mb-1 block text-base font-medium text-gray-700"
-          span.text-red-500.ml-0.5 *
           = f.email_field :email, 
               autofocus: true, 
               autocomplete: "email",
@@ -34,12 +32,16 @@
               class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base placeholder-gray-400 shadow-sm transition focus:border-violet-500 focus:ring focus:ring-violet-200 focus:ring-opacity-50 focus:outline-none"
 
         .flex.flex-col
-          = f.label :profile_picture, t('activerecord.attributes.user.profile_picture', default: 'Zdjęcie profilowe'), class: "mb-1 block text-base font-medium text-gray-700"
-          = f.file_field :profile_picture, direct_upload: true, class: "block w-full text-base text-gray-700"
+          = f.label :email, "Adres email", class: "mb-1 block text-base font-medium text-gray-700"
+          = f.email_field :email, 
+              autofocus: true, 
+              autocomplete: "email",
+              placeholder: "twoj.email@example.com",
+              class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base placeholder-gray-400 shadow-sm transition focus:border-violet-500 focus:ring focus:ring-violet-200 focus:ring-opacity-50 focus:outline-none"
 
+      .grid.grid-cols-2.gap-4
         .flex.flex-col
-          = f.label :password, "Hasło #{'(' + @minimum_password_length.to_s + ' znaków minimum)' if @minimum_password_length}", class: "mb-1 block text-base font-medium text-gray-700"
-          span.text-red-500.ml-0.5 *
+          = f.label :password, "Hasło", class: "mb-1 block text-base font-medium text-gray-700"
           = f.password_field :password, 
               autocomplete: "new-password",
               placeholder: "Wybierz silne hasło",
@@ -47,18 +49,17 @@
 
         .flex.flex-col
           = f.label :password_confirmation, "Potwierdź hasło", class: "mb-1 block text-base font-medium text-gray-700"
-          span.text-red-500.ml-0.5 *
           = f.password_field :password_confirmation, 
               autocomplete: "new-password",
               placeholder: "Powtórz hasło",
               class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base placeholder-gray-400 shadow-sm transition focus:border-violet-500 focus:ring focus:ring-violet-200 focus:ring-opacity-50 focus:outline-none"
-      
-      .pt-4
-        = render Ui::ButtonComponent.new(text: "Utwórz konto", submit: true)
-    
-    .mt-8.pt-6.border-t.border-gray-200
-      .text-center.space-y-3.text-base
-        - if controller_name != 'sessions'
-          p.text-gray-600
-            | Masz już konto? 
-            = link_to "Zaloguj się", new_session_path(resource_name), class: "text-violet-600 hover:text-violet-500 font-medium"
+
+      .mt-6.text-center
+        .flex.flex-col.items-center
+          = f.label :profile_picture, t('activerecord.attributes.user.profile_picture', default: 'Zdjęcie profilowe'), class: "mb-2 block text-base font-medium text-gray-700"
+          label.w-24.h-24.flex.items-center.justify-center.border-2.border-dashed.border-gray-300.rounded-full.cursor-pointer.hover:border-violet-500.transition(for="user_profile_picture")
+            = '+'
+          = f.file_field :profile_picture, id: "user_profile_picture", direct_upload: true, class: "hidden"
+
+      .pt-2
+        = render Ui::ButtonComponent.new(text: "Utwórz konto", submit: true, html_options: { class: 'w-full' })

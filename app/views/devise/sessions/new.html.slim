@@ -1,5 +1,5 @@
-.max-w-7xl.mx-auto.px-4.sm:px-6.lg:px-8.pt-24
-  .max-w-md.mx-auto.bg-secondary.rounded-xl.shadow-lg.p-8
+.max-w-7xl.mx-auto.px-4.sm:px-6.lg:px-8.pt-12
+  .max-w-md.mx-auto.rounded-xl.p-8
     header.mb-8.text-center
       h1.text-3xl.font-extrabold.text-gray-900.mb-2 Zaloguj się
       p.text-gray-600 Witaj z powrotem w zlecajto.pl
@@ -27,15 +27,4 @@
             = f.label :remember_me, "Zapamiętaj mnie", class: "ml-2 text-base text-gray-700"
       
       .pt-4
-        = render Ui::ButtonComponent.new(text: "Zaloguj się", submit: true)
-    
-    .mt-8.pt-6.border-t.border-gray-200
-      .text-center.space-y-3.text-base
-        - if devise_mapping.registerable? && controller_name != 'registrations'
-          p.text-gray-600
-            | Nie masz konta? 
-            = link_to "Zarejestruj się", new_registration_path(resource_name), class: "text-violet-600 hover:text-violet-500 font-medium"
-        
-        - if devise_mapping.recoverable? && controller_name != 'passwords'
-          p
-            = link_to "Zapomniałeś hasła?", new_password_path(resource_name), class: "text-violet-600 hover:text-violet-500 font-medium"
+        = render Ui::ButtonComponent.new(text: "Zaloguj się", submit: true, html_options: { class: 'w-full'   })

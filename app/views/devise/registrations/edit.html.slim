@@ -1,85 +1,38 @@
-.max-w-7xl.mx-auto.px-4.sm:px-6.lg:px-8.pt-24
-  .max-w-2xl.mx-auto.bg-white.rounded-xl.shadow-lg.p-8
-    header.mb-8.text-center
-      h1.text-3xl.font-extrabold.text-gray-900.mb-2 Edytuj profil
-      p.text-gray-600 Zarządzaj ustawieniami swojego konta
-    
-    = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "space-y-8" }) do |f|
-      = render "devise/shared/error_messages", resource: resource
-      
-      .space-y-6
-        h3.text-lg.font-medium.text-gray-900.border-b.border-gray-200.pb-2 Podstawowe informacje
-        
+.max-w-6xl.mx-auto.px-4.sm:px-6.lg:px-8.pt-16
+  .grid.grid-cols-1.md:grid-cols-3.gap-8
+    / Left column: profile card
+    .col-span-1.bg-white.rounded-2xl.p-6.flex.flex-col.items-center
+      - if @user.profile_picture.attached?
+        = image_tag @user.profile_picture.variant(resize_to_fill: [140, 140]),
+          class: "h-36 w-36 rounded-full object-cover mb-4"
+      - else
+        .h-36.w-36.rounded-full.bg-gray-100.flex.items-center.justify-center.text-gray-400.text-5xl.mb-4
+          i.fa.fa-user
+
+      h2.text-2xl.font-bold.text-gray-900.mb-1 #{@user.first_name} #{@user.last_name}
+      p.text-sm.text-gray-500 #500
+
+      .mt-4.flex.flex-col.items-center.space-y-2.text-sm.text-gray-600
+        .flex.items-center.gap-2
+          span.h-2.w-2.rounded-full.bg-green-600.inline-block
+          span Online recently
+        .flex.items-center.gap-2
+          i.fa.fa-map-marker-alt.text-gray-400
+          span Poznań, Polska
+
+      .mt-6
+        = link_to "Edytuj profil", edit_user_registration_path,
+          class: "inline-flex items-center px-4 py-2 rounded-lg bg-green-600 text-white font-medium hover:bg-green-700 transition"
+
+    / Right column: reviews
+    .col-span-2.bg-white.rounded-2xl.p-6
+      h3.text-lg.font-semibold.text-gray-900.mb-4 Recenzje
+      - if @user.reviews.any?
         .space-y-4
-          .flex.flex-col
-            = f.label :first_name, t('activerecord.attributes.user.first_name', default: 'Imię'), class: "mb-1 block text-base font-medium text-gray-700"
-            span.text-red-500.ml-0.5 *
-            = f.text_field :first_name,
-                autocomplete: "given-name",
-                placeholder: "Jan",
-                class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base placeholder-gray-400 shadow-sm transition focus:border-violet-500 focus:ring focus:ring-violet-200 focus:ring-opacity-50 focus:outline-none"
-
-          .flex.flex-col
-            = f.label :last_name, t('activerecord.attributes.user.last_name', default: 'Nazwisko'), class: "mb-1 block text-base font-medium text-gray-700"
-            span.text-red-500.ml-0.5 *
-            = f.text_field :last_name,
-                autocomplete: "family-name",
-                placeholder: "Kowalski",
-                class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base placeholder-gray-400 shadow-sm transition focus:border-violet-500 focus:ring focus:ring-violet-200 focus:ring-opacity-50 focus:outline-none"
-
-          .flex.flex-col
-            = f.label :email, "Adres email", class: "mb-1 block text-base font-medium text-gray-700"
-            span.text-red-500.ml-0.5 *
-            = f.email_field :email, 
-                autofocus: true, 
-                autocomplete: "email",
-                placeholder: "twoj.email@example.com",
-                class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base placeholder-gray-400 shadow-sm transition focus:border-violet-500 focus:ring focus:ring-violet-200 focus:ring-opacity-50 focus:outline-none"
-
-          .flex.flex-col
-            = f.label :profile_picture, t('activerecord.attributes.user.profile_picture', default: 'Zdjęcie profilowe'), class: "mb-1 block text-base font-medium text-gray-700"
-            = f.file_field :profile_picture, direct_upload: true, class: "block w-full text-base text-gray-700"
-
-          - if devise_mapping.confirmable? && resource.pending_reconfirmation?
-            .bg-yellow-50.border.border-yellow-200.rounded-lg.p-4
-              p.text-base.text-yellow-800 Oczekuje na potwierdzenie: #{resource.unconfirmed_email}
-      
-      .space-y-6
-        h3.text-lg.font-medium.text-gray-900.border-b.border-gray-200.pb-2 Zmiana hasła
-        
-        .space-y-4
-          .flex.flex-col
-            = f.label :password, "Nowe hasło #{'(' + @minimum_password_length.to_s + ' znaków minimum)' if @minimum_password_length}", class: "mb-1 block text-base font-medium text-gray-700"
-            = f.password_field :password, 
-                autocomplete: "new-password",
-                placeholder: "Pozostaw puste, jeśli nie chcesz zmieniać",
-                class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base placeholder-gray-400 shadow-sm transition focus:border-violet-500 focus:ring focus:ring-violet-200 focus:ring-opacity-50 focus:outline-none"
-          
-          .flex.flex-col
-            = f.label :password_confirmation, "Potwierdź nowe hasło", class: "mb-1 block text-base font-medium text-gray-700"
-            = f.password_field :password_confirmation, 
-                autocomplete: "new-password",
-                placeholder: "Powtórz nowe hasło",
-                class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base placeholder-gray-400 shadow-sm transition focus:border-violet-500 focus:ring focus:ring-violet-200 focus:ring-opacity-50 focus:outline-none"
-          
-          .flex.flex-col
-            = f.label :current_password, "Aktualne hasło", class: "mb-1 block text-base font-medium text-gray-700"
-            span.text-red-500.ml-0.5 *
-            = f.password_field :current_password, 
-                autocomplete: "current-password",
-                placeholder: "Potrzebujemy Twojego hasła aby potwierdzić zmiany",
-                class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base placeholder-gray-400 shadow-sm transition focus:border-violet-500 focus:ring focus:ring-violet-200 focus:ring-opacity-50 focus:outline-none"
-      
-      .pt-6
-        = render Ui::ButtonComponent.new(text: "Zaktualizuj profil", submit: true)
-    
-    .mt-12.pt-8.border-t.border-gray-200
-      .bg-red-50.border.border-red-200.rounded-lg.p-6
-        h3.text-lg.font-medium.text-red-900.mb-4 Usuń konto
-        p.text-base.text-red-700.mb-4 Nie jesteś zadowolony z naszego serwisu? Możesz permanentnie usunąć swoje konto.
-        .flex.justify-between.items-center
-          = link_to "Powrót", :back, class: "text-gray-600 hover:text-gray-500 font-medium"
-          = button_to "Usuń moje konto", registration_path(resource_name), 
-              method: :delete,
-              data: { confirm: "Czy na pewno chcesz usunąć swoje konto? Ta operacja jest nieodwracalna.", turbo_confirm: "Czy na pewno chcesz usunąć swoje konto? Ta operacja jest nieodwracalna." },
-              class: "inline-flex items-center justify-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-base font-semibold rounded-lg shadow-md focus:outline-none transition"
+          - @user.reviews.each do |review|
+            .border-b.border-gray-200.pb-4
+              p.text-gray-800.font-medium = review.author_name
+              p.text-gray-600.text-sm.mt-1 = review.content
+      - else
+        p.text-gray-500 Brak recenzji
+        p.text-sm.text-gray-400.mt-1 #{@user.first_name} dołączył/a niedawno
