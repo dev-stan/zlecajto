@@ -1,0 +1,7 @@
+pl:
+  activerecord:
+    attributes:
+      user:
+        first_name: "Imię"
+        last_name: "Nazwisko"
+        profile_picture: "Zdjęcie profilowe"

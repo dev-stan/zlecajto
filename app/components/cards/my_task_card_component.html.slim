@@ -1,0 +1,26 @@
+/ Left column
+= link_to helpers.my_task_path(@task) do
+    .bg-gray-50.rounded-2xl.p-6.flex.gap-6.items-stretch
+        .flex-1.flex.flex-col.justify-between
+            .flex.flex-col.items-start.mb-1
+            h3.text-xl.font-bold.text-gray-900.leading-snug.mb-3 = @task.title
+            .space-y-2.text-gray-600.text-base.mb-2
+                .flex.items-center.text-gray-500.text-sm.space-x-2
+                i.fa.fa-map-marker.fa-fw.text-base
+                span = @task.location
+                .flex.items-center.text-gray-500.text-sm.space-x-2
+                i.fa.fa-calendar.fa-fw.text-base
+                span = formatted_due_date(@task)
+                .flex.items-center.text-gray-500.text-sm.space-x-2
+                i.fa.fa-usd.fa-fw.text-base
+                span = formatted_salary(@task)
+        / Right column
+        .flex.flex-col.items-center.gap-3.min-w-[110px]
+            = render(Ui::BadgeComponent.new(text: @task.category))
+            .text-2xl.font-extrabold.text-gray-900.text-right = '32 PLN'
+            .flex.flex-col.items-center.text-center.text-base.text-gray-600.gap-1.mt-1
+                - if @task.user&.profile_picture&.attached?
+                    = image_tag @task.user.profile_picture.variant(resize_to_fill: [40, 40]), class: "w-full h-full object-cover", alt: t('activerecord.attributes.user.profile_picture', default: 'Zdjęcie profilowe'), loading: "lazy"
+                - else
+                    img.w-full.h-full.object-cover src="https://via.placeholder.com/40x40?text=U" alt="Profile" loading="lazy"
+            .font-semibold.text-gray-800.text-base = @task.user.first_name

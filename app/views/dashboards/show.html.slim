@@ -23,13 +23,13 @@
         - if @tasks.any?
           .grid.grid-cols-1.md:grid-cols-3.gap-6
             - @tasks.each do |task|
-              = link_to t("#{task.title}"), my_task_path(task), class: 'block'
+              = render Cards::MyTaskCardComponent.new(task: task)
         - else
           .text-center.py-12
             p.text-gray-500.mb-4 = t('dashboard.my_tasks.empty', default: 'Nie masz jeszcze żadnych zadań.')
             = render Ui::ButtonComponent.new(text: t('dashboard.my_tasks.new', default: 'Dodaj zadanie'), path: new_task_path, variant: :primary)
 
-      / Submissions panel
+      / Submissions panel\
       .space-y-6 data-tabs-target="panel" data-tab="submissions" class=(active_tab == 'submissions' ? '' : 'hidden')
         - if @submissions.any?
           .grid.grid-cols-1.md:grid-cols-2.lg:grid-cols-3.gap-6

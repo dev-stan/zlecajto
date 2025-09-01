@@ -1,8 +1,10 @@
-- if submit?
+- if submit_button?
   = content_tag :button, text, merged_button_options('submit')
-- elsif button?
+- elsif regular_button?
   = content_tag :button, text, merged_button_options('button')
-- elsif path
+- elsif form_button?
+  = button_to text, path, button_to_options
+- elsif link_button?
   = link_to text, path, link_options
 - else
   = content_tag :button, text, merged_button_options('button')

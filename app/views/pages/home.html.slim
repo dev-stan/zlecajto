@@ -5,3 +5,5 @@
 = render 'pages/home/team'
 = render 'pages/home/app'
 = render 'pages/home/faq'
+
+= link_to('log out', destroy_user_session_path, method: :delete)

@@ -5,7 +5,7 @@ class CreateTasks < ActiveRecord::Migration[7.1]
     create_table :tasks do |t|
       t.string :title
       t.text :description
-      t.decimal :salary
+      t.integer :salary
       t.string :status
       t.references :user, null: false, foreign_key: true
 

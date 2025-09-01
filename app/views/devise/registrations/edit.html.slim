@@ -12,6 +12,22 @@
         
         .space-y-4
           .flex.flex-col
+            = f.label :first_name, t('activerecord.attributes.user.first_name', default: 'Imię'), class: "mb-1 block text-base font-medium text-gray-700"
+            span.text-red-500.ml-0.5 *
+            = f.text_field :first_name,
+                autocomplete: "given-name",
+                placeholder: "Jan",
+                class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base placeholder-gray-400 shadow-sm transition focus:border-violet-500 focus:ring focus:ring-violet-200 focus:ring-opacity-50 focus:outline-none"
+
+          .flex.flex-col
+            = f.label :last_name, t('activerecord.attributes.user.last_name', default: 'Nazwisko'), class: "mb-1 block text-base font-medium text-gray-700"
+            span.text-red-500.ml-0.5 *
+            = f.text_field :last_name,
+                autocomplete: "family-name",
+                placeholder: "Kowalski",
+                class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base placeholder-gray-400 shadow-sm transition focus:border-violet-500 focus:ring focus:ring-violet-200 focus:ring-opacity-50 focus:outline-none"
+
+          .flex.flex-col
             = f.label :email, "Adres email", class: "mb-1 block text-base font-medium text-gray-700"
             span.text-red-500.ml-0.5 *
             = f.email_field :email, 
@@ -19,7 +35,11 @@
                 autocomplete: "email",
                 placeholder: "twoj.email@example.com",
                 class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base placeholder-gray-400 shadow-sm transition focus:border-violet-500 focus:ring focus:ring-violet-200 focus:ring-opacity-50 focus:outline-none"
-          
+
+          .flex.flex-col
+            = f.label :profile_picture, t('activerecord.attributes.user.profile_picture', default: 'Zdjęcie profilowe'), class: "mb-1 block text-base font-medium text-gray-700"
+            = f.file_field :profile_picture, direct_upload: true, class: "block w-full text-base text-gray-700"
+
           - if devise_mapping.confirmable? && resource.pending_reconfirmation?
             .bg-yellow-50.border.border-yellow-200.rounded-lg.p-4
               p.text-base.text-yellow-800 Oczekuje na potwierdzenie: #{resource.unconfirmed_email}
