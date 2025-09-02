@@ -4,11 +4,11 @@ module Ui
   # Renders a button, link, or form button with consistent styling and intent-revealing API.
   class ButtonComponent < ApplicationComponent
     VARIANTS = {
-      primary: 'bg-pink-700 text-white',
+      primary: 'bg-primary text-white',
       glowing: 'bg-primary text-white glowing-btn',
       secondary: 'bg-secondary text-white',
       danger: 'bg-red-600 hover:bg-red-700 text-white',
-      ghost: 'bg-transparent text-black hover:bg-green-600 hover:text-white',
+      ghost: 'bg-white border-2 border-blue-900',
       text: 'bg-transparent text-black',
       success: 'bg-primary text-primary'
     }.freeze

@@ -28,15 +28,15 @@
           = f.email_field :email, 
               autofocus: true, 
               autocomplete: "email",
-              placeholder: "twoj.email@example.com",
+              placeholder: "jan@gmail.com",
               class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base placeholder-gray-400 shadow-sm transition focus:border-violet-500 focus:ring focus:ring-violet-200 focus:ring-opacity-50 focus:outline-none"
 
         .flex.flex-col
-          = f.label :email, "Adres email", class: "mb-1 block text-base font-medium text-gray-700"
-          = f.email_field :email, 
+          = f.label :phone_number, "Numer telefonu", class: "mb-1 block text-base font-medium text-gray-700"
+          = f.text_field :phone_number, 
               autofocus: true, 
-              autocomplete: "email",
-              placeholder: "twoj.email@example.com",
+              autocomplete: "number",
+              placeholder: "+48 881 228 832",
               class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base placeholder-gray-400 shadow-sm transition focus:border-violet-500 focus:ring focus:ring-violet-200 focus:ring-opacity-50 focus:outline-none"
 
       .grid.grid-cols-2.gap-4

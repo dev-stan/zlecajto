@@ -26,7 +26,7 @@ class ApplicationComponent < ViewComponent::Base
     case variant
     when :primary then 'bg-violet-600 text-white hover:bg-violet-700'
     when :secondary then 'bg-gray-200 text-gray-900 hover:bg-gray-300'
-    when :success then 'bg-green-600 text-white hover:bg-green-700'
+    when :success then 'bg-primary text-white hover:bg-green-700'
     when :danger then 'bg-red-600 text-white hover:bg-red-700'
     else variant
     end

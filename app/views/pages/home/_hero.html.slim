@@ -4,7 +4,7 @@ section.py-20
             .space-y-10
                 h1.text-6xl.font-extrabold.leading-tight
                     | Odblokuj swój czas ze 
-                    span.text-green-600 ZlecajTo
+                    span.text-primary ZlecajTo
 
                 / Steps list
                 ol.space-y-6
@@ -23,7 +23,7 @@ section.py-20
 
 
                 .pt-4
-                    = render Ui::ButtonComponent.new(text: 'Zleć zadanie', path: new_task_path, variant: :glowing, size: :lg, html_options: { class: 'w-60' })
+                    = render Ui::ButtonComponent.new(text: 'Zleć zadanie', path: new_task_path, variant: :secondary, size: :lg, html_options: { class: 'w-60' })
                         
             / Right side visual placeholder (could be replaced with illustration / carousel later)
             .hidden.lg:block
