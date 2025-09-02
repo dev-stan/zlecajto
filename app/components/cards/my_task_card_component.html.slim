@@ -1,6 +1,6 @@
 / Left column
 = link_to helpers.my_task_path(@task) do
-    .bg-gray-100.rounded-2xl.p-8.flex.gap-8.items-stretch.w-full.border-3.border-blue-900
+    .bg-white.rounded-2xl.p-8.flex.gap-8.items-stretch.w-full.border-3.border-blue-900.border-sm
         .w-3/4.flex.flex-col
             h3.text-xl.font-bold.text-gray-900.leading-snug.mb-3 = @task.title
             .flex.gap-3.mb-4
@@ -19,7 +19,7 @@
         / Right column
         .w-1/4.flex.flex-col.items-center.justify-start
             = render(Ui::BadgeComponent.new(text: @task.status, variant: :red))
-            .text-2xl.font-extrabold.text-gray-900.text-center.mt-5 = '32 PLN'
+            .text-2xl.font-extrabold.text-gray-900.text-center.mt-5 = formatted_salary(@task)
             .mt-3
                 = render(Profile::ProfilePictureComponent.new(user: @task.user))
                 = render(Profile::ProfileReviewsComponent.new(user: @task.user))

@@ -28,7 +28,7 @@
       / Submissions panel\
       .space-y-6 data-tabs-target="panel" data-tab="submissions" class=(active_tab == 'submissions' ? '' : 'hidden')
         - if @submissions.any?
-          .grid.grid-cols-1.md:grid-cols-2.lg:grid-cols-3.gap-6
+          .grid.grid-cols-1.lg:grid-cols-2.gap-6
             - @submissions.each do |submission|
               - highlight = (submission.status == 'accepted')
               = render Cards::TaskCardComponent.new(task: submission.task, show_image: false, highlight: highlight)
