@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 
-const ERROR_CLASS = 'border-red-400'
+const ERROR_CLASS = 'border-red-500'
 // Only toggle the error color class. Removing the generic 'border' class caused
 // radio labels to lose border width, so peer-checked:* color utilities had no visible effect.
 const ERROR_CLASSES = [ERROR_CLASS]
@@ -73,18 +73,47 @@ export default class extends Controller {
 
   markInvalid(field) {
     const label = this.labelFor(field)
-    // Ensure border width exists on label so color changes are visible
-    if (label && !label.classList.contains('border')) label.classList.add('border')
-    ;[field, label].filter(Boolean).forEach(el => ERROR_CLASSES.forEach(c => el.classList.add(c)))
+    ;[field, label].filter(Boolean).forEach(el => this.applyErrorStyles(el))
   }
 
   unmarkInvalid(field) {
     const label = this.labelFor(field)
-    ;[field, label].filter(Boolean).forEach(el => ERROR_CLASSES.forEach(c => el.classList.remove(c)))
+    ;[field, label].filter(Boolean).forEach(el => this.removeErrorStyles(el))
   }
 
   clearErrors() {
-    this.element.querySelectorAll('.' + ERROR_CLASS).forEach(el => this.unmarkInvalid(el))
+    // Select elements currently marked invalid by presence of ERROR_CLASS
+    this.element.querySelectorAll('.' + CSS.escape(ERROR_CLASS)).forEach(el => this.removeErrorStyles(el))
+  }
+
+  applyErrorStyles(el) {
+    if (!el) return
+    // Ensure a visible border width exists
+    if (!el.classList.contains('border')) {
+      el.classList.add('border')
+      el.dataset.addedBorder = 'true'
+    }
+    // Persist previous border color (first matching utility) to restore later
+    const prev = Array.from(el.classList).find(c => c.startsWith('border-') && c !== 'border' && c !== ERROR_CLASS)
+    if (prev && !el.dataset.prevBorderColor) el.dataset.prevBorderColor = prev
+    // Remove previous color utility so new one is effective regardless of Tailwind generation order
+    if (prev) el.classList.remove(prev)
+    ERROR_CLASSES.forEach(c => el.classList.add(c))
+  }
+
+  removeErrorStyles(el) {
+    if (!el) return
+    ERROR_CLASSES.forEach(c => el.classList.remove(c))
+    // Restore previous border color if we stored one
+    if (el.dataset.prevBorderColor) {
+      el.classList.add(el.dataset.prevBorderColor)
+      delete el.dataset.prevBorderColor
+    }
+    // If we artificially added a border (e.g. plain text inputs), remove it again
+    if (el.dataset.addedBorder) {
+      el.classList.remove('border')
+      delete el.dataset.addedBorder
+    }
   }
 
   focusFirst(invalid) {

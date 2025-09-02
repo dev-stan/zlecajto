@@ -6,7 +6,7 @@ class TasksController < ApplicationController
     @task = current_user.tasks.find(params[:id])
     # Add any additional logic here if needed
   end
-  before_action :authenticate_user!, only: %i[new create wizard create_from_session]
+  before_action :authenticate_user!, only: %i[new create wizard create_from_session edit_modal update my_task]
   before_action :load_wizard_collections, only: %i[new wizard create]
 
   def index
@@ -16,6 +16,28 @@ class TasksController < ApplicationController
   def show
     @task = Task.find(params[:id])
     @existing_submission = current_user.submissions.find_by(task: @task) if user_signed_in?
+  end
+
+  def edit_modal
+    @task = current_user.tasks.find(params[:id])
+    render partial: 'tasks/edit_modal', locals: { task: @task }
+  end
+
+  def update
+    @task = current_user.tasks.find(params[:id])
+    if @task.update(task_params)
+      respond_to do |format|
+        format.turbo_stream do
+          flash.now[:notice] = t('tasks.flash.updated')
+          render turbo_stream: [
+            turbo_stream.replace('modal', '')
+          ]
+        end
+        format.html { redirect_to my_task_path(@task), notice: t('tasks.flash.updated') }
+      end
+    else
+      render partial: 'tasks/edit_modal', status: :unprocessable_entity, locals: { task: @task }
+    end
   end
 
   # GET /tasks/new (step-driven wizard entry)

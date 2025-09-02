@@ -84,3 +84,5 @@ gem 'rubocop-rails'
 gem 'ruby-lsp'
 gem 'view_component'
 gem 'i18n'
+
+gem "ultimate_turbo_modal", "~> 2.2"

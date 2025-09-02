@@ -39,6 +39,16 @@ pl:
     flash:
       accepted: "Oferta została zaakceptowana"
       rejected: "Oferta została odrzucona"
+  tasks:
+    edit:
+      title: "Edytuj zlecenie"
+      open: "Edytuj"
+      save: "Zapisz"
+    flash:
+      updated: "Zlecenie zaktualizowane"
+      created: "Zlecenie utworzone"
+      created_after_login: "Zlecenie utworzone po zalogowaniu"
+      creation_error: "Nie udało się utworzyć zlecenia"
   unauthorized: "Brak uprawnień"
   home:
     team:

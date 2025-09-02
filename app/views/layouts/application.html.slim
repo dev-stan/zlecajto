@@ -10,6 +10,7 @@ html
     = javascript_importmap_tags
 
   body
+    = turbo_frame_tag "modal" 
     = render Layout::NavbarComponent.new()
     
     main.pt-20

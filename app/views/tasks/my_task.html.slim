@@ -1,3 +1,4 @@
+
 .max-w-5xl.mx-auto.px-4.py-10.space-y-10
   / --- New Offers Banner ---
   .bg-primary.rounded-2xl.p-6.flex.flex-col.md:flex-row.items-center.space-y-4.md:space-y-0.md:space-x-8
@@ -22,7 +23,7 @@
           i.fa.fa-usd.fa-fw.text-base
           span = formatted_salary(@task)
         .mt-2
-          a.inline-block.bg-pink-100.text-pink-700.text-xs.font-semibold.px-3.py-1.rounded Edytuj
+          = link_to t('tasks.edit.open', default: 'Edytuj'), edit_modal_task_path(@task), data: { turbo_frame: 'modal' }, class: 'inline-block bg-pink-100 text-pink-700 text-xs font-semibold px-3 py-1 rounded'
 
   .mt-10
     .flex.items-center.gap-2
@@ -46,3 +47,7 @@
           .flex-1.flex.items-center
             .bg-blue-100.border-2.border-blue-200.rounded-2xl.p-4.h-full.w-3/4
               p.text-black.text-base.whitespace-pre-line= submission.note
+
+
+
+= link_to 'edyt', edit_modal_task_path(@task), data: { turbo_frame: 'modal' }
