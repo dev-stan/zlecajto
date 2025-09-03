@@ -35,6 +35,9 @@ Rails.application.routes.draw do
       patch :accept
       patch :reject
     end
+    collection do
+      get :create_from_session
+    end
   end
   resource :dashboard, only: :show, controller: 'dashboards'
 

@@ -10,6 +10,8 @@ export default class extends Controller {
     this.onInput = this.onInput.bind(this)
     this.element.addEventListener('input', this.onInput)
     this.element.addEventListener('change', this.onInput)
+  // Ensure radios whose labels carry the required marker or have required attribute are tracked
+  this.syncRequiredMarkers()
   }
 
   disconnect() {
@@ -31,9 +33,8 @@ export default class extends Controller {
     const el = e.target
     if (!el.classList.contains('required')) return
     if (el.type === 'radio' || el.type === 'checkbox') {
-      // Re-evaluate entire group
-      const group = this.group(el)
-      if (group.some(member => !this.invalidField(member))) {
+      const group = this.allGroupMembers(el)
+      if (group.some(member => member.checked)) {
         group.forEach(member => this.unmarkInvalid(member))
       }
     } else if (!this.invalidField(el)) {
@@ -42,20 +43,28 @@ export default class extends Controller {
   }
 
   requiredFields() {
-    return Array.from(this.element.querySelectorAll('.required'))
+    // Base: elements explicitly marked with required class
+    const fromClass = Array.from(this.element.querySelectorAll('.required'))
+    // Include radios / checkboxes whose label has required class
+    const radios = Array.from(this.element.querySelectorAll('input[type=radio], input[type=checkbox]'))
+      .filter(input => !input.classList.contains('required'))
+      .filter(input => input.hasAttribute('required') || this.labelFor(input)?.classList.contains('required'))
+    return Array.from(new Set([...fromClass, ...radios]))
   }
 
   collectInvalid(fields) {
     const invalid = []
-    const radioGroups = {}
+    const radioNames = new Set()
     fields.forEach(f => {
       if (f.type === 'radio') {
-        (radioGroups[f.name] ||= []).push(f)
+        radioNames.add(f.name)
       } else if (this.invalidField(f)) {
         invalid.push(f)
       }
     })
-    Object.values(radioGroups).forEach(group => {
+    // Evaluate each radio group by name, considering all radios in the form (not just those with required class)
+    radioNames.forEach(name => {
+  const group = this.radiosByName(name)
       if (!group.some(r => r.checked)) invalid.push(...group)
     })
     return invalid
@@ -67,8 +76,14 @@ export default class extends Controller {
     return v == null || v.toString().trim() === ''
   }
 
-  group(radio) {
-    return Array.from(this.element.querySelectorAll(`input[type=radio][name='${CSS.escape(radio.name)}'].required`))
+  // Return all radios sharing this one's name (full group regardless of required class presence)
+  allGroupMembers(radio) {
+    return this.radiosByName(radio.name)
+  }
+
+  radiosByName(name) {
+    // getElementsByName avoids CSS selector escaping edge cases (e.g. brackets in param names)
+    return Array.from(document.getElementsByName(name)).filter(el => el instanceof HTMLInputElement && el.type === 'radio' && el.form === this.element)
   }
 
   markInvalid(field) {
@@ -124,5 +139,26 @@ export default class extends Controller {
 
   labelFor(field) {
     return field.id ? this.element.querySelector("label[for='" + CSS.escape(field.id) + "']") : null
+  }
+
+  // Propagate required marker from labels / attributes to the underlying inputs so onInput logic fires.
+  syncRequiredMarkers() {
+    const candidates = Array.from(this.element.querySelectorAll('label.required[for]'))
+    candidates.forEach(label => {
+      const id = label.getAttribute('for')
+      if (!id) return
+      const input = this.element.querySelector('#' + CSS.escape(id))
+      if (input && !input.classList.contains('required')) {
+        input.classList.add('required')
+        input.dataset.inheritedRequired = 'true'
+      }
+    })
+    // Also mark inputs with native required attribute
+    this.element.querySelectorAll('input[required]').forEach(input => {
+      if (!input.classList.contains('required')) {
+        input.classList.add('required')
+        input.dataset.inheritedRequired = 'true'
+      }
+    })
   }
 }

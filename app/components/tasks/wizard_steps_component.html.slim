@@ -6,12 +6,12 @@ nav aria-label="Task creation steps" class="md:w-56 mb-6 md:mb-0"
             - status = step_status(number)
             - active = (status == :active)
             li
-                - indicator = active ? content_tag(:span, '|', class: 'mr-2 text-green-600') : content_tag(:span, ' ', class: 'mr-2')
+                - indicator = active ? content_tag(:span, '|', class: 'mr-2 text-blue-600') : content_tag(:span, ' ', class: 'mr-2')
                 - if [:available, :completed].include?(status)
-                    = link_to step_path(number), data: { turbo_frame: 'task_wizard' }, class: merge_classes('flex items-center transition', active ? 'text-green-600 font-semibold' : 'text-gray-700 hover:text-green-600'), aria: { current: (active ? 'step' : nil) }
+                    = link_to step_path(number), data: { turbo_frame: 'task_wizard' }, class: merge_classes('flex items-center transition', active ? 'text-blue-600 font-semibold' : 'text-gray-700 hover:text-blue-600'), aria: { current: (active ? 'step' : nil) }
                         == indicator
                         span = label
                 - else
-                    span class=merge_classes('flex items-center', active ? 'text-green-600 font-semibold' : 'text-gray-400 cursor-not-allowed') aria-current=(active ? 'step' : nil) aria-disabled=(status == :locked ? 'true' : nil)
+                    span class=merge_classes('flex items-center', active ? 'text-blue-600 font-semibold' : 'text-gray-400 cursor-not-allowed') aria-current=(active ? 'step' : nil) aria-disabled=(status == :locked ? 'true' : nil)
                         == indicator
                         span = label

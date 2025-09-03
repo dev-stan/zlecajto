@@ -3,10 +3,14 @@
 module Ui
   class RadioButtonComponent < ApplicationComponent
     CATEGORY_EMOJIS = {
-      'Sprzątanie' => '🧹',
-      'Development' => '💻',
-      'Writing' => '✍️',
-      'Other' => '✨'
+  'Sprzątanie' => '🧹',      # cleaning
+  'Zakupy' => '🛒',          # shopping
+  'Montaż' => '🛠️',         # assembly / installation
+  'Transport' => '🚗',       # transport
+  'Przeprowadzki' => '📦',   # moving
+  'Opieka' => '🤝',          # care / assistance
+  'Naprawy' => '🔧',         # repairs
+  'Ogrodnictwo' => '🌿'      # gardening
     }.freeze
 
     PAYMENT_METHODS_EMOJIS = {
@@ -16,10 +20,9 @@ module Ui
     }.freeze
 
     TIMESLOT_EMOJIS = {
-      'rano' => '🌅',
-      'godziny_pracy' => '☀️',
-      'popoludnie' => '🕓',
-      'wieczor' => '🌙'
+      'Rano' => '🌅',
+      'Popołudnie' => '☀️',
+      'Wieczór' => '🌙'
     }.freeze
 
     def initialize(name:, value:, checked: false, id: nil, label: nil, style: :default,

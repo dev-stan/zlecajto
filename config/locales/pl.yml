@@ -39,6 +39,10 @@ pl:
     flash:
       accepted: "Oferta została zaakceptowana"
       rejected: "Oferta została odrzucona"
+  already_applied: "Już aplikowałeś na to zadanie"
+  created: "Aplikacja została wysłana"
+  created_after_login: "Aplikacja wysłana po zalogowaniu"
+  creation_error: "Nie udało się wysłać aplikacji"
   tasks:
     edit:
       title: "Edytuj zlecenie"

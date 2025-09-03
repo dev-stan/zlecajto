@@ -1,9 +1,15 @@
-- base_classes = 'relative flex cursor-pointer items-center gap-2 rounded-lg border border-transparent bg-gray-50 px-5 py-4 text-base font-medium text-gray-700 transition hover:border-green-400 hover:bg-green-50 peer-checked:!border-green-500 peer-checked:bg-green-100 peer-checked:text-green-900 peer-checked:shadow peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-green-500'
+- base_classes = 'relative flex cursor-pointer items-center gap-2 rounded-lg bg-gray-50 px-5 py-4 text-base font-medium text-gray-700 transition hover:bg-blue-100 peer-checked:!border-blue-500 peer-checked:bg-blue-100 peer-checked:text-blue-900 peer-checked:shadow peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-blue-500'
 - square_extras = style == :square ? 'flex-col text-center justify-center gap-3' : ''
 
+/- Provided classes may include 'required' which we only want on the input for validation.
+- provided_classes = @options[:class].to_s.split
+- required_for_input = provided_classes.include?('required') ? 'required' : nil
+- label_extra_classes = (provided_classes - ['required']).join(' ')
+
 - base_input_classes = 'peer absolute opacity-0 w-0 h-0 -m-px overflow-hidden pointer-events-none appearance-none'
-- merged_input_classes = [base_input_classes, @options[:class]].compact.join(' ')
+- merged_input_classes = [base_input_classes, required_for_input].compact.join(' ')
+- label_classes = [base_classes, square_extras, label_extra_classes].reject(&:blank?).join(' ')
 = radio_button_tag name, value, checked, id: id, class: merged_input_classes, **@options.except(:class)
-label for=id class="#{[base_classes, square_extras].reject(&:blank?).join(' ')}"
+label for=id class=label_classes
   span.text-4xl.leading-none = display_emoji
   span.text-base.font-medium = label

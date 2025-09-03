@@ -6,7 +6,9 @@ class TasksController < ApplicationController
     @task = current_user.tasks.find(params[:id])
     # Add any additional logic here if needed
   end
-  before_action :authenticate_user!, only: %i[new create wizard create_from_session edit_modal update my_task]
+  # Allow guests to access the wizard (new & wizard) so they can fill in data first.
+  # Authentication is only required when persisting (create / create_from_session) or editing existing records.
+  before_action :authenticate_user!, only: %i[create create_from_session edit_modal update my_task]
   before_action :load_wizard_collections, only: %i[new wizard create]
 
   def index
@@ -52,10 +54,18 @@ class TasksController < ApplicationController
   end
 
   def create
+    unless user_signed_in?
+      # Store data & bounce to login, then resume in create_from_session
+      session[:pending_task_data] = task_params
+      session[:return_to] = create_from_session_tasks_path
+      redirect_to new_user_session_path and return
+    end
+
     @task = current_user.tasks.build(task_params)
     if @task.save
       redirect_to @task, notice: t('tasks.flash.created')
     else
+      # Rehydrate wizard at second step (after basic details) so user can correct
       @wizard = TaskWizard.new(step: 2, params: task_params)
       @step   = @wizard.current_step
       render :new, status: :unprocessable_entity
