@@ -1,0 +1,16 @@
+-# frozen_string_literal: true
+.wrapper.flex.flex-col.space-y-2 data-controller="image-upload" data-image-upload-limit="#{limit if limit.present?}"
+  - if label.present?
+    label.block.font-medium.text-base.mb-1 for=input_id = label
+  - if hint.present?
+    span.text-xs.text-gray-500.mb-1 = hint
+  .flex.flex-wrap.gap-3
+    button.group.relative.w-20.h-20.rounded-md.bg-gray-100.hover:bg-gray-200.flex.items-center.justify-center.border.border-dashed.border-gray-300.text-gray-500.hover:text-gray-700.transition.mr-1.mb-1 type="button" data-action="image-upload#pick"
+      span.text-3xl.leading-none +
+      span class="absolute bottom-1 left-1/2 -translate-x-1/2 text-[10px] font-medium opacity-0 group-hover:opacity-100 text-gray-600"
+    .flex.flex-wrap.gap-3 data-image-upload-target="list"
+  - if form
+    = form.file_field name, id: input_id, multiple: multiple, direct_upload: direct_upload, class: 'hidden', data: { image_upload_target: 'input', action: 'change->image-upload#changed' }.merge(html_options)
+  - else
+    = file_field_tag name, multiple: multiple, direct_upload: direct_upload, class: 'hidden', id: input_id, data: { image_upload_target: 'input', action: 'change->image-upload#changed' }.merge(html_options)
+  span.text-base.text-gray-600 data-image-upload-target="count"

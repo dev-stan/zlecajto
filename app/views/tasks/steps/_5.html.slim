@@ -3,14 +3,14 @@
   h1.text-2xl.font-bold.mb-4 Zdjęcia
   p.text-base.text-gray-600.mb-2.font-bold Dodaj zdjęcia
 
-  .space-y-3 data-controller='photos'
-    = file_field_tag 'task[photos][]', multiple: true, direct_upload: true, class: 'hidden', id: 'task_photos_input', data: { photos_target: 'input', action: 'change->photos#changed' }
-    .flex.flex-wrap.gap-3
-      button.group.relative.w-20.h-20.rounded-md.bg-gray-100.hover:bg-gray-200.flex.items-center.justify-center.border.border-dashed.border-gray-300.text-gray-500.hover:text-gray-700.transition.mr-1.mb-1 type='button' data-action='photos#pick'
-        span.text-3xl.leading-none +
-        span class="absolute.bottom-1.left-1/2.-translate-x-1/2.text-[10px].font-medium.opacity-0.group-hover:opacity-100.text-gray-600"
-      .flex.flex-wrap.gap-3 data-photos-target='list'
-    span.text-base.text-gray-600 data-photos-target='count'
+  = render Input::ImageUploadComponent.new(form: f,
+      name: 'task[photos][]',
+      multiple: true,
+      limit: 5,
+      direct_upload: true,
+      input_id: 'task_photos_input',
+      required: true,
+      html_options: {})
 
   = hidden_field_tag :step, 5
   = f.hidden_field :category
