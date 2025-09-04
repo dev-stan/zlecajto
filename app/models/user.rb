@@ -1,7 +1,23 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  # Ensure superpowers is always an array
+  def superpowers
+    self[:superpowers] || []
+  end
+
+  def superpowers=(values)
+    self[:superpowers] = Array(values).reject(&:blank?).uniq.take(3)
+  end
+  # SUPERPOWERS constant for user selection
+  SUPERPOWERS = %w[TEST1 TEST2 TEST3 TEST4 TEST5].freeze
+
   has_one_attached :profile_picture
+
+  validates :superpowers,
+            length: { maximum: 3,
+                      message: I18n.t('errors.messages.superpowers_limit',
+                                      default: 'Możesz wybrać maksymalnie 3 supermoce.') }
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 

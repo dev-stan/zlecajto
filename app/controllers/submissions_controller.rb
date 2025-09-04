@@ -16,9 +16,7 @@ class SubmissionsController < ApplicationController
   def new
     if user_signed_in?
       existing_submission = current_user.submissions.find_by(task: @task)
-      if existing_submission
-        redirect_to @task, alert: t('submissions.flash.already_applied') and return
-      end
+      redirect_to @task, alert: t('submissions.flash.already_applied') and return if existing_submission
     end
     @submission = @task.submissions.build # Unsaved; fields can be prefilled later
   end
@@ -32,9 +30,7 @@ class SubmissionsController < ApplicationController
     end
 
     existing_submission = current_user.submissions.find_by(task: @task)
-    if existing_submission
-      redirect_to @task, alert: t('submissions.flash.already_applied') and return
-    end
+    redirect_to @task, alert: t('submissions.flash.already_applied') and return if existing_submission
 
     persist_submission(submission_params)
   end
@@ -74,19 +70,13 @@ class SubmissionsController < ApplicationController
   def create_from_session
     data = session.delete(:pending_submission_data)
     task_id = session.delete(:pending_submission_task_id)
-    unless data && task_id
-      redirect_to tasks_path, alert: t('submissions.flash.creation_error') and return
-    end
+    redirect_to tasks_path, alert: t('submissions.flash.creation_error') and return unless data && task_id
 
     @task = Task.find_by(id: task_id)
-    unless @task
-      redirect_to tasks_path, alert: t('submissions.flash.creation_error') and return
-    end
+    redirect_to tasks_path, alert: t('submissions.flash.creation_error') and return unless @task
 
     existing_submission = current_user.submissions.find_by(task: @task)
-    if existing_submission
-      redirect_to @task, alert: t('submissions.flash.already_applied') and return
-    end
+    redirect_to @task, alert: t('submissions.flash.already_applied') and return if existing_submission
 
     persist_submission(data)
   end
