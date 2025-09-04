@@ -10,7 +10,30 @@ class User < ApplicationRecord
     self[:superpowers] = Array(values).reject(&:blank?).uniq.take(3)
   end
   # SUPERPOWERS constant for user selection
-  SUPERPOWERS = %w[TEST1 TEST2 TEST3 TEST4 TEST5].freeze
+  SUPERPOWERS = [
+    'Nocny Marek',
+    'Ranny Ptaszek',
+    'Cichy Specjalista',
+    'Architekt Porządku',
+    'Kreatywny Chaos',
+    'Mistrz Gaduła',
+    'Stara Szkoła',
+    'Kawowy Wojownik',
+    'Student na Urlopie',
+    'Mistrz Prokrastynacji',
+    'Zjadacz Deadlineów',
+    'Wieczny Optymista',
+    'Szef Kanapek',
+    'Kreator Awarii',
+    'Szybki Scrollowicz',
+    'Kolekcjoner Zakładek',
+    'Władca Przekąsek',
+    'Ekspert Odkładania',
+    'Mistrz Znikania',
+    'Pogromca Bugów',
+    'Szef Small Talku',
+    'Koneser Memów'
+  ]
 
   has_one_attached :profile_picture
 
@@ -21,8 +44,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :user_roles
-  has_many :roles, through: :user_roles
   has_many :tasks
   has_many :submissions
   has_many :reviews, through: :tasks

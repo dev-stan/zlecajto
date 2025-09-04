@@ -1,0 +1,4 @@
+div.flex.items-center
+  = check_box_tag name, value, checked, id: id, class: "peer opacity-0 w-0 h-0", **options.except(:class)
+  label for=id class=render_label_classes
+    span.text-base.font-medium.leading-normal.flex.items-center.justify-center.h-full.w-full = label
