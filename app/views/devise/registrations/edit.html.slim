@@ -12,6 +12,7 @@
       h2.text-2xl.font-bold.text-gray-900.mb-1 #{@user.first_name} #{@user.last_name}
       p.text-sm.text-gray-500
 
+
       .mt-4.flex.flex-col.items-center.space-y-2.text-sm.text-gray-600
         .flex.items-center.gap-2
           span.h-2.w-2.rounded-full.bg-primary.inline-block
@@ -19,6 +20,10 @@
         .flex.items-center.gap-2
           i.fa.fa-map-marker-alt.text-gray-400
           span Poznań, Polska
+        - if @user.superpowers.any?
+          .flex.flex-wrap.gap-2.mt-2
+            - @user.superpowers.each do |power|
+              span.inline-block.bg-violet-100.text-violet-800.text-xs.font-semibold.px-2.py-1.rounded #{power}
 
       .mt-6
         = link_to "Edytuj profil", edit_user_registration_path,

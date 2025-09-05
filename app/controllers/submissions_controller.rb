@@ -52,9 +52,22 @@ class SubmissionsController < ApplicationController
 
   def accept
     if @submission.update(status: 'accepted')
-      redirect_back fallback_location: @submission.task, notice: I18n.t('submissions.flash.accepted')
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(
+            dom_id(@submission),
+            Tasks::SubmissionFrameComponent.new(submission: @submission, accepted: true).render_in(view_context)
+          )
+        end
+        format.html { redirect_back fallback_location: @submission.task, notice: I18n.t('submissions.flash.accepted') }
+      end
     else
-      redirect_back fallback_location: @submission.task, alert: @submission.errors.full_messages.to_sentence
+      respond_to do |format|
+        format.turbo_stream { head :unprocessable_entity }
+        format.html do
+          redirect_back fallback_location: @submission.task, alert: @submission.errors.full_messages.to_sentence
+        end
+      end
     end
   end
 

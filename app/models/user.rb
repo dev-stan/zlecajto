@@ -37,6 +37,10 @@ class User < ApplicationRecord
 
   has_one_attached :profile_picture
 
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+  validates :email, presence: true
+  validates :phone_number, presence: true
   validates :superpowers,
             length: { maximum: 3,
                       message: I18n.t('errors.messages.superpowers_limit',

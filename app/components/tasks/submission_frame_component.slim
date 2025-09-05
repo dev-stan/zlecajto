@@ -1,0 +1,21 @@
+-# frozen_string_literal: true
+-# Turbo Frame for a single submission in my_task.html.slim
+
+= turbo_frame_tag dom_id(submission) do
+  - if accepted
+    = render Ui::ButtonComponent.new(text: 'hello world', variant: :primary, size: :sm, html_options: { class: 'w-full' })
+  - else
+    .flex.items-stretch.space-x-8
+      .flex.flex-col.justify-center.w-48.space-y-4
+        .flex.flex-row.items-start.space-x-4
+          = render(Profile::ProfilePictureComponent.new(user: submission.user))
+          .flex.flex-col.justify-center.text-left.h-full
+            span.font-semibold.text-black.text-lg= submission.user.first_name
+            .flex.items-center.space-x-1
+              span.font-semibold.text-black.text-base 5.0
+              span.text-yellow-500.text-base ★
+              span.text-gray-400.text-sm = "(11)"
+        = render Ui::ButtonComponent.new(text: "Akceptuj", path: accept_submission_path(submission), method: :patch, variant: :secondary, size: :sm, html_options: { class: 'w-full', data: { turbo_frame: dom_id(submission) } })
+      .flex-1.flex.items-center
+        .bg-blue-100.border-2.border-blue-200.rounded-2xl.p-4.h-full.w-3/4
+          p.text-black.text-base.whitespace-pre-line= submission.note
