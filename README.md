@@ -2,4 +2,4 @@
 
 Zlecajto.pl
 
-Piciu Mecias i Stachu
+Piciu Mecias i Stachu.
