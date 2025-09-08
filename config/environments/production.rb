@@ -90,9 +90,8 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # Enable DNS rebinding protection and other `Host` header attacks.
-  config.hosts = [
-    /.*\.ngrok-free\.app/ # Allow requests from subdomains like `www.example.com`
-  ]
+  config.hosts << 'zlecajto-91525bb17f39.herokuapp.com'
+  config.hosts << 'www.zlecajto.pl'
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 end
