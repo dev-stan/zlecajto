@@ -30,9 +30,3 @@
       h2.text-2xl.font-bold.text-gray-900.mb-0.flex.items-center Twoje oferty
       span.text-gray-500.text-2xl.font-base.flex.items-center= "(#{@task.submissions.count})"
     .space-y-4.mt-6
-      - @task.submissions.each do |submission|
-        = render Tasks::SubmissionFrameComponent.new(submission: submission, accepted: submission.status == 'accepted')
-
-
-
-= link_to 'edyt', edit_modal_task_path(@task), data: { turbo_frame: 'modal' }
