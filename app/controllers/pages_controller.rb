@@ -16,4 +16,6 @@ class PagesController < ApplicationController
         content: 'Załóż konto wykonawcy, uzupełnij profil i zacznij odpowiadać na dostępne ogłoszenia w swojej okolicy.' }
     ]
   end
+
+  def waitlist; end
 end
