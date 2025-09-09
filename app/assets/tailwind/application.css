@@ -1,5 +1,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 @import "tailwindcss";
 
 /* Minimal semantic color utilities – kept intentionally tiny. */
@@ -21,10 +22,6 @@
 	}
 
 	body {
-		font-family: 'Roboto', sans-serif;
+		font-family: 'Outfit', sans-serif;
 	}
 }
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Libertinus+Keyboard&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">

@@ -1,14 +1,40 @@
-.flex.items-center.justify-center.min-h-screen.bg-white.px-4.md:px-32
-  .flex.flex-row.items-center.max-w-5xl.mx-auto.gap-16
-    / Left side - Phone mockup
-    .flex-shrink-0
-      = image_tag 'iMockup - iPhone 15 Pro Max.png', class: 'h-auto', style: 'width: 15rem;', alt: 'Sortd app mockup'
+.relative.min-h-screen.flex.items-center.justify-center
+  .absolute.inset-0.z-0#vanta-bg
 
-    
-    / Right side - Text content
-    .flex-1
-      h1.text-5xl.font-extrabold.text-gray-900.mb-2.leading-tight
-        | Ide w kime, potem dokoncze
-      
-      p.text-lg.text-gray-600.leading-relaxed
-        | Zaoszczędź czas i pieniądze, korzystając z lokalnych usług. Znajdź wykonawców w swojej okolicy i zleć im zadania
+  .relative.z-10.flex.items-center.justify-center.px-4.sm:mx-24
+    .flex.flex-col.md:flex-row.items-center.max-w-5xl.mx-auto.gap-16.p-8.rounded-2xl
+      .flex-shrink-0
+        = image_tag 'phone.png', class: 'h-auto', style: 'width: 15rem;', alt: 'Phone with zlecajto'
+      .flex.flex-col.items-center.md:items-start.text-left
+        h1.text-5xl.font-extrabold.text-gray-900.mb-2.leading-tight Zlecajto.pl - wykonuj i zlecaj
+        p.text-lg.text-gray-600.leading-relaxed
+          | Zaoszczędź czas i pieniądze, korzystając z lokalnych usług. Znajdź wykonawców w swojej okolicy i zleć im zadania lub dorb sobie jako wykonawca.
+        = link_to 'Zapisz się!', 'https://tally.so/r/nPo1lb', class: 'bg-gray-200 px-5 py-2 mt-3 rounded-lg border-2 text-center w-full md:w-1/4'
+
+  / Vanta.js Birds background
+  script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"
+  script src="https://cdnjs.cloudflare.com/ajax/libs/vanta/0.5.24/vanta.birds.min.js"
+  script
+    |
+      document.addEventListener("DOMContentLoaded", function() {
+        VANTA.BIRDS({
+          el: "#vanta-bg",
+          mouseControls: true,
+          touchControls: true,
+          gyroControls: false,
+          minHeight: 200.00,
+          minWidth: 200.00,
+          scale: 1.00,
+          scaleMobile: 1.00,
+          backgroundColor: 0xffffff,
+          color1: 0x1e293b,
+          color2: 0x64748b,
+          birdSize: 2.0,
+          wingSpan: 40.0,
+          speedLimit: 3.0,
+          separation: 80.0,
+          alignment: 50.0,
+          cohesion: 50.0,
+          quantity: 1
+        })
+      })

@@ -13,7 +13,7 @@ html
     = turbo_frame_tag "modal" 
     /= render Layout::NavbarComponent.new()
     
-    main.pt-20
+    main
       - if notice
         = render Ui::AlertComponent.new(message: notice, variant: :success)
       
