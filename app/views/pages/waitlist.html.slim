@@ -2,14 +2,14 @@
   .absolute.inset-0.z-0#vanta-bg
 
   .relative.z-10.flex.items-center.justify-center.px-4.sm:mx-24
-    .flex.flex-col.md:flex-row.items-center.max-w-5xl.mx-auto.gap-16.p-8.rounded-2xl
-      .flex-shrink-0
-        = image_tag 'phone.png', class: 'h-auto', style: 'width: 15rem;', alt: 'Phone with zlecajto'
-      .flex.flex-col.items-center.md:items-start.text-left
+    .flex.flex-col.md:flex-row-reverse.items-center.max-w-5xl.mx-auto.gap-16.p-8.rounded-2xl
+      .flex.flex-col.items-center.md:items-start.md:text-left.text-center
         h1.text-5xl.font-extrabold.text-gray-900.mb-2.leading-tight Zlecajto.pl - wykonuj i zlecaj
         p.text-lg.text-gray-600.leading-relaxed
           | Zaoszczędź czas i pieniądze, korzystając z lokalnych usług. Znajdź wykonawców w swojej okolicy i zleć im zadania lub dorb sobie jako wykonawca.
         = link_to 'Zapisz się!', 'https://tally.so/r/nPo1lb', class: 'bg-gray-200 px-5 py-2 mt-3 rounded-lg border-2 text-center w-full md:w-1/4'
+      .flex-shrink-0
+        = image_tag 'phone.png', class: 'h-auto', style: 'width: 15rem;', alt: 'Phone with zlecajto'
 
   / Vanta.js Birds background
   script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"
