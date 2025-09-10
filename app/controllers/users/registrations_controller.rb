@@ -6,8 +6,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :profile_picture, { superpowers: [] }])
+    devise_parameter_sanitizer.permit(:sign_up,
+                                      keys: [:first_name, :last_name, :profile_picture, :phone_number,
+                                             { superpowers: [] }])
     devise_parameter_sanitizer.permit(:account_update,
-                                      keys: [:first_name, :last_name, :profile_picture, { superpowers: [] }])
+                                      keys: [:first_name, :last_name, :profile_picture, :phone_number,
+                                             { superpowers: [] }])
   end
 end

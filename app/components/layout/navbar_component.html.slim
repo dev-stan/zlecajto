@@ -1,30 +1,26 @@
 nav.fixed.top-0.left-0.right-0.bg-white.shadow-sm.z-50
-  .max-w-7xl.mx-auto.h-16.flex.items-center.justify-between.gap-4.px-24
+  .max-w-7xl.mx-auto.h-16.flex.items-center.justify-between.gap-4.px-4
     / Left side - Navigation items
     .flex.items-center.gap-2
       = link_to root_path, class: 'flex items-center font-extrabold text-4xl text-blue-900' do
         span ZlecajTo
-    
-    / Right side - Authentication links
-    .flex.items-center.gap-1
+
+    / Right side - Mobile Burger Menu (hidden on md+)
+    .flex.items-center.md:hidden
+      = render Layout::BurgerMenuComponent.new(user_signed_in: user_signed_in?, current_user: current_user, has_accepted_submissions: has_accepted_submissions?)
+
+    / Right side - Desktop Menu (hidden on mobile)
+    .hidden.md:flex.items-center.gap-1
       = render(Ui::ButtonComponent.new(text: 'Dodaj zlecenie', path: new_task_path, size: :sm))
       = render(Ui::ButtonComponent.new(text: 'Zacznij Zarabiać', path: tasks_path, size: :sm, variant: :ghost))
       - if user_signed_in?
         = render(Ui::ButtonComponent.new(text: 'Panel', path: dashboard_path, size: :sm, variant: :text)) do
           - if has_accepted_submissions?
             span.ml-1.inline-block.w-2.h-2.rounded-full.bg-red-500
-        / Profile picture placeholder
         .ml-4.flex.items-center
           = link_to edit_user_registration_path do
             = render(Profile::ProfilePictureComponent.new(user: current_user))
-
       - else
         .flex.items-center.gap-2
           = link_to 'Zaloguj', helpers.new_user_session_path
           = link_to 'Zarejestruj', helpers.new_user_registration_path
-
-  / .bg-pink-700/80.py-1.text-center.relative.transition-all.duration-500.ease-in-out data-controller="dismiss"
-  /   .w-full.flex.items-center.justify-center.gap-2
-  /     span.text-white Nasza sąsiedzka platforma obejmuje zlecenia w Suchym Lesie i na Strzeszynie
-  /     button.text-white.text-lg.font-bold.bg-transparent.border-0.cursor-pointer aria-label="Zamknij" data-action="dismiss#close" type="button"
-  /       | ×

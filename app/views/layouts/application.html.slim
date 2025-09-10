@@ -9,15 +9,11 @@ html
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
     = javascript_importmap_tags
 
-  body
-    = turbo_frame_tag "modal" 
-    /= render Layout::NavbarComponent.new()
-    
+  body.mt-12
+    = render Layout::NavbarComponent.new()
     main
       - if notice
         = render Ui::AlertComponent.new(message: notice, variant: :success)
-      
       - if alert
         = render Ui::AlertComponent.new(message: alert, variant: :error)
-      
       = yield

@@ -1,5 +1,5 @@
 /. Entire card is now an anchor linking to the task show page so the whole surface is clickable
-= link_to helpers.task_path(@task), class: 'rounded-2xl border-3 border-blue-900 overflow-hidden flex flex-col h-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow hover:shadow-md' do
+= link_to (defined?(path) && path.present? ? path : helpers.task_path(@task)), class: 'rounded-2xl border-3 border-blue-900 overflow-hidden flex flex-col h-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow hover:shadow-md' do
   - if show_image && @task.photos.attached?
     img.w-full.h-48.object-cover src=helpers.url_for(@task.photos.first.variant(resize_to_fill: [640, 360])) alt=@task.title loading="lazy"
 
