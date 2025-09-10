@@ -20,10 +20,8 @@ export default class extends Controller {
 
   pick() {
     if (this.isAtLimit()) return
-    if (this.hasInputTarget) {
-      this.inputTarget.value = ''
-      this.inputTarget.click()
-    }
+    this.inputTarget.value = '' // Clear the file input's current value before opening the file picker
+    this.inputTarget.click()
   }
 
   changed() {
@@ -90,11 +88,8 @@ export default class extends Controller {
     reader.readAsDataURL(file)
   }
 
-  // Helper methods
-
   addFiles(newFiles) {
-    this.files = [...(this.files || []), ...newFiles]
-    this.files = this.files.filter((f, i, arr) => arr.findIndex(x => x.name === f.name && x.size === f.size) === i)
+    this.files = [...(this.files || []), ...newFiles] // Comibne existing and new files
     if (this.limit && this.files.length > this.limit) {
       this.files = this.files.slice(0, this.limit)
     }
