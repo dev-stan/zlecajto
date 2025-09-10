@@ -7,9 +7,17 @@ export default class extends Controller {
   connect() {
     this.files = []
     this.limit = this.data.get("limit") ? parseInt(this.data.get("limit"), 10) : null
+    this.uploadsInProgress = 0
     this.updateCount()
     this.renderPreviews()
     this.updatePickButtonState()
+
+    // Listen for ActiveStorage direct upload events
+    this.directUploadStartHandler = this.handleDirectUploadStart.bind(this)
+    this.directUploadCompleteHandler = this.handleDirectUploadComplete.bind(this)
+    this.element.addEventListener('direct-upload:start', this.directUploadStartHandler)
+    this.element.addEventListener('direct-upload:complete', this.directUploadCompleteHandler)
+    this.updateSubmitButtonState()
   }
 
   pick() {
@@ -110,5 +118,53 @@ export default class extends Controller {
     this.updateCount()
     this.renderPreviews()
     this.updatePickButtonState()
+  }
+
+  disconnect() {
+    this.element.removeEventListener('direct-upload:start', this.directUploadStartHandler)
+    this.element.removeEventListener('direct-upload:complete', this.directUploadCompleteHandler)
+  }
+
+  handleDirectUploadStart(event) {
+    this.uploadsInProgress = (this.uploadsInProgress || 0) + 1;
+    this.updateSubmitButtonState();
+  }
+
+  handleDirectUploadComplete(event) {
+    const { target, detail } = event
+    // Find the form element
+    const form = this.element.closest('form') || document.getElementById('task_step_form')
+    if (!form) return
+    // Remove any previous hidden field for this blob (by id)
+    const signedId = detail.signed_id
+    // Only add if not already present
+    if (!form.querySelector(`input[type="hidden"][name="task[photo_blob_ids][]"][value="${signedId}"]`)) {
+      const input = document.createElement('input')
+      input.type = 'hidden'
+      input.name = 'task[photo_blob_ids][]'
+      input.value = signedId
+      form.appendChild(input)
+    }
+    // Decrement uploadsInProgress and update submit button
+    this.uploadsInProgress = Math.max((this.uploadsInProgress || 1) - 1, 0);
+    this.updateSubmitButtonState();
+  }
+
+  updateSubmitButtonState() {
+    // Find all submit buttons for this form
+    const form = this.element.closest('form') || document.getElementById('task_step_form');
+    if (!form) return;
+    const submitButtons = form.querySelectorAll('button[type="submit"], input[type="submit"]');
+    if (this.uploadsInProgress > 0) {
+      submitButtons.forEach(btn => {
+        btn.disabled = true;
+        btn.classList.add('opacity-50', 'cursor-not-allowed');
+      });
+    } else {
+      submitButtons.forEach(btn => {
+        btn.disabled = false;
+        btn.classList.remove('opacity-50', 'cursor-not-allowed');
+      });
+    }
   }
 }

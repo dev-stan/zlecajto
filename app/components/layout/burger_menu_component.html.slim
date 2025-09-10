@@ -1,0 +1,24 @@
+/ Mobile burger menu for small screens
+nav.relative.flex.items-center data-controller="burger-menu"
+  button.inline-flex.items-center.justify-center.p-2.rounded-md.text-blue-900.hover:bg-blue-100.focus:outline-none.focus:ring-2.focus:ring-inset.focus:ring-blue-500.md:hidden aria-label="Open main menu" data-action="click->burger-menu#toggle"
+    svg.h-8.w-8 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true"
+      g id="SVGRepo_iconCarrier"
+        path d="M4 18L20 18" stroke="#000000" stroke-width="2" stroke-linecap="round"
+        path d="M4 12L20 12" stroke="#000000" stroke-width="2" stroke-linecap="round"
+        path d="M4 6L20 6" stroke="#000000" stroke-width="2" stroke-linecap="round"
+
+
+  / Mobile menu (hidden by default, toggled by Stimulus)
+  .fixed.inset-0.top-14.bg-white.shadow-lg.px-4.pt-6.pb-8.z-50.hidden.flex.flex-col.gap-2 data-burger-menu-target="menu"
+    = render(Ui::ButtonComponent.new(text: 'Dodaj zlecenie', path: new_task_path, size: :sm, html_options: { class: 'w-full mb-4 font-bold text-lg' }))
+    - if @user_signed_in
+        = render(Ui::ButtonComponent.new(text: 'Przeglądaj zlecenia', text_align: 'left', path: tasks_path, size: :sm, variant: :text, html_options: { class: 'w-full text-left text-blue-900 font-semibold mb-2' }))
+        = render(Ui::ButtonComponent.new(text: "Profil (#{@current_user.first_name})", text_align: 'left', path: edit_user_registration_path, size: :sm, variant: :text, html_options: { class: 'w-full text-left text-blue-900 font-semibold mb-2' }))
+        = render(Ui::ButtonComponent.new(text: 'Strona główna', path: root_path, text_align: 'left', size: :sm, variant: :text, html_options: { class: 'w-full text-left text-blue-900 font-semibold mb-2' }))
+        = render(Ui::ButtonComponent.new(text: 'Panel zleceniowadcy / wykonawcy', text_align: 'left', path: dashboard_path, size: :sm, variant: :text, html_options: { class: 'w-full text-left text-blue-900 font-semibold mb-2' }))
+        = render(Ui::ButtonComponent.new(text: 'Wyloguj się', text_align: 'left', path: destroy_user_session_path, size: :sm, variant: :text, html_options: { class: 'w-full text-left text-blue-900 font-semibold', method: :delete }))
+    - else
+        = render(Ui::ButtonComponent.new(text: 'Strona główna', text_align: 'left', path: root_path, size: :sm, variant: :text, html_options: { class: 'w-full text-left text-blue-900 font-semibold mb-2' }))
+        = render(Ui::ButtonComponent.new(text: 'Przeglądaj zlecenia', text_align: 'left', path: tasks_path, size: :sm, variant: :text, html_options: { class: 'w-full text-left text-blue-900 font-semibold mb-2' }))
+        = render(Ui::ButtonComponent.new(text: 'Zaloguj', text_align: 'left', path: helpers.new_user_session_path, size: :sm, variant: :text, html_options: { class: 'w-full text-left text-blue-900 font-semibold mb-2' }))
+        = render(Ui::ButtonComponent.new(text: 'Zarejestruj', text_align: 'left', path: helpers.new_user_registration_path, size: :sm, variant: :text, html_options: { class: 'w-full text-left text-blue-900 font-semibold' }))

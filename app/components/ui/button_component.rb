@@ -45,7 +45,8 @@ module Ui
       button: false,
       intent: nil, # :submit, :button, or nil (auto-detect)
       width: nil,
-      html_options: {}
+      html_options: {},
+      text_align: :center # :left, :right, :center (default)
     )
       super()
       @text = text
@@ -57,6 +58,7 @@ module Ui
       @html_options = html_options
       @submit = submit
       @button = button
+      @text_align = text_align&.to_sym || :center
       @intent =
         if intent
           intent.to_sym
@@ -84,7 +86,7 @@ module Ui
       path.present? && method && method != :get
     end
 
-    attr_reader :text, :path, :method
+    attr_reader :text, :path, :method, :text_align
 
     # Used by template for option hashes
     def merged_button_options(default_type)
@@ -110,8 +112,14 @@ module Ui
     attr_reader :variant, :size, :width, :html_options, :intent
 
     def button_classes
+      align_class = case text_align
+                    when :left then 'justify-start text-left'
+                    when :right then 'justify-end text-right'
+                    else 'justify-center text-center'
+                    end
       merge_classes(
-        'inline-flex items-center justify-center text-center rounded-3xl font-medium transition-colors duration-700 outline-none',
+        'inline-flex items-center rounded-3xl font-medium transition-colors duration-700 outline-none ',
+        align_class,
         VARIANTS[variant],
         SIZES[size],
         WIDTHS[width],

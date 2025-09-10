@@ -61,7 +61,10 @@ class TasksController < ApplicationController
       redirect_to new_user_session_path and return
     end
 
-    @task = current_user.tasks.build(task_params)
+    @task = current_user.tasks.build(task_params.except(:photo_blob_ids))
+    if task_params[:photo_blob_ids].present?
+      @task.photos.attach(task_params[:photo_blob_ids].map { |signed_id| { signed_id: signed_id } })
+    end
     if @task.save
       redirect_to @task, notice: t('tasks.flash.created')
     else
@@ -104,7 +107,7 @@ class TasksController < ApplicationController
     return {} unless params[:task]
 
     params.require(:task).permit(:title, :description, :salary, :status, :category, :due_date, :timeslot,
-                                 :payment_method, :location, photos: [])
+                                 :payment_method, :location, photos: [], photo_blob_ids: [])
   end
 
   def load_wizard_collections

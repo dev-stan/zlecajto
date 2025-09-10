@@ -4,13 +4,18 @@
   p.text-base.text-gray-600.mb-2.font-bold Dodaj zdjęcia
 
   = render Input::ImageUploadComponent.new(form: f,
-      name: 'task[photos][]',
+      name: 'photos',
       multiple: true,
       limit: 5,
       direct_upload: true,
       input_id: 'task_photos_input',
       required: true,
       html_options: {})
+
+  / Hidden field to persist signed blob IDs between steps
+  - if params.dig(:task, :photo_blob_ids).present?
+    - Array(params.dig(:task, :photo_blob_ids)).each do |signed_id|
+      = hidden_field_tag 'task[photo_blob_ids][]', signed_id
 
   = hidden_field_tag :step, 5
   = f.hidden_field :category
