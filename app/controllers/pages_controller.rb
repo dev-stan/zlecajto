@@ -17,5 +17,14 @@ class PagesController < ApplicationController
     ]
   end
 
+  def profile
+    @user = current_user
+    @tasks = current_user.tasks.includes(:submissions, :reviews).order(created_at: :desc)
+    @submissions = current_user.submissions.includes(task: :user).order(created_at: :desc)
+    return unless params[:tab] == 'submissions' && @submissions.accepted.exists?
+
+    current_user.mark_accepted_submissions_seen!
+  end
+
   def waitlist; end
 end

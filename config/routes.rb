@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root 'pages#home'
+  get 'profile', to: 'pages#profile'
   resources :tasks, only: %i[index create show new update] do
     collection do
       match :wizard, via: %i[get post]

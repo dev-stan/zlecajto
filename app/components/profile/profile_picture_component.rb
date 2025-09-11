@@ -17,7 +17,7 @@ module Profile
       when 'md'
         [48, 48]
       when 'lg'
-        [64, 64]
+        [128, 128]
       else
         [48, 48]
       end
