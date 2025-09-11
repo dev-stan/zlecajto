@@ -1,25 +1,27 @@
-/ Left column
-= link_to helpers.my_task_path(@task) do
-    .bg-white.rounded-2xl.p-8.flex.gap-8.items-stretch.w-full.border-3.border-blue-900.border-sm
-        .w-3/4.flex.flex-col
-            h3.text-xl.font-bold.text-gray-900.leading-snug.mb-3 = @task.title
-            .flex.gap-3.mb-4
-                = render(Ui::BadgeComponent.new(text: @task.category, variant: :blue))
-                = render(Ui::BadgeComponent.new(text: @task.payment_method, variant: :green))
-            .space-y-1.text-gray-600.text-base.mb-2
-                .flex.items-center.text-gray-500.text-sm.space-x-2
-                i.fa.fa-map-marker.fa-fw.text-base.mr-1
-                span = @task.location
-                .flex.items-center.text-gray-500.text-sm.space-x-2
-                i.fa.fa-calendar.fa-fw.text-base.mr-1
-                span = formatted_due_date(@task)
-                .flex.items-center.text-gray-500.text-sm.space-x-2
-                i.fa.fa-clock-o.fa-fw.text-base.mr-1
-                span = @task.timeslot
-        / Right column
-        .w-1/4.flex.flex-col.items-center.justify-start
-            = render(Ui::BadgeComponent.new(text: @task.status, variant: :red))
-            .text-2xl.font-extrabold.text-gray-900.text-center.mt-5 = formatted_salary(@task)
-            .mt-3
-                = render(Profile::ProfilePictureComponent.new(user: @task.user))
-                = render(Profile::ProfileReviewsComponent.new(user: @task.user))
+/. Entire card is now an anchor linking to the task show page so the whole surface is clickable
+= link_to (defined?(path) && path.present? ? path : helpers.task_path(@task)), class: 'rounded-2xl overflow-hidden flex flex-col h-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow hover:shadow-md' do
+  / Body
+  .p-6.pb-4.flex-1.bg-white
+    .flex.justify-between.gap-6.items-stretch.h-full
+      / Left column
+      .flex-1
+        = render(Ui::BadgeComponent.new(text: '0 ofert', variant: :red))
+        h3.text-xl.font-semibold.text-gray-900.leading-snug.mt-4.mb-2 = @task.title
+        .space-y-1.text-gray-600.text-base.items-center
+          .flex.items-center.gap-2
+            span.text-gray-400
+              i.fa.fa-home.fa-fw.text-secondary
+            span = @task.location
+          .flex.items-center.gap-2
+            span.text-gray-400
+              i.fa.fa-bolt.fa-fw.text-secondary
+            span = formatted_due_date(@task)
+          .flex.items-center.gap-2
+            span.text-gray-400
+              i.fa.fa-clock-o.fa-fw.text-secondary
+            span = @task.timeslot
+
+      / Right column (price + user)
+      div class="flex flex-col items-end min-w-[110px] h-full justify-between"
+        .text-2xl.font-extrabold.text-primary.whitespace-nowrap.mt-1 = formatted_salary(@task)
+        .flex.flex-col.items-center.text-center.text-base.text-gray-600.mt-3.self-end.mt-auto = @task.created_at.strftime('%d.%m')

@@ -4,9 +4,11 @@ module Cards
   class TaskCardComponent < ApplicationComponent
     include TasksHelper
 
-    def initialize(task:, show_actions: true, show_image: true, highlight: false, html_options: {}, path: nil)
+    def initialize(task:, show_actions: true, show_avatar: true, show_image: true, highlight: false, html_options: {},
+                   path: nil)
       super()
       @task = task
+      @show_avatar = show_avatar
       @show_actions = show_actions
       @show_image = show_image
       @highlight = highlight

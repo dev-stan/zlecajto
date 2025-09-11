@@ -1,8 +1,8 @@
-.p-6.flex.items-center.gap-6.mt-18
+.p-6.flex.items-center.justify-center.gap-6.mt-18
     = render(Profile::ProfilePictureComponent.new(user: @user, size: 'lg'))
     .flex.flex-col
         h2.text-2xl.font-bold.text-gray-900.mb-1 #{@user.first_name} #{@user.last_name[0]}.
-        = render(Ui::BadgeComponent.new(text: "edytuj", variant: :green)) if @user.reviews.any?
+        = render(Ui::BadgeComponent.new(text: "edytuj", variant: :green))
 
 .mx-auto.px-4
     - requested_tab = params[:tab].presence
@@ -10,11 +10,11 @@
     div data-controller="tabs"
         .flex.flex-row.justify-center
             nav.flex role="tablist"
-            button.py-3.px-6.text-lg.font-semibold.transition data-action="tabs#show" data-tabs-target="tab" data-tab="tasks" role="tab" aria-selected=(active_tab == 'tasks') class=(active_tab == 'tasks' ? 'text-black border-b-2 border-black bg-white' : 'text-gray-500')
+            button.py-3.px-6.text-lg.font-semibold.transition data-action="tabs#show" data-tabs-target="tab" data-tab="tasks" role="tab" aria-selected=(active_tab == 'tasks') class=(active_tab == 'tasks' ? 'text-black border-b-2 border-black' : 'text-gray-500')
                 = 'Zlecam'
                 - if @tasks.any?
                     span.ml-2.inline-flex.items-center.justify-center.text-base.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @tasks.size
-            button.py-3.px-6.text-lg.font-semibold.transition data-action="tabs#show" data-tabs-target="tab" data-tab="submissions" role="tab" aria-selected=(active_tab == 'submissions') class=(active_tab == 'submissions' ? 'text-black border-b-2 border-black bg-white' : 'text-gray-500')
+            button.py-3.px-6.text-lg.font-semibold.transition data-action="tabs#show" data-tabs-target="tab" data-tab="submissions" role="tab" aria-selected=(active_tab == 'submissions') class=(active_tab == 'submissions' ? 'text-black border-b-2 border-black' : 'text-gray-500')
                 = 'Wykonuję'
                 - if @submissions.any?
                     span.ml-2.inline-flex.items-center.justify-center.text-base.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @submissions.size
@@ -25,7 +25,7 @@
             - if @tasks.any?
                 .grid.grid-cols-1.lg:grid-cols-2.gap-6
                     - @tasks.each do |task|
-                        = render Cards::TaskCardComponent.new(task: task, path: my_task_path(task), show_image: false)
+                        = render Cards::MyTaskCardComponent.new(task: task, path: my_task_path(task))
             - else
                 .text-center.py-12
                     p.text-gray-500.mb-4 = t('dashboard.my_tasks.empty', default: 'Nie masz jeszcze żadnych zadań.')
@@ -37,7 +37,7 @@
                 .grid.grid-cols-1.lg:grid-cols-2.gap-6
                     - @submissions.each do |submission|
                         - highlight = (submission.status == 'accepted')
-                        = render Cards::TaskCardComponent.new(task: submission.task, show_image: false, highlight: highlight)
+                        = render Cards::MyTaskCardComponent.new(task: submission.task, highlight: highlight)
             - else
                 .text-center.py-12
                     p.text-gray-500.mb-4 = t('dashboard.my_submissions.empty', default: 'Nie aplikowałeś jeszcze na żadne zadania.')

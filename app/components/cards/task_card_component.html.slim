@@ -30,5 +30,4 @@
       div class="flex flex-col items-end gap-3 min-w-[110px]"
         .text-lg.font-extrabold.text-black.whitespace-nowrap.mt-1 = formatted_salary(@task)
         .flex.flex-col.items-center.text-center.text-base.text-gray-600.mt-3
-          = render(Profile::ProfilePictureComponent.new(user: @task.user))
-          = render(Profile::ProfileReviewsComponent.new(user: @task.user))
+          = render(Profile::ProfilePictureComponent.new(user: @task.user)) if @show_avatar
