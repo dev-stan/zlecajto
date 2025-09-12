@@ -1,33 +1,25 @@
-/. Entire card is now an anchor linking to the task show page so the whole surface is clickable
-= link_to (defined?(path) && path.present? ? path : helpers.task_path(@task)), class: 'rounded-2xl border-3 border-blue-900 overflow-hidden flex flex-col h-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow hover:shadow-md' do
+= link_to (defined?(path) && path.present? ? path : helpers.task_path(@task)), class: 'rounded-2xl overflow-hidden flex flex-col' do
   - if show_image && @task.photos.attached?
     img.w-full.h-48.object-cover src=helpers.url_for(@task.photos.first.variant(resize_to_fill: [640, 360])) alt=@task.title loading="lazy"
 
-  / Body
-  .p-6.pb-4.flex-1.bg-gray-100
-    .flex.justify-between.gap-6
-      / Left column
+  .p-6.pb-4.flex-1.bg-white
+    .flex.justify-between.h-full
       .flex-1
-        h3.text-xl.font-semibold.text-gray-900.leading-snug = @task.title
+        h3.text-xl.font-semibold.text-gray-900.mb-2 = @task.title
         .flex.gap-3.mb-4.mt-1
           = render(Ui::BadgeComponent.new(text: @task.category, variant: :blue))
           = render(Ui::BadgeComponent.new(text: @task.payment_method, variant: :green))
-        .space-y-1.text-gray-600.text-base.items-center
-          .flex.items-center.gap-2
+        .text-gray-600
+          .flex.gap-2
             span.text-gray-400
-              i.fa.fa-map-marker.fa-fw.text-base
+              i.fa.fa-home.fa-fw.text-secondary
             span = @task.location
-          .flex.items-center.gap-2
+          .flex.gap-2
             span.text-gray-400
-              i.fa.fa-calendar.fa-fw.text-base
+              i.fa.fa-bolt.fa-fw.text-secondary
             span = formatted_due_date(@task)
-          .flex.items-center.gap-2
-            span.text-gray-400
-              i.fa.fa-clock-o.fa-fw.text-base
-            span = @task.timeslot
 
-      / Right column (price + user)
-      div class="flex flex-col items-end gap-3 min-w-[110px]"
-        .text-lg.font-extrabold.text-black.whitespace-nowrap.mt-1 = formatted_salary(@task)
-        .flex.flex-col.items-center.text-center.text-base.text-gray-600.mt-3
-          = render(Profile::ProfilePictureComponent.new(user: @task.user)) if @show_avatar
+      / Right column (price / date)
+      .div class="flex flex-col items-end h-full justify-between"
+        .text-2xl.font-extrabold.text-primary.mt-1 = formatted_salary(@task)
+        .text-gray-600 = @task.created_at.strftime('%d.%m')
