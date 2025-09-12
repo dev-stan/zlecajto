@@ -19,7 +19,7 @@ nav.fixed.top-0.left-0.right-0.bg-white.shadow-sm.z-50
             span.ml-1.inline-block.w-2.h-2.rounded-full.bg-red-500
         .ml-4.flex.items-center
           = link_to edit_user_registration_path do
-            = render(Profile::ProfilePictureComponent.new(user: current_user))
+            = render(User::AvatarComponent.new(user: current_user))
       - else
         .flex.items-center.gap-2
           = link_to 'Zaloguj', helpers.new_user_session_path

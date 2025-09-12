@@ -4,8 +4,6 @@ module Ui
   class CheckboxButtonComponent < ApplicationComponent
     attr_reader :name, :value, :checked, :id, :label, :options, :color
 
-    # Define all possible colors and their corresponding Tailwind classes.
-    # This is critical to ensure the JIT compiler can see them.
     COLOR_CLASSES = {
       'red' => {
         hover: 'hover:bg-red-200',

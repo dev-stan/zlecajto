@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module Ui
-  # Renders a button, link, or form button with consistent styling and intent-revealing API.
   class ButtonComponent < ApplicationComponent
     VARIANTS = {
       primary: 'bg-primary text-white',
@@ -27,14 +26,6 @@ module Ui
       100 => 'w-full'
     }.freeze
 
-    # Usage:
-    # - As a submit button: set submit: true (legacy) or intent: :submit (preferred)
-    # - As a regular button: set button: true (legacy) or intent: :button (preferred)
-    # - As a link: provide path (and optionally method)
-    #
-    # Only one intent should be set at a time.
-    #
-    # For backward compatibility, submit: and button: are supported but intent: is preferred.
     def initialize(
       text:,
       path: nil,

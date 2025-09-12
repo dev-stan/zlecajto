@@ -4,20 +4,18 @@ module Cards
   class TaskCardComponent < ApplicationComponent
     include TasksHelper
 
-    def initialize(task:, show_actions: true, show_avatar: true, show_image: true, highlight: false, html_options: {},
+    def initialize(task:, show_avatar: true, show_image: true, html_options: {},
                    path: nil)
       super()
       @task = task
       @show_avatar = show_avatar
-      @show_actions = show_actions
       @show_image = show_image
-      @highlight = highlight
       @html_options = html_options
       @path = path
     end
 
     private
 
-    attr_reader :task, :show_actions, :show_image, :highlight, :html_options, :path
+    attr_reader :task, :show_image, :html_options, :path
   end
 end

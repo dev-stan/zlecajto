@@ -1,5 +1,5 @@
 .p-6.flex.items-center.justify-center.gap-6.mt-18
-    = render(Profile::ProfilePictureComponent.new(user: @user, size: 'lg'))
+    = render(User::AvatarComponent.new(user: @user, size: 'lg'))
     .flex.flex-col
         h2.text-2xl.font-bold.text-gray-900.mb-1 #{@user.first_name} #{@user.last_name[0]}.
         = render(Ui::BadgeComponent.new(text: "edytuj", variant: :green))

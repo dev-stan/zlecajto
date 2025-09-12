@@ -25,8 +25,6 @@ module Ui
       'Wieczór' => '🌙'
     }.freeze
 
-    # style: :default, :square, :rounded
-    # :rounded gives more rounded corners and less vertical padding
     def initialize(name:, value:, checked: false, id: nil, label: nil, style: :default, html_options: {})
       super()
       @name = name
