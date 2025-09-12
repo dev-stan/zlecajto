@@ -39,8 +39,8 @@ module Input
 
     def input_classes
       merge_classes(
-        'block rounded-lg bg-gray-100 px-3 py-3 text-base placeholder-gray-400 transition focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 focus:outline-none',
-        disabled ? 'bg-gray-100 cursor-not-allowed' : nil,
+        'block rounded-lg bg-white px-3 py-3 text-base placeholder-gray-400 transition focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 focus:outline-none',
+        disabled ? 'bg-white cursor-not-allowed' : nil,
         html_options[:class]
       )
     end

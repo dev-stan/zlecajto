@@ -1,10 +1,10 @@
-div class="min-h-[60vh] py-10 px-4"
+div class="min-h-[60vh].mt-8 px-8"
   div class="mx-auto w-full max-w-6xl"
     = turbo_frame_tag "task_wizard" do
       div class="flex flex-col md:flex-row gap-10 items-start"
         aside class="md:w-48 md:flex-shrink-0"
           - wizard_steps = ['Tytuł i kategoria', 'Opis', 'Lokalizacja', 'Budżet', 'Zdjęcia']
-          = render Tasks::WizardStepsComponent.new(current_step: @step, task: @task, steps: wizard_steps)
+          / = render Tasks::WizardStepsComponent.new(current_step: @step, task: @task, steps: wizard_steps)
         section class="flex-1 max-w-3xl w-full"
           = render "tasks/steps/#{@step}", task: @task, categories: @categories, step: @step
 

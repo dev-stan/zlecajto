@@ -1,5 +1,5 @@
 = form_with url: wizard_tasks_path, method: :post, data: { turbo_frame: 'task_wizard', controller: 'form-validation', action: 'submit->form-validation#validate' }, html: { id: 'task_step_form', novalidate: true } do |f|
-
+  p.font-bold.mb-2 Krok 4/5
   h1.text-2xl.font-bold.mb-4 Budżet
   p.text-base.text-gray-600.mb-2.font-bold Ustal budżet lub widełki
 
@@ -7,7 +7,7 @@
 
   fieldset.space-y-3.pt-5
     p.text-base.text-gray-600.mb-2.font-bold Wybierz metodę płatności
-    ul.grid.grid-cols-1.sm:grid-cols-3.gap-3
+    ul.grid.grid-cols-3.sm:grid-cols-3.gap-3
       - @payment_methods.each do |method|
         li
           = render Ui::RadioButtonComponent.new(name: 'task[payment_method]',

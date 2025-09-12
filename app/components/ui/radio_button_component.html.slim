@@ -1,12 +1,12 @@
 - is_vertical = %i[square rounded].include?(style)
-- base_label_classes = is_vertical ? 'relative flex flex-col cursor-pointer items-center justify-center gap-2 bg-gray-50 px-5 text-base font-medium text-gray-700 transition hover:bg-blue-100 peer-checked:!border-blue-500 peer-checked:bg-blue-100 peer-checked:text-blue-900 peer-checked:shadow peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-blue-500' : 'relative flex cursor-pointer items-center gap-2 bg-gray-50 px-5 py-4 text-base font-medium text-gray-700 transition hover:bg-blue-100 peer-checked:!border-blue-500 peer-checked:bg-blue-100 peer-checked:text-blue-900 peer-checked:shadow peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-blue-500'
+- base_label_classes = is_vertical ? 'border-2 border-blue-500 rounded-xl relative flex flex-col cursor-pointer items-center justify-center gap-2 bg-gray-50 px-7 text-base font-medium text-gray-700 transition hover:bg-blue-100 peer-checked:!border-blue-500 peer-checked:bg-blue-100 peer-checked:text-blue-900 peer-checked:shadow peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-blue-500' : 'relative flex cursor-pointer items-center gap-2 bg-gray-50 py-4 text-base font-medium text-gray-700 transition hover:bg-blue-100 peer-checked:!border-blue-500 peer-checked:bg-blue-100 peer-checked:text-blue-900 peer-checked:shadow peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-blue-500'
 - rounded_label_classes = style == :rounded ? 'rounded-4xl py-1' : nil
 
 - all_classes = options[:class].to_s.split
 - input_required = all_classes.include?('required') ? 'required' : nil
 - label_user_classes = all_classes - ['required']
 
-- input_classes = ['peer absolute opacity-0 w-0 h-0 -m-px overflow-hidden pointer-events-none appearance-none', input_required].compact.join(' ')
+- input_classes = ['peer absolute opacity-0 w-0 h-0 overflow-hidden pointer-events-none appearance-none', input_required].compact.join(' ')
 - label_classes = [base_label_classes, rounded_label_classes, label_user_classes.join(' ')].reject(&:blank?).join(' ')
 
 = radio_button_tag name, value, checked, id: id, class: input_classes, **options.except(:class)
