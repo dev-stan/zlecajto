@@ -9,8 +9,8 @@ html
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
     = javascript_importmap_tags
 
-  body.mt-12
-    = render Layout::NavbarComponent.new()
+  body
+    / = render Layout::NavbarComponent.new()
     main
       - if notice
         = render Ui::AlertComponent.new(message: notice, variant: :success)
