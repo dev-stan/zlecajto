@@ -124,6 +124,8 @@ GEM
     ffi (1.17.2-x86_64-darwin)
     ffi (1.17.2-x86_64-linux-gnu)
     ffi (1.17.2-x86_64-linux-musl)
+    font-awesome-rails (4.7.0.9)
+      railties (>= 3.2, < 9.0)
     foreman (0.90.0)
       thor (~> 1.4)
     globalid (1.2.1)
@@ -391,6 +393,7 @@ DEPENDENCIES
   debug
   devise
   faker
+  font-awesome-rails (~> 4.7, >= 4.7.0.8)
   foreman
   i18n
   image_processing (~> 1.2)
