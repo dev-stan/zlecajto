@@ -19,4 +19,4 @@ div class="min-h-[60vh] mt-8 px-8 pb-24"
               - if @step < 5
                 = render Ui::ButtonComponent.new(text: 'Dalej', submit: true, size: :md, html_options: { form: 'task_step_form', class: 'w-full'})
               - elsif @step == 5
-                = render Ui::ButtonComponent.new(text: 'Utwórz zlecenie', submit: true, size: :md, html_options: { form: 'task_step_form' })
+                = render Ui::ButtonComponent.new(text: 'Utwórz zlecenie', submit: true, size: :md, html_options: { form: 'task_step_form', class: 'w-full' })
