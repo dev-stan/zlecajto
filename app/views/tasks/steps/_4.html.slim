@@ -7,7 +7,7 @@
 
   fieldset.space-y-3.pt-5
     p.text-base.text-gray-600.mb-2.font-bold Wybierz metodę płatności
-    ul.grid.grid-cols-2.sm:grid-cols-2.gap-3
+    ul.grid.grid-cols-2.md:grid-cols-3.gap-4
       - @payment_methods.each do |method|
         li
           = render Ui::RadioButtonComponent.new(name: 'task[payment_method]',

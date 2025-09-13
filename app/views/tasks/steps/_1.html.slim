@@ -3,15 +3,31 @@
   h1.text-2xl.font-bold.mb-4 Z czym potrzebujesz pomocy?
 
   p.text-base.text-gray-600.mb-2.font-bold.mt-5 Nadaj krótki tytuł swojemu zleceniu
-  = render Input::InputComponent.new(name: 'task[title]', placeholder: 'Short title', value: task.title, html_options: { class: 'required' })
-
-  p.text-base.text-gray-600.mb-2.font-bold.mt-5 Wybierz kategorię
-  = render Input::SelectComponent.new(form: f, options: @categories, selected: task.category, label: 'Wybierz kategorię', field: :category)
+  = render Input::InputComponent.new(name: 'task[title]', placeholder: 'Short title', value: task.title)
 
   p.text-base.text-gray-600.mb-2.font-bold.mt-5 Nadaj krótki tytuł swojemu zleceniu
-  = render Input::DatePickerComponent.new(name: 'task[due_date]', value: task.due_date&.to_date || params.dig(:task, :due_date), html_options: { class: 'required' })
+  .hidden.md:block
+    ul.grid.grid-cols-4.gap-3
+      - categories.each do |cat|
+        - id = "cat_#{cat.parameterize}"
+        li
+          = render Ui::RadioButtonComponent.new(name: 'task[category]', value: cat, checked: task.category == cat, id: id, label: cat, style: :square)
+
+  .block.md:hidden
+    = render Input::SelectComponent.new(form: f, options: @categories, selected: task.category, label: 'Wybierz kategorię', field: :category)
+
+  p.text-base.text-gray-600.mb-2.font-bold.mt-5 Nadaj krótki tytuł swojemu zleceniu
+  = render Input::DatePickerComponent.new(name: 'task[due_date]', value: task.due_date&.to_date || params.dig(:task, :due_date))
 
   p.text-base.text-gray-600.mb-2.font-bold.mt-5 Kiedy najlepiej wykonać zadanie?
-  = render Input::SelectComponent.new(form: f, options: @time_slots, selected: task.timeslot, label: 'Wybierz przedział czasowy', field: :timeslot)
+  .hidden.md:block
+    ul.grid.grid-cols-1.sm:grid-cols-3.gap-3
+      - @time_slots.each do |slot|
+        - id = "slot_#{slot}"
+        li
+          = render Ui::RadioButtonComponent.new(name: 'task[timeslot]', value: slot, checked: params.dig(:task, :timeslot) == slot || task.timeslot == slot, id: id, label: slot.humanize, style: :square)
+
+  .block.md:hidden
+    = render Input::SelectComponent.new(form: f, options: @time_slots, selected: task.timeslot, label: 'Wybierz przedział czasowy', field: :timeslot)
 
   = hidden_field_tag :step, 1
