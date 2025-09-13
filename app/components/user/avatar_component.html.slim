@@ -1,4 +1,4 @@
-.rounded-full.bg-gray-200.flex.items-center.justify-center.overflow-hidden.border-2.border-blue-900
+.rounded-full.flex.items-center.justify-center.overflow-hidden
   - if @user&.profile_picture&.attached?
     = image_tag @user.profile_picture.variant(resize_to_fill: image_size), class: "w-full h-full object-cover", alt: t('activerecord.attributes.user.profile_picture', default: 'Zdjęcie profilowe'), loading: "lazy"
   - else
