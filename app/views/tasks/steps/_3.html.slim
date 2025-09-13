@@ -8,7 +8,7 @@
       - @locations.each do |loc|
         - id = "loc_#{loc.parameterize}"
         li
-          = render Ui::RadioButtonComponent.new(name: 'task[location]', value: loc, checked: params.dig(:task, :location) == loc || task.location == loc, id: id, label: loc, html_options: { class: 'required' })
+          = render Ui::RadioButtonComponent.new(name: 'task[location]', value: loc, checked: params.dig(:task, :location) == loc || task.location == loc, id: id, label: loc, style: :square, html_options: { class: 'required' })
 
   = hidden_field_tag :step, 3
   = hidden_field_tag 'task[category]', task.category

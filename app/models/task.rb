@@ -5,7 +5,7 @@ class Task < ApplicationRecord
   CATEGORIES      = %w[Sprzątanie Zakupy Montaż Transport Przeprowadzki Opieka
                        Naprawy Ogrodnictwo].freeze
 
-  TIMESLOTS       = %w[Rano Popołudnie Wieczór].freeze
+  TIMESLOTS       = %w[Rano Popołudnie Wieczór Obojętnie].freeze
   PAYMENT_METHODS = %w[Przelew Blik Gotówka].freeze
   LOCATIONS       = ['Stary Strzeszyn', 'Osiedle Literackie', 'Strzeszyn Grecki', 'Osiedle Wojskowe'].freeze
 

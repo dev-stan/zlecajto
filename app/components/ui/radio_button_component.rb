@@ -22,7 +22,8 @@ module Ui
     TIMESLOT_EMOJIS = {
       'Rano' => '🌅',
       'Popołudnie' => '☀️',
-      'Wieczór' => '🌙'
+      'Wieczór' => '🌙',
+      'Obojętnie' => '❓'
     }.freeze
 
     def initialize(name:, value:, checked: false, id: nil, label: nil, style: :default, html_options: {})

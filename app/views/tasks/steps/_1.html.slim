@@ -18,6 +18,4 @@
         - id = "slot_#{slot}"
         li
           = render Ui::RadioButtonComponent.new(name: 'task[timeslot]', value: slot, checked: params.dig(:task, :timeslot) == slot || task.timeslot == slot, id: id, label: slot.humanize, style: :square, html_options: { class: 'required' })
-      li
-        = render Ui::RadioButtonComponent.new(name: 'task[timeslot]', value: 'a', label: 'Inaczej', style: :square, html_options: { class: 'required' })
   = hidden_field_tag :step, 1
