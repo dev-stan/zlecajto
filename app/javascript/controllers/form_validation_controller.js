@@ -7,6 +7,7 @@ const ERROR_CLASSES = [ERROR_CLASS]
 
 export default class extends Controller {
   connect() {
+    console.log("FormValidationController connected")
     this.onInput = this.onInput.bind(this)
     this.element.addEventListener('input', this.onInput)
     this.element.addEventListener('change', this.onInput)
