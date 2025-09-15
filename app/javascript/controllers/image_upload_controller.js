@@ -6,6 +6,7 @@ export default class extends Controller {
   static targets = ["input", "count", "list"]
 
   connect() {
+    console.log("ImageUploadController connected")
     this.files = []
     this.limit = parseInt(this.data.get("limit"))
     this.updateCountDisplay()
