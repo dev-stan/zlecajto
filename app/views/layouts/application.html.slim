@@ -5,15 +5,28 @@ html
     meta name="viewport" content="width=device-width,initial-scale=1"
     = csrf_meta_tags
     = csp_meta_tag
+
+    / Tailwind + app styles
     = stylesheet_link_tag "tailwind", "data-turbo-track": "reload"
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
     = javascript_importmap_tags
 
+    / ---- PWA / iOS meta ----
+    meta name="apple-mobile-web-app-capable" content="yes"
+    meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"
+    meta name="apple-mobile-web-app-title" content="Zlecajto"
+    link rel="apple-touch-icon" href=asset_path("icons/apple-touch-icon.png")
+    link rel="manifest" href=asset_path("manifest.json")
+    meta name="theme-color" content="#0d6efd"
+
   body
+    / Optional navbar
     / = render Layout::NavbarComponent.new()
+
     main
       - if notice
         = render Ui::AlertComponent.new(message: notice, variant: :success)
       - if alert
         = render Ui::AlertComponent.new(message: alert, variant: :error)
+
       = yield
