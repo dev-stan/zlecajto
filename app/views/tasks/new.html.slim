@@ -1,18 +1,17 @@
-div class="min-h-[60vh] mt-8 px-8 pb-24 md:mt-24"
-  div class="mx-auto w-full max-w-6xl"
+.px-8.md:mt-24
+  .md:mx-auto.md:max-w-6xl
     = turbo_frame_tag "task_wizard" do
-      div class="flex flex-col md:flex-row gap-10 items-start"
-        div class="md:w-48 md:flex-shrink-0"
+      .flex.flex-col.md:flex-row.gap-10.items-start
+        .md:w-48.md:flex-shrink-0
           - wizard_steps = ['Tytuł i kategoria', 'Opis', 'Lokalizacja', 'Budżet', 'Zdjęcia']
           .hidden.md:block
             = render Tasks::WizardStepsComponent.new(current_step: @step, task: @task, steps: wizard_steps)
-        div class="flex-1 max-w-3xl w-full"
+        .flex-1.max-w-3xl.w-full
           = render "tasks/steps/#{@step}", task: @task, categories: @categories, step: @step
 
       - nav_task_params = { category: @task.category, title: @task.title, description: @task.description, salary: @task.salary, payment_method: @task.payment_method, due_date: @task.due_date, timeslot: @task.timeslot, location: @task.location }
-      / Sticky/fixed bottom bar for navigation buttons
-      div.mt-6.flex.items-center.justify-center.gap-4
-        div class="flex gap-4 fixed bottom-0 left-0 w-full bg-transparent z-50 p-4 justify-center items-center md:justify-end"
+      .mt-6.flex.items-center.justify-center.gap-4
+        .flex.gap-4.fixed.bottom-0.left-0.w-full.bg-transparent.z-50.p-4.justify-center.items-center.md:justify-end
           - if @step > 1
             = render Ui::ButtonComponent.new(text: 'Cofnij', path: new_task_path(step: @step - 1, task: nav_task_params), variant: :ghost, size: :md, html_options: { data: { turbo_frame: 'task_wizard' } })
           - if @step < 5
