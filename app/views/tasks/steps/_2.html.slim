@@ -3,7 +3,7 @@
   h1.text-2xl.font-bold.mb-4 Opis zadania
   p.text-base.text-gray-600.mb-2.font-bold Dodaj więcej szczegółów
 
-  = render Input::InputComponent.new(name: 'task[description]', type: 'textarea', placeholder: 'Opisz dokładnie zadanie...', value: task.description, rows: 6, html_options: { class: 'required' })
+  = render Input::InputComponent.new(name: 'task[description]', type: 'textarea', placeholder: 'Opisz dokładnie zadanie...', value: task.description, rows: 6, html_options: { class: 'required border-2 border-blue-500' })
 
   = hidden_field_tag :step, 2
   = hidden_field_tag 'task[category]', task.category

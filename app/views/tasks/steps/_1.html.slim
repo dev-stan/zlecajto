@@ -1,11 +1,11 @@
-= form_with url: wizard_tasks_path, method: :post, data: { turbo_frame: "task_wizard", controller: 'form-validation', action: 'submit->form-validation#validate' }, html: { multipart: true, id: 'task_step_form', novalidate: true } do |f|
+= form_with url: wizard_tasks_path, method: :post, data: { turbo_frame: "task_wizard", controller: 'form-validation category-toggle', action: 'submit->form-validation#validate' }, html: { multipart: true, id: 'task_step_form', novalidate: true } do |f|
   p.font-bold.mb-2 Krok 1/5
   h1.text-2xl.font-bold.mb-4 Z czym potrzebujesz pomocy?
 
   p.text-base.text-gray-600.mb-2.font-bold.mt-5 Nadaj krótki tytuł swojemu zleceniu
-  = render Input::InputComponent.new(name: 'task[title]', placeholder: 'Short title', value: task.title)
+  = render Input::InputComponent.new(name: 'task[title]', placeholder: 'Short title', value: task.title, html_options: { class: 'border-2 border-blue-500'})
 
-  p.text-base.text-gray-600.mb-2.font-bold.mt-5 Nadaj krótki tytuł swojemu zleceniu
+  p.text-base.text-gray-600.mb-2.font-bold.mt-5 Przypisz katerogię do zlecenia
   .hidden.md:block
     ul.grid.grid-cols-4.gap-3
       - categories.each do |cat|
@@ -16,10 +16,10 @@
   .block.md:hidden
     = render Input::SelectComponent.new(form: f, options: @categories, selected: task.category, label: 'Wybierz kategorię', field: :category)
 
-  p.text-base.text-gray-600.mb-2.font-bold.mt-5 Nadaj krótki tytuł swojemu zleceniu
+  p.text-base.text-gray-600.mb-2.font-bold.mt-5 Kiedy potrzebujesz pomocy?
   = render Input::DatePickerComponent.new(name: 'task[due_date]', value: task.due_date&.to_date || params.dig(:task, :due_date))
 
-  p.text-base.text-gray-600.mb-2.font-bold.mt-5 Kiedy najlepiej wykonać zadanie?
+  p.text-base.text-gray-600.mb-2.font-bold.mt-5 O której godzinie?
   .hidden.md:block
     ul.grid.grid-cols-1.sm:grid-cols-3.gap-3
       - @time_slots.each do |slot|

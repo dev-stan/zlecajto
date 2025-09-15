@@ -15,7 +15,7 @@
             checked: params.dig(:task, :payment_method) == method || task.payment_method == method,
             label: method,
             style: :square,
-            html_options: { class: 'required' })
+            html_options: { class: 'required border-2 border-blue-500' })
 
 
   = hidden_field_tag :step, 4

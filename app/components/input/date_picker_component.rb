@@ -2,6 +2,8 @@
 
 module Input
   class DatePickerComponent < ApplicationComponent
+    attr_reader :name, :label, :value, :disabled, :html_options, :id
+
     def initialize(name:, label: nil, value: nil, disabled: false, html_options: {})
       super()
       @name = name
@@ -9,45 +11,24 @@ module Input
       @value = value
       @disabled = disabled
       @html_options = html_options
-      @id = generate_id
+      @id = "datepicker_#{name.to_s.parameterize(separator: '_')}"
     end
 
-    private
+    def formatted_value
+      return if value.blank?
 
-    attr_reader :name, :label, :value, :disabled, :html_options, :id
-
-    def generate_id
-      "datepicker_#{name.to_s.parameterize(separator: '_')}"
+      v = value.respond_to?(:to_date) ? value.to_date : value
+      v.is_a?(Date) ? v.strftime('%Y-%m-%d') : v.to_s
     end
 
-    def label_classes
-      'mb-1 block text-base font-medium text-gray-700'
-    end
-
-    def input_classes
-      merge_classes(
-        'block rounded-md bg-white px-3 py-2 text-base transition focus:border-green-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 focus:outline-none',
-        disabled ? 'bg-white cursor-not-allowed' : nil,
-        html_options[:class]
-      )
-    end
-
-    def input_attributes
-      {
+    def input_options
+      html_options.merge(
         id: id,
         name: name,
         type: 'date',
         value: formatted_value,
-        class: input_classes,
-        disabled: disabled || nil
-      }.merge(html_options.except(:class))
-    end
-
-    def formatted_value
-      return unless value.present?
-
-      v = value.respond_to?(:to_date) ? value.to_date : value
-      v.is_a?(Date) ? v.strftime('%Y-%m-%d') : v.to_s
+        disabled: disabled ? true : nil
+      ).compact
     end
   end
 end

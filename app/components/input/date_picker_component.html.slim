@@ -1,4 +1,4 @@
 - if label.present?
-  label for=id class=label_classes
+  label for=id class="mb-1 block text-base font-medium text-gray-700"
     = label
-= tag.input(**input_attributes)
+= tag.input(**input_options, class: "block rounded-md bg-white px-3 py-3 text-gray-500 transition border-2 border-blue-500 #{'bg-white cursor-not-allowed' if disabled} #{html_options[:class]}")
