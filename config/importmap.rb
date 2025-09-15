@@ -11,4 +11,3 @@ pin '@rails/activestorage', to: 'activestorage.esm.js' # enable direct uploads f
 pin 'ultimate_turbo_modal' # @2.2.1
 pin 'vanta_birds', to: 'vanta/birds.min.js'
 pin 'three', to: 'vanta/three.min.js'
-pin '@fortawesome/fontawesome-free', to: '@fortawesome/fontawesome-free/js/all.js'

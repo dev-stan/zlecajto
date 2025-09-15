@@ -74,7 +74,6 @@ gem 'tailwindcss-ruby', '~> 4.1'
 gem 'tailwindcss-rails', '~> 4.3'
 
 gem 'slim-rails', '~> 3.7'
-gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.8'
 gem 'devise'
 gem 'foreman'
 gem 'image_processing', '~> 1.2'
