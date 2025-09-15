@@ -2,7 +2,7 @@
   header.text-center
     h1.text-4xl.font-extrabold.text-gray-900.mb-4 Zarabiaj ze ZlecajTo
     p.text-lg.text-gray-600 Zostań wykonawcą i zacznij zarabiać jak chcesz i kiedy chcesz!
-  main.grid.grid-cols-1.md:grid-cols-3.gap-4.mx-3
+  main.grid.grid-cols-1.md:grid-cols-3.gap-4.mx-3.mt-5
     - @tasks.each do |task|
         = render Tasks::NewTaskCardComponent.new(task: task, path: task_path(task), variant: :default) do |card|
           - if task.photos.attached?
