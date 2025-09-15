@@ -32,7 +32,9 @@
       - if @tasks.any?
         .grid.grid-cols-1.lg:grid-cols-2.gap-6
           - @tasks.each do |task|
-            = render Cards::MyTaskCardComponent.new(task: task, path: my_task_path(task))
+            = render Tasks::NewTaskCardComponent.new(task: task, variant: :owner) do |card|
+              - card.with_badge do
+                = render Ui::BadgeComponent.new(text: "#{task.submissions.count} zgłoszeń", variant: :red)
       - else
         .text-center.py-12
           p.text-gray-500.mb-4 = t('dashboard.my_tasks.empty', default: 'Nie masz jeszcze żadnych zadań.')
