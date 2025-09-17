@@ -3,30 +3,37 @@
 - photos = @task.photos.attachments
 - multiple = photos.size > 1
 
-.relative.w-full.max-w-2xl.mx-auto.mb-10
-  - if @task.photos.attached?
-    = render 'tasks/show/media', photos: photos, multiple: multiple, task: @task
-  .px-8.py-8
-    .flex.justify-between.mb-3
-      = render Ui::BadgeComponent.new(text: "#{@task.submissions.count} zgłoszeń", variant: :green)
-      h1.font-extrabold.text-primary.text-xl = formatted_salary(@task)
-    h1.text-xl.font-extrabold.text-gray-900.mb-2 = @task.title
-    = render 'tasks/show/contact_with_worker', task: @task
-    = render 'tasks/show/badges', task: @task
-    = render 'tasks/show/description', task: @task
-    = render 'tasks/show/timing_location', task: @task
-    .flex.gap-2.items-center.my-3
-      = render User::AvatarComponent.new(user: @task.user, size: 'md')
-      p.font-semibold = "Zadanie zleca #{@task.user.first_name}" 
-    = render 'tasks/show/submissions', task: @task
 
-    .w-full.md:w-72.flex-shrink-0.md:sticky.md:top-24.md:self-start.space-y-6.mt-6
-    .hidden.md:block
+// Container
+.relative.w-full.mx-auto.mb-10.md:w-3/4.md:mt-10
+  .flex.flex-col.md:flex-row.md:items-start.gap-8.md:px-0
+    // Left column: media + main content
+    .flex-1.flex.flex-col
+      - if @task.photos.attached?
+        .mb-6
+          = render 'tasks/show/media', photos: photos, multiple: multiple, task: @task
+      // Main content with margin
+      .mx-8.md:mx-0.mb-12.flex-1
+        .flex.justify-between.mb-3
+          = render Ui::BadgeComponent.new(text: "#{@task.submissions.count} zgłoszeń", variant: :green)
+          h1.font-extrabold.text-primary.text-xl.block.md:hidden = formatted_salary(@task)
+        h1.text-xl.font-extrabold.text-gray-900.mb-2 = @task.title
+        = render 'tasks/show/contact_with_worker', task: @task
+        = render 'tasks/show/badges', task: @task
+        = render 'tasks/show/description', task: @task
+        = render 'tasks/show/timing_location', task: @task
+        .flex.gap-2.items-center.my-5
+          = render User::AvatarComponent.new(user: @task.user, size: 'md')
+          p.font-semibold = "Zadanie zleca #{@task.user.first_name}"
+        = render 'tasks/show/submissions', task: @task
+    // Sidebar (right)
+    .w-full.md:w-72.flex-shrink-0.md:sticky.md:top-8.space-y-6.hidden.md:block
       = render 'tasks/show/apply_card', task: @task, existing_submission: existing_submission
       = render 'tasks/show/support_card'
-    .flex.gap-4.fixed.bottom-2.left-0.w-full.bg-transparent.z-50.p-4.justify-center.items-center.md:justify-end
-      - if current_user == @task.user
-        = render Ui::ButtonComponent.new(text: 'Detale zlecenia', path: my_task_path(@task), html_options: { class: 'w-full py-3'})
-      - else
-        = render Ui::ButtonComponent.new(text: 'Aplikuj', path: new_task_submission_path(@task), html_options: { class: 'w-full py-3'})
+  // Mobile bottom bar
+  .flex.gap-4.fixed.bottom-2.left-0.w-full.bg-transparent.z-50.p-4.justify-center.items-center.md:justify-end
+    - if current_user == @task.user
+      = render Ui::ButtonComponent.new(text: 'Detale zlecenia', path: my_task_path(@task), html_options: { class: 'w-full py-3 block md:hidden'})
+    - else
+      = render Ui::ButtonComponent.new(text: 'Aplikuj', path: new_task_submission_path(@task), html_options: { class: 'w-full py-3 block md:hidden'})
   

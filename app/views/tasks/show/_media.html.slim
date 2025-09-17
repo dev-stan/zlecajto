@@ -1,10 +1,10 @@
 
-.relative.overflow-hidden.h-64.md:h-72.w-full data-controller=(multiple ? 'carousel' : nil) data-carousel-index-value="0"
+.relative.overflow-hidden.h-64.md:h-100.w-full data-controller=(multiple ? 'carousel' : nil) data-carousel-index-value="0"
   - if multiple
     - photos.each_with_index do |photo, i|
       - visible = i.zero?
       .absolute.inset-0.transition-opacity.duration-300.opacity-0 data-carousel-target="slide" class=(visible ? 'opacity-100' : '')
-        = image_tag photo.variant(resize_to_fill: [900, 600]), class: 'w-full h-64 md:h-72 object-cover', alt: task.title
+        = image_tag photo.variant(resize_to_fill: [900, 600]), class: 'w-full h-64 md:h-100 md:rounded-xl object-cover', alt: task.title
     button.absolute.left-2.top-1/2.-translate-y-1/2.bg-white/80.text-gray-700.rounded-full.h-9.w-9.flex.items-center.justify-center.shadow.z-10 data-action="click->carousel#prev" aria-label="Poprzednie zdjęcie"
         i.fas.fa-arrow-left
     button.absolute.right-2.top-1/2.-translate-y-1/2.bg-white/80.text-gray-700.rounded-full.h-9.w-9.flex.items-center.justify-center.shadow.z-10 data-action="click->carousel#next" aria-label="Następne zdjęcie"
@@ -14,4 +14,4 @@
         button.h-2.w-2.rounded-full.bg-white/50.border.border-white.transition data-carousel-target="indicator" data-action="click->carousel#go" data-carousel-index-param=i aria-label="Przejdź do zdjęcia #{i + 1}"
   - else
     - photo = photos.first
-    = image_tag photo.variant(resize_to_fill: [900, 600]), class: 'w-full h-64 md:h-72 object-cover', alt: task.title
+    = image_tag photo.variant(resize_to_fill: [900, 600]), class: 'w-full h-64 md:h-100 md:rounded-xl object-cover', alt: task.title
