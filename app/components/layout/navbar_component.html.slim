@@ -1,22 +1,24 @@
 nav.fixed.top-0.left-0.right-0.bg-white.shadow-sm.z-50
-  .max-w-7xl.mx-auto.h-16.flex.items-center.justify-between.gap-4.px-4
-    / Left side - Navigation items
-    .flex.items-center.gap-2
+  .max-w-7xl.mx-auto.h-16.flex.items-center.justify-between.gap-4.px-4.relative
+    / Left: Back arrow
+    .absolute.left-0.top-0.h-full.flex.items-center.pl-2
+      = link_to request.referer || root_path, class: "block md:hidden flex items-center hover:text-primary text-2xl ml-5 pr-2" do
+        i.fas.fa-arrow-left.mr-1 aria-label="Back"
+
+    / Center: Logo (center on mobile, left on md+)
+    .flex-1.flex.justify-center.items-center.md:justify-start
       = link_to root_path, class: 'flex items-center font-extrabold text-4xl text-primary' do
-        span ZlecajTo
+        span ZlecajTo.pl
 
     / Right side - Mobile Burger Menu (hidden on md+)
-    .flex.items-center.md:hidden
+    .flex.items-center.md:hidden.absolute.right-0.top-0.h-full.pr-2
       = render Layout::BurgerMenuComponent.new(user_signed_in: user_signed_in?, current_user: current_user, has_accepted_submissions: has_accepted_submissions?)
 
     / Right side - Desktop Menu (hidden on mobile)
-    .hidden.md:flex.items-center.gap-1
+    .hidden.md:flex.items-center.gap-1.absolute.right-0.top-0.h-full.pr-2
       = render(Ui::ButtonComponent.new(text: 'Dodaj zlecenie', path: new_task_path, size: :sm))
       = render(Ui::ButtonComponent.new(text: 'Zacznij Zarabiać', path: tasks_path, size: :sm, variant: :ghost))
       - if user_signed_in?
-        = render(Ui::ButtonComponent.new(text: 'Panel', path: dashboard_path, size: :sm, variant: :text)) do
-          - if has_accepted_submissions?
-            span.ml-1.inline-block.w-2.h-2.rounded-full.bg-red-500
         .ml-4.flex.items-center
           = link_to profile_path do
             = render(User::AvatarComponent.new(user: current_user))
