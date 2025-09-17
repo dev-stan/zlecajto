@@ -3,7 +3,7 @@
 module Tasks
   #  - :default (title first, badge under)
   #  - :owner   (badge first, title under)
-  class NewTaskCardComponent < ApplicationComponent
+  class TaskCardComponent < ApplicationComponent
     include ActionView::Helpers::DateHelper
 
     renders_one  :image

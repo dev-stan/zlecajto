@@ -4,10 +4,10 @@
     p.text-lg.text-gray-600 Zostań wykonawcą i zacznij zarabiać jak chcesz i kiedy chcesz!
   main.grid.grid-cols-1.md:grid-cols-3.gap-4.mx-3.mt-5
     - @tasks.each do |task|
-        = render Tasks::NewTaskCardComponent.new(task: task, path: task_path(task), variant: :default) do |card|
+        = render Tasks::TaskCardComponent.new(task: task, path: task_path(task), variant: :default) do |card|
           - if task.photos.attached?
             - card.with_image do
-              = image_tag task.photos.first.variant(resize_to_fill: [640, 360]), class: "w-full h-48 object-cover", alt: task.title, loading: "lazy"
+              = image_tag task.photos.first.variant(resize_to_fill: [640, 360]), class: "hidden md:block w-full h-48 object-cover", alt: task.title, loading: "lazy"
           - card.with_badge do
             = render Ui::BadgeComponent.new(text: task.category, variant: :blue)
           - card.with_badge do

@@ -32,7 +32,7 @@
       - if @tasks.any?
         .grid.grid-cols-1.lg:grid-cols-2.gap-6
           - @tasks.each do |task|
-            = render Tasks::NewTaskCardComponent.new(task: task, variant: :owner) do |card|
+            = render Tasks::TaskCardComponent.new(task: task, variant: :owner) do |card|
               - card.with_badge do
                 = render Ui::BadgeComponent.new(text: "#{task.submissions.count} zgłoszeń", variant: :red)
       - else
@@ -45,8 +45,12 @@
       - if @submissions.any?
         .grid.grid-cols-1.lg:grid-cols-2.gap-6
           - @submissions.each do |submission|
-            - highlight = (submission.status == 'accepted')
-            = render Cards::MyTaskCardComponent.new(task: submission.task, highlight: highlight)
+              = render Tasks::TaskCardComponent.new(task: submission.task, path: task_path(submission.task), variant: :default) do |card|
+                - card.with_badge do
+                  = render Ui::BadgeComponent.new(text: submission.task.category, variant: :blue)
+                - card.with_badge do
+                  = render Ui::BadgeComponent.new(text: submission.task.payment_method, variant: :green)
+
       - else
         .text-center.py-12
           p.text-gray-500.mb-4 = t('dashboard.my_submissions.empty', default: 'Nie aplikowałeś jeszcze na żadne zadania.')
