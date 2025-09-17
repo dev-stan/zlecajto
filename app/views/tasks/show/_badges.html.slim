@@ -3,3 +3,5 @@
 .flex.flex-wrap.items-center.gap-2.mb-4
   = render Ui::BadgeComponent.new(text: task.category, variant: :violet)
   = render Ui::BadgeComponent.new(text: task.payment_method, variant: :green)
+  - if current_user == task.user
+    = render Ui::BadgeComponent.new(text: "#{task.submissions.count} zgłoszeń", variant: :yellow)

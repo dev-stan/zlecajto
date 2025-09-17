@@ -1,23 +1,34 @@
-.max-w-6xl.mx-auto.px-6.py-10
-  - existing_submission = user_signed_in? ? current_user.submissions.find_by(task: @task) : nil
-  - placeholder = 'https://i.imgur.com/iyJqQH3.jpeg'
-  - photos = @task.photos.attachments
-  - multiple = photos.size > 1
 
-  .flex.flex-col.md:flex-row.md:items-start.gap-10
-    .flex-1.min-w-0
-      = render 'tasks/show/media', photos: photos, multiple: multiple, placeholder: placeholder, task: @task
+- existing_submission = user_signed_in? ? current_user.submissions.find_by(task: @task) : nil
+- placeholder = 'https://i.imgur.com/iyJqQH3.jpeg'
+- photos = @task.photos.attachments
+- multiple = photos.size > 1
+
+.relative.w-full.max-w-2xl.mx-auto.px-8.py-8.mb-8
+    = render 'tasks/show/media', photos: photos, multiple: multiple, placeholder: placeholder, task: @task
+    .mt-5
+      .flex.w-full.mb-5
+        .w-2/3
+          h1.text-xl.font-extrabold.text-gray-900 = @task.title
+        .w-1/3.text-end
+          .font-extrabold.text-primary.text-xl = formatted_salary(@task)
+
       = render 'tasks/show/contact_with_worker', task: @task
       = render 'tasks/show/badges', task: @task
-      = render 'tasks/show/owner', task: @task
       = render 'tasks/show/description', task: @task
       = render 'tasks/show/timing_location', task: @task
-      = render 'tasks/show/info_card'
+      / = render 'tasks/show/info_card'
       = render 'tasks/show/submissions', task: @task
 
-    .w-full.md:w-72.flex-shrink-0.md:sticky.md:top-24.md:self-start.space-y-6
-      = render 'tasks/show/apply_card', task: @task, existing_submission: existing_submission
-      = render 'tasks/show/support_card'
+      .w-full.md:w-72.flex-shrink-0.md:sticky.md:top-24.md:self-start.space-y-6.mt-6
+      .hidden.md:block
+        = render 'tasks/show/apply_card', task: @task, existing_submission: existing_submission
+        = render 'tasks/show/support_card'
+      .flex.gap-4.fixed.bottom-3.left-0.w-full.bg-transparent.z-50.p-4.justify-center.items-center.md:justify-end
+        - if current_user == @task.user
+          = render Ui::ButtonComponent.new(text: 'Detale zlecenia', path: my_task_path(@task), html_options: { class: 'w-full py-3'})
+        - else
+          = render Ui::ButtonComponent.new(text: 'Cofnij', path: new_task_submission_path(@task), html_options: { class: 'w-full py-3'})
 
-  = render 'tasks/show/mobile_apply_bar', task: @task, existing_submission: existing_submission
+= render 'tasks/show/mobile_apply_bar', task: @task, existing_submission: existing_submission
     

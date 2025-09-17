@@ -10,12 +10,14 @@ module TasksHelper
   end
 
   def formatted_created_at(task)
-    I18n.with_locale(:pl) do
-      I18n.l(task.created_at, format: :short_day_and_date)
-    end
+    formatted_date(task.created_at)
+  end
+
+  def formatted_date(datetime)
+    I18n.with_locale(:pl) { I18n.l(datetime, format: :short_day_and_date) }
   end
 
   def formatted_salary(task)
-    "#{task.salary} PLN"
+    "#{task.salary} ZŁ"
   end
 end

@@ -12,7 +12,7 @@ class User::AvatarComponent < ApplicationComponent
   def image_size
     case @size
     when 'sm'
-      [40, 40]
+      [36, 36]
     when 'md'
       [48, 48]
     when 'lg'

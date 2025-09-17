@@ -3,7 +3,7 @@
     = image
   .p-6.pb-4.flex-1.bg-white
     .flex.justify-between.h-full
-      .flex-1
+      .flex-1.pr-5
         - if badges_before_title? && badges.any?
           - # Owner variant: show first badge (only one expected) before title
           - badges.each do |badge|
@@ -23,5 +23,5 @@
               i.fa-solid.fa-calendar.fa-fw.text-secondary
             span = helpers.formatted_due_date(task)
       .div.flex.flex-col.items-end.h-full.justify-between
-        .font-extrabold.text-primary.mt-1.text-xl = helpers.formatted_salary(task)
+        .font-extrabold.text-primary.mt-1.text-xl.text-end = helpers.formatted_salary(task)
         .text-gray-400 = helpers.formatted_created_at(task)

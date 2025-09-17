@@ -6,16 +6,16 @@ section.mt-8
       h3.text-base.font-semibold.text-gray-900.mb-1 Czas i data
       .space-y-1.text-base
         div.flex.items-center.gap-1
-          span.text-gray-400
+          span.text-secondary
             i.fa.fa-calendar.text-base aria-hidden="true"
           span.text-gray-900 = task.due_date&.strftime('%d.%m.%Y')
         div.flex.items-center.gap-1
-          span.text-gray-400
+          span.text-secondary
             i.fa.fa-clock.text-base aria-hidden="true"
           span.text-gray-900 = task.timeslot&.humanize
     .flex.flex-col.items-start.min-w-[160px]
       h3.text-base.font-semibold.text-gray-900.mb-1 Lokalizacja
       .text-base.flex.items-center.gap-1
-        span.text-gray-400
+        span.text-secondary
           i.fa.fa-map-marker.text-base aria-hidden="true"
         span.text-gray-900 = task.location
