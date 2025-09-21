@@ -11,6 +11,10 @@ class SubmissionsController < ApplicationController
     @submissions = current_user.submissions.includes(:task)
   end
 
+  def accepted
+    @submission = Submission.find(params[:id])
+  end
+
   def show; end
 
   def new
@@ -52,15 +56,7 @@ class SubmissionsController < ApplicationController
 
   def accept
     if @submission.update(status: 'accepted')
-      respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.replace(
-            dom_id(@submission),
-            Tasks::SubmissionFrameComponent.new(submission: @submission, accepted: true).render_in(view_context)
-          )
-        end
-        format.html { redirect_back fallback_location: @submission.task, notice: I18n.t('submissions.flash.accepted') }
-      end
+      redirect_to accepted_submission_path(@submission)
     else
       respond_to do |format|
         format.turbo_stream { head :unprocessable_entity }

@@ -66,13 +66,18 @@ class TasksController < ApplicationController
       @task.photos.attach(task_params[:photo_blob_ids].map { |signed_id| { signed_id: signed_id } })
     end
     if @task.save
-      redirect_to @task, notice: t('tasks.flash.created')
+      # redirect_to @task, notice: t('tasks.flash.created')
+      redirect_to created_task_path(@task)
     else
       # Rehydrate wizard at second step (after basic details) so user can correct
       @wizard = TaskWizard.new(step: 2, params: task_params)
       @step   = @wizard.current_step
       render :new, status: :unprocessable_entity
     end
+  end
+
+  def created
+    @task = Task.find(params[:id])
   end
 
   def authenticate_and_create

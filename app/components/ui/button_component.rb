@@ -9,7 +9,9 @@ module Ui
       danger: 'bg-red-600 hover:bg-red-700 text-white',
       ghost: 'bg-white border-2 border-blue-900',
       text: 'bg-transparent text-black',
-      success: 'bg-primary text-primary'
+      success: 'bg-primary text-primary',
+      green: 'bg-light-green text-emerald-700 border-2 border-emerald-200',
+      red: 'bg-red-200 text-red-800 border-2 border-red-300'
     }.freeze
 
     SIZES = {

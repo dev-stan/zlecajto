@@ -22,6 +22,10 @@ class Submission < ApplicationRecord
   # Default status
   after_initialize :set_default_status, if: :new_record?
 
+  def accepted?
+    status == 'accepted'
+  end
+
   private
 
   def set_default_status
