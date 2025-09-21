@@ -18,7 +18,6 @@
           = render Ui::BadgeComponent.new(text: "#{@task.submissions.count} zgłoszeń", variant: :green)
           h1.font-extrabold.text-primary.text-xl.block.md:hidden = formatted_salary(@task)
         h1.text-xl.font-extrabold.text-gray-900.mb-2 = @task.title
-        = render 'tasks/show/contact_with_worker', task: @task
         = render 'tasks/show/badges', task: @task
         = render 'tasks/show/description', task: @task
         = render 'tasks/show/timing_location', task: @task

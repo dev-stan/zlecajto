@@ -54,6 +54,10 @@ class SubmissionsController < ApplicationController
     redirect_to submissions_path, notice: 'Aplikacja została usunięta'
   end
 
+  def contact
+    @submission = Submission.find(params[:id])
+  end
+
   def accept
     if @submission.update(status: 'accepted')
       redirect_to accepted_submission_path(@submission)

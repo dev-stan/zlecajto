@@ -80,6 +80,10 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
   end
 
+  def completed
+    @task = Task.find(params[:id])
+  end
+
   def authenticate_and_create
     if params[:task].present?
       session[:pending_task_data] = task_params

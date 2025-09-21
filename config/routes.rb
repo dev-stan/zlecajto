@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       get :edit_modal
       patch :update
       get :created
+      get :completed
     end
 
     resources :submissions, only: %i[new create] do
@@ -37,6 +38,7 @@ Rails.application.routes.draw do
       patch :accept
       patch :reject
       get :accepted
+      get :contact
     end
     collection do
       get :create_from_session
