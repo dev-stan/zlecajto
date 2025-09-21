@@ -8,7 +8,7 @@ class TasksController < ApplicationController
   end
   # Allow guests to access the wizard (new & wizard) so they can fill in data first.
   # Authentication is only required when persisting (create / create_from_session) or editing existing records.
-  before_action :authenticate_user!, only: %i[create create_from_session edit_modal update my_task]
+  before_action :authenticate_user!, only: %i[create create_from_session update my_task]
   before_action :load_wizard_collections, only: %i[new wizard create]
 
   def index
@@ -20,25 +20,16 @@ class TasksController < ApplicationController
     @existing_submission = current_user.submissions.find_by(task: @task) if user_signed_in?
   end
 
-  def edit_modal
+  def edit
     @task = current_user.tasks.find(params[:id])
-    render partial: 'tasks/edit_modal', locals: { task: @task }
   end
 
   def update
     @task = current_user.tasks.find(params[:id])
     if @task.update(task_params)
-      respond_to do |format|
-        format.turbo_stream do
-          flash.now[:notice] = t('tasks.flash.updated')
-          render turbo_stream: [
-            turbo_stream.replace('modal', '')
-          ]
-        end
-        format.html { redirect_to my_task_path(@task), notice: t('tasks.flash.updated') }
-      end
+      redirect_to @task, notice: 'Task was successfully updated.'
     else
-      render partial: 'tasks/edit_modal', status: :unprocessable_entity, locals: { task: @task }
+      render :edit, status: :unprocessable_entity
     end
   end
 

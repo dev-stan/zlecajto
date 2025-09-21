@@ -1,0 +1,37 @@
+
+.max-w-2xl.mx-auto.px-4.sm:px-6.lg:px-8.pt-8
+	h1.text-2xl.font-extrabold.text-gray-900.mb-2 Edytuj zlecenie
+	p.text-gray-600.mb-6 Zmień szczegóły swojego zlecenia poniżej.
+
+	= form_with model: @task, url: task_path(@task), method: :patch, local: true, html: { class: "space-y-6" } do |f|
+		.space-y-4
+			= render Input::InputComponent.new(name: 'task[title]', label: 'Tytuł', value: @task.title, placeholder: 'Podaj tytuł zlecenia', html_options: { required: true })
+			= render Input::InputComponent.new(name: 'task[description]', type: 'textarea', label: 'Opis', value: @task.description, placeholder: 'Opisz szczegóły zadania', rows: 4, html_options: { required: true })
+			= render Input::InputComponent.new(name: 'task[salary]', type: 'number', label: 'Wynagrodzenie (zł)', value: @task.salary, placeholder: 'Podaj kwotę', html_options: { min: 0, step: 1 })
+
+			.flex.flex-col
+				label.mb-1.block.text-base.font-medium.text-gray-700 Kategoria
+				= render Input::SelectComponent.new(form: f, options: Task::CATEGORIES, selected: @task.category, label: 'Wybierz kategorię', field: :category)
+
+			.flex.flex-col
+				label.mb-1.block.text-base.font-medium.text-gray-700 Lokalizacja
+				= render Input::SelectComponent.new(form: f, options: Task::LOCATIONS, selected: @task.location, label: 'Wybierz lokalizację', field: :location)
+
+			.flex.flex-col
+				label.mb-1.block.text-base.font-medium.text-gray-700 Termin
+				= render Input::SelectComponent.new(form: f, options: Task::TIMESLOTS, selected: @task.timeslot, label: 'Wybierz przedział czasowy', field: :timeslot)
+
+			.flex.flex-col
+				label.mb-1.block.text-base.font-medium.text-gray-700 Metoda płatności
+				= render Input::SelectComponent.new(form: f, options: Task::PAYMENT_METHODS, selected: @task.payment_method, label: 'Wybierz metodę płatności', field: :payment_method)
+			.flex.flex-col
+					label.mb-1.block.text-base.font-medium.text-gray-700 Zdjęcia
+					- if @task.photos.attached?
+						.flex.flex-wrap.gap-2.mb-2
+							- @task.photos.each do |photo|
+								= image_tag url_for(photo), class: 'h-20 w-20 object-cover rounded-lg border border-gray-200', alt: 'Załączone zdjęcie'
+					= render Input::ImageUploadComponent.new(form: f, name: 'photos', multiple: true, limit: 5, direct_upload: true, input_id: 'task_photos_input', required: false, html_options: {})
+
+		.pt-4
+			= render Ui::ButtonComponent.new(text: "Zapisz zmiany", submit: true, html_options: { class: 'w-full' })
+			= link_to 'Anuluj', @task, class: 'block text-center text-gray-500 text-sm mt-2 hover:underline'

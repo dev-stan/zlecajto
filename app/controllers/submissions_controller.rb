@@ -60,7 +60,7 @@ class SubmissionsController < ApplicationController
 
   def accept
     if @submission.update(status: 'accepted')
-      redirect_to accepted_submission_path(@submission)
+      redirect_to contact_submission_path(@submission)
     else
       respond_to do |format|
         format.turbo_stream { head :unprocessable_entity }

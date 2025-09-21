@@ -12,14 +12,13 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root 'pages#waitlist'
   get 'profile', to: 'pages#profile'
-  resources :tasks, only: %i[index create show new update] do
+  resources :tasks, only: %i[index create show new update edit] do
     collection do
       match :wizard, via: %i[get post]
       post :authenticate_and_create
       get :create_from_session, as: :create_from_session
     end
     member do
-      get :edit_modal
       patch :update
       get :created
       get :completed
