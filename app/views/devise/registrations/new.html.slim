@@ -5,8 +5,8 @@ section.max-w-3xl.mx-auto.px-4.sm:px-6.lg:px-12.pt-8
     = render "devise/shared/error_messages", resource: resource
 
     .flex.flex-col.space-y-3.md:pr-8.justify-center.px-4
-      h2.text-3xl.sm:text-4xl.font-bold.mb-1.text-center Dołącz do nas! :)
-      p.text-base.text-gray-600.mb-6.text-center Zarejestruj się i zacznij zlecać albo zarabiać już dziś!
+      h2.text-3xl.sm:text-4xl.font-bold.mb-1.text-center Dołącz do nas!
+      p.text-base.text-gray-600.mb-6.text-center Zarejestruj się i zacznij zlecać albo zarabiać!
 
       .flex.flex-row.gap-4.w-full.sm:flex-row
         = render Input::InputComponent.new(name: 'user[first_name]',
@@ -47,7 +47,7 @@ section.max-w-3xl.mx-auto.px-4.sm:px-6.lg:px-12.pt-8
           input_id: 'user_profile_picture',
           required: false,
           html_options: { class: 'w-full' })
-      .flex.flex-col.gap-3
+      .flex.flex-col.gap-3.mb-3
         = render Ui::ButtonComponent.new(text: "Utwórz konto", submit: true, html_options: { class: 'w-full' })
         = link_to user_google_oauth2_omniauth_authorize_path, method: :post, data: { turbo: 'false' }, class: "w-full flex items-center justify-center gap-3 px-4 py-2 rounded-3xl bg-white transition font-semibold text-gray-700 text-base" do
           = image_tag 'google.png', alt: 'Google', class: 'h-6 w-6 rounded-full bg-white'
