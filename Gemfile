@@ -82,5 +82,6 @@ gem 'rubocop-rails'
 gem 'ruby-lsp'
 gem 'view_component'
 gem 'i18n'
+gem "aws-sdk-s3", require: false
 
 gem "ultimate_turbo_modal", "~> 2.2"
