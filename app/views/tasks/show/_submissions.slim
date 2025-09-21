@@ -19,7 +19,7 @@
             span.text-base.text-gray-500 = formatted_date(submission.created_at)
             - if current_user == task.user
               .mt-3
-                = render(Ui::ButtonComponent.new(text: 'Kontakt z wykonawcą', variant: :red, path: contact_submission_path(submission), size: :sm, html_options: { class: ' w-full mb-4 font-bold text-lg' }, method: :patch))
+                = render(Ui::ButtonComponent.new(text: 'Kontakt z wykonawcą', variant: :red, path: contact_submission_path(submission), size: :sm, html_options: { class: ' w-full mb-4 font-bold text-lg' }))
             - if current_user == submission.user
               .mt-3
                 = render(Ui::ButtonComponent.new(text: 'Kontakt ze zleceniodawcą', variant: :red, path: accepted_submission_path(submission), size: :sm, html_options: { class: ' w-full mb-4 font-bold text-lg' }, method: :patch))
