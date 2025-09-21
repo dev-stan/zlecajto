@@ -9,15 +9,21 @@ nav.relative.flex.items-center data-controller="burger-menu"
 
 
   / Mobile menu (hidden by default, toggled by Stimulus)
-  .fixed.inset-0.top-14.bg-white.shadow-lg.px-4.pt-6.pb-8.z-50.hidden.flex.flex-col.gap-2 data-burger-menu-target="menu"
-    = render(Ui::ButtonComponent.new(text: 'Dodaj zlecenie', path: new_task_path, size: :sm, html_options: { class: 'w-full mb-4 font-bold text-lg' }))
-    - if @user_signed_in
-        = render(Ui::ButtonComponent.new(text: 'Przeglądaj zlecenia', text_align: 'left', path: tasks_path, size: :sm, variant: :text, html_options: { class: 'w-full text-left text-blue-900 font-semibold mb-2' }))
-        = render(Ui::ButtonComponent.new(text: "Profil (#{@current_user.first_name})", text_align: 'left', path: profile_path(@current_user), size: :sm, variant: :text, html_options: { class: 'w-full text-left text-blue-900 font-semibold mb-2' }))
-        = render(Ui::ButtonComponent.new(text: 'Strona główna', path: root_path, text_align: 'left', size: :sm, variant: :text, html_options: { class: 'w-full text-left text-blue-900 font-semibold mb-2' }))
-        = render(Ui::ButtonComponent.new(text: 'Wyloguj się', text_align: 'left', path: destroy_user_session_path, size: :sm, variant: :text, html_options: { class: 'w-full text-left text-blue-900 font-semibold', method: :delete }))
-    - else
-        = render(Ui::ButtonComponent.new(text: 'Strona główna', text_align: 'left', path: root_path, size: :sm, variant: :text, html_options: { class: 'w-full text-left text-blue-900 font-semibold mb-2' }))
-        = render(Ui::ButtonComponent.new(text: 'Przeglądaj zlecenia', text_align: 'left', path: tasks_path, size: :sm, variant: :text, html_options: { class: 'w-full text-left text-blue-900 font-semibold mb-2' }))
-        = render(Ui::ButtonComponent.new(text: 'Zaloguj', text_align: 'left', path: helpers.new_user_session_path, size: :sm, variant: :text, html_options: { class: 'w-full text-left text-blue-900 font-semibold mb-2' }))
-        = render(Ui::ButtonComponent.new(text: 'Zarejestruj', text_align: 'left', path: helpers.new_user_registration_path, size: :sm, variant: :text, html_options: { class: 'w-full text-left text-blue-900 font-semibold' }))
+  .fixed.inset-0.top-14.bg-white.shadow-lg.px-4.pt-6.pb-8.pl-6.z-50.hidden.flex.flex-col.gap-2 data-burger-menu-target="menu"
+    p.text-xl.text-black.font-bold Zlecenia
+    = link_to tasks_path, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
+      i.fas.fa-bolt.mr-2
+      | Przeglądaj zlecenia
+    = link_to new_task_path, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
+      i.fas.fa-plus.mr-2
+      | Dodaj zlecenie
+    p.text-xl.text-black.font-bold Pomoc
+    = link_to new_task_path, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
+      i.fas.fa-phone.mr-2
+      | Kontakt
+    = link_to new_task_path, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
+      i.fas.fa-circle-question.mr-2
+      | FAQ
+    = link_to destroy_user_session_path, method: :delete, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
+      i.fas.fa-sign-out-alt.mr-2
+      | Wyloguj się
