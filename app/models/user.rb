@@ -1,7 +1,27 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  # Ensure superpowers is always an array
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable,
+         :omniauthable, omniauth_providers: [:google_oauth2]
+
+  require 'open-uri'
+
+  def self.from_google(auth)
+    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+      user.email = auth.info.email
+      user.password = Devise.friendly_token[0, 20] # random password
+      user.first_name = auth.info.first_name
+      user.last_name  = auth.info.last_name
+      if auth.info.image.present?
+        user.profile_picture.attach(
+          io: URI.open(auth.info.image),
+          filename: 'profile.jpg'
+        )
+      end
+    end
+  end
+
   def superpowers
     self[:superpowers] || []
   end
@@ -40,13 +60,15 @@ class User < ApplicationRecord
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :email, presence: true
-  validates :phone_number, presence: true
+  validates :phone_number, presence: true, unless: :google_oauth_user?
+
+  def google_oauth_user?
+    provider.present? && uid.present?
+  end
   validates :superpowers,
             length: { maximum: 3,
                       message: I18n.t('errors.messages.superpowers_limit',
                                       default: 'Możesz wybrać maksymalnie 3 supermoce.') }
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
 
   has_many :tasks
   has_many :submissions

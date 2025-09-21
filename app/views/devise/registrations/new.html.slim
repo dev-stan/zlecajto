@@ -1,69 +1,73 @@
 
-section.max-w-7xl.mx-auto.px-4.sm:px-6.lg:px-8.pt-12
+
+section.max-w-7xl.mx-auto.px-4.sm:px-6.lg:px-12.pt-8
   = form_for(resource, as: resource_name, url: registration_path(resource_name), data: { controller: 'form-validation', action: 'submit->form-validation#validate' }) do |f|
     = render "devise/shared/error_messages", resource: resource
-    .grid.grid-cols-1.md:grid-cols-2
 
-      / Left: text fields + image
-      .flex.flex-col.space-y-6.md:border-r.md:border-gray-200.md:pr-8
-        h2.text-4xl.font-bold.mb-1 Dołącz do nas!
-        p.text-base.text-gray-600.mb-8 Zarejestruj się i zacznij zlecać / zarabiać już dziś!
-        .flex.gap-4.w-full
-          = render Input::InputComponent.new(name: 'user[first_name]',
-            label: t('activerecord.attributes.user.first_name', default: 'Imię'),
-            placeholder: 'Jan',
-            value: resource.first_name,
-            html_options: { autocomplete: 'given-name', class: 'flex-1' })
-          = render Input::InputComponent.new(name: 'user[last_name]',
-            label: t('activerecord.attributes.user.last_name', default: 'Nazwisko'),
-            placeholder: 'Kowalski',
-            value: resource.last_name,
-            html_options: { autocomplete: 'family-name', class: 'flex-1' })
-        .flex.gap-4.w-full
-          = render Input::InputComponent.new(name: 'user[email]',
-            label: t('activerecord.attributes.user.email', default: 'Adres email'),
-            placeholder: 'jan@gmail.com',
-            value: resource.email,
-            html_options: { autocomplete: 'email', type: 'email', class: 'flex-1' })
-          = render Input::InputComponent.new(name: 'user[phone_number]',
-            label: t('activerecord.attributes.user.phone_number', default: 'Numer telefonu'),
-            placeholder: '+48 881 228 832',
-            value: resource.phone_number,
-            html_options: { autocomplete: 'tel', class: 'flex-1' })
-        .flex.gap-4.w-full
-          = render Input::InputComponent.new(name: 'user[password]',
-            label: t('activerecord.attributes.user.password', default: 'Hasło'),
-            placeholder: 'Wybierz silne hasło',
-            value: nil,
-            html_options: { autocomplete: 'new-password', type: 'password', class: 'flex-1' })
-          = render Input::InputComponent.new(name: 'user[password_confirmation]',
-            label: t('activerecord.attributes.user.password_confirmation', default: 'Potwierdź hasło'),
-            placeholder: 'Powtórz hasło',
-            value: nil,
-            html_options: { autocomplete: 'new-password', type: 'password', class: 'flex-1' })
-        = render Input::ImageUploadComponent.new(form: f,
-            name: :profile_picture,
-            label: t('activerecord.attributes.user.profile_picture', default: 'Zdjęcie profilowe'),
-            multiple: false,
-            direct_upload: true,
-            input_id: 'user_profile_picture',
-            required: false,
-            html_options: {})
+    .flex.flex-col.space-y-3.md:border-r.md:border-gray-200.md:pr-8.justify-center.px-4
+      h2.text-3xl.sm:text-4xl.font-bold.mb-1.text-center Dołącz do nas!
+      p.text-base.text-gray-600.mb-6.text-center Zarejestruj się i zacznij zlecać / zarabiać już dziś!
 
-      / Right: superpowers
-      .flex.flex-col.md:pl-8
-        .pt-2.md:pt-0
-          h2.text-4xl.font-bold.mb-1 Wybierz do 3 supermocy :)
-          p.text-base.text-gray-600.mb-8 Wybierz maksymalnie 3 supermoce, które najlepiej Cię opisują
-          .flex.flex-wrap.space-x-1 data-controller="superpowers-limit"
-            - User::SUPERPOWERS.each do |power|
-              - id = "superpower_#{power.parameterize}"
-              = render Ui::CheckboxButtonComponent.new(name: 'user[superpowers][]',
-                  value: power,
-                  checked: resource.superpowers&.include?(power),
-                  id: id,
-                  label: power,
-                  random_color: true,
-                  html_options: { class: 'mb-2', data: { superpowers_limit_target: 'checkbox' } })
-        .items-center.text-right
-          = render Ui::ButtonComponent.new(text: "Utwórz konto", submit: true, html_options: { class: 'w-50' })
+      .flex.flex-row.gap-4.w-full.sm:flex-row
+        = render Input::InputComponent.new(name: 'user[first_name]',
+          label: t('activerecord.attributes.user.first_name', default: 'Imię'),
+          placeholder: 'Jan',
+          value: resource.first_name,
+          html_options: { autocomplete: 'given-name', class: 'w-full' })
+        = render Input::InputComponent.new(name: 'user[last_name]',
+          label: t('activerecord.attributes.user.last_name', default: 'Nazwisko'),
+          placeholder: 'Kowalski',
+          value: resource.last_name,
+          html_options: { autocomplete: 'family-name', class: 'w-full' })
+
+      .flex.flex-col.gap-4.w-full.sm:flex-row
+        = render Input::InputComponent.new(name: 'user[email]',
+          label: t('activerecord.attributes.user.email', default: 'Adres email'),
+          placeholder: 'jan@gmail.com',
+          value: resource.email,
+          html_options: { autocomplete: 'email', type: 'email', class: 'w-full' })
+        = render Input::InputComponent.new(name: 'user[phone_number]',
+          label: t('activerecord.attributes.user.phone_number', default: 'Numer telefonu'),
+          placeholder: '+48 881 228 832',
+          value: resource.phone_number,
+          html_options: { autocomplete: 'tel', class: 'w-full' })
+
+      .flex.flex-col.gap-4.w-full.sm:flex-row
+        = render Input::InputComponent.new(name: 'user[password]',
+          label: t('activerecord.attributes.user.password', default: 'Hasło'),
+          placeholder: 'Wybierz silne hasło',
+          value: nil,
+          html_options: { autocomplete: 'new-password', type: 'password', class: 'w-full' })
+
+      = render Input::ImageUploadComponent.new(form: f,
+          name: :profile_picture,
+          label: t('activerecord.attributes.user.profile_picture', default: 'Zdjęcie profilowe'),
+          multiple: false,
+          direct_upload: true,
+          input_id: 'user_profile_picture',
+          required: false,
+          html_options: { class: 'w-full' })
+
+      = render Ui::ButtonComponent.new(text: "Utwórz konto", submit: true, html_options: { class: 'w-full sm:w-50' })
+
+      = link_to user_google_oauth2_omniauth_authorize_path, method: :post, data: { turbo: 'false' }, class: "w-full flex items-center justify-center gap-3 px-4 py-2 rounded-3xl bg-white border border-gray-300 shadow hover:bg-gray-50 transition font-semibold text-gray-700 text-base" do
+        = image_tag 'google.png', alt: 'Google', class: 'h-6 w-6 rounded-full bg-white'
+        | Zaloguj się przez Google
+
+
+
+      / / Right: superpowers
+      / .flex.flex-col.md:pl-8
+      /   .pt-2.md:pt-0
+      /     h2.text-4xl.font-bold.mb-1 Wybierz do 3 supermocy :)
+      /     p.text-base.text-gray-600.mb-8 Wybierz maksymalnie 3 supermoce, które najlepiej Cię opisują
+      /     .flex.flex-wrap.space-x-1 data-controller="superpowers-limit"
+      /       - User::SUPERPOWERS.each do |power|
+      /         - id = "superpower_#{power.parameterize}"
+      /         = render Ui::CheckboxButtonComponent.new(name: 'user[superpowers][]',
+      /             value: power,
+      /             checked: resource.superpowers&.include?(power),
+      /             id: id,
+      /             label: power,
+      /             random_color: true,
+      /             html_options: { class: 'mb-2', data: { superpowers_limit_target: 'checkbox' } })

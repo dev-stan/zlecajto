@@ -27,4 +27,7 @@
             = f.label :remember_me, "Zapamiętaj mnie", class: "ml-2 text-base text-gray-700"
       
       .pt-4
-        = render Ui::ButtonComponent.new(text: "Zaloguj się", submit: true, html_options: { class: 'w-full'   })
+        = render Ui::ButtonComponent.new(text: "Zaloguj się", submit: true, html_options: { class: 'w-full' })
+        = link_to user_google_oauth2_omniauth_authorize_path, method: :post, data: { turbo: 'false' }, class: "w-full flex items-center justify-center gap-3 mt-4 px-4 py-2 rounded-3xl bg-white border border-gray-300 shadow hover:bg-gray-50 transition font-semibold text-gray-700 text-base" do
+          = image_tag 'google.png', alt: 'Google', class: 'h-6 w-6 rounded-full bg-white'
+          | Zaloguj się przez Google

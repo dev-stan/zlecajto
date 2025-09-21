@@ -83,5 +83,8 @@ gem 'ruby-lsp'
 gem 'view_component'
 gem 'i18n'
 gem "aws-sdk-s3", require: false
+gem "omniauth"
+gem "omniauth-google-oauth2"
+gem "omniauth-rails_csrf_protection"
 
 gem "ultimate_turbo_modal", "~> 2.2"
