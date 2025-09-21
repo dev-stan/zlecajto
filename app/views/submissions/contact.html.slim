@@ -1,8 +1,8 @@
 .flex.flex-col.items-center.justify-center.min-h-screen
-    h1.text-7xl.font-bold Woohoo!
-    p.text-lg.mt-3.font-bold.mb-3 Wybrałeś wykonawcę do realizacji zlecenia
-    = image_tag "thumbs_up.png", width: 150, height: 150, class: "object-cover", alt: "Profile", loading: "lazy"
-    p.text-lg.mt-3.font-bold.mb-3 Co teraz?
+    .px-10.text-center
+        h1.text-7xl.font-bold Woohoo!
+        p.text-lg.mt-3.font-bold.mb-3 Wybrałeś wykonawcę do realizacji zlecenia
+    / = image_tag "thumbs_up.png", width: 150, height: 150, class: "object-cover", alt: "Profile", loading: "lazy"
     .px-4
         = render Cards::CardComponent.new do 
             .flex.flex-col.space-y-6.items-start
@@ -20,5 +20,5 @@
                     .flex-shrink-0
                         span.flex.items-center.justify-center.w-8.h-8.rounded-full.bg-blue-50.text-blue-600.font-semibold.border.border-blue-200 = 3
                     p.text-base.text-gray-600.leading-relaxed = 'Gdy zlecenie zostanie wykonane, potwierdź jego realizację w aplikacji'
-            = render Ui::ButtonComponent.new(text: 'Wróć do ogłoszenia', path: task_path(@submission.task), variant: :primary, size: :lg, html_options: { class: 'w-full mt-5' })
+            = render Ui::ButtonComponent.new(text: 'Wróć do ogłoszenia', path: my_task_path(@submission.task), variant: :primary, size: :lg, html_options: { class: 'w-full mt-5' })
             = render Ui::ButtonComponent.new(text: 'Potwierdź wykonanie zlecenia', path: completed_task_path(@submission.task), variant: :green, size: :lg, html_options: { class: 'w-full mt-5' })

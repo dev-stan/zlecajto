@@ -27,6 +27,7 @@
 
     .border-t.border-gray-400.-mx-4
     / Tasks panel
+    .mt-4
     .space-y-6 data-tabs-target="panel" data-tab="tasks" class=(active_tab == 'tasks' ? '' : 'hidden')
       - if @tasks.any?
         .grid.grid-cols-1.lg:grid-cols-2.gap-4
