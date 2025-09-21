@@ -15,6 +15,14 @@ pl:
       long: "%d %B %Y %H:%M"
       short_day_and_date: "%a, %d.%m"
   activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              taken: "Ten adres email jest już zajęty"
+            last_name:
+              blank: "Nazwisko nie może być puste"
     attributes:
       task:
         due_date: "Termin"
