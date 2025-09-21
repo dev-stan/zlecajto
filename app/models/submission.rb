@@ -26,6 +26,10 @@ class Submission < ApplicationRecord
     status == 'accepted'
   end
 
+  def pending?
+    status == 'pending'
+  end
+
   private
 
   def set_default_status
