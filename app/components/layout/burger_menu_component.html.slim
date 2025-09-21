@@ -17,6 +17,9 @@ nav.relative.flex.items-center data-controller="burger-menu"
     = link_to new_task_path, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
       i.fas.fa-plus.mr-2
       | Dodaj zlecenie
+    = link_to profile_path, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
+      i.fas.fa-circle-user.mr-2
+      | Mój profil
     p.text-xl.text-black.font-bold Pomoc
     = link_to new_task_path, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
       i.fas.fa-phone.mr-2

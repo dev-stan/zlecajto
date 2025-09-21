@@ -42,4 +42,9 @@
                   = render(Ui::ButtonComponent.new(text: 'Akceptuj', variant: :green, path: accept_task_submission_path(task, submission), size: :sm, html_options: { class: ' w-full mb-4 font-bold text-lg' }, method: :patch))
                 
   - else
-    = render Layout::NoContentComponent.new
+    - if current_user == task.user
+      .mt-3
+        = render Layout::NoContentComponent.new(message: "Tu pojawią się zgłoszenia od wykonawców, udostępnij zlecenie, aby otrzymać zgłoszenia.")
+    - else
+      .mt-3
+        = render Layout::NoContentComponent.new(message: "Tu pojawią się zgłoszenia od wykonawców, bądź pierwszym, który się zgłosi!")
