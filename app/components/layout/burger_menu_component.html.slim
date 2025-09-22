@@ -12,21 +12,28 @@ nav.relative.flex.items-center data-controller="burger-menu"
   .fixed.inset-0.top-14.bg-white.shadow-lg.px-4.pt-6.pb-8.pl-6.z-50.hidden.flex.flex-col.gap-2 data-burger-menu-target="menu"
     p.text-xl.text-black.font-bold Zlecenia
     = link_to tasks_path, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
-      i.fas.fa-bolt.mr-2
+      i.fas.fa-bolt.fa-fw.mr-2
       | Przeglądaj zlecenia
     = link_to new_task_path, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
-      i.fas.fa-plus.mr-2
+      i.fas.fa-plus.fa-fw.mr-2
       | Dodaj zlecenie
     = link_to profile_path, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
-      i.fas.fa-circle-user.mr-2
+      i.fas.fa-circle-user.fa-fw.mr-2
       | Mój profil
     p.text-xl.text-black.font-bold Pomoc
     = link_to new_task_path, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
-      i.fas.fa-phone.mr-2
+      i.fas.fa-phone.fa-fw.mr-2
       | Kontakt
     = link_to new_task_path, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
-      i.fas.fa-circle-question.mr-2
+      i.fas.fa-circle-question.fa-fw.mr-2
       | FAQ
-    = link_to destroy_user_session_path, method: :delete, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
-      i.fas.fa-sign-out-alt.mr-2
+    p.text-xl.text-black.font-bold Inne
+    = link_to pages_tos_path, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
+      i.fas.fa-book.fa-fw.mr-2
+      | Regulamin
+    = link_to pages_privacy_path, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
+      i.fas.fa-user-shield.fa-fw.mr-2
+      | Polityka prywatności
+    = button_to destroy_user_session_path, method: :delete, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
+      i.fas.fa-sign-out-alt.fa-fw.mr-2
       | Wyloguj się

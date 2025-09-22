@@ -2,6 +2,8 @@
 
 Rails.application.routes.draw do
   get 'pages/home'
+  get 'pages/tos'
+  get 'pages/privacy'
   devise_for :users, controllers: {
     registrations: 'users/registrations',
     omniauth_callbacks: 'users/omniauth_callbacks'

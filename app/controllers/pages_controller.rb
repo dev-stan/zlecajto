@@ -26,5 +26,9 @@ class PagesController < ApplicationController
     current_user.mark_accepted_submissions_seen!
   end
 
+  def tos; end
+
+  def privacy; end
+
   def waitlist; end
 end
