@@ -91,5 +91,7 @@ gem 'sidekiq'
 gem 'sinatra', require: false  # needed for sidekiq/web UI
 gem 'letter_opener', group: :development
 gem 'open-uri'
+gem "judoscale-rails"
+gem "judoscale-sidekiq"
 
 gem "ultimate_turbo_modal", "~> 2.2"
