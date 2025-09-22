@@ -16,7 +16,6 @@ Rails.application.configure do
 
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local = false
-  config.action_controller.perform_caching = true
 
   # Ensures that a master key has been made available in ENV["RAILS_MASTER_KEY"], config/master.key, or an environment
   # key such as config/credentials/production.key. This key is used to decrypt credentials (and other encrypted files).
@@ -70,10 +69,25 @@ Rails.application.configure do
   # config.cache_store = :mem_cache_store
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
-  # config.active_job.queue_adapter = :resque
   # config.active_job.queue_name_prefix = "zlecajto_production"
 
+  config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_caching = false
+  config.action_mailer.delivery_method = :smtp
+
+  config.action_mailer.default_url_options = { host: 'www.zlecajto.pl', protocol: 'https' }
+
+  config.action_mailer.smtp_settings = {
+    address: Rails.application.credentials.dig(:mailgun, :address),
+    port: Rails.application.credentials.dig(:mailgun, :port),
+    domain: Rails.application.credentials.dig(:mailgun, :domain),
+    user_name: Rails.application.credentials.dig(:mailgun, :username),
+    password: Rails.application.credentials.dig(:mailgun, :password),
+    authentication: :plain,
+    enable_starttls_auto: true
+  }
+
+  config.active_job.queue_adapter = :sidekiq
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.

@@ -21,9 +21,15 @@ class Task < ApplicationRecord
 
   before_validation :set_default_status
 
+  after_create :send_task_created_email
+
   private
 
   def set_default_status
     self.status ||= 'Otwarte'
+  end
+
+  def send_task_created_email
+    UserMailer.task_created(user).deliver_later
   end
 end

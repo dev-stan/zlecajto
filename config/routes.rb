@@ -1,33 +1,43 @@
 # frozen_string_literal: true
 
+require 'sidekiq/web' # for Sidekiq Web UI
+
 Rails.application.routes.draw do
+  # Static pages
+  root 'pages#waitlist'
   get 'pages/home'
   get 'pages/tos'
   get 'pages/privacy'
+  get 'profile', to: 'pages#profile'
+
+  get 'up', to: 'rails/health#show', as: :rails_health_check
+
+  # Devise routes
   devise_for :users, controllers: {
     registrations: 'users/registrations',
     omniauth_callbacks: 'users/omniauth_callbacks'
   }
 
+  # Sidekiq Web UI (admin only)
+  authenticate :user, lambda(&:admin?) do
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
+  # User-specific routes
   namespace :users do
     resource :profile, only: %i[edit update]
   end
 
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  resource :dashboard, only: :show, controller: 'dashboards'
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get 'up' => 'rails/health#show', as: :rails_health_check
-
-  # Defines the root path route ("/")
-  root 'pages#waitlist'
-  get 'profile', to: 'pages#profile'
-  resources :tasks, only: %i[index create show new update edit] do
+  # Tasks and nested submissions
+  resources :tasks, only: %i[index create show new edit update] do
     collection do
       match :wizard, via: %i[get post]
       post :authenticate_and_create
       get :create_from_session, as: :create_from_session
     end
+
     member do
       patch :update
       get :created
@@ -42,6 +52,7 @@ Rails.application.routes.draw do
     end
   end
 
+  # Submissions
   resources :submissions, only: %i[index show edit update destroy] do
     member do
       patch :accept
@@ -53,8 +64,7 @@ Rails.application.routes.draw do
       get :create_from_session
     end
   end
-  resource :dashboard, only: :show, controller: 'dashboards'
 
-  # Custom route for user's own task view
+  # Custom routes
   get 'my_tasks/:id', to: 'tasks#my_task', as: :my_task
 end

@@ -35,13 +35,28 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.perform_caching = false
+  config.action_mailer.delivery_method = :smtp
+
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+  config.action_mailer.smtp_settings = {
+    address: Rails.application.credentials.dig(:mailgun, :address),
+    port: Rails.application.credentials.dig(:mailgun, :port),
+    domain: Rails.application.credentials.dig(:mailgun, :domain),
+    user_name: Rails.application.credentials.dig(:mailgun, :username),
+    password: Rails.application.credentials.dig(:mailgun, :password),
+    authentication: :plain,
+    enable_starttls_auto: true
+  }
+
+  config.active_job.queue_adapter = :sidekiq
+
   config.hosts << /.*\.ngrok-free\.app/
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :amazon
-
-  # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
 
   config.action_mailer.perform_caching = false
 
