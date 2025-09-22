@@ -18,11 +18,11 @@ Rails.application.routes.draw do
     omniauth_callbacks: 'users/omniauth_callbacks'
   }
 
-  # Sidekiq Web UI (admin only)
-  authenticate :user, lambda(&:admin?) do
-    mount Sidekiq::Web => '/sidekiq'
-  end
-
+  # # Sidekiq Web UI (admin only)
+  # authenticate :user, lambda(&:admin?) do
+  #   mount Sidekiq::Web => '/sidekiq'
+  # end
+  mount Sidekiq::Web => '/sidekiq'
   # User-specific routes
   namespace :users do
     resource :profile, only: %i[edit update]
