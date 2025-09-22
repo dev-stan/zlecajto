@@ -18,6 +18,8 @@ Rails.application.routes.draw do
     omniauth_callbacks: 'users/omniauth_callbacks'
   }
 
+  post '/scaler/scale_worker', to: 'sidekiq_scaler#scale'
+
   # # Sidekiq Web UI (admin only)
   # authenticate :user, lambda(&:admin?) do
   #   mount Sidekiq::Web => '/sidekiq'
