@@ -1,8 +1,8 @@
 class UserMailer < ApplicationMailer
   default from: 'no-reply@zlecajto.pl'
 
-  def welcome(user)
-    @user = user
+  def welcome(user_id)
+    @user = User.find(user_id)
     mail(to: @user.email, subject: 'Welcome to MyApp')
   end
 

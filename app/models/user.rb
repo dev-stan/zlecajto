@@ -18,7 +18,7 @@ class User < ApplicationRecord
   private
 
   def send_welcome_email
-    UserMailer.welcome(self).deliver_later
+    UserMailer.welcome(id).deliver_later
   end
 
   def google_oauth_user?
