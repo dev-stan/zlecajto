@@ -45,7 +45,7 @@ Rails.application.configure do
     address: Rails.application.credentials.dig(:mailgun, :address),
     port: Rails.application.credentials.dig(:mailgun, :port),
     domain: Rails.application.credentials.dig(:mailgun, :domain),
-    user_name: Rails.application.credentials.dig(:mailgun, :username),
+    user_name: Rails.application.credentials.dig(:mailgun, :user_name),
     password: Rails.application.credentials.dig(:mailgun, :password),
     authentication: :plain,
     enable_starttls_auto: true
