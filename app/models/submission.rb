@@ -7,33 +7,17 @@ class Submission < ApplicationRecord
   validates :status, presence: true
   validates :user_id, uniqueness: { scope: :task_id, message: 'has already applied to this task' }
 
-  STATUSES = %w[pending accepted rejected].freeze
+  enum status: { pending: 0, accepted: 1, rejected: 2 }
 
-  validates :status, inclusion: { in: STATUSES }
-
-  scope :pending, -> { where(status: 'pending') }
-  scope :accepted, -> { where(status: 'accepted') }
-  scope :rejected, -> { where(status: 'rejected') }
-
-  after_initialize :set_default_status, if: :new_record?
   after_create :send_new_submission_email
 
-  def send_new_submission_email
-    MailgunTemplateJob.perform_later(to: email, template: 'welcome_email', subject: 'Witaj w zlecajto :)',
-                                     variables: { test: 'test' })
-  end
-
-  def accepted?
-    status == 'accepted'
-  end
-
-  def pending?
-    status == 'pending'
+  def accept!
+    update!(status: :accepted)
   end
 
   private
 
-  def set_default_status
-    self.status ||= 'pending'
+  def send_new_submission_email
+    # [TODO] Implement email notification to task owner about new submission
   end
 end
