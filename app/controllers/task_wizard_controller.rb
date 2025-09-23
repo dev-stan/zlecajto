@@ -1,0 +1,77 @@
+class TaskWizardController < ApplicationController
+  # Allow unauthenticated users to hit `create` so we can stash the task in session.
+  before_action :authenticate_user!, only: %i[create_from_session]
+  before_action :load_wizard_collections, only: %i[new wizard create]
+
+  def new
+    init_wizard(advance: false)
+  end
+
+  def wizard
+    init_wizard(advance: request.post?)
+    render :new
+  end
+
+  def create
+    unless user_signed_in?
+      PendingTask.store(session, params: task_params, return_path: create_from_session_task_path)
+      redirect_to new_user_session_path
+      return
+    end
+
+    task = TaskCreator.new(user: current_user, params: task_params).call
+
+    if task.persisted?
+      redirect_to created_task_path(task)
+    else
+      handle_creation_error(task)
+    end
+  end
+
+  def authenticate_and_create
+    if params[:task].present?
+      PendingTask.store(session, params: task_params,
+                                 return_path: create_from_session_task_path)
+    end
+    redirect_to new_user_session_path
+  end
+
+  def create_from_session
+    task = PendingTask.create_for_user(current_user, session)
+
+    if task&.persisted?
+      redirect_to task_path(task), notice: t('tasks.flash.created_after_login')
+    else
+      redirect_to new_task_path(step: 2), alert: t('tasks.flash.creation_error')
+    end
+  end
+
+  private
+
+  def handle_creation_error(task)
+    @wizard = TaskWizard.new(step: 2, params: task_params)
+    @step = @wizard.current_step
+    @task = task # Use the failed task to show validation errors
+    render :new, status: :unprocessable_entity
+  end
+
+  def task_params
+    return {} unless params[:task]
+
+    params.require(:task).permit(:title, :description, :salary, :status, :category, :due_date, :timeslot,
+                                 :payment_method, :location, photos: [], photo_blob_ids: [])
+  end
+
+  def load_wizard_collections
+    @categories = Task::CATEGORIES
+    @time_slots = Task::TIMESLOTS
+    @payment_methods = Task::PAYMENT_METHODS
+    @locations = Task::LOCATIONS
+  end
+
+  def init_wizard(advance: false)
+    @wizard = TaskWizard.new(step: params[:step], params: task_params, advance: advance)
+    @task = @wizard.task
+    @step = @wizard.current_step
+  end
+end

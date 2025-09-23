@@ -4,10 +4,12 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if @user.persisted?
       sign_in @user, event: :authentication
+
       if @user.phone_number.blank?
         redirect_to edit_users_profile_path, notice: 'Uzupełnij numer telefonu, aby dokończyć rejestrację.'
       else
-        redirect_to root_path, notice: 'Zalogowano przez Google!'
+        # Use the same logic as your ApplicationController
+        redirect_to after_sign_in_path_for(@user), notice: 'Zalogowano przez Google!'
       end
       set_flash_message(:notice, :success, kind: 'Google') if is_navigational_format?
     else

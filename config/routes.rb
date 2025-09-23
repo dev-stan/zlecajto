@@ -32,14 +32,17 @@ Rails.application.routes.draw do
 
   resource :dashboard, only: :show, controller: 'dashboards'
 
-  # Tasks and nested submissions
-  resources :tasks, only: %i[index create show new edit update] do
-    collection do
-      match :wizard, via: %i[get post]
-      post :authenticate_and_create
-      get :create_from_session, as: :create_from_session
-    end
+  # Task Wizard Routes (separate from CRUD)
+  scope path: 'tasks' do
+    get 'new', to: 'task_wizard#new', as: :new_task
+    match 'wizard', to: 'task_wizard#wizard', via: %i[get post], as: :task_wizard
+    post 'create', to: 'task_wizard#create', as: :create_task
+    post 'authenticate_and_create', to: 'task_wizard#authenticate_and_create', as: :authenticate_and_create_task
+    get 'create_from_session', to: 'task_wizard#create_from_session', as: :create_from_session_task
+  end
 
+  # Tasks CRUD routes
+  resources :tasks, only: %i[index show edit update] do
     member do
       patch :update
       get :created

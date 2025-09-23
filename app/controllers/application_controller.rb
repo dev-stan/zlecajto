@@ -3,21 +3,30 @@
 class ApplicationController < ActionController::Base
   protected
 
-  # Override Devise's after_sign_in_path to handle task creation flow
   def after_sign_in_path_for(resource)
-    if session[:pending_submission]
-      create_from_session_submissions_path
-    else
-      super
-    end
+    pending_redirect_path || super
   end
 
-  # Also handle after_sign_up_path for new registrations
   def after_sign_up_path_for(resource)
-    if session[:pending_submission]
+    pending_redirect_path || super
+  end
+
+  # Add this for OAuth flows
+  def after_omniauth_success_path_for(resource)
+    pending_redirect_path || super
+  end
+
+  private
+
+  def pending_redirect_path
+    if PendingSubmission.present?(session)
       create_from_session_submissions_path
-    else
-      super
+    elsif PendingTask.present?(session)
+      create_from_session_task_path
+    elsif session[:return_to].present?
+      return_path = session[:return_to]
+      session.delete(:return_to)
+      return_path
     end
   end
 end

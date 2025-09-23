@@ -1,28 +1,20 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
-  # GET /my_tasks/:id
+  before_action :authenticate_user!, only: %i[update edit my_task]
+  before_action :set_task, only: %i[show edit update created completed]
+
   def my_task
     @task = current_user.tasks.find(params[:id])
-    # Add any additional logic here if needed
   end
-  # Allow guests to access the wizard (new & wizard) so they can fill in data first.
-  # Authentication is only required when persisting (create / create_from_session) or editing existing records.
-  before_action :authenticate_user!, only: %i[create create_from_session update my_task]
-  before_action :load_wizard_collections, only: %i[new wizard create]
 
   def index
     @tasks = Task.with_attached_photos
   end
 
-  def show
-    @task = Task.find(params[:id])
-    @existing_submission = current_user.submissions.find_by(task: @task) if user_signed_in?
-  end
+  def show; end
 
-  def edit
-    @task = current_user.tasks.find(params[:id])
-  end
+  def edit; end
 
   def update
     @task = current_user.tasks.find(params[:id])
@@ -33,74 +25,14 @@ class TasksController < ApplicationController
     end
   end
 
-  # GET /tasks/new (step-driven wizard entry)
-  def new
-    init_wizard(advance: false)
-  end
+  def created; end
 
-  # GET/POST /tasks/wizard (progress wizard via Turbo)
-  def wizard
-    init_wizard(advance: request.post?)
-    render :new
-  end
-
-  def create
-    unless user_signed_in?
-      # Store data & bounce to login, then resume in create_from_session
-      session[:pending_task_data] = task_params
-      session[:return_to] = create_from_session_tasks_path
-      redirect_to new_user_session_path and return
-    end
-
-    @task = current_user.tasks.build(task_params.except(:photo_blob_ids))
-    if task_params[:photo_blob_ids].present?
-      @task.photos.attach(task_params[:photo_blob_ids].map { |signed_id| { signed_id: signed_id } })
-    end
-    if @task.save
-      # redirect_to @task, notice: t('tasks.flash.created')
-      redirect_to created_task_path(@task)
-    else
-      # Rehydrate wizard at second step (after basic details) so user can correct
-      @wizard = TaskWizard.new(step: 2, params: task_params)
-      @step   = @wizard.current_step
-      render :new, status: :unprocessable_entity
-    end
-  end
-
-  def created
-    @task = Task.find(params[:id])
-  end
-
-  def completed
-    @task = Task.find(params[:id])
-  end
-
-  def authenticate_and_create
-    if params[:task].present?
-      session[:pending_task_data] = task_params
-      session[:return_to] = create_from_session_tasks_path # Use dedicated route after login
-    end
-
-    redirect_to new_user_session_path
-  end
-
-  def create_from_session
-    create_pending_task
-    redirect_to tasks_path unless performed?
-  end
+  def completed; end
 
   private
 
-  def create_pending_task
-    data = session.delete(:pending_task_data)
-    return unless data.present?
-
-    @task = current_user.tasks.build(data)
-    if @task.save
-      redirect_to root_path, notice: t('tasks.flash.created_after_login')
-    else
-      redirect_to new_task_path(step: 2), alert: t('tasks.flash.creation_error')
-    end
+  def set_task
+    @task = Task.find(params[:id])
   end
 
   def task_params
@@ -108,18 +40,5 @@ class TasksController < ApplicationController
 
     params.require(:task).permit(:title, :description, :salary, :status, :category, :due_date, :timeslot,
                                  :payment_method, :location, photos: [], photo_blob_ids: [])
-  end
-
-  def load_wizard_collections
-    @categories       = Task::CATEGORIES
-    @time_slots       = Task::TIMESLOTS
-    @payment_methods  = Task::PAYMENT_METHODS
-    @locations = Task::LOCATIONS
-  end
-
-  def init_wizard(advance: false)
-    @wizard = TaskWizard.new(step: params[:step], params: task_params, advance: advance)
-    @task   = @wizard.task
-    @step   = @wizard.current_step
   end
 end
