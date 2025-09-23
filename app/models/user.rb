@@ -18,7 +18,8 @@ class User < ApplicationRecord
   private
 
   def send_welcome_email
-    UserMailer.welcome(id).deliver_later
+    MailgunTemplateJob.perform_later(to: email, template: 'welcome_email', subject: 'Witaj w zlecajto :)',
+                                     variables: { test: 'test' })
   end
 
   def google_oauth_user?

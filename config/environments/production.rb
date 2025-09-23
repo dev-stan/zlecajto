@@ -73,19 +73,10 @@ Rails.application.configure do
 
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_caching = false
-  config.action_mailer.delivery_method = :smtp
-
+  # For template emails, bypass ActionMailer and use MailgunTemplateJob
+  # Keep ActionMailer free for non-template emails
+  # config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options = { host: 'www.zlecajto.pl', protocol: 'https' }
-
-  config.action_mailer.smtp_settings = {
-    address: Rails.application.credentials.dig(:mailgun, :address),
-    port: Rails.application.credentials.dig(:mailgun, :port),
-    domain: Rails.application.credentials.dig(:mailgun, :domain),
-    user_name: Rails.application.credentials.dig(:mailgun, :user_name),
-    password: Rails.application.credentials.dig(:mailgun, :password),
-    authentication: :plain,
-    enable_starttls_auto: true
-  }
 
   config.active_job.queue_adapter = :sidekiq
 

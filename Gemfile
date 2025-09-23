@@ -94,6 +94,4 @@ gem 'open-uri'
 gem "judoscale-rails"
 gem "judoscale-sidekiq"
 gem 'dotenv-rails'
-
-
 gem "ultimate_turbo_modal", "~> 2.2"
