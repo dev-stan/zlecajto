@@ -30,8 +30,6 @@ Rails.application.routes.draw do
     resource :profile, only: %i[edit update]
   end
 
-  resource :dashboard, only: :show, controller: 'dashboards'
-
   # Task Wizard Routes (separate from CRUD)
   scope path: 'tasks' do
     get 'new', to: 'task_wizard#new', as: :new_task
