@@ -1,7 +1,7 @@
 # app/controllers/sidekiq_scaler_controller.rb
 class SidekiqScalerController < ApplicationController
   skip_before_action :verify_authenticity_token
-  # before_action :authenticate_token!  # add back for security
+  # before_action :authenticate_token!  # uncomment for security in production
 
   require 'sidekiq/api'
   require 'net/http'
@@ -12,14 +12,25 @@ class SidekiqScalerController < ApplicationController
   HEROKU_API_KEY = ENV['HEROKU_API_KEY']
 
   def scale
-    stats = Sidekiq::Stats.new
-    queued_jobs = stats.queues.values.sum
-    busy_jobs   = Sidekiq::Workers.new.size
+    stats          = Sidekiq::Stats.new
+    queued_jobs    = stats.queues.values.sum
+    busy_jobs      = Sidekiq::Workers.new.size
+    retries_count  = Sidekiq::RetrySet.new.size
+    scheduled_count = Sidekiq::ScheduledSet.new.size
 
-    dynos_needed = queued_jobs > 0 || busy_jobs > 0 ? 1 : 0
+    total_jobs = queued_jobs + busy_jobs + retries_count + scheduled_count
+    dynos_needed = total_jobs > 0 ? 1 : 0
+
     scale_worker(dynos_needed)
 
-    render json: { status: 'ok', queued: queued_jobs, busy: busy_jobs, dynos: dynos_needed }
+    render json: {
+      status: 'ok',
+      queued: queued_jobs,
+      busy: busy_jobs,
+      retries: retries_count,
+      scheduled: scheduled_count,
+      dynos: dynos_needed
+    }
   rescue StandardError => e
     Rails.logger.error "Error in scale action: #{e.message}"
     render json: { status: 'error', message: e.message }, status: 500
