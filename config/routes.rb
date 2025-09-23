@@ -35,7 +35,6 @@ Rails.application.routes.draw do
     get 'new', to: 'task_wizard#new', as: :new_task
     match 'wizard', to: 'task_wizard#wizard', via: %i[get post], as: :task_wizard
     post 'create', to: 'task_wizard#create', as: :create_task
-    post 'authenticate_and_create', to: 'task_wizard#authenticate_and_create', as: :authenticate_and_create_task
     get 'create_from_session', to: 'task_wizard#create_from_session', as: :create_from_session_task
   end
 

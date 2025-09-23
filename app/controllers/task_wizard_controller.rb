@@ -7,7 +7,7 @@ class TaskWizardController < ApplicationController
     init_wizard(advance: false)
   end
 
-  def wizard
+  def wizard # this action advances the wizard / called with form in views
     init_wizard(advance: request.post?)
     render :new
   end
@@ -24,36 +24,21 @@ class TaskWizardController < ApplicationController
     if task.persisted?
       redirect_to created_task_path(task)
     else
-      handle_creation_error(task)
+      render :new, status: :unprocessable_entity
     end
-  end
-
-  def authenticate_and_create
-    if params[:task].present?
-      PendingTask.store(session, params: task_params,
-                                 return_path: create_from_session_task_path)
-    end
-    redirect_to new_user_session_path
   end
 
   def create_from_session
     task = PendingTask.create_for_user(current_user, session)
 
     if task&.persisted?
-      redirect_to task_path(task), notice: t('tasks.flash.created_after_login')
+      redirect_to task_path(task), notice: 'Dodano zlecenie 🚀'
     else
-      redirect_to new_task_path(step: 2), alert: t('tasks.flash.creation_error')
+      redirect_to new_task_path(step: 2), alert: 'Coś poszło nie tak, spróbuj ponownie...'
     end
   end
 
   private
-
-  def handle_creation_error(task)
-    @wizard = TaskWizard.new(step: 2, params: task_params)
-    @step = @wizard.current_step
-    @task = task # Use the failed task to show validation errors
-    render :new, status: :unprocessable_entity
-  end
 
   def task_params
     return {} unless params[:task]

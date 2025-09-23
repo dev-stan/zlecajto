@@ -4,6 +4,13 @@ class TasksController < ApplicationController
   before_action :authenticate_user!, only: %i[update edit my_task]
   before_action :set_task, only: %i[show edit update created completed]
 
+  def show; end
+  def edit; end
+  
+  def created; end
+  def completed; end
+
+
   def my_task
     @task = current_user.tasks.find(params[:id])
   end
@@ -11,10 +18,6 @@ class TasksController < ApplicationController
   def index
     @tasks = Task.with_attached_photos
   end
-
-  def show; end
-
-  def edit; end
 
   def update
     @task = current_user.tasks.find(params[:id])
@@ -24,10 +27,6 @@ class TasksController < ApplicationController
       render :edit, status: :unprocessable_entity
     end
   end
-
-  def created; end
-
-  def completed; end
 
   private
 
