@@ -19,8 +19,8 @@ class Submission < ApplicationRecord
   after_create :send_new_submission_email
 
   def send_new_submission_email
-    debugger
-    UserMailer.new_submission(task.user).deliver_later
+    MailgunTemplateJob.perform_later(to: email, template: 'welcome_email', subject: 'Witaj w zlecajto :)',
+                                     variables: { test: 'test' })
   end
 
   def accepted?
