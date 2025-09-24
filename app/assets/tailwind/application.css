@@ -13,6 +13,7 @@
 	.text-primary { color: #3454E1 } /* green-200 */
 	.text-secondary { color:oklch(45.9% 0.187 3.815) } /* yellow-200 */
 	.bg-light-green { background-color: #cef6cf}
+	.bg-white-ish { background-color: #F3F7FA}
 
 	/* Simple fade animations for modals */
 	@keyframes fade-in {

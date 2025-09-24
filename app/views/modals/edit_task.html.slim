@@ -2,9 +2,10 @@
   = render Ui::FormModalComponent.new(title: 'Edytuj zlecenie') do
     = form_with model: @task, url: task_path(@task), method: :patch, data: { turbo_frame: '_top' }, html: { class: "space-y-6" } do |f|
       .space-y-4
-        = render Input::InputComponent.new(name: 'task[title]', label: 'Tytuł', value: @task.title, placeholder: 'Podaj tytuł zlecenia', html_options: { required: true })
-        = render Input::InputComponent.new(name: 'task[description]', type: 'textarea', label: 'Opis', value: @task.description, placeholder: 'Opisz szczegóły zadania', rows: 4, html_options: { required: true })
-        = render Input::InputComponent.new(name: 'task[salary]', type: 'number', label: 'Wynagrodzenie (zł)', value: @task.salary, placeholder: 'Podaj kwotę', html_options: { min: 0, step: 1 })
+        .flex.gap-3
+            = render Input::InputComponent.new(name: 'task[title]', label: 'Tytuł', value: @task.title, placeholder: 'Podaj tytuł zlecenia', html_options: { class: '', required: true })
+            = render Input::InputComponent.new(name: 'task[salary]', type: 'number', label: 'Wynagrodzenie (zł)', value: @task.salary, placeholder: 'Podaj kwotę', html_options: { class: '', min: 0, step: 1 })
+        = render Input::InputComponent.new(name: 'task[description]', type: 'textarea', label: 'Opis', value: @task.description, placeholder: 'Opisz szczegóły zadania', rows: 4, html_options: { class: '', required: true })
 
         .flex.flex-row.gap-3 
             .flex.flex-col
@@ -18,7 +19,7 @@
                 label.mb-1.block.text-base.font-medium.text-gray-700 Termin
                 = render Input::SelectComponent.new(form: f, options: Task::TIMESLOTS, selected: @task.timeslot, label: 'Wybierz przedział czasowy', field: :timeslot)
             .flex.flex-col
-                label.mb-1.block.text-base.font-medium.text-gray-700 Metoda płatności
+                label.mb-1.block.text-base.font-medium.text-gray-700 Płatność
                 = render Input::SelectComponent.new(form: f, options: Task::PAYMENT_METHODS, selected: @task.payment_method, label: 'Wybierz metodę płatności', field: :payment_method)
 
         / .flex.flex-col
