@@ -39,6 +39,10 @@ Rails.application.routes.draw do
     get 'create_from_session', to: 'task_wizard#create_from_session', as: :create_from_session_task
   end
 
+  scope path: 'submissions' do
+    get 'create_from_session', to: 'submissions#create_from_session', as: :create_from_session_submission
+  end
+
   # Tasks CRUD routes
   resources :tasks, only: %i[index show edit update] do
     member do

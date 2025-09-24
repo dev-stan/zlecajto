@@ -9,6 +9,8 @@ class SubmissionCreator
     submission = task.submissions.build(params)
     submission.user = user
     submission.save
+    puts "Errors: #{submission.errors.full_messages.join(', ')}"
+
     submission
   end
 

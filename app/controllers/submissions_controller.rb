@@ -19,12 +19,32 @@ class SubmissionsController < ApplicationController
   end
 
   def create
+    unless user_signed_in?
+      PendingSubmission.store(session, params: submission_params, task_id: @task.id, return_path: create_from_session_submission_path)
+      redirect_to new_user_session_path and return
+    end
+
+    if @task.user_id == current_user.id
+      redirect_back fallback_location: @task, alert: 'Nie możesz zgłosić się do własnego zadania' and return
+    end
+
     submission = SubmissionCreator.new(user: current_user, task: @task, params: submission_params).call
+
     if submission.persisted?
       redirect_to @task, notice: 'Pomyslnie złożono zgłoszenie do zadania.'
     else
       @submission = submission
       render :new, status: :unprocessable_entity
+    end
+  end
+
+    def create_from_session
+    submission = PendingSubmission.create_for_user(current_user, session)
+
+    if submission&.persisted?
+      redirect_to submission.task, notice: 'Pomyslnie złożono zgłoszenie do zadania.'
+    else
+      redirect_back fallback_location: root_path, alert: 'Coś poszło nie tak, spróbuj ponownie...'
     end
   end
 
