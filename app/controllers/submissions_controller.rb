@@ -1,14 +1,18 @@
 class SubmissionsController < ApplicationController
   before_action :authenticate_user!, except: %i[new create]
   before_action :set_task, only: %i[new create]
-  before_action :set_submission, only: %i[show edit update destroy accept]
-  before_action :authorize_task_owner!, only: %i[accept]
+  before_action :set_submission, only: %i[show accept contact confirm_submission_accept]
+  before_action :authorize_task_owner!, only: %i[accept confirm_submission_accept]
 
   def index
     @submissions = current_user.submissions.includes(:task)
   end
 
   def show; end
+
+  def confirm_submission_accept
+  render :confirm_submission_accept
+  end
 
   def new
     @submission = @task.submissions.build
@@ -22,6 +26,8 @@ class SubmissionsController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
+
+  def contact; end
 
   def accept
     @submission.accept!

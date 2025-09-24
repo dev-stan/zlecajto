@@ -34,5 +34,6 @@ html
         = render Ui::AlertComponent.new(message: notice, variant: :success)
       - if alert
         = render Ui::AlertComponent.new(message: alert, variant: :error)
+      = turbo_frame_tag "modal"
 
       = yield
