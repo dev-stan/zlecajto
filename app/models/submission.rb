@@ -10,6 +10,9 @@ class Submission < ApplicationRecord
 
   enum status: { pending: 0, accepted: 1, rejected: 2 }
 
+  # Ensure a default status is set before validations run.
+  after_initialize :set_default_status, if: :new_record?
+
   after_create :send_new_submission_email
 
   def accept!
@@ -17,6 +20,10 @@ class Submission < ApplicationRecord
   end
 
   private
+
+  def set_default_status
+    self.status ||= :pending
+  end
 
   def cannot_apply_to_own_task
     return unless task && user
