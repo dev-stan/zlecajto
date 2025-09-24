@@ -28,7 +28,6 @@ class PendingSubmission
 
   task = Task.find_by(id: task_id)
   return nil unless task
-  debugger
 
   SubmissionCreator.new(user: user, task: task, params: submission_attrs).call
   end
