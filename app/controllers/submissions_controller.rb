@@ -23,6 +23,7 @@ class SubmissionsController < ApplicationController
     if submission.persisted?
       redirect_to @task, notice: 'Pomyslnie złożono zgłoszenie do zadania.'
     else
+      @submission = submission
       render :new, status: :unprocessable_entity
     end
   end
