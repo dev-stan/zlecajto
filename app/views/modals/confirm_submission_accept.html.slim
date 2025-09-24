@@ -1,0 +1,10 @@
+= turbo_frame_tag 'modal' do
+  = render Ui::ConfirmModalComponent.new(title: 'Wybierasz wykonawcę zadania 👀',
+    body: "Czy na pewno chcesz żeby #{@submission.user.first_name} wykonywał(a) twoje zadanie?",
+    footer: 'Tego się nie da cofnąć!',
+    confirm_text: 'Na pewno!',
+    cancel_text: 'Wróć',
+    cancel_variant: :blue,
+    confirm_path: accept_task_submission_path(@submission.task, @submission),
+    confirm_method: :patch,
+    confirm_variant: :green)

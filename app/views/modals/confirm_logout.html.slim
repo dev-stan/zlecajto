@@ -1,0 +1,10 @@
+= turbo_frame_tag 'modal' do
+  = render Ui::ConfirmModalComponent.new(title: 'Czekaj, czekaj!',
+    body: 'Czy na pewno chcesz się wylogować? Będziemy tęsknić! 😢',
+    confirm_text: 'Wyloguj się',
+    cancel_text: 'Wróć',
+    confirm_path: destroy_user_session_path,
+    confirm_method: :delete,
+    confirm_turbo_frame: '_top',
+    confirm_variant: :red,
+    cancel_variant: :blue)

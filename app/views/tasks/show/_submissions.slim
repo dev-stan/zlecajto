@@ -42,7 +42,7 @@
                   = render(Ui::ButtonComponent.new(text: 'Akceptuj',
                     variant: :green,
                     size: :sm,
-                    path: confirm_submission_accept_submission_path(submission),
+                    path: confirm_submission_accept_modal_path(submission),
                     method: :get,
                     html_options: { class: ' w-full mb-4 font-bold text-lg', data: { turbo_frame: 'modal', turbo: true } }))
                 

@@ -31,6 +31,7 @@ module Ui
       confirm_turbo_frame: '_top',
       confirm_variant: :danger,
       cancel_variant: :secondary,
+      footer: nil,
       size: :md,
       html_options: {}
     )
@@ -46,6 +47,7 @@ module Ui
       @confirm_turbo_frame = confirm_turbo_frame
       @confirm_variant = (confirm_variant&.to_sym || :danger)
       @cancel_variant = (cancel_variant&.to_sym || :secondary)
+      @footer = footer
       @size = (size&.to_sym || :md)
       @html_options = html_options
     end
@@ -53,6 +55,6 @@ module Ui
     attr_reader :title, :body, :confirm_text, :cancel_text,
         :confirm_path, :confirm_method, :cancel_path,
         :cancel_method, :confirm_turbo_frame, :confirm_variant,
-        :cancel_variant, :size, :html_options
+        :cancel_variant, :footer, :size, :html_options
   end
 end

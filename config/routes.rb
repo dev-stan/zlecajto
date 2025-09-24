@@ -9,7 +9,12 @@ Rails.application.routes.draw do
   get 'pages/tos'
   get 'pages/privacy'
   get 'profile', to: 'pages#profile'
+
+  # Modals
+  get 'users/sign_out/confirm', to: 'modals#confirm_logout', as: 'confirm_user_logout'
+  get 'submissions/:id/confirm_accept', to: 'modals#confirm_submission_accept', as: :confirm_submission_accept_modal
   delete 'modal', to: 'modals#destroy', as: 'close_modal'
+
 
   get 'up', to: 'rails/health#show', as: :rails_health_check
 
@@ -66,7 +71,6 @@ Rails.application.routes.draw do
       patch :reject
       get :accepted
       get :contact
-      get :confirm_submission_accept
     end
     collection do
       get :create_from_session

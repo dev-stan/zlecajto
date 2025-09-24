@@ -57,12 +57,12 @@
               p.text-base.text-gray-600.mb-1 = truncate(submission.note, length: 200)
               span.text-base.text-gray-500.mb-10 = formatted_date(submission.created_at)
               - if submission.pending?
-                = render(Ui::ButtonComponent.new(text: 'Akceptuj',
-                    variant: :green,
-                    size: :sm,
-                    path: confirm_submission_accept_submission_path(submission),
-                    method: :get,
-                    html_options: { class: ' w-full mb-4 font-bold text-lg', data: { turbo_frame: 'modal', turbo: true } }))
+        = render(Ui::ButtonComponent.new(text: 'Akceptuj',
+          variant: :green,
+          size: :sm,
+          path: confirm_submission_accept_modal_path(submission),
+          method: :get,
+          html_options: { class: ' w-full mb-4 font-bold text-lg', data: { turbo_frame: 'modal', turbo: true } }))
     - else
       .flex.items-center.gap-2
         h2.text-2xl.font-bold.text-gray-900.mb-0.flex.items-center Zgłoszenia
