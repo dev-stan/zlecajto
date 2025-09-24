@@ -1,0 +1,33 @@
+= turbo_frame_tag 'modal' do
+  = render Ui::FormModalComponent.new(title: 'Edytuj zlecenie') do
+    = form_with model: @task, url: task_path(@task), method: :patch, data: { turbo_frame: '_top' }, html: { class: "space-y-6" } do |f|
+      .space-y-4
+        = render Input::InputComponent.new(name: 'task[title]', label: 'Tytuł', value: @task.title, placeholder: 'Podaj tytuł zlecenia', html_options: { required: true })
+        = render Input::InputComponent.new(name: 'task[description]', type: 'textarea', label: 'Opis', value: @task.description, placeholder: 'Opisz szczegóły zadania', rows: 4, html_options: { required: true })
+        = render Input::InputComponent.new(name: 'task[salary]', type: 'number', label: 'Wynagrodzenie (zł)', value: @task.salary, placeholder: 'Podaj kwotę', html_options: { min: 0, step: 1 })
+
+        .flex.flex-row.gap-3 
+            .flex.flex-col
+                label.mb-1.block.text-base.font-medium.text-gray-700 Kategoria
+                = render Input::SelectComponent.new(form: f, options: Task::CATEGORIES, selected: @task.category, label: 'Wybierz kategorię', field: :category)
+            .flex.flex-col
+                label.mb-1.block.text-base.font-medium.text-gray-700 Lokalizacja
+                = render Input::SelectComponent.new(form: f, options: Task::LOCATIONS, selected: @task.location, label: 'Wybierz lokalizację', field: :location)
+        .flex.flex-row.gap-3
+            .flex.flex-col
+                label.mb-1.block.text-base.font-medium.text-gray-700 Termin
+                = render Input::SelectComponent.new(form: f, options: Task::TIMESLOTS, selected: @task.timeslot, label: 'Wybierz przedział czasowy', field: :timeslot)
+            .flex.flex-col
+                label.mb-1.block.text-base.font-medium.text-gray-700 Metoda płatności
+                = render Input::SelectComponent.new(form: f, options: Task::PAYMENT_METHODS, selected: @task.payment_method, label: 'Wybierz metodę płatności', field: :payment_method)
+
+        / .flex.flex-col
+        /   label.mb-1.block.text-base.font-medium.text-gray-700 Zdjęcia
+        /   - if @task.photos.attached?
+        /     .flex.flex-wrap.gap-2.mb-2
+        /       - @task.photos.each do |photo|
+        /         = image_tag url_for(photo), class: 'h-20 w-20 object-cover rounded-lg border border-gray-200', alt: 'Załączone zdjęcie'
+        /   = render Input::ImageUploadComponent.new(form: f, name: 'photos', multiple: true, limit: 5, direct_upload: true, input_id: 'task_photos_input', required: false, html_options: {})
+      .pt-4.border-t.border-gray-100.flex.items-center.gap-3
+        = render(Ui::ButtonComponent.new(text: 'Anuluj', button: true, variant: :secondary, html_options: { data: { action: 'click->modal#close' } }))
+        = render(Ui::ButtonComponent.new(text: 'Zapisz', submit: true, variant: :green))

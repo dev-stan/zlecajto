@@ -1,0 +1,10 @@
+= turbo_frame_tag 'modal' do
+  = render Ui::ConfirmModalComponent.new(title: 'Potwierdzić wykonanie?',
+    body: 'Czy zlecenie zostało wykonane zgodnie z umową i chcesz je zakończyć?',
+    footer: 'Tego się nie da cofnąć!',
+    confirm_text: 'Potwierdź wykonanie',
+    cancel_text: 'Anuluj',
+    confirm_path: completed_task_path(@task),
+    confirm_method: :get,
+    confirm_turbo_frame: '_top',
+    confirm_variant: :green)

@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   # Modals
   get 'users/sign_out/confirm', to: 'modals#confirm_logout', as: 'confirm_user_logout'
   get 'submissions/:id/confirm_accept', to: 'modals#confirm_submission_accept', as: :confirm_submission_accept_modal
+  get 'tasks/:id/confirm_complete', to: 'modals#confirm_task_complete', as: :confirm_task_complete_modal
+  get 'tasks/:id/edit_modal', to: 'modals#edit_task', as: :edit_task_modal
   delete 'modal', to: 'modals#destroy', as: 'close_modal'
 
 

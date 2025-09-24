@@ -21,4 +21,9 @@
                         span.flex.items-center.justify-center.w-8.h-8.rounded-full.bg-blue-50.text-blue-600.font-semibold.border.border-blue-200 = 3
                     p.text-base.text-gray-600.leading-relaxed = 'Gdy zlecenie zostanie wykonane, potwierdź jego realizację w aplikacji'
             = render Ui::ButtonComponent.new(text: 'Wróć do ogłoszenia', path: my_task_path(@submission.task), variant: :primary, size: :lg, html_options: { class: 'w-full mt-5' })
-            = render Ui::ButtonComponent.new(text: 'Potwierdź wykonanie zlecenia', path: completed_task_path(@submission.task), variant: :green, size: :lg, html_options: { class: 'w-full mt-5' })
+            = render Ui::ButtonComponent.new(text: 'Potwierdź wykonanie zlecenia',
+                path: confirm_task_complete_modal_path(@submission.task),
+                variant: :green,
+                size: :lg,
+                method: :get,
+                html_options: { class: 'w-full mt-4', data: { turbo_frame: 'modal', turbo: true } })
