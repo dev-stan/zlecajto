@@ -1,6 +1,6 @@
 /.fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4
-.fixed.inset-0.z-50.bg-black/50.flex.items-center.justify-center.p-4
-  .relative.bg-white.rounded-2xl.shadow-xl.max-w-lg.w-full
+.fixed.inset-0.z-50.bg-black/50.flex.items-center.justify-center.p-4.animate-fade-in.transition-colors.duration-200.ease-out data-modal-target="overlay"
+  .relative.bg-white.rounded-2xl.shadow-xl.max-w-lg.w-full.animate-fade-in data-modal-target="content"
     .px-6.py-4.border-b.border-gray-100.flex.items-center.justify-between
       h3.text-lg.font-semibold.text-gray-900 = title
     .px-6.py-4
@@ -12,7 +12,7 @@
       - if cancel_path
         = render(Ui::ButtonComponent.new(text: cancel_text, path: cancel_path, method: cancel_method, variant: cancel_variant, html_options: { data: { turbo_frame: 'modal' } }))
       - else
-        = render(Ui::ButtonComponent.new(text: cancel_text, path: close_modal_path, method: :delete, variant: cancel_variant, html_options: { data: { turbo_frame: 'modal' } }))
+        = render(Ui::ButtonComponent.new(text: cancel_text, button: true, variant: cancel_variant, html_options: { data: { action: 'click->modal#close' } }))
       - if confirm_path
         = render(Ui::ButtonComponent.new(text: confirm_text, path: confirm_path, method: confirm_method, variant: confirm_variant, html_options: { data: { turbo_frame: confirm_turbo_frame } }))
       - else
