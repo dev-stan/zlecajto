@@ -9,5 +9,5 @@
           = render Input::InputComponent.new(name: 'user[email]', type: 'email', label: 'Email', value: @user.email, placeholder: 'Podaj email', html_options: { class: 'w-full', required: true })
           = render Input::InputComponent.new(name: 'user[phone_number]', type: 'tel', label: 'Telefon', value: @user.phone_number, placeholder: 'Podaj numer telefonu', html_options: { class: 'w-full' })
       .pt-4.border-t.border-gray-100.flex.items-center.gap-3
-        = render(Ui::ButtonComponent.new(text: 'Anuluj', button: true, variant: :secondary, html_options: { data: { action: 'click->modal#close' } }))
+        = render(Ui::ButtonComponent.new(text: 'Anuluj', button: true, variant: :secondary, html_options: { class: 'w-1/4', data: { action: 'click->modal#close' } }))
         = render(Ui::ButtonComponent.new(text: 'Zapisz', submit: true, variant: :green, html_options: { class: 'w-3/4' }))

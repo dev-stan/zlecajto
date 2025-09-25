@@ -33,6 +33,7 @@ class Submission < ApplicationRecord
   end
 
   def send_new_submission_email
-    # [TODO] Implement email notification to task owner about new submission
+    MailgunTemplateJob.perform_later(to: task.user.email, template: 'nowa_oferta_new', subject: 'Nowa oferta!',
+                                     variables: { salary: task.salary, title: task.title, timeslot: task.timeslot, location: task.location, due_date: task.due_date, first_name: task.user.first_name})
   end
 end

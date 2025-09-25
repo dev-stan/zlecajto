@@ -29,6 +29,7 @@
         /       - @task.photos.each do |photo|
         /         = image_tag url_for(photo), class: 'h-20 w-20 object-cover rounded-lg border border-gray-200', alt: 'Załączone zdjęcie'
         /   = render Input::ImageUploadComponent.new(form: f, name: 'photos', multiple: true, limit: 5, direct_upload: true, input_id: 'task_photos_input', required: false, html_options: {})
+        
       .pt-4.border-t.border-gray-100.flex.items-center.justify-end.gap-3.w-full
-        = render(Ui::ButtonComponent.new(text: 'Anuluj', button: true, variant: :secondary, html_options: { data: { action: 'click->modal#close' } }))
+        = render(Ui::ButtonComponent.new(text: 'Anuluj', button: true, variant: :secondary, html_options: { class: 'w-1/4' data: { action: 'click->modal#close' } }))
         = render(Ui::ButtonComponent.new(text: 'Zapisz', submit: true, variant: :green, html_options: { class: 'w-3/4' }))
