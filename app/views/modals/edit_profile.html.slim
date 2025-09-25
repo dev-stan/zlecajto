@@ -1,0 +1,13 @@
+= turbo_frame_tag 'modal' do
+  = render Ui::FormModalComponent.new(title: 'Edytuj profil') do
+    = form_with model: @user, url: users_profile_path, method: :patch, data: { turbo_frame: '_top' }, html: { class: 'space-y-6' } do |f|
+      .space-y-4
+        .flex.flex-row.gap-3
+          = render Input::InputComponent.new(name: 'user[first_name]', label: 'Imię', value: @user.first_name, placeholder: 'Podaj imię', html_options: { class: 'w-full', required: true })
+          = render Input::InputComponent.new(name: 'user[last_name]', label: 'Nazwisko', value: @user.last_name, placeholder: 'Podaj nazwisko', html_options: { class: 'w-full' })
+        .flex.flex-row.gap-3
+          = render Input::InputComponent.new(name: 'user[email]', type: 'email', label: 'Email', value: @user.email, placeholder: 'Podaj email', html_options: { class: 'w-full', required: true })
+          = render Input::InputComponent.new(name: 'user[phone_number]', type: 'tel', label: 'Telefon', value: @user.phone_number, placeholder: 'Podaj numer telefonu', html_options: { class: 'w-full' })
+      .pt-4.border-t.border-gray-100.flex.items-center.gap-3
+        = render(Ui::ButtonComponent.new(text: 'Anuluj', button: true, variant: :secondary, html_options: { data: { action: 'click->modal#close' } }))
+        = render(Ui::ButtonComponent.new(text: 'Zapisz', submit: true, variant: :green, html_options: { class: 'w-3/4' }))

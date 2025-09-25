@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get 'submissions/:id/confirm_accept', to: 'modals#confirm_submission_accept', as: :confirm_submission_accept_modal
   get 'tasks/:id/confirm_complete', to: 'modals#confirm_task_complete', as: :confirm_task_complete_modal
   get 'tasks/:id/edit_modal', to: 'modals#edit_task', as: :edit_task_modal
+  get 'users/profile/edit_modal', to: 'modals#edit_profile', as: :edit_profile_modal
   delete 'modal', to: 'modals#destroy', as: 'close_modal'
 
 

@@ -10,7 +10,7 @@ class Users::ProfilesController < ApplicationController
   def update
     @user = current_user
     if @user.update(profile_params)
-      redirect_to root_path, notice: 'Profil uzupełniony!'
+  redirect_to profile_path, notice: 'Profil uzupełniony!'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -19,6 +19,6 @@ class Users::ProfilesController < ApplicationController
   private
 
   def profile_params
-    params.require(:user).permit(:phone_number)
+  params.require(:user).permit(:first_name, :last_name, :email, :phone_number)
   end
 end

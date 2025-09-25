@@ -2,10 +2,10 @@
   = render Ui::FormModalComponent.new(title: 'Edytuj zlecenie') do
     = form_with model: @task, url: task_path(@task), method: :patch, data: { turbo_frame: '_top' }, html: { class: "space-y-6" } do |f|
       .space-y-4
-        .flex.gap-3
-            = render Input::InputComponent.new(name: 'task[title]', label: 'Tytuł', value: @task.title, placeholder: 'Podaj tytuł zlecenia', html_options: { class: '', required: true })
-            = render Input::InputComponent.new(name: 'task[salary]', type: 'number', label: 'Wynagrodzenie (zł)', value: @task.salary, placeholder: 'Podaj kwotę', html_options: { class: '', min: 0, step: 1 })
-        = render Input::InputComponent.new(name: 'task[description]', type: 'textarea', label: 'Opis', value: @task.description, placeholder: 'Opisz szczegóły zadania', rows: 4, html_options: { class: '', required: true })
+        .flex.flex-row.gap-3
+            = render Input::InputComponent.new(name: 'task[title]', label: 'Tytuł', value: @task.title, placeholder: 'Podaj tytuł zlecenia', html_options: { class: 'w-full', required: true })
+            = render Input::InputComponent.new(name: 'task[salary]', type: 'number', label: 'Wynagrodzenie', value: @task.salary, placeholder: 'Podaj kwotę', html_options: { class: 'w-full', min: 0, step: 1 })
+        = render Input::InputComponent.new(name: 'task[description]', type: 'textarea', label: 'Opis', value: @task.description, placeholder: 'Opisz szczegóły zadania', rows: 3, html_options: { class: '', required: true })
 
         .flex.flex-row.gap-3 
             .flex.flex-col
@@ -29,6 +29,6 @@
         /       - @task.photos.each do |photo|
         /         = image_tag url_for(photo), class: 'h-20 w-20 object-cover rounded-lg border border-gray-200', alt: 'Załączone zdjęcie'
         /   = render Input::ImageUploadComponent.new(form: f, name: 'photos', multiple: true, limit: 5, direct_upload: true, input_id: 'task_photos_input', required: false, html_options: {})
-      .pt-4.border-t.border-gray-100.flex.items-center.gap-3
+      .pt-4.border-t.border-gray-100.flex.items-center.justify-end.gap-3.w-full
         = render(Ui::ButtonComponent.new(text: 'Anuluj', button: true, variant: :secondary, html_options: { data: { action: 'click->modal#close' } }))
-        = render(Ui::ButtonComponent.new(text: 'Zapisz', submit: true, variant: :green))
+        = render(Ui::ButtonComponent.new(text: 'Zapisz', submit: true, variant: :green, html_options: { class: 'w-3/4' }))

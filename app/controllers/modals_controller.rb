@@ -32,6 +32,14 @@ class ModalsController < ApplicationController
     end
   end
 
+  # GET /users/profile/edit_modal
+  def edit_profile
+    @user = current_user
+    respond_to do |format|
+      format.html
+    end
+  end
+
   # Clears the global modal frame
   def destroy
     respond_to do |format|
