@@ -24,7 +24,6 @@ class User < ApplicationRecord
   # Returns true if the user has any unread notifications whose notifiable
   # is a submission for the provided task.
   def unread_notifications_for_task?(task)
-    return false unless task
     notifications.unread.for_task(task).exists?
   end
 

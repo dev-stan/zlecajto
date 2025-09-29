@@ -18,7 +18,10 @@ class Submission < ApplicationRecord
   after_create :create_new_submission_notification
 
   def accept!
-    update!(status: :accepted)
+    transaction do
+      update!(status: :accepted)
+      create_accepted_submission_notification
+    end
   end
 
   private
@@ -41,5 +44,9 @@ class Submission < ApplicationRecord
 
   def create_new_submission_notification
     NotificationService.notify_new_submission(self)
+  end
+
+  def create_accepted_submission_notification
+    NotificationService.notify_accepted_submission(self)
   end
 end

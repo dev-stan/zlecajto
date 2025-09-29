@@ -21,7 +21,7 @@ nav.fixed.top-0.left-0.right-0.bg-white.shadow-sm.z-50
       - if user_signed_in?
         .ml-4.flex.items-center
           = link_to profile_path do
-            = render(User::AvatarComponent.new(user: current_user))
+            = render(User::AvatarComponent.new(user: current_user, show_notification: true))
       - else
         .flex.items-center.gap-2
           = link_to 'Zaloguj', helpers.new_user_session_path
