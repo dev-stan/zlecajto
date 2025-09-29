@@ -9,6 +9,7 @@ module Ui
       secondary: 'bg-secondary text-white',
       danger: 'bg-red-600 hover:bg-red-700 text-white',
       ghost: 'bg-white border-2 border-blue-900',
+      ghost_2: 'bg-white text-primary',
       text: 'bg-transparent text-black',
       success: 'bg-primary text-primary',
       green: 'bg-light-green text-emerald-700 border-2 border-emerald-200',

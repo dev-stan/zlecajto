@@ -7,7 +7,7 @@
   = render(Ui::ButtonComponent.new(text: 'Opublikuj zlecenie', path: new_task_path, size: :sm))
   = render(Ui::ButtonComponent.new(text: 'Zarób ze zlecajto!', path: tasks_path, size: :sm, variant: :primary_2))
 
-h1.text-center.text-5xl.font-bold.mt-5.px-8 = "Po prostu zaoszczędź czas"
+h1.text-center.text-5xl.font-bold.mt-12.px-8 = "Po prostu zaoszczędź czas"
 .px-8.mt-8
   ul.flex.flex-col.space-y-6.items-start
     - steps = ['Opisz z czym potrzebujesz pomocy',
@@ -25,35 +25,61 @@ h1.text-center.text-5xl.font-bold.mt-5.px-8 = "Po prostu zaoszczędź czas"
 
 
 .px-5.mt-8
-  h1.text-5xl.font-bold = 'Kategorie'
+  h1.text-5xl.font-bold.text-center.mt-5 = 'Kategorie'
   .flex.overflow-x-auto.snap-x.snap-mandatory.scroll-smooth.space-x-4.p-8.w-full
     - @categories.each do |category|
-      .snap-start.shrink-0.bg-blue-200.rounded-lg.shadow-md.w-64.h-40.flex.items-center.justify-center
-        = category
+      .snap-start.shrink-0.w-36.flex.flex-col.items-center.gap-2.p-4.border.border-amber-200.bg-amber-50/60.rounded-md.hover:bg-amber-50.transition.shadow-sm
+        span.text-2xl = '🐝'
+        span.text-base.font-medium.text-gray-700 = category
 
 
-.flex.flex-col.bg-primary.p-8.mt-12
-  h1.text-center.text-5xl.font-bold.text-white.pb-5 = "Chcesz zarobić ze Zlecajto?"
-  p.text-white.pb-3 = 'Nieważne czy jesteś mistrzem excela, miłośnikiem sportu czy studentem matematyki, znajdź zlecenie dla siebie na ZlecajTo!'
-  ul.flex.flex-col.space-y-4.items-start.p-8
-    - earn_steps = ['Opisz z czym potrzebujesz pomocy',
-        'Zdefiniuj cenę usługi',
-        'Otrzymaj oferty i wybierz wykonawcę']
-    - earn_steps.each do |step|
-      li.flex.items-center.gap-4
-        i.fa-solid.fa-check.text-white
-        p.text-base.text-white.leading-relaxed = step
-  .flex.justify-center.px-8
-    = render(Ui::ButtonComponent.new(text: 'Zacznij Zarabiać', path: tasks_path, size: :sm, variant: :ghost, width: 100))
+.relative.mt-12.overflow-hidden
+  / Curved top background element
+  .w-full.flex.items-center.justify-center
+    div class="bg-primary rounded-[60%] h-100 -mb-[75%] w-[180%] flex-shrink-0"
+
+  / Main content container
+  .relative.flex.flex-col.bg-primary.p-8.pt-16
+    h1.text-center.text-5xl.font-bold.text-white.pb-5 = "Chcesz zarobić ze Zlecajto?"
+    p.text-white.pb-3 = 'Nieważne czy jesteś mistrzem excela, miłośnikiem sportu czy studentem matematyki, znajdź zlecenie dla siebie na ZlecajTo!'
+    ul.flex.flex-col.space-y-4.items-start.p-8
+      - earn_steps = ['Opisz z czym potrzebujesz pomocy',
+          'Zdefiniuj cenę usługi',
+          'Otrzymaj oferty i wybierz wykonawcę']
+      - earn_steps.each do |step|
+        li.flex.items-center.gap-4
+          i.fa-solid.fa-check.text-white
+          p.text-base.text-white.leading-relaxed = step
+    .flex.justify-center.px-8
+      = render(Ui::ButtonComponent.new(text: 'Zarób po swojemu 😎', path: tasks_path, size: :sm, variant: :ghost_2, width: 100))
+
+  / Curved bottom background element
+  .w-full.flex.items-center.justify-center
+    div class="bg-primary rounded-[60%] h-100 -mt-[75%] w-[180%] flex-shrink-0"
 
 
-h1.text-5xl.font-bold.text-center.mt-12.mb-10 = "Kim jesteśmy?"
+
+h1.text-5xl.font-bold.text-center.mt-12.mb-16 = "Kim jesteśmy?"
 = image_tag('group.png', class: 'w-full h-auto relative z-0')
 
-.flex.flex-col.relative.z-10.bg-primary.-mt-12.p-8
-  p.text-white.mb-5 = 'Trzech kumpli wychowanych razem w suchym lesie i Strzeszynie'
-  h2.text-white.text-2xl.mb-3 = 'Skąd pomysł na ZlecajTo.pl?'
-  p.text-white = 'Jako studenci często sami przeglądamy grupki w poszukiwaniu dorywczej pracy, która pomoże nam dorzucić coś do czynszu'
+div class="relative pt-[0px] pb-[0px]"
+  / Curved top element (overlapping content)
+  div class="absolute left-1/2 transform -translate-x-1/2 -top-[30px]"
+    div class="bg-primary rounded-[40%] h-[60px] w-[120vw] scale-y-[-1]"
+      i.hidden = 'w'
+
+  / Content
+  .flex.flex-col.relative.z-10.p-8.bg-primary
+    h2.text-white.text-xl.font-bold.mb-3 = 'Skąd pomysł na ZlecajTo.pl?'
+    p.text-white = 'Jako studenci często sami przeglądamy grupki w poszukiwaniu dorywczej pracy, która pomoże nam dorzucić coś do czynszu'
+
+  / Curved bottom element (overlapping content)
+  div class="absolute left-1/2 transform -translate-x-1/2 -bottom-[30px]"
+    div class="bg-primary rounded-[40%] h-[60px] w-[120vw]"
+      i.hidden = 'w'
+
+
+
 
 .px-12
   h1.text-5xl.font-bold.text-center.mt-12.mb-8 = "FAQ"
