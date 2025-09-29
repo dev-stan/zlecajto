@@ -1,18 +1,26 @@
-= link_to @path, class: 'rounded-2xl overflow-hidden flex flex-col'
+= link_to @path, class: 'relative rounded-2xl overflow-hidden flex flex-col'
   - if image
     = image
   .p-6.pb-4.flex-1.bg-white
     .flex.justify-between.h-full
       .flex-1.pr-5
         - if badges_before_title? && badges.any?
-          - # Owner variant: show first badge (only one expected) before title
-          - badges.each do |badge|
-            = badge
-        h3 class=title_classes = @task.title
-        - if !badges_before_title? && badges.any?
-          .flex.gap-3.mb-4.mt-1
+          .flex.items-center.gap-3.mb-1
             - badges.each do |badge|
               = badge
+            - if @show_notification && current_user&.unread_notifications_for_task?(@task)
+              span.relative.flex.h-4.w-4.items-center.justify-center
+                span.absolute.inline-flex.h-full.w-full.rounded-full.bg-red-400.opacity-75.animate-ping
+                span.relative.inline-flex.h-4.w-4.rounded-full.bg-red-500
+        h3 class=title_classes = @task.title
+        - if !badges_before_title? && badges.any?
+          .flex.gap-3.mb-4.mt-1.items-center
+            - badges.each do |badge|
+              = badge
+            - if @show_notification && current_user&.unread_notifications_for_task?(@task)
+              span.relative.flex.h-4.w-4.items-center.justify-center
+                span.absolute.inline-flex.h-full.w-full.rounded-full.bg-red-400.opacity-75.animate-ping
+                span.relative.inline-flex.h-4.w-4.rounded-full.bg-red-500
         .text-gray-600
           .flex.gap-2
             span.text-gray-400

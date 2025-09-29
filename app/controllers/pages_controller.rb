@@ -19,7 +19,7 @@ class PagesController < ApplicationController
 
   def profile
     @user = current_user
-    @tasks = current_user.tasks.includes(:submissions, :reviews).order(created_at: :desc)
+    @tasks = current_user.tasks.includes(:submissions).order(created_at: :desc)
     @submissions = current_user.submissions.includes(task: :user).order(created_at: :desc)
     return unless params[:tab] == 'submissions' && @submissions.accepted.exists?
 

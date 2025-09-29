@@ -1,22 +1,36 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+
+  has_many :tasks
+  has_many :submissions
+  has_many :notifications
+  has_one_attached :profile_picture
+  
+  validates :first_name, presence: true
+  validates :email, presence: true
+  validates :phone_number, presence: true, unless: :google_oauth_user?
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: [:google_oauth2]
 
   after_create :send_welcome_email
 
-  has_one_attached :profile_picture
-  has_many :tasks
-  has_many :submissions
+  def unread_notifications_count
+    notifications.unread.count
+  end
 
-  validates :first_name, presence: true
-  validates :email, presence: true
-  validates :phone_number, presence: true, unless: :google_oauth_user?
+  # Returns true if the user has any unread notifications whose notifiable
+  # is a submission for the provided task.
+  def unread_notifications_for_task?(task)
+    return false unless task
+    notifications.unread.for_task(task).exists?
+  end
+
 
   private
-
+  
   def send_welcome_email
     MailgunTemplateJob.perform_later(to: email, template: 'welcome_email', subject: 'Witaj w zlecajto :)',
                                      variables: { test: 'test' })
