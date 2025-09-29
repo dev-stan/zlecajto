@@ -58,26 +58,26 @@ h1.text-center.text-5xl.font-bold.mt-12.px-8 = "Po prostu zaoszczędź czas"
     div class="bg-primary rounded-[60%] h-100 -mt-[75%] w-[180%] flex-shrink-0"
 
 
+div class="-mb-[10%] z-0"
+  h1.text-5xl.font-bold.text-center.mt-12.mb-6 = "Kim jesteśmy?"
+  = image_tag('group.png', class: 'w-full h-auto relative z-0')
 
-h1.text-5xl.font-bold.text-center.mt-12.mb-16 = "Kim jesteśmy?"
-= image_tag('group.png', class: 'w-full h-auto relative z-0')
+.relative.overflow-hidden
+  / Curved top background element
+  .w-full.flex.items-center.justify-center.z-10
+    div class="bg-primary rounded-[60%] h-80 w-[200%] flex-shrink-0 flex flex-col items-center justify-center"
+      h2.text-white.text-xl.font-bold.mb-3 = 'Skąd pomysł na ZlecajTo.pl?'
+      p.text-white.w-2/5.mb-3 = 'Jako studenci często sami przeglądamy grupki w poszukiwaniu dorywczej pracy która pomoże nam dorzucić coś do czynszu'
+      p.text-white.w-2/5.mb-3 = 'Jako studenci często sami przeglądamy grupki w poszukiwaniu dorywczej pracy która pomoże nam dorzucić coś do czynszu'
 
-div class="relative pt-[0px] pb-[0px]"
-  / Curved top element (overlapping content)
-  div class="absolute left-1/2 transform -translate-x-1/2 -top-[30px]"
-    div class="bg-primary rounded-[40%] h-[60px] w-[120vw] scale-y-[-1]"
-      i.hidden = 'w'
+  / / Content
+  / .relative.z-10.p-8
+  /   h2.text-white.text-xl.font-bold.mb-3 = 'Skąd pomysł na ZlecajTo.pl?'
+  /   p.text-white = 'Jako studenci...'
 
-  / Content
-  .flex.flex-col.relative.z-10.p-8.bg-primary
-    h2.text-white.text-xl.font-bold.mb-3 = 'Skąd pomysł na ZlecajTo.pl?'
-    p.text-white = 'Jako studenci często sami przeglądamy grupki w poszukiwaniu dorywczej pracy, która pomoże nam dorzucić coś do czynszu'
-
-  / Curved bottom element (overlapping content)
-  div class="absolute left-1/2 transform -translate-x-1/2 -bottom-[30px]"
-    div class="bg-primary rounded-[40%] h-[60px] w-[120vw]"
-      i.hidden = 'w'
-
+  / / Curved bottom background element
+  / .w-full.flex.items-center.justify-center
+  /   div class="bg-primary rounded-[10%] h-100 -mt-[25%] w-[180%] flex-shrink-0"
 
 
 
