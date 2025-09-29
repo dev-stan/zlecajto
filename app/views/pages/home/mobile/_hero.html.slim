@@ -39,7 +39,7 @@ h1.text-center.text-5xl.font-bold.mt-12.px-8 = "Po prostu zaoszczędź czas"
     div class="bg-primary rounded-[60%] h-90 -mb-[75%] w-[180%] flex-shrink-0"
 
   / Main content container
-  .relative.flex.flex-col.bg-primary.p-8.pt-16
+  .relative.flex.flex-col.bg-primary.p-8.pt-8
     h1.text-center.text-5xl.font-bold.text-white.pb-10 = "Chcesz zarobić ze Zlecajto?"
     p.text-white.pb-3 = 'Nieważne czy jesteś mistrzem excela, miłośnikiem sportu czy studentem matematyki, znajdź zlecenie dla siebie na ZlecajTo!'
     ul.flex.flex-col.space-y-4.items-start.p-8
@@ -65,7 +65,7 @@ div class="-mb-[10%] z-0 mt-24"
 .relative.overflow-hidden
   / Curved top background element
   .w-full.flex.items-center.justify-center.z-10
-    div class="bg-primary rounded-[60%] h-50 w-[200%] flex-shrink-0 flex flex-col items-center justify-center"
+    div class="bg-primary rounded-[60%] h-90 w-[200%] flex-shrink-0 flex flex-col items-center justify-center"
       h2.text-white.text-xl.font-bold.mb-3 = 'Skąd pomysł na ZlecajTo.pl?'
       p.text-white.w-2/5.mb-3 = 'Jako studenci często sami przeglądamy grupki w poszukiwaniu dorywczej pracy która pomoże nam dorzucić coś do czynszu'
       p.text-white.w-2/5.mb-3 = 'Jako studenci często sami przeglądamy grupki w poszukiwaniu dorywczej pracy która pomoże nam dorzucić coś do czynszu'
@@ -82,5 +82,5 @@ div class="-mb-[10%] z-0 mt-24"
 
 
 .px-12
-  h1.text-5xl.font-bold.text-center.mt-12.mb-8 = "FAQ"
+  h1.text-5xl.font-bold.text-center.mt-18.mb-8 = "FAQ"
   = render Interactive::AccordionComponent.new(items: @faq_items)
