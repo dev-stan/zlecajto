@@ -1,0 +1,13 @@
+h1.text-5xl.font-bold = "Aplikacja mobilna"
+/ Horizontal scroll snap (mobile first)
+- @items = ['mobile_app_1', 'mobile_app_2', 'mobile_app_3', 'mobile_app_4']
+.flex.overflow-x-auto.snap-x.snap-mandatory.scroll-smooth.space-x-4.p-8.w-full
+  - @items.each do |item|
+    div class="snap-start shrink-0 bg-blue-200 rounded-lg p-6"
+      = image_tag(item, class: "max-h-72 w-auto object-contain mx-auto")
+/ Constrained section (standard padding & max width)
+.py-20
+    .max-w-7xl.mx-auto.px-6.lg:px-12
+        div
+            h2.text-xl.font-bold.mb-10 FAQ
+            = render Interactive::AccordionComponent.new(items: @faq_items)

@@ -8,7 +8,7 @@
 
 /* Minimal semantic color utilities – kept intentionally tiny. */
 @layer utilities {
-	.bg-primary { background-color: #3454E1}
+	.bg-primary { background-color: #3478F5}
 	.bg-secondary { background-color: oklch(45.9% 0.187 3.815)} /* gray-100 */
 	.text-primary { color: #3454E1 } /* green-200 */
 	.text-secondary { color:oklch(45.9% 0.187 3.815) } /* yellow-200 */

@@ -15,6 +15,8 @@ class PagesController < ApplicationController
       { title: 'Jak zostać wykonawcą?',
         content: 'Załóż konto wykonawcy, uzupełnij profil i zacznij odpowiadać na dostępne ogłoszenia w swojej okolicy.' }
     ]
+
+    @categories = Task::CATEGORIES
   end
 
   def profile

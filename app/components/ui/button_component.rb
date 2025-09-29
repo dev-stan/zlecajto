@@ -4,6 +4,7 @@ module Ui
   class ButtonComponent < ApplicationComponent
     VARIANTS = {
       primary: 'bg-primary text-white',
+      primary_2: 'bg-blue-100 text-primary',
       glowing: 'bg-primary text-white glowing-btn',
       secondary: 'bg-secondary text-white',
       danger: 'bg-red-600 hover:bg-red-700 text-white',
@@ -112,7 +113,7 @@ module Ui
                     else 'justify-center text-center'
                     end
       merge_classes(
-        'inline-flex items-center rounded-3xl font-medium transition-colors duration-700 outline-none ',
+        'inline-flex items-center rounded-3xl font-semibold transition-colors duration-700 outline-none py-4 ',
         align_class,
         VARIANTS[variant],
         SIZES[size],
