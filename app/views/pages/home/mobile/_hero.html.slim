@@ -1,86 +1,129 @@
+/ Hero Section
+.md:min-h-screen.md:flex.md:items-center
+  .md:grid.md:grid-cols-2.md:gap-12.md:items-center.md:max-w-6xl.md:mx-auto.md:px-8
+    / Mobile version
+    .flex.flex-col.items-center.mb-4.pt-5.md:hidden
+      = image_tag('mobile_cta.png')
+    .px-8.text-center.md:hidden
+      p = "Tworzymy platformę, na której sąsiedzi mogą zlecać i wykonywać jakiegokolwiek typu zadania!"
+    .flex.flex-col.p-5.gap-3.px-8.md:hidden
+      = render(Ui::ButtonComponent.new(text: 'Opublikuj zlecenie', path: new_task_path, size: :md))
+      = render(Ui::ButtonComponent.new(text: 'Zarób ze zlecajto!', path: tasks_path, size: :md, variant: :primary_2))
+    
+    / Desktop left column
+    .hidden.md:block
+      h1.text-6xl.font-bold.leading-tight.mb-3
+        | Odblokuj swój czas ze 
+        span.text-primary = "ZlecajTo"
+        span.text-3xl = "*"
+      p.text-sm.text-gray-500.mb-6 = "*To banalnie proste :)"
+      p.text-lg.text-gray-700.mb-8.leading-relaxed.font-light = "Tworzymy platformę, na której sąsiedzi mogą zlecać i wykonywać jakiegokolwiek typu zadania!"
+      .flex.gap-4
+        = render(Ui::ButtonComponent.new(text: 'Opublikuj zlecenie', path: new_task_path, size: :md))
+        = render(Ui::ButtonComponent.new(text: 'Zarób ze zlecajto!', path: tasks_path, size: :md, variant: :primary_2))
+    
+    / Desktop right column
+    .hidden.md:flex.md:items-center.md:justify-center
+      = image_tag('mobile_cta.png', class: 'max-w-md')
 
-.flex.flex-col.items-center.mb-4.pt-5
-  = image_tag('mobile_cta.png')
-.px-8.text-center
-  p = "Oszczędź czas w trzech prostych krokach. Opublikuj. Wybierz chętnego. Miej to z głowy."
-.flex.flex-col.p-5.gap-3.px-8
-  = render(Ui::ButtonComponent.new(text: 'Opublikuj zlecenie', path: new_task_path, size: :sm))
-  = render(Ui::ButtonComponent.new(text: 'Zarób ze zlecajto!', path: tasks_path, size: :sm, variant: :primary_2))
-
-h1.text-center.text-5xl.font-bold.mt-12.px-8 = "Po prostu zaoszczędź czas"
-.px-8.mt-8
-  ul.flex.flex-col.space-y-6.items-start
+/ How it works section
+h1.text-center.text-5xl.font-bold.mt-12.px-8.md:max-w-6xl.md:mx-auto.md:mt-8.md:mb-12 = "Po prostu zaoszczędź czas"
+.px-8.mt-8.md:max-w-6xl.md:mx-auto.md:mt-0
+  ul.flex.flex-col.space-y-3.items-start.md:grid.md:grid-cols-3.md:gap-6.md:space-y-0
     - steps = ['Opisz z czym potrzebujesz pomocy',
       'Zdefiniuj cenę usługi',
       'Otrzymaj oferty i wybierz wykonawcę']
 
     - steps.each_with_index do |step, index|
-      li.flex.items-center.gap-4
+      li.flex.items-center.gap-4.md:flex-col.md:items-start.md:p-6.md:rounded-2xl.md:bg-white.md:border.md:border-gray-200.md:hover:border-blue-400.md:hover:shadow-lg.md:transition-all
         .flex-shrink-0
-          span.flex.items-center.justify-center.w-8.h-8.rounded-full.bg-blue-200.text-blue-600.font-semibold.border.border-green-200 = index + 1
-        p.text-base.text-gray-600.leading-relaxed = step
+          span.flex.items-center.justify-center.w-8.h-8.rounded-full.bg-primary.text-white.font-semibold.md:w-12.md:h-12.md:text-lg.md:mb-4 = index + 1
+        p.text-base.text-gray-700.leading-relaxed = step
 
-.flex.justify-center.px-8.mt-8
-  = render(Ui::ButtonComponent.new(text: 'Wchodzę w to ✨', path: new_task_path, size: :sm, width: 100, variant: :primary))
+.md:hidden.flex.justify-center.px-8.mt-8.md:mt-12.md:mb-24
+  = render(Ui::ButtonComponent.new(text: 'Zleć zadanie', path: new_task_path, size: :md, variant: :primary, width: 100))
+.hidden.md:flex.justify-center.px-8.mt-12.mb-24
+  = render(Ui::ButtonComponent.new(text: 'Zleć zadanie', path: new_task_path, size: :md, variant: :primary, width: 25))
 
-
-.px-5.mt-8
-  h1.text-5xl.font-bold.text-center.mt-5 = 'Kategorie'
-  .flex.overflow-x-auto.snap-x.snap-mandatory.scroll-smooth.space-x-4.p-8.w-full
+/ Categories section
+.px-5.mt-8.md:mt-0.md:px-8.md:mb-24
+  h1.text-5xl.font-bold.text-center.mt-5.md:mb-10.md:max-w-6xl.md:mx-auto = 'Kategorie'
+  
+  .flex.overflow-x-auto.snap-x.snap-mandatory.scroll-smooth.space-x-4.p-8.w-full.md:grid.md:grid-cols-8.md:gap-4.md:overflow-visible.md:max-w-6xl.md:mx-auto.md:p-0.md:mt-0
     - @categories.each do |category|
-      .snap-start.shrink-0.w-36.flex.flex-col.items-center.gap-2.p-4.border.border-amber-200.bg-amber-50/60.rounded-md.hover:bg-amber-50.transition.shadow-sm
-        span.text-2xl = '🐝'
-        span.text-base.font-medium.text-gray-700 = category
+      .snap-start.shrink-0.w-36.flex.flex-col.items-center.gap-2.p-4.border.border-amber-200.bg-amber-50/60.rounded-md.hover:bg-amber-50.transition.shadow-sm.md:w-full.md:p-5.md:border-gray-200.md:bg-white.md:rounded-xl.md:shadow-sm.md:hover:shadow-md.md:hover:-translate-y-1.md:transition-all.md:cursor-pointer
+        span.text-2xl.md:text-3xl = '🐝'
+        span.text-base.font-medium.text-gray-700.md:text-sm.md:mt-2.md:font-semibold = category
 
-
-.relative.mt-12.overflow-hidden
-  / Curved top background element
-  .w-full.flex.items-center.justify-center
+/ Earn money section
+.relative.mt-12.overflow-hidden.md:mt-0.md:mb-24
+  / Curved top background element - MOBILE ONLY
+  .w-full.flex.items-center.justify-center.md:hidden
     div class="bg-primary rounded-[60%] h-90 -mb-[75%] w-[180%] flex-shrink-0"
 
   / Main content container
-  .relative.flex.flex-col.bg-primary.p-8.pt-8
-    h1.text-center.text-5xl.font-bold.text-white.pb-10 = "Chcesz zarobić ze Zlecajto?"
-    p.text-white.pb-3 = 'Nieważne czy jesteś mistrzem excela, miłośnikiem sportu czy studentem matematyki, znajdź zlecenie dla siebie na ZlecajTo!'
-    ul.flex.flex-col.space-y-4.items-start.p-8
-      - earn_steps = ['Opisz z czym potrzebujesz pomocy',
-          'Zdefiniuj cenę usługi',
-          'Otrzymaj oferty i wybierz wykonawcę']
-      - earn_steps.each do |step|
-        li.flex.items-center.gap-4
-          i.fa-solid.fa-check.text-white
-          p.text-base.text-white.leading-relaxed = step
-    .flex.justify-center.px-8
-      = render(Ui::ButtonComponent.new(text: 'Zarób po swojemu 😎', path: tasks_path, size: :sm, variant: :ghost_2, width: 100))
+  .relative.flex.flex-col.bg-primary.p-8.pt-8.md:rounded-3xl.md:max-w-6xl.md:mx-auto.md:mx-8.md:px-12.md:py-16.md:shadow-xl
+    .md:grid.md:grid-cols-5.md:gap-10.md:items-center
+      / Left column
+      div class="md:col-span-3"
+        h1.text-center.text-5xl.font-bold.text-white.pb-10.md:text-left.md:text-4xl.md:pb-6.md:leading-tight = "Chcesz zarobić ze Zlecajto?"
+        p.text-white.pb-3.md:text-lg.md:pb-0.md:leading-relaxed.md:font-light = 'Nieważne czy jesteś mistrzem excela, miłośnikiem sportu czy studentem matematyki, znajdź zlecenie dla siebie na ZlecajTo!'
+        
+        / Desktop only button
+        .hidden.md:block.md:mt-8
+          = render(Ui::ButtonComponent.new(text: 'Zarób po swojemu 😎', path: tasks_path, size: :md, variant: :ghost_2))
+      
+      / Right column
+      div class="md:col-span-2"
+        ul.flex.flex-col.space-y-4.items-start.p-8.md:p-6.md:space-y-4.md:bg-white/10.md:backdrop-blur-sm.md:rounded-2xl.md:border.md:border-white/20
+          - earn_steps = ['Opisz z czym potrzebujesz pomocy',
+              'Zdefiniuj cenę usługi',
+              'Otrzymaj oferty i wybierz wykonawcę']
+          - earn_steps.each do |step|
+            li.flex.items-center.gap-4
+              i.fa-solid.fa-check.text-white.md:text-lg
+              p.text-base.text-white.leading-relaxed.md:font-normal = step
+    
+    / Mobile button
+    .flex.justify-center.px-8.md:hidden
+      = render(Ui::ButtonComponent.new(text: 'Zarób po swojemu 😎', path: tasks_path, size: :md, variant: :ghost_2, width: 100))
 
-  / Curved bottom background element
-  .w-full.flex.items-center.justify-center
+  / Curved bottom background element - MOBILE ONLY
+  .w-full.flex.items-center.justify-center.md:hidden
     div class="bg-primary rounded-[60%] h-100 -mt-[75%] w-[180%] flex-shrink-0"
 
+/ About us section
+.relative.mt-24.mb-24.md:mt-32.md:mb-32
+  / Section header - mobile first
+  h1.text-5xl.font-bold.text-center.mb-12.md:mb-16 = "Kim jesteśmy?"
+  
+  / Mobile image
+  .md:hidden
+    = image_tag('group.png', class: 'w-full h-auto', alt: 'Group of people')
+  
+  
+  / Desktop layout
+  .hidden.md:block.md:max-w-6xl.md:mx-auto.md:px-8
+    .md:grid.md:grid-cols-2.md:gap-16.md:items-center
+      / Left column - Image
+      div
+        = image_tag('group.png', class: 'w-full h-auto rounded-2xl', alt: 'Group of people')
+      
+      / Right column - Text content
+      div
+        h2.text-3xl.font-bold.mb-6.leading-tight = 'Zgrana ekipa'
+        p.text-gray-600.text-base.leading-relaxed.mb-8.font-normal = 'Jesteśmy trójką młodych studentów z Suchego Lasu i...'
 
-div class="-mb-[10%] z-0 mt-24"
-  h1.text-5xl.font-bold.text-center.mt-12.mb-6 = "Kim jesteśmy?"
-  = image_tag('group.png', class: 'w-full h-auto relative z-0', alt: 'Group of people')
-
-.relative.overflow-hidden
-  / Curved top background element
-  .w-full.flex.items-center.justify-center.z-10
+/ Origin story section
+.relative.overflow-hidden.md:bg-primary.md:mb-24.-mt-32
+  / Curved top background element - MOBILE ONLY
+  .w-full.flex.items-center.justify-center.z-10.md:hidden
     div class="bg-primary rounded-[60%] h-90 w-[200%] flex-shrink-0 flex flex-col items-center justify-center"
       h2.text-white.text-xl.font-bold.mb-3 = 'Skąd pomysł na ZlecajTo.pl?'
-      p.text-white.w-2/5.mb-3 = 'Jako studenci często sami przeglądamy grupki w poszukiwaniu dorywczej pracy która pomoże nam dorzucić coś do czynszu'
-      p.text-white.w-2/5.mb-3 = 'Jako studenci często sami przeglądamy grupki w poszukiwaniu dorywczej pracy która pomoże nam dorzucić coś do czynszu'
-
-  / / Content
-  / .relative.z-10.p-8
-  /   h2.text-white.text-xl.font-bold.mb-3 = 'Skąd pomysł na ZlecajTo.pl?'
-  /   p.text-white = 'Jako studenci...'
-
-  / / Curved bottom background element
-  / .w-full.flex.items-center.justify-center
-  /   div class="bg-primary rounded-[10%] h-100 -mt-[25%] w-[180%] flex-shrink-0"
-
-
-
-.px-12
-  h1.text-5xl.font-bold.text-center.mt-18.mb-8 = "FAQ"
+      p.text-white.w-2/5.mb-3 = 'Lorem ipsum dolor sit amet, consectetur adipisci Lorem ipsum dolor sit amet, consectetur adipisci'
+      p.text-white.w-2/5.mb-3 = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore amco laboris nisi ut aliquip ex ea commodo consequat.'
+  
+/ FAQ section
+.px-12.md:max-w-4xl.md:mx-auto.md:mt-0.md:mb-20.md:px-8
+  h1.text-5xl.font-bold.text-center.mt-18.mb-8.md:mb-10 = "FAQ"
   = render Interactive::AccordionComponent.new(items: @faq_items)

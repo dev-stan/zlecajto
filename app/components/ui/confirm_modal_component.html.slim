@@ -13,10 +13,10 @@
 
     .px-6.py-4.border-t.border-gray-100.flex.items-center.gap-3
       - if cancel_path
-        = render(Ui::ButtonComponent.new(text: cancel_text, path: cancel_path, method: cancel_method, variant: cancel_variant, html_options: { data: { turbo_frame: 'modal' } }))
+        = render(Ui::ButtonComponent.new(text: cancel_text, size: :sm, path: cancel_path, method: cancel_method, variant: cancel_variant, html_options: { data: { turbo_frame: 'modal' } }))
       - else
-        = render(Ui::ButtonComponent.new(text: cancel_text, button: true, variant: cancel_variant, html_options: { data: { action: 'click->modal#close' } }))
+        = render(Ui::ButtonComponent.new(text: cancel_text, size: :sm, button: true, variant: cancel_variant, html_options: { data: { action: 'click->modal#close' } }))
       - if confirm_path
-        = render(Ui::ButtonComponent.new(text: confirm_text, path: confirm_path, method: confirm_method, variant: confirm_variant, html_options: { data: { turbo_frame: confirm_turbo_frame } }))
+        = render(Ui::ButtonComponent.new(text: confirm_text, size: :sm,  path: confirm_path, method: confirm_method, variant: confirm_variant, html_options: { data: { turbo_frame: confirm_turbo_frame } }))
       - else
-        = render(Ui::ButtonComponent.new(text: confirm_text, button: true, variant: confirm_variant))
+        = render(Ui::ButtonComponent.new(text: confirm_text, size: :sm,  button: true, variant: confirm_variant))
