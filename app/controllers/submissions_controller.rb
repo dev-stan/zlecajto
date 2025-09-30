@@ -1,7 +1,7 @@
 class SubmissionsController < ApplicationController
   before_action :authenticate_user!, except: %i[new create]
   before_action :set_task, only: %i[new create]
-  before_action :set_submission, only: %i[show accept contact confirm_submission_accept]
+  before_action :set_submission, only: %i[show accept contact accepted confirm_submission_accept]
   before_action :authorize_task_owner!, only: %i[accept confirm_submission_accept]
 
   def index
@@ -49,6 +49,9 @@ class SubmissionsController < ApplicationController
   end
 
   def contact; end
+
+  def accepted
+  end
 
   def accept
     @submission.accept!

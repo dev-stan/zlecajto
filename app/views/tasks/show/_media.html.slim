@@ -17,5 +17,5 @@
       - photo = photos.first
       = image_tag photo.variant(resize_to_fill: [900, 600]), class: 'w-full h-64 md:h-100 md:rounded-xl object-cover', alt: task.title
   - else
-    .absolute.inset-0.bg-gray-200.flex.items-center.justify-center
+    .absolute.inset-0.bg-gray-200.flex.items-center.justify-center.md:rounded-xl
       i.fas.fa-image.text-gray-400.text-6xl
