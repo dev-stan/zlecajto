@@ -22,7 +22,7 @@
                 = render(Ui::ButtonComponent.new(text: 'Kontakt z wykonawcą', variant: :red, path: contact_submission_path(submission), size: :sm, html_options: { class: ' w-full mb-4 font-bold text-lg' }))
             - if current_user == submission.user
               .mt-3
-                = render(Ui::ButtonComponent.new(text: 'Kontakt ze zleceniodawcą', variant: :red, path: accepted_submission_path(submission), size: :sm, html_options: { class: ' w-full mb-4 font-bold text-lg' }))
+                = render(Ui::ButtonComponent.new(text: 'Kontakt ze zleceniodawcą', variant: :green, path: accepted_submission_path(submission), size: :sm, html_options: { class: ' w-full mb-4 font-bold text-lg' }))
 
 - else      
   h3.text-lg.font-semibold.text-gray-900.mt-3 Zgłoszenia (#{task.submissions.count})

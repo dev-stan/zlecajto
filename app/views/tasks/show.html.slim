@@ -1,5 +1,6 @@
 
 - existing_submission = user_signed_in? ? current_user.submissions.find_by(task: @task) : nil
+- accepted_submission_for_current_user = user_signed_in? ? @task.submissions.accepted.find_by(user_id: current_user.id) : nil
 - photos = @task.photos.attachments
 - multiple = photos.size > 1
 
@@ -29,9 +30,11 @@
       = render 'tasks/show/apply_card', task: @task, existing_submission: existing_submission
       = render 'tasks/show/support_card'
   // Mobile bottom bar
-  .flex.gap-4.fixed.bottom-2.left-0.w-full.bg-transparent.z-50.p-4.justify-center.items-center.md:justify-end
+  .flex.gap-4.fixed.bottom-2.left-0.w-full.bg-transparent.z-25.p-4.justify-center.items-center.md:justify-end
     - if current_user == @task.user
       = render Ui::ButtonComponent.new(text: 'Detale zlecenia', path: my_task_path(@task), html_options: { class: 'w-full py-3 block md:hidden'})
+    - elsif accepted_submission_for_current_user
+      = render Ui::ButtonComponent.new(text: 'Wybrano cię!', variant: :green, path: accepted_submission_path(accepted_submission_for_current_user), html_options: { class: 'w-full py-3 block md:hidden'})
     - else
       = render Ui::ButtonComponent.new(text: 'Aplikuj', path: new_task_submission_path(@task), html_options: { class: 'w-full py-3 block md:hidden'})
   
