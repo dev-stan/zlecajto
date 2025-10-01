@@ -43,13 +43,13 @@
               p.font-bold.text-gray-800 = submission.user.first_name
             p.text-base.text-gray-600.mb-1 = truncate(submission.note, length: 200)
             span.text-base.text-gray-500.mb-10 = formatted_date(submission.created_at)
-            = render Ui::ButtonComponent.new(text: 'Skontaktuj się z wykonawcą!', variant: :primary, path: contact_submission_path(submission), size: :lg, html_options: { class: 'w-full mt-5' })
+            = render Ui::ButtonComponent.new(text: 'Skontaktuj się z wykonawcą!', variant: :primary, path: contact_submission_path(submission), size: :md, html_options: { class: 'w-full mt-5 text-md' })
             = render Ui::ButtonComponent.new(text: 'Potwierdź wykonanie zlecenia',
               path: confirm_task_complete_modal_path(submission.task),
               variant: :green,
-              size: :lg,
+              size: :md,
               method: :get,
-              html_options: { class: 'w-full mt-4', data: { turbo_frame: 'modal', turbo: true } })
+              html_options: { class: 'w-full mt-4 text-lg', data: { turbo_frame: 'modal', turbo: true } })
 
     - elsif @task.submissions.any?
       .flex.items-center.gap-2

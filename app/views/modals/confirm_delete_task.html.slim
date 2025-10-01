@@ -1,10 +1,14 @@
 = turbo_frame_tag 'modal' do
   = render Ui::ConfirmModalComponent.new(title: 'Uwaga, uwaga!',
-    body: "Czy na pewno chcesz usunąć zlecenie? Kto teraz wykona Twoje zadanie?",
-    footer: 'Tego się nie da cofnąć!',
-    confirm_text: 'Usuwam!',
-    cancel_text: 'Zmieniam zdanie',
+    body: "Tej opcji jednak jeszcze nie mamy 🤐",
+    footer: 'Może w przyszłości...',
+    confirm_text: 'Jasne',
+    cancel_text: 'Rozumiem',
     cancel_variant: :green,
-    confirm_path: task_path(@task),
-    confirm_method: :delete,
+    confirm_path: '#',
+    confirm_method: :get,
     confirm_variant: :red)
+
+// [todo] i need to add logic to delete task only if there are no submissions
+// confirm_path:task_path(@task)
+// confirm_method: :delete

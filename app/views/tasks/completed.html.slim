@@ -2,5 +2,5 @@
     h1.text-7xl.font-bold Udało się!
     p.text-lg.mt-3.font-bold.mb-3 Twoja zlecenie zostało wykonane
     = image_tag "thumbs_up.gif", width: 300, height: 300, class: "object-cover rounded-xl", alt: "Profile", loading: "lazy"
-    = render Ui::ButtonComponent.new(text: 'Dodaj nowe zlecenie', path: new_task_path, variant: :secondary, size: :lg, html_options: { class: 'w-full mt-5' })
-    = render Ui::ButtonComponent.new(text: 'Przeglądaj zlecenia', path: tasks_path, variant: :primary, size: :lg, html_options: { class: 'w-full mt-5' })
+    = render Ui::ButtonComponent.new(text: 'Dodaj nowe zlecenie', path: new_task_path, variant: :secondary, size: :md, html_options: { class: 'w-full mt-5' })
+    = render Ui::ButtonComponent.new(text: 'Przeglądaj zlecenia', path: tasks_path, variant: :primary, size: :md, html_options: { class: 'w-full mt-5' })

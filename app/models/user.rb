@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-
   has_many :tasks
   has_many :submissions
   has_many :notifications
   has_one_attached :profile_picture
-  
+
   validates :first_name, presence: true
   validates :email, presence: true
   validates :phone_number, presence: true, unless: :google_oauth_user?
@@ -27,12 +26,10 @@ class User < ApplicationRecord
     notifications.unread.for_task(task).exists?
   end
 
-
   private
-  
+
   def send_welcome_email
-    MailgunTemplateJob.perform_later(to: email, template: 'welcome_email', subject: 'Witaj w zlecajto :)',
-                                     variables: { test: 'test' })
+    MailgunTemplateJob.perform_later(to: email, template: 'prod_welcome_email', subject: 'Witaj w zlecajto :)')
   end
 
   def google_oauth_user?

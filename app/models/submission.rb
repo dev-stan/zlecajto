@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Submission < ApplicationRecord
-
   belongs_to :task
   belongs_to :user
 
@@ -20,6 +19,7 @@ class Submission < ApplicationRecord
   def accept!
     transaction do
       update!(status: :accepted)
+      send_accepted_submission_email
       create_accepted_submission_notification
     end
   end
@@ -32,14 +32,27 @@ class Submission < ApplicationRecord
 
   def cannot_apply_to_own_task
     return unless task && user
-    if task.user_id == user_id
-      errors.add(:base, 'Nie możesz zgłosić się do własnego zadania')
-    end
+
+    return unless task.user_id == user_id
+
+    errors.add(:base, 'Nie możesz zgłosić się do własnego zadania')
   end
+  # Variables i will need for send accepted submission email
+  # {
+  # "due_date": "test_due_date",
+  # "location": "test_location",
+  # "salary": "test_salary",
+  # "timeslot": "test_timeslot",
+  # "title": "test_title"
+  # }
+
+  send_accepted_submission_email
+  MailgunTemplateJob.perform_later(to: user.email, template: 'prod_submission_accepted', subject: 'Twoje zgłoszenie zostało zaakceptowane!',
+                                   variables: { due_date: task.due_date.strftime('%d/%m/%Y'), location: task.location, salary: task.salary, timeslot: task.timeslot, title: task.title, task_url: task_url(task.id) })
 
   def send_new_submission_email
-    MailgunTemplateJob.perform_later(to: task.user.email, template: 'nowa_oferta_new', subject: 'Nowa oferta!',
-                                     variables: { salary: task.salary, title: task.title, timeslot: task.timeslot, location: task.location, due_date: task.due_date, first_name: task.user.first_name})
+    MailgunTemplateJob.perform_later(to: task.user.email, template: 'prod_new_submission', subject: 'Nowe zgłoszenie!',
+                                     variables: { user_name: user.first_name, user_note: note, my_task_url: my_task_url(task.id), task_url: task_url(task.id) })
   end
 
   def create_new_submission_notification
