@@ -7,6 +7,6 @@
   - if existing_submission
     .inline-flex.items-center.justify-center.w-full.px-3.py-2.rounded-md.text-base.font-medium.bg-green-100.text-green-800 ✓ Już aplikowałeś
   - elsif current_user == task.user
-    = render(Ui::ButtonComponent.new(text: 'Detale zlecenia', path: my_task_path(task), html_options: { class: 'w-full'}))
+    = render(Ui::ButtonComponent.new(text: 'Detale zlecenia', path: my_task_path(task), size: :md, html_options: { class: 'w-full'}))
   - else
-    = render Ui::ButtonComponent.new(text: 'Aplikuj', path: new_task_submission_path(task), variant: :primary, size: :lg, width: 100)
+    = render Ui::ButtonComponent.new(text: 'Aplikuj', path: new_task_submission_path(task), variant: :primary, size: :md, width: 100)

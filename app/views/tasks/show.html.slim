@@ -15,7 +15,7 @@
       // Main content with margin
       .mx-8.md:mx-0.mb-12.flex-1
         .flex.justify-between.mb-3
-          = render Ui::BadgeComponent.new(text: "#{@task.submissions.count} zgłoszeń", variant: :green)
+          = render Ui::BadgeComponent.new(text: t('tasks.submissions', count: @task.submissions.count), variant: :green)
           h1.font-extrabold.text-primary.text-xl.block.md:hidden = formatted_salary(@task)
         h1.text-xl.font-extrabold.text-gray-900.mb-2 = @task.title
         = render 'tasks/show/badges', task: @task

@@ -62,11 +62,11 @@ pl:
       created: "Zlecenie utworzone"
       created_after_login: "Zlecenie utworzone po zalogowaniu"
       creation_error: "Nie udało się utworzyć zlecenia"
-    offers:
-      one: "Masz %{count} zgłoszenie!"
-      few: "Masz %{count} zgłoszenia!"
-      many: "Masz %{count} zgłoszeń!"
-      other: "Masz %{count} zgłoszeń..."
+    submissions:
+      one: "%{count} zgłoszenie"
+      few: "%{count} zgłoszenia"
+      many: "%{count} zgłoszeń"
+      other: "%{count} zgłoszeń"
   unauthorized: "Brak uprawnień"
   home:
     team:

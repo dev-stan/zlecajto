@@ -18,8 +18,8 @@ module Ui
     }.freeze
 
     SIZES = {
-      sm: 'px-3 py-1.5 text-base',
-      md: 'px-4 py-4 text-xl',
+      sm: 'px-3 py-1.5 text-base rounded-3xl',
+      md: 'px-4 py-3 text-xl rounded-4xl',
       lg: 'px-6 py-3 text-base'
     }.freeze
 
@@ -114,7 +114,7 @@ module Ui
                     else 'justify-center text-center'
                     end
       merge_classes(
-        'inline-flex items-center rounded-3xl font-semibold transition-colors duration-700 outline-none ',
+        'inline-flex items-center font-semibold transition-colors duration-700 outline-none ',
         align_class,
         VARIANTS[variant],
         SIZES[size],

@@ -5,7 +5,9 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update created completed destroy]
 
   def show
-    current_user&.notifications.unread.for_task(@task).first&.mark_as_read!
+    if current_user
+      current_user&.notifications.unread.for_task(@task).first&.mark_as_read!
+    end
   end
   def edit; end
   def destroy

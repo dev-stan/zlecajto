@@ -1,14 +1,18 @@
 = form_with url: task_wizard_path, method: :post, data: { turbo_frame: 'task_wizard', controller: 'form-validation', action: 'submit->form-validation#validate' }, html: { id: 'task_step_form', novalidate: true } do |f|
   p.font-bold.mb-2 Krok 3/5
   h1.text-2xl.font-bold.mb-4 Gdzie wykonać zadanie?
-  p.text-base.text-gray-600.mb-2.font-bold Wybierz lokalizację
 
-  fieldset.space-y-3
-    ul.grid.grid-cols-2.sm:grid-cols-4.gap-3
-      - @locations.each do |loc|
-        - id = "loc_#{loc.parameterize}"
-        li
-          = render Ui::RadioButtonComponent.new(name: 'task[location]', value: loc, checked: params.dig(:task, :location) == loc || task.location == loc, id: id, label: loc, style: :square, html_options: { class: 'required' })
+  div data-field-wrapper=""
+    p.text-base.text-gray-600.mb-2.font-bold 
+      | Wybierz lokalizację
+      span.text-red-500 *
+
+    fieldset.space-y-3
+      ul.grid.grid-cols-2.sm:grid-cols-4.gap-3
+        - @locations.each do |loc|
+          - id = "loc_#{loc.parameterize}"
+          li
+            = render Ui::RadioButtonComponent.new(name: 'task[location]', value: loc, checked: params.dig(:task, :location) == loc || task.location == loc, id: id, label: loc, style: :square)
 
   = hidden_field_tag :step, 3
   = hidden_field_tag 'task[category]', task.category
@@ -17,5 +21,3 @@
   = hidden_field_tag 'task[due_date]', task.due_date if task.due_date.present?
   = hidden_field_tag 'task[timeslot]', task.timeslot if task.respond_to?(:timeslot) && task.timeslot.present?
   = hidden_field_tag 'task[payment_method]', task.payment_method if task.respond_to?(:payment_method) && task.payment_method.present?
-  = hidden_field_tag 'task[location]', task.location if task.respond_to?(:location) && task.location.present?
-

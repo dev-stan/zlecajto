@@ -108,16 +108,18 @@ export default class extends Controller {
   buildRemoveButton(idx) {
     const btn = document.createElement('button')
     btn.type = 'button'
-    btn.innerHTML = '&times;'
+    // Font Awesome close icon (fa-solid fa-xmark)
+    btn.innerHTML = '<i class="fa-solid fa-xmark" aria-hidden="true"></i>'
     btn.setAttribute('aria-label', 'Usuń zdjęcie')
-    btn.className = 'absolute top-1 right-1 z-10 w-6 h-6 rounded-full bg-white bg-opacity-80 text-gray-700 hover:bg-red-500 hover:text-white flex items-center justify-center text-lg font-bold shadow transition-opacity opacity-0 group-hover:opacity-100 focus:opacity-100 focus:outline-none'
-    btn.style.display = 'flex'
-    btn.style.alignItems = 'center'
-    btn.style.justifyContent = 'center'
-    btn.addEventListener('click', ev => {
-      ev.preventDefault()
-      this.removeFile(idx)
-    })
+    // Always visible (was previously hidden until hover); mobile friendly larger tap target
+    btn.className = 'absolute top-1 right-1 z-10 w-5 h-5 rounded-full bg-white/90 text-gray-700 text-center hover:bg-red-500 hover:text-white flex items-center justify-center text-md font-bold shadow focus:outline-none focus:ring-2 focus:ring-red-400 touch-manipulation'
+      btn.style.display = 'flex'
+      btn.style.alignItems = 'center'
+      btn.style.justifyContent = 'center'
+      btn.addEventListener('click', ev => {
+        ev.preventDefault()
+        this.removeFile(idx)
+      })
     return btn
   }
 }

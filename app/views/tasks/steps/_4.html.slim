@@ -1,22 +1,22 @@
 = form_with url: task_wizard_path, method: :post, data: { turbo_frame: 'task_wizard', controller: 'form-validation', action: 'submit->form-validation#validate' }, html: { id: 'task_step_form', novalidate: true } do |f|
   p.font-bold.mb-2 Krok 4/5
   h1.text-2xl.font-bold.mb-4 Budżet
-  p.text-base.text-gray-600.mb-2.font-bold Ustal budżet lub widełki
 
-  = render Input::InputComponent.new(name: 'task[salary]', type: 'number', placeholder: '150', value: task.salary, html_options: { class: 'required' })
+  div data-field-wrapper=""
+    p.text-base.text-gray-600.mb-2.font-bold 
+      | Ustal budżet lub widełki
+      span.text-red-500 *
+    = render Input::InputComponent.new(name: 'task[salary]', type: 'number', placeholder: '150', value: task.salary, html_options: { class: 'border-2 border-gray-300' })
 
-  fieldset.space-y-3.pt-5
-    p.text-base.text-gray-600.mb-2.font-bold Wybierz metodę płatności
-    ul.grid.grid-cols-2.md:grid-cols-3.gap-4
-      - @payment_methods.each do |method|
-        li
-          = render Ui::RadioButtonComponent.new(name: 'task[payment_method]',
-            value: method,
-            checked: params.dig(:task, :payment_method) == method || task.payment_method == method,
-            label: method,
-            style: :square,
-            html_options: { class: 'required border-2 border-blue-500' })
-
+  div data-field-wrapper=""
+    fieldset.space-y-3.pt-5
+      p.text-base.text-gray-600.mb-2.font-bold 
+        | Wybierz metodę płatności
+        span.text-red-500 *
+      ul.grid.grid-cols-2.md:grid-cols-3.gap-4
+        - @payment_methods.each do |method|
+          li
+            = render Ui::RadioButtonComponent.new(name: 'task[payment_method]', value: method, checked: params.dig(:task, :payment_method) == method || task.payment_method == method, label: method, style: :square)
 
   = hidden_field_tag :step, 4
   = hidden_field_tag 'task[category]', task.category
@@ -24,5 +24,4 @@
   = hidden_field_tag 'task[description]', task.description if task.description.present?
   = hidden_field_tag 'task[due_date]', task.due_date if task.due_date.present?
   = hidden_field_tag 'task[timeslot]', task.timeslot if task.respond_to?(:timeslot) && task.timeslot.present?
-  = hidden_field_tag 'task[payment_method]', task.payment_method if task.respond_to?(:payment_method) && task.payment_method.present?
   = hidden_field_tag 'task[location]', task.location if task.respond_to?(:location) && task.location.present?

@@ -4,7 +4,7 @@
     .flex-1.relative
         .flex.flex-col.justify-center.h-full
           - if @task.submissions.accepted.none?
-            h2.text-5xl.font-bold.text-white.mb-2 = t('tasks.offers', count: @task.submissions.count)
+            h2.text-5xl.font-bold.text-white.mb-2 = "Masz #{t('tasks.submissions', count: @task.submissions.count)}"  
             - if @task.submissions.count > 0
               p.text-white.mb-0 Twoje zlecenie otrzymało właśnie nowe zgłoszenie! Przejrzyj profil wykonawcy i zaakceptuj zlecenie gdy będziesz gotowy
             - else

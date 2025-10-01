@@ -1,164 +1,448 @@
+// app/javascript/controllers/form_validation_controller.js
 import { Controller } from "@hotwired/stimulus"
 
-const ERROR_CLASS = 'border-red-500'
-// Only toggle the error color class. Removing the generic 'border' class caused
-// radio labels to lose border width, so peer-checked:* color utilities had no visible effect.
-const ERROR_CLASSES = [ERROR_CLASS]
-
 export default class extends Controller {
-  connect() {
-    this.onInput = this.onInput.bind(this)
-    this.element.addEventListener('input', this.onInput)
-    this.element.addEventListener('change', this.onInput)
-  // Ensure radios whose labels carry the required marker or have required attribute are tracked
-  this.syncRequiredMarkers()
+  static values = {
+    step: Number
   }
 
-  disconnect() {
-    this.element.removeEventListener('input', this.onInput)
-    this.element.removeEventListener('change', this.onInput)
+  // All validation rules defined here
+  get validationRules() {
+    return {
+      1: {
+        'task[title]': {
+          required: true,
+          minLength: 5,
+          maxLength: 100,
+          fieldName: 'Tytuł',
+          errors: {
+            required: 'Tytuł jest wymagany',
+            minLength: 'Tytuł musi mieć co najmniej 5 znaków',
+            maxLength: 'Tytuł nie może przekraczać 100 znaków'
+          }
+        },
+        'task[category]': {
+          required: true,
+          fieldName: 'Kategoria',
+          errors: {
+            required: 'Kategoria jest wymagana'
+          }
+        },
+        'task[due_date]': {
+          required: true,
+          futureDate: true,
+          fieldName: 'Data',
+          errors: {
+            required: 'Data jest wymagana',
+            futureDate: 'Data musi być dziś lub w przyszłości'
+          }
+        },
+        'task[timeslot]': {
+          required: true,
+          fieldName: 'Godzina',
+          errors: {
+            required: 'Godzina jest wymagana'
+          }
+        }
+      },
+      2: {
+        'task[description]': {
+          required: true,
+          minLength: 20,
+          maxLength: 1000,
+          fieldName: 'Opis',
+          errors: {
+            required: 'Opis zadania jest wymagany',
+            minLength: 'Opis musi mieć co najmniej 20 znaków',
+            maxLength: 'Opis nie może przekraczać 1000 znaków'
+          }
+        }
+      },
+      3: {
+        'task[location]': {
+          required: true,
+          fieldName: 'Lokalizacja',
+          errors: {
+            required: 'Lokalizacja jest wymagana'
+          }
+        }
+      },
+      4: {
+        'task[salary]': {
+          required: true,
+          pattern: /^\d+$/,
+          minValue: 1,
+          fieldName: 'Budżet',
+          errors: {
+            required: 'Budżet jest wymagany',
+            pattern: 'Budżet musi być liczbą',
+            minValue: 'Budżet musi być większy niż 0'
+          }
+        },
+        'task[payment_method]': {
+          required: true,
+          fieldName: 'Metoda płatności',
+          errors: {
+            required: 'Metoda płatności jest wymagana'
+          }
+        }
+      },
+      5: {
+        'task[phone]': {
+          required: true,
+          pattern: /^(\+48)?[\s-]?\d{3}[\s-]?\d{3}[\s-]?\d{3}$/,
+          fieldName: 'Telefon',
+          errors: {
+            required: 'Numer telefonu jest wymagany',
+            pattern: 'Wprowadź prawidłowy numer telefonu (np. 123 456 789)'
+          }
+        },
+        'task[address]': {
+          required: true,
+          minLength: 5,
+          fieldName: 'Adres',
+          errors: {
+            required: 'Adres jest wymagany',
+            minLength: 'Adres musi mieć co najmniej 5 znaków'
+          }
+        }
+      }
+    }
+  }
+
+  connect() {
+    this.updateStepValue()
+    this.attachRealTimeListeners()
+  }
+
+  attachRealTimeListeners() {
+    // Listen for input changes on text fields, textareas, selects, date inputs
+    this.element.addEventListener('input', (e) => {
+      if (e.target.matches('input[type="text"], input[type="email"], input[type="date"], textarea, select')) {
+        this.validateFieldRealTime(e.target)
+      }
+    })
+
+    // Listen for change events on radio buttons
+    this.element.addEventListener('change', (e) => {
+      if (e.target.matches('input[type="radio"]')) {
+        this.validateFieldRealTime(e.target)
+      }
+    })
+
+    // Listen for blur to validate on focus loss
+    this.element.addEventListener('blur', (e) => {
+      if (e.target.matches('input, select, textarea')) {
+        this.validateFieldRealTime(e.target)
+      }
+    }, true)
+  }
+
+  validateFieldRealTime(field) {
+    this.updateStepValue()
+    const currentStepRules = this.validationRules[this.stepValue] || {}
+    const rules = currentStepRules[field.name]
+    
+    if (rules) {
+      this.validateFieldWithRules(field, rules)
+    }
+  }
+
+  updateStepValue() {
+    const stepInput = this.element.querySelector('input[name="step"]')
+    if (stepInput) {
+      this.stepValue = parseInt(stepInput.value) || 1
+    }
   }
 
   validate(event) {
-    this.clearErrors()
-    const all = this.requiredFields()
-    const invalid = this.collectInvalid(all)
-    if (invalid.length === 0) return
-    event.preventDefault()
-    invalid.forEach(f => this.markInvalid(f))
-    this.focusFirst(invalid)
+    this.updateStepValue()
+    this.clearAllErrors()
+
+    const isValid = this.validateAllFields()
+
+    if (!isValid) {
+      event.preventDefault()
+      event.stopImmediatePropagation()
+    }
+
+    return isValid
   }
 
-  onInput(e) {
-    const el = e.target
-    if (!el.classList.contains('required')) return
-    if (el.type === 'radio' || el.type === 'checkbox') {
-      const group = this.allGroupMembers(el)
-      if (group.some(member => member.checked)) {
-        group.forEach(member => this.unmarkInvalid(member))
+  validateAllFields() {
+    const currentStepRules = this.validationRules[this.stepValue] || {}
+    const fields = this.getAllValidatableFields()
+    let isValid = true
+    let firstInvalidField = null
+
+    fields.forEach(field => {
+      const rules = currentStepRules[field.name]
+      if (!rules) return
+
+      if (!this.validateFieldWithRules(field, rules)) {
+        isValid = false
+        if (!firstInvalidField) {
+          firstInvalidField = field
+        }
       }
-    } else if (!this.invalidField(el)) {
-      this.unmarkInvalid(el)
+    })
+
+    if (firstInvalidField) {
+      this.scrollToField(firstInvalidField)
+    }
+
+    return isValid
+  }
+
+  validateFieldWithRules(field, rules) {
+    if (field.type === 'hidden' || field.disabled || !this.isVisible(field)) {
+      return true
+    }
+
+    const value = this.getFieldValue(field)
+    const error = this.checkValidationRules(field, value, rules)
+
+    if (error) {
+      this.showError(field, error)
+      return false
+    }
+
+    this.clearError(field)
+    return true
+  }
+
+  checkValidationRules(field, value, rules) {
+    // Required validation
+    if (rules.required && !value) {
+      return rules.errors?.required || `${rules.fieldName || 'To pole'} jest wymagane`
+    }
+
+    // Skip other validations if field is empty and not required
+    if (!value) return null
+
+    // Min length
+    if (rules.minLength && value.length < rules.minLength) {
+      return rules.errors?.minLength || 
+             `${rules.fieldName} musi mieć co najmniej ${rules.minLength} znaków`
+    }
+
+    // Max length
+    if (rules.maxLength && value.length > rules.maxLength) {
+      return rules.errors?.maxLength || 
+             `${rules.fieldName} nie może przekraczać ${rules.maxLength} znaków`
+    }
+
+    // Min value (for numbers)
+    if (rules.minValue !== undefined && parseFloat(value) < rules.minValue) {
+      return rules.errors?.minValue || 
+             `${rules.fieldName} musi być większy niż ${rules.minValue}`
+    }
+
+    // Max value (for numbers)
+    if (rules.maxValue !== undefined && parseFloat(value) > rules.maxValue) {
+      return rules.errors?.maxValue || 
+             `${rules.fieldName} nie może przekraczać ${rules.maxValue}`
+    }
+
+    // Email validation
+    if (rules.email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      if (!emailRegex.test(value)) {
+        return rules.errors?.email || 'Wprowadź prawidłowy adres email'
+      }
+    }
+
+    // Pattern validation
+    if (rules.pattern) {
+      const pattern = rules.pattern instanceof RegExp ? rules.pattern : new RegExp(rules.pattern)
+      if (!pattern.test(value)) {
+        return rules.errors?.pattern || `${rules.fieldName} ma nieprawidłowy format`
+      }
+    }
+
+    // Future date validation
+    if (rules.futureDate && field.type === 'date') {
+      const selectedDate = new Date(value)
+      const today = new Date()
+      today.setHours(0, 0, 0, 0)
+      
+      if (selectedDate < today) {
+        return rules.errors?.futureDate || 'Data musi być w przyszłości'
+      }
+    }
+
+    // Custom validator function
+    if (rules.validator && typeof rules.validator === 'function') {
+      const customError = rules.validator(value, field)
+      if (customError) return customError
+    }
+
+    return null
+  }
+
+  getFieldValue(field) {
+    if (field.type === 'checkbox') {
+      return field.checked ? field.value : ''
+    }
+    if (field.type === 'radio') {
+      const checked = this.element.querySelector(`input[name="${field.name}"]:checked`)
+      return checked ? checked.value : ''
+    }
+    return (field.value || '').trim()
+  }
+
+  isVisible(field) {
+    return field.offsetParent !== null
+  }
+
+  getAllValidatableFields() {
+    return Array.from(
+      this.element.querySelectorAll('input:not([name="step"]):not([name="authenticity_token"]), select, textarea')
+    ).filter(field => {
+      // For radio buttons, only include one per group
+      if (field.type === 'radio') {
+        const name = field.name
+        const firstRadio = this.element.querySelector(`input[name="${name}"]`)
+        return field === firstRadio
+      }
+      return true
+    })
+  }
+
+  showError(field, message) {
+    const wrapper = this.getFieldWrapper(field)
+    
+    this.addErrorStyling(field)
+
+    let errorElement = wrapper.querySelector('[data-validation-error]')
+    
+    if (!errorElement) {
+      errorElement = document.createElement('p')
+      errorElement.setAttribute('data-validation-error', '')
+      errorElement.className = 'text-red-600 text-sm mt-1 opacity-0 transition-opacity duration-300'
+      errorElement.setAttribute('role', 'alert')
+      
+      const insertPoint = this.getErrorInsertionPoint(field, wrapper)
+      insertPoint.appendChild(errorElement)
+      
+      // Trigger fade in after element is in DOM
+      setTimeout(() => {
+        errorElement.classList.remove('opacity-0')
+        errorElement.classList.add('opacity-100')
+      }, 10)
+    }
+
+    errorElement.textContent = message
+  }
+
+  clearError(field) {
+    const wrapper = this.getFieldWrapper(field)
+    
+    this.removeErrorStyling(field)
+
+    const errorElement = wrapper.querySelector('[data-validation-error]')
+    if (errorElement) {
+      // Fade out before removing
+      errorElement.classList.remove('opacity-100')
+      errorElement.classList.add('opacity-0')
+      
+      // Remove from DOM after transition completes
+      setTimeout(() => {
+        errorElement.remove()
+      }, 300)
     }
   }
 
-  requiredFields() {
-    // Base: elements explicitly marked with required class
-    const fromClass = Array.from(this.element.querySelectorAll('.required'))
-    // Include radios / checkboxes whose label has required class
-    const radios = Array.from(this.element.querySelectorAll('input[type=radio], input[type=checkbox]'))
-      .filter(input => !input.classList.contains('required'))
-      .filter(input => input.hasAttribute('required') || this.labelFor(input)?.classList.contains('required'))
-    return Array.from(new Set([...fromClass, ...radios]))
-  }
-
-  collectInvalid(fields) {
-    const invalid = []
-    const radioNames = new Set()
-    fields.forEach(f => {
-      if (f.type === 'radio') {
-        radioNames.add(f.name)
-      } else if (this.invalidField(f)) {
-        invalid.push(f)
-      }
+  clearAllErrors() {
+    this.element.querySelectorAll('[data-validation-error]').forEach(el => el.remove())
+    
+    this.element.querySelectorAll('.border-red-500').forEach(field => {
+      this.removeErrorStyling(field)
     })
-    // Evaluate each radio group by name, considering all radios in the form (not just those with required class)
-    radioNames.forEach(name => {
-  const group = this.radiosByName(name)
-      if (!group.some(r => r.checked)) invalid.push(...group)
+
+    // Clear radio button individual errors
+    this.element.querySelectorAll('label.ring-red-500').forEach(label => {
+      label.classList.remove('ring-2', 'ring-red-500', 'border-red-500')
+      label.classList.add('border-blue-500')
     })
-    return invalid
   }
 
-  invalidField(field) {
-    if (field.type === 'radio' || field.type === 'checkbox') return !field.checked
-    const v = field.value
-    return v == null || v.toString().trim() === ''
-  }
-
-  // Return all radios sharing this one's name (full group regardless of required class presence)
-  allGroupMembers(radio) {
-    return this.radiosByName(radio.name)
-  }
-
-  radiosByName(name) {
-    // getElementsByName avoids CSS selector escaping edge cases (e.g. brackets in param names)
-    return Array.from(document.getElementsByName(name)).filter(el => el instanceof HTMLInputElement && el.type === 'radio' && el.form === this.element)
-  }
-
-  markInvalid(field) {
-    const label = this.labelFor(field)
-    ;[field, label].filter(Boolean).forEach(el => this.applyErrorStyles(el))
-  }
-
-  unmarkInvalid(field) {
-    const label = this.labelFor(field)
-    ;[field, label].filter(Boolean).forEach(el => this.removeErrorStyles(el))
-  }
-
-  clearErrors() {
-    // Select elements currently marked invalid by presence of ERROR_CLASS
-    this.element.querySelectorAll('.' + CSS.escape(ERROR_CLASS)).forEach(el => this.removeErrorStyles(el))
-  }
-
-  applyErrorStyles(el) {
-    if (!el) return
-    // Ensure a visible border width exists
-    if (!el.classList.contains('border')) {
-      el.classList.add('border')
-      el.dataset.addedBorder = 'true'
-    }
-    // Persist previous border color (first matching utility) to restore later
-    const prev = Array.from(el.classList).find(c => c.startsWith('border-') && c !== 'border' && c !== ERROR_CLASS)
-    if (prev && !el.dataset.prevBorderColor) el.dataset.prevBorderColor = prev
-    // Remove previous color utility so new one is effective regardless of Tailwind generation order
-    if (prev) el.classList.remove(prev)
-    ERROR_CLASSES.forEach(c => el.classList.add(c))
-  }
-
-  removeErrorStyles(el) {
-    if (!el) return
-    ERROR_CLASSES.forEach(c => el.classList.remove(c))
-    // Restore previous border color if we stored one
-    if (el.dataset.prevBorderColor) {
-      el.classList.add(el.dataset.prevBorderColor)
-      delete el.dataset.prevBorderColor
-    }
-    // If we artificially added a border (e.g. plain text inputs), remove it again
-    if (el.dataset.addedBorder) {
-      el.classList.remove('border')
-      delete el.dataset.addedBorder
+  addErrorStyling(field) {
+    if (field.type === 'radio') {
+      // Add red border to ALL radio button labels in the group
+      const radioGroup = this.element.querySelectorAll(`input[name="${field.name}"]`)
+      radioGroup.forEach(radio => {
+        const label = this.element.querySelector(`label[for="${radio.id}"]`)
+        if (label) {
+          label.classList.add('transition-all', 'duration-300')
+          // Use setTimeout to trigger transition
+          setTimeout(() => {
+            label.classList.add('ring-2', 'ring-red-500', 'border-red-500')
+            label.classList.remove('border-blue-500')
+          }, 10)
+        }
+      })
+    } else {
+      // Style the input field with transition
+      field.classList.add('transition-all', 'duration-300')
+      setTimeout(() => {
+        field.classList.add('border-red-500', 'focus:border-red-500')
+        field.classList.remove('border-blue-500', 'border-gray-300')
+      }, 10)
     }
   }
 
-  focusFirst(invalid) {
-    const first = invalid[0]
-    const target = this.labelFor(first) || first
-    target?.focus?.({ preventScroll: true })
+  removeErrorStyling(field) {
+    if (field.type === 'radio') {
+      // Remove red border from ALL radio button labels in the group
+      const radioGroup = this.element.querySelectorAll(`input[name="${field.name}"]`)
+      radioGroup.forEach(radio => {
+        const label = this.element.querySelector(`label[for="${radio.id}"]`)
+        if (label) {
+          label.classList.remove('ring-2', 'ring-red-500', 'border-red-500')
+          label.classList.add('border-blue-500')
+        }
+      })
+    } else {
+      field.classList.remove('border-red-500', 'focus:border-red-500', 'focus:ring-red-500')
+      field.classList.add('border-gray-300')
+    }
   }
 
-  labelFor(field) {
-    return field.id ? this.element.querySelector("label[for='" + CSS.escape(field.id) + "']") : null
+  getFieldWrapper(field) {
+    const explicitWrapper = field.closest('[data-field-wrapper]')
+    if (explicitWrapper) return explicitWrapper
+
+    if (field.type === 'radio') {
+      // For radio buttons, the wrapper is the container with data-field-wrapper
+      // or the parent of all radio buttons
+      return field.closest('[data-field-wrapper]') || field.closest('div')
+    }
+
+    return field.closest('div') || field.parentElement
   }
 
-  // Propagate required marker from labels / attributes to the underlying inputs so onInput logic fires.
-  syncRequiredMarkers() {
-    const candidates = Array.from(this.element.querySelectorAll('label.required[for]'))
-    candidates.forEach(label => {
-      const id = label.getAttribute('for')
-      if (!id) return
-      const input = this.element.querySelector('#' + CSS.escape(id))
-      if (input && !input.classList.contains('required')) {
-        input.classList.add('required')
-        input.dataset.inheritedRequired = 'true'
+  getErrorInsertionPoint(field, wrapper) {
+    if (field.type === 'radio') {
+      // Insert error after the radio group (ul/grid)
+      const radioContainer = wrapper.querySelector('ul, .grid')
+      return radioContainer?.parentElement || wrapper
+    }
+    
+    return wrapper
+  }
+
+  scrollToField(field) {
+    const wrapper = this.getFieldWrapper(field)
+    const yOffset = -100
+    const y = wrapper.getBoundingClientRect().top + window.pageYOffset + yOffset
+
+    window.scrollTo({ top: y, behavior: 'smooth' })
+    
+    setTimeout(() => {
+      if (field.type !== 'radio') {
+        field.focus()
       }
-    })
-    // Also mark inputs with native required attribute
-    this.element.querySelectorAll('input[required]').forEach(input => {
-      if (!input.classList.contains('required')) {
-        input.classList.add('required')
-        input.dataset.inheritedRequired = 'true'
-      }
-    })
+    }, 300)
   }
 }
