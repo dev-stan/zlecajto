@@ -362,7 +362,7 @@ export default class extends Controller {
 
     // Clear radio button individual errors
     this.element.querySelectorAll('label.ring-red-500').forEach(label => {
-      label.classList.remove('ring-2', 'ring-red-500', 'border-red-500')
+      label.classList.remove( 'ring-red-500', 'border-red-500')
       label.classList.add('border-blue-500')
     })
   }
@@ -377,7 +377,7 @@ export default class extends Controller {
           label.classList.add('transition-all', 'duration-300')
           // Use setTimeout to trigger transition
           setTimeout(() => {
-            label.classList.add('ring-2', 'ring-red-500', 'border-red-500')
+            label.classList.add( 'ring-red-500', 'border-red-500')
             label.classList.remove('border-blue-500')
           }, 10)
         }
@@ -399,7 +399,7 @@ export default class extends Controller {
       radioGroup.forEach(radio => {
         const label = this.element.querySelector(`label[for="${radio.id}"]`)
         if (label) {
-          label.classList.remove('ring-2', 'ring-red-500', 'border-red-500')
+          label.classList.remove( 'ring-red-500', 'border-red-500')
           label.classList.add('border-blue-500')
         }
       })
