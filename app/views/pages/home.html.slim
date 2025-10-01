@@ -13,5 +13,4 @@
 / = render 'pages/home/app'
 / = render 'pages/home/faq'
 
-= link_to "Wyloguj się", destroy_user_session_path, data: { turbo_method: :delete }
-
+= render Layout::FooterComponent.new

@@ -49,7 +49,7 @@ html
     link rel="manifest" href=asset_path("manifest.json")
     meta name="theme-color" content="#ffffff"
 
-  body
+  body class="flex flex-col min-h-screen"
     / Google Tag Manager (noscript)
     noscript
       iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WQR7ZJ75" height="0" width="0" style="display:none;visibility:hidden"
@@ -59,7 +59,7 @@ html
     - if user_signed_in?
       = render Layout::NavbarComponent.new()
     
-    main
+    main class="flex-grow pb-6"
       - if user_signed_in?
         .mt-16
       - if notice
@@ -67,5 +67,4 @@ html
       - if alert
         = render Ui::AlertComponent.new(message: alert, variant: :error)
       = yield
-
       = turbo_frame_tag "modal", data: { controller: 'modal' }

@@ -36,7 +36,7 @@ module Ui
       path: nil,
       method: :get,
       variant: :primary,
-      size: :md,
+      size: :sm,
       submit: false,
       button: false,
       intent: nil, # :submit, :button, or nil (auto-detect)

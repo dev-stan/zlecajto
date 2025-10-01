@@ -3,6 +3,7 @@
 require 'sidekiq/web' # for Sidekiq Web UI
 
 Rails.application.routes.draw do
+
   # Static pages
   root 'pages#waitlist'
   get 'pages/home'
@@ -10,12 +11,17 @@ Rails.application.routes.draw do
   get 'pages/privacy'
   get 'profile', to: 'pages#profile'
 
-  # Modals
+  # Confirm modals
   get 'users/sign_out/confirm', to: 'modals#confirm_logout', as: 'confirm_user_logout'
   get 'submissions/:id/confirm_accept', to: 'modals#confirm_submission_accept', as: :confirm_submission_accept_modal
   get 'tasks/:id/confirm_complete', to: 'modals#confirm_task_complete', as: :confirm_task_complete_modal
+  get 'tasks/:id/delete_modal', to: 'modals#confirm_delete_task', as: :confirm_delete_task_modal
+
+  # Edit modals
   get 'tasks/:id/edit_modal', to: 'modals#edit_task', as: :edit_task_modal
   get 'users/profile/edit_modal', to: 'modals#edit_profile', as: :edit_profile_modal
+
+  # Close modal
   delete 'modal', to: 'modals#destroy', as: 'close_modal'
 
 
@@ -27,13 +33,12 @@ Rails.application.routes.draw do
     omniauth_callbacks: 'users/omniauth_callbacks'
   }
 
+  # Sidekiq autoscaler endpoint
   post '/scaler/scale_worker', to: 'sidekiq_scaler#scale'
 
-  # # Sidekiq Web UI (admin only)
-  # authenticate :user, lambda(&:admin?) do
-  #   mount Sidekiq::Web => '/sidekiq'
-  # end
+  # Sidekiq Web UI ([todo] admin only)
   mount Sidekiq::Web => '/sidekiq'
+
   # User-specific routes
   namespace :users do
     resource :profile, only: %i[edit update]
@@ -52,7 +57,7 @@ Rails.application.routes.draw do
   end
 
   # Tasks CRUD routes
-  resources :tasks, only: %i[index show edit update] do
+  resources :tasks, only: %i[index show edit update destroy] do
     member do
       patch :update
       get :created

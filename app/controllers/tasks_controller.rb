@@ -2,12 +2,16 @@
 
 class TasksController < ApplicationController
   before_action :authenticate_user!, only: %i[update edit my_task]
-  before_action :set_task, only: %i[show edit update created completed]
+  before_action :set_task, only: %i[show edit update created completed destroy]
 
   def show
     current_user&.notifications.unread.for_task(@task).first&.mark_as_read!
   end
   def edit; end
+  def destroy
+    @task.destroy
+    redirect_to profile_path, notice: 'Usunięto zlecenie.'
+  end
   
   def created; end
   def completed; end

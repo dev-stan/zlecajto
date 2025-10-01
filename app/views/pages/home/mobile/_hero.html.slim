@@ -2,8 +2,10 @@
 .md:min-h-screen.md:flex.md:items-center
   .md:grid.md:grid-cols-2.md:gap-12.md:items-center.md:max-w-6xl.md:mx-auto.md:px-8
     / Mobile version
-    .flex.flex-col.items-center.mb-4.pt-5.md:hidden
-      = image_tag('mobile_cta.png')
+    .flex.flex-col.items-center.md:hidden
+      / Wrapper provides the visible rounded corners (video elements don't always clip with border-radius reliably)
+      .w-full.max-w-xs.p-5.overflow-hidden
+        = video_tag('home_video.mp4', autoplay: true, loop: false, muted: true, playsinline: true, controls: false, class: 'w-full h-auto rounded-2xl block object-cover')
     .px-8.text-center.md:hidden
       p = "Tworzymy platformę, na której sąsiedzi mogą zlecać i wykonywać jakiegokolwiek typu zadania!"
     .flex.flex-col.p-5.gap-3.px-8.md:hidden
@@ -24,7 +26,7 @@
     
     / Desktop right column
     .hidden.md:flex.md:items-center.md:justify-center
-      = image_tag('mobile_cta.png', class: 'max-w-md')
+      = video_tag('home_video.mp4', autoplay: true, loop: true, muted: true, playsinline: true, controls: false, class: 'max-w-md rounded-lg')
 
 / How it works section
 h1.text-center.text-5xl.font-bold.mt-12.px-8.md:max-w-6xl.md:mx-auto.md:mt-8.md:mb-12 = "Po prostu zaoszczędź czas"
