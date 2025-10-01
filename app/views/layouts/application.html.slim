@@ -59,7 +59,7 @@ html
     - if user_signed_in?
       = render Layout::NavbarComponent.new()
     
-    main class="flex-grow pb-6"
+    main class="flex-grow"
       - if user_signed_in?
         .mt-16
       - if notice

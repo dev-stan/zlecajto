@@ -4,8 +4,9 @@
     / Mobile version
     .flex.flex-col.items-center.md:hidden
       / Wrapper provides the visible rounded corners (video elements don't always clip with border-radius reliably)
-      .w-full.max-w-xs.p-5.overflow-hidden
-        = video_tag('home_video.mp4', autoplay: true, loop: false, muted: true, playsinline: true, controls: false, class: 'w-full h-auto rounded-2xl block object-cover')
+      = video_tag 'home_video.mp4', autoplay: true, loop: true, muted: true, playsinline: true, controls: false, class: 'w-full h-auto rounded-2xl block object-cover p-5', "webkit-playsinline" => true
+
+
     .px-8.text-center.md:hidden
       p = "Tworzymy platformę, na której sąsiedzi mogą zlecać i wykonywać jakiegokolwiek typu zadania!"
     .flex.flex-col.p-5.gap-3.px-8.md:hidden
@@ -129,3 +130,6 @@ h1.text-center.text-5xl.font-bold.mt-12.px-8.md:max-w-6xl.md:mx-auto.md:mt-8.md:
 .px-12.md:max-w-4xl.md:mx-auto.md:mt-0.md:mb-20.md:px-8
   h1.text-5xl.font-bold.text-center.mt-18.mb-8.md:mb-10 = "FAQ"
   = render Interactive::AccordionComponent.new(items: @faq_items)
+
+.mt-12
+  = render Layout::FooterComponent.new
