@@ -9,6 +9,19 @@ export default class extends Controller {
   // All validation rules defined here
   get validationRules() {
     return {
+      0: {
+        'submission[note]': {
+          required: true,
+          minLength: 25,
+          maxLength: 500,
+          fieldName: 'Wiadomość',
+          errors: {
+            required: 'Wiadomość do zleceniodawcy jest wymagana',
+            minLength: 'Wiadomość musi mieć co najmniej 25 znaków',
+            maxLength: 'Wiadomość nie może przekraczać 500 znaków'
+          }
+        }
+      },
       1: {
         'task[title]': {
           required: true,
@@ -151,7 +164,9 @@ export default class extends Controller {
   updateStepValue() {
     const stepInput = this.element.querySelector('input[name="step"]')
     if (stepInput) {
-      this.stepValue = parseInt(stepInput.value) || 1
+      const parsed = parseInt(stepInput.value)
+      // Allow step 0; only fallback to 1 if NaN
+      this.stepValue = Number.isNaN(parsed) ? 1 : parsed
     }
   }
 

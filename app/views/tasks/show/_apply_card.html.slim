@@ -6,7 +6,7 @@
   p.text-base.text-gray-500.leading-snug.pb-5 Aplikując wysyłasz krótką ofertę. Właściciel otrzyma powiadomienie i może się z Tobą skontaktować.
   - if current_user == task.user
     = render(Ui::ButtonComponent.new(text: 'Detale zlecenia', path: my_task_path(task), method: :get, size: :sm, variant: :primary, html_options: { class: 'w-full mb-4 font-bold text-lg' }))
-  - if accepted_submission_for_current_user
+  - elsif accepted_submission_for_current_user
     = render(Ui::ButtonComponent.new(text: 'Wybrano cię! Co dalej?', variant: :green, path: accepted_submission_path(accepted_submission_for_current_user), method: :get, size: :sm, html_options: { class: 'w-full mb-4 font-bold text-lg', data: { turbo: true } }))
   - elsif existing_submission
     = render(Ui::ButtonComponent.new(text: 'Już aplikowałeś', path: '#', size: :sm, variant: :primary, method: :get, html_options: { class: 'w-full mb-4 font-bold text-lg cursor-default pointer-events-none opacity-70' }))

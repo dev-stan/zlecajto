@@ -27,7 +27,7 @@
         = render 'tasks/show/submissions', task: @task
     // Sidebar (right)
     .w-full.md:w-72.flex-shrink-0.md:sticky.md:top-8.space-y-6.hidden.md:block
-      = render 'tasks/show/apply_card', task: @task, existing_submission: existing_submission
+      = render 'tasks/show/apply_card', task: @task, existing_submission: existing_submission, accepted_submission_for_current_user: accepted_submission_for_current_user
       = render 'tasks/show/support_card'
   // Mobile bottom bar
   .flex.gap-4.fixed.bottom-2.left-0.w-full.bg-transparent.z-25.p-4.justify-center.items-center.md:justify-end
@@ -35,6 +35,8 @@
       = render Ui::ButtonComponent.new(text: 'Zobacz detale zlecenia', path: my_task_path(@task), html_options: { class: 'w-full py-3 block md:hidden'})
     - elsif accepted_submission_for_current_user
       = render Ui::ButtonComponent.new(text: 'Wybrano cię! Co dalej?', variant: :green, path: accepted_submission_path(accepted_submission_for_current_user), html_options: { class: 'w-full py-3 block md:hidden'})
+    - elsif existing_submission
+      = render(Ui::ButtonComponent.new(text: 'Już aplikowałeś', path: '#', size: :sm, variant: :primary, method: :get, html_options: { class: 'w-full py-3 block md:hidden'}))
     - else
       = render Ui::ButtonComponent.new(text: 'Aplikuj', path: new_task_submission_path(@task), html_options: { class: 'w-full py-3 block md:hidden'})
   
