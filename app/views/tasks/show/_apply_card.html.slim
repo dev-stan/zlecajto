@@ -5,7 +5,9 @@
   p.text-2xl.font-semibold.text-gray-900 = formatted_salary(task)
   p.text-base.text-gray-500.leading-snug.pb-5 Aplikując wysyłasz krótką ofertę. Właściciel otrzyma powiadomienie i może się z Tobą skontaktować.
   - if existing_submission
-    .inline-flex.items-center.justify-center.w-full.px-3.py-2.rounded-md.text-base.font-medium.bg-green-100.text-green-800 ✓ Już aplikowałeś
+    = render(Ui::ButtonComponent.new(text: 'Już aplikowałeś', path: '#', size: :md, variant: :primary, width: 100))
+  - elsif accepted_submission_for_current_user
+    = render Ui::ButtonComponent.new(text: 'Wybrano cię! Co dalej?', variant: :green, path: accepted_submission_path(accepted_submission_for_current_user), html_options: { class: 'w-full py-3 block md:hidden'})
   - elsif current_user == task.user
     = render(Ui::ButtonComponent.new(text: 'Detale zlecenia', path: my_task_path(task), size: :md, html_options: { class: 'w-full'}))
   - else

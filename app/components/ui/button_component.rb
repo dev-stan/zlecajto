@@ -5,6 +5,7 @@ module Ui
     VARIANTS = {
       primary: 'bg-primary text-white',
       primary_2: 'bg-blue-100 text-primary',
+      primary_3: 'bg-blue-100 text-primary border-2 border-blue-300',
       glowing: 'bg-primary text-white glowing-btn',
       secondary: 'bg-secondary text-white',
       danger: 'bg-red-600 hover:bg-red-700 text-white',

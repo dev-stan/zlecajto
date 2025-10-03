@@ -77,6 +77,7 @@ Rails.application.configure do
   # Keep ActionMailer free for non-template emails
   # config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options = { host: 'www.zlecajto.pl', protocol: 'https' }
+  Rails.application.routes.default_url_options[:host] = 'https://www.zlecajto.pl'
 
   config.active_job.queue_adapter = :sidekiq
 

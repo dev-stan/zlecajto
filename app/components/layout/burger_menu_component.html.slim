@@ -8,7 +8,8 @@ nav.relative.flex.items-center data-controller="burger-menu"
         path d="M4 12L20 12" stroke="#000000" stroke-width="2" stroke-linecap="round"
         path d="M4 6L20 6" stroke="#000000" stroke-width="2" stroke-linecap="round"
     / Pulsing notification dot (container + ping + foreground)
-    - if @current_user.unread_notifications_count > 0
+    / [todo] redundant check for current_user - null exceptions should be handled on a higher level 
+    - if @user_signed_in && @current_user.unread_notifications_count > 0
       span.absolute.top-0.-right-1.flex.h-5.w-5.items-center.justify-center data-burger-menu-target="badge"
         span.absolute.inline-flex.h-full.w-full.rounded-full.bg-red-400.opacity-75.animate-ping
         span.relative.inline-flex.h-5.w-5.rounded-full.bg-red-500.text-white.text-sm.font-semibold.items-center.justify-center
@@ -24,16 +25,15 @@ nav.relative.flex.items-center data-controller="burger-menu"
     = link_to new_task_path, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
       i.fas.fa-plus.fa-fw.mr-2
       | Dodaj zlecenie
-    = link_to profile_path, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
-      i.fas.fa-circle-user.fa-fw.mr-2
-      span.flex.items-center.gap-2
-        | Mój profil
-        - if @current_user.unread_notifications_count > 0
-          span.relative.flex.h-3.w-3.items-center.justify-center
-            span.absolute.inline-flex.h-full.w-full.rounded-full.bg-red-400.opacity-75.animate-ping
-            span.relative.inline-flex.h-3.w-3.rounded-full.bg-red-500.items-center.justify-center
-
-
+    - if @user_signed_in
+      = link_to profile_path, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
+        i.fas.fa-circle-user.fa-fw.mr-2
+        span.flex.items-center.gap-2
+          | Mój profil
+          - if @user_signed_in && @current_user.unread_notifications_count > 0
+            span.relative.flex.h-3.w-3.items-center.justify-center
+              span.absolute.inline-flex.h-full.w-full.rounded-full.bg-red-400.opacity-75.animate-ping
+              span.relative.inline-flex.h-3.w-3.rounded-full.bg-red-500.items-center.justify-center
     p.text-xl.text-black.font-bold Pomoc
     = link_to new_task_path, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
       i.fas.fa-phone.fa-fw.mr-2
@@ -48,7 +48,11 @@ nav.relative.flex.items-center data-controller="burger-menu"
     = link_to pages_privacy_path, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
       i.fas.fa-user-shield.fa-fw.mr-2
       | Polityka prywatności
-    = link_to confirm_user_logout_path, data: { turbo_frame: 'modal' }, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
-        i.fas.fa-sign-out-alt.fa-fw.mr-2
-        | Wyloguj się
+    - if @user_signed_in
+      = link_to confirm_user_logout_path, data: { turbo_frame: 'modal' }, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
+          i.fas.fa-sign-out-alt.fa-fw.mr-2
+          | Wyloguj się
+    - unless @user_signed_in
+      .flex.items-center.justify-center.mt-4.gap-3
+        = render(Ui::ButtonComponent.new(text: 'Zaloguj się', path: helpers.new_user_session_path, size: :sm, variant: :green, width: 50))
 

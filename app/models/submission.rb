@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Submission < ApplicationRecord
+  include Rails.application.routes.url_helpers
   belongs_to :task
   belongs_to :user
 

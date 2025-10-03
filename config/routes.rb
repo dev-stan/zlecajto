@@ -3,10 +3,9 @@
 require 'sidekiq/web' # for Sidekiq Web UI
 
 Rails.application.routes.draw do
-
   # Static pages
-  root 'pages#waitlist'
-  get 'pages/home'
+  get 'pages/waitlist'
+  root 'pages#home'
   get 'pages/tos'
   get 'pages/privacy'
   get 'profile', to: 'pages#profile'
@@ -23,7 +22,6 @@ Rails.application.routes.draw do
 
   # Close modal
   delete 'modal', to: 'modals#destroy', as: 'close_modal'
-
 
   get 'up', to: 'rails/health#show', as: :rails_health_check
 

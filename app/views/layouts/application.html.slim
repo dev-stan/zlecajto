@@ -55,13 +55,9 @@ html
       iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WQR7ZJ75" height="0" width="0" style="display:none;visibility:hidden"
     / End Google Tag Manager (noscript)
 
-    / Optional navbar
-    - if user_signed_in?
-      = render Layout::NavbarComponent.new()
+    = render Layout::NavbarComponent.new()
     
     main class="flex-grow"
-      - if user_signed_in?
-        .mt-16
       - if notice
         = render Ui::AlertComponent.new(message: notice, variant: :success)
       - if alert

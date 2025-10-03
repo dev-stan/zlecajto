@@ -1,8 +1,12 @@
-.max-w-7xl.mx-auto.px-4.sm:px-6.lg:px-8
-  header
-    h1.text-4xl.font-extrabold.text-gray-900 Zlecenia
-    / p.text-lg.text-gray-600 
-  main.grid.grid-cols-1.md:grid-cols-3.gap-4.mx-3.mt-5
+.max-w-7xl.mx-auto.px-8.mt-8
+  h1.text-2xl.font-extrabold.text-gray-900
+    | Lokalne zlecenia na 
+    span.text-secondary Strzeszynie 
+    |  i 
+    span.text-secondary Suchym Lesie
+    / | ...
+
+  main.grid.grid-cols-1.md:grid-cols-3.gap-4.mt-5
     - @tasks.each do |task|
         = render Tasks::TaskCardComponent.new(task: task, path: task_path(task), variant: :default) do |card|
           - card.with_image do

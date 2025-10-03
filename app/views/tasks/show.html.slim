@@ -32,9 +32,9 @@
   // Mobile bottom bar
   .flex.gap-4.fixed.bottom-2.left-0.w-full.bg-transparent.z-25.p-4.justify-center.items-center.md:justify-end
     - if current_user == @task.user
-      = render Ui::ButtonComponent.new(text: 'Detale zlecenia', path: my_task_path(@task), html_options: { class: 'w-full py-3 block md:hidden'})
+      = render Ui::ButtonComponent.new(text: 'Zobacz detale zlecenia', path: my_task_path(@task), html_options: { class: 'w-full py-3 block md:hidden'})
     - elsif accepted_submission_for_current_user
-      = render Ui::ButtonComponent.new(text: 'Wybrano cię!', variant: :green, path: accepted_submission_path(accepted_submission_for_current_user), html_options: { class: 'w-full py-3 block md:hidden'})
+      = render Ui::ButtonComponent.new(text: 'Wybrano cię! Co dalej?', variant: :green, path: accepted_submission_path(accepted_submission_for_current_user), html_options: { class: 'w-full py-3 block md:hidden'})
     - else
       = render Ui::ButtonComponent.new(text: 'Aplikuj', path: new_task_submission_path(@task), html_options: { class: 'w-full py-3 block md:hidden'})
   
