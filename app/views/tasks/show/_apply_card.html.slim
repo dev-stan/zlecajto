@@ -11,4 +11,4 @@
   - elsif existing_submission
     = render(Ui::ButtonComponent.new(text: 'Już aplikowałeś', path: '#', size: :sm, variant: :primary, method: :get, html_options: { class: 'w-full mb-4 font-bold text-lg cursor-default pointer-events-none opacity-70' }))
   - else
-    = render(Ui::ButtonComponent.new(text: 'Aplikuj', path: new_task_submission_path(task), variant: :primary, size: :sm, method: :get, html_options: { class: 'w-full mb-4 font-bold text-lg', data: { turbo_frame: 'modal', turbo: true } }))
+    = render(Ui::ButtonComponent.new(text: 'Aplikuj', path: new_task_submission_path(task), variant: :primary, size: :sm, method: :get, html_options: { class: 'w-full mb-4 font-bold text-lg' }))
