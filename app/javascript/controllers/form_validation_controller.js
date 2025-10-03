@@ -119,8 +119,55 @@ export default class extends Controller {
             minLength: 'Adres musi mieć co najmniej 5 znaków'
           }
         }
+      },
+      // Registration form validation (step 100)
+      100: {
+        'user[first_name]': {
+          required: true,
+          fieldName: 'Imię',
+          errors: {
+            required: 'Imię jest wymagane',
+          }
+        },
+        'user[last_name]': {
+          required: true,
+          fieldName: 'Nazwisko',
+          errors: {
+            required: 'Nazwisko jest wymagane',
+          }
+        },
+        'user[email]': {
+          required: true,
+          email: true,
+          fieldName: 'Adres email',
+          errors: {
+            required: 'Adres email jest wymagany',
+            email: 'Wprowadź prawidłowy adres email'
+          }
+        },
+        'user[phone_number]': {
+          required: true,
+          pattern: /^(\+48)?[\s-]?\d{3}[\s-]?\d{3}[\s-]?\d{3}$/,
+          fieldName: 'Numer telefonu',
+          errors: {
+            required: 'Numer telefonu jest wymagany',
+            pattern: 'Wprowadź prawidłowy numer telefonu (np. 123 456 789)'
+          }
+        },
+        'user[password]': {
+          required: true,
+          minLength: 8,
+          maxLength: 128,
+          fieldName: 'Hasło',
+          errors: {
+            required: 'Hasło jest wymagane',
+            minLength: 'Hasło musi mieć co najmniej 8 znaków',
+            maxLength: 'Hasło nie może przekraczać 128 znaków'
+          }
+        }
       }
     }
+
   }
 
   connect() {

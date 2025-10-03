@@ -3,23 +3,25 @@
     .mb-8.text-center
       h1.text-3xl.font-extrabold.text-gray-900.mb-2 Zaloguj się
       p.text-gray-600 Witaj z powrotem w zlecajto.pl
-    
-    = form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "space-y-6" }) do |f|
+
+    = form_for(resource, as: resource_name, url: session_path(resource_name), data: { controller: 'form-validation', action: 'submit->form-validation#validate' }, html: { class: "space-y-6", novalidate: true }) do |f|
       .space-y-4
         .flex.flex-col
-          = f.label :email, "Adres email", class: "mb-1 block text-base font-medium text-gray-700"
-          = f.email_field :email, 
-              autofocus: true, 
-              autocomplete: "email",
-              placeholder: "twoj.email@example.com",
-              class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base placeholder-gray-400 shadow-sm transition focus:border-blue-500 focus:ring focus:ring-violet-200 focus:ring-opacity-50 focus:outline-none"
+          div data-field-wrapper=""
+            = f.label :email, "Adres email", class: "mb-1 block text-base font-medium text-gray-700"
+            = f.email_field :email, 
+                autofocus: true, 
+                autocomplete: "email",
+                placeholder: "twoj.email@example.com",
+                class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base placeholder-gray-400 shadow-sm transition focus:border-blue-500 focus:ring focus:ring-violet-200 focus:ring-opacity-50 focus:outline-none"
         
         .flex.flex-col
-          = f.label :password, "Hasło", class: "mb-1 block text-base font-medium text-gray-700"
-          = f.password_field :password, 
-              autocomplete: "current-password",
-              placeholder: "Twoje hasło",
-              class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base placeholder-gray-400 shadow-sm transition focus:border-blue-500 focus:ring focus:ring-violet-200 focus:ring-opacity-50 focus:outline-none"
+          div data-field-wrapper=""
+            = f.label :password, "Hasło", class: "mb-1 block text-base font-medium text-gray-700"
+            = f.password_field :password, 
+                autocomplete: "current-password",
+                placeholder: "Twoje hasło",
+                class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base placeholder-gray-400 shadow-sm transition focus:border-blue-500 focus:ring focus:ring-violet-200 focus:ring-opacity-50 focus:outline-none"
         
         - if devise_mapping.rememberable?
           .flex.items-center
@@ -31,5 +33,6 @@
         = link_to user_google_oauth2_omniauth_authorize_path, data: { turbo: 'false' }, class: "py-3 w-full flex items-center justify-center gap-3 mt-4 px-4 py-2 rounded-4xl bg-white border border-gray-300 shadow hover:bg-gray-50 transition font-semibold text-gray-700 text-base" do
           = image_tag 'google.png', alt: 'Google', class: 'h-6 w-6 rounded-full bg-white'
           | Zaloguj się przez Google
+      = hidden_field_tag :step, 100
     .mt-6.text-center.text-base.text-gray-600
       = link_to "Nie masz konta? Zarejestruj się", new_user_registration_path, class: "font-medium text-primary hover:text-blue-800"
