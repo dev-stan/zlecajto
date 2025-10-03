@@ -4,14 +4,14 @@
 
   div data-field-wrapper=""
     p.text-base.text-gray-600.mb-2.font-bold 
-      | Ustal budżet lub widełki
+      | Ustal stawkę lub widełki
       span.text-red-500 *
     = render Input::InputComponent.new(name: 'task[salary]', type: 'number', placeholder: '150', value: task.salary, html_options: { class: 'border-2 border-gray-300' })
 
   div data-field-wrapper=""
     fieldset.space-y-3.pt-5
       p.text-base.text-gray-600.mb-2.font-bold 
-        | Wybierz metodę płatności
+        | Jak zapłacisz wykonawcy?
         span.text-red-500 *
       ul.grid.grid-cols-2.md:grid-cols-3.gap-4
         - @payment_methods.each do |method|

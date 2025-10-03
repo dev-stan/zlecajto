@@ -16,7 +16,8 @@ module Ui
     PAYMENT_METHODS_EMOJIS = {
       'Przelew' => '💳',
       'Blik' => '📱',
-      'Gotówka' => '💵'
+      'Gotówka' => '💵',
+      'Czekolada' => '🍫'
     }.freeze
 
     TIMESLOT_EMOJIS = {

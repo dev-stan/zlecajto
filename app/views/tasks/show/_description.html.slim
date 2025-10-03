@@ -1,4 +1,4 @@
 / Task description
 - task ||= @task
 h2.text-lg.font-semibold.text-gray-900.mb-2 Co dokładnie trzeba zrobić?
-.prose.prose-sm.max-w-none.text-gray-700 = simple_format(task.description)
+.prose.prose-sm.max-w-none.text-gray-700.whitespace-pre-wrap.break-words = simple_format(task.description)

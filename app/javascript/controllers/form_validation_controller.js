@@ -76,7 +76,7 @@ export default class extends Controller {
           required: true,
           fieldName: 'Lokalizacja',
           errors: {
-            required: 'Lokalizacja jest wymagana'
+            required: 'Miejsce wykonania zadania jest wymagane'
           }
         }
       },
@@ -84,12 +84,12 @@ export default class extends Controller {
         'task[salary]': {
           required: true,
           pattern: /^\d+$/,
-          minValue: 1,
-          fieldName: 'Budżet',
+          minValue: 0,
+          fieldName: 'Stawka',
           errors: {
-            required: 'Budżet jest wymagany',
-            pattern: 'Budżet musi być liczbą',
-            minValue: 'Budżet musi być większy niż 0'
+            required: 'Stawka jest wymagana',
+            pattern: 'Stawka musi być liczbą',
+            minValue: 'Stawka musi być dodatnia ( lub 0 za darmo )'
           }
         },
         'task[payment_method]': {

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Task < ApplicationRecord
-
   belongs_to :user
 
   has_many :submissions, dependent: :destroy
@@ -11,15 +10,15 @@ class Task < ApplicationRecord
   before_validation :set_default_status
   after_create :send_task_created_email
 
-
   # [todo] Can i make this cleaner with enum?
   STATUSES        = ['draft', 'Otwarte', 'W trakcie', 'Zakończone', 'Anulowane'].freeze
   CATEGORIES      = %w[Sprzątanie Zakupy Montaż Transport Przeprowadzki Opieka
                        Naprawy Ogrodnictwo].freeze
 
   TIMESLOTS       = %w[Rano Popołudnie Wieczór Obojętnie].freeze
-  PAYMENT_METHODS = %w[Przelew Blik Gotówka].freeze
-  LOCATIONS       = ['Stary Strzeszyn', 'Osiedle Literackie', 'Strzeszyn Grecki', 'Osiedle Wojskowe'].freeze
+  PAYMENT_METHODS = %w[Przelew Blik Gotówka Czekolada].freeze
+  LOCATIONS       = ['Stary Strzeszyn', 'Osiedle Literackie', 'Strzeszyn Grecki', 'Osiedle Wojskowe',
+                     'Jelonek', 'Suchy Las Wschód', 'Suchy Las Zachód', 'Złotniki'].freeze
 
   validates :status, inclusion: { in: STATUSES }, allow_blank: true
   validates :category, inclusion: { in: CATEGORIES }, allow_blank: true
