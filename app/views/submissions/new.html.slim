@@ -1,6 +1,5 @@
 /. Submission new form with validation (step 0)
-.max-w-2xl.mx-auto.px-4.py-8
-  header.mb-8
+.max-w-2xl.mx-auto.px-4.mt-8
   = form_with model: [@task, @submission], local: true, class: "space-y-6", data: { controller: 'form-validation', action: 'submit->form-validation#validate' }, html: { novalidate: true } do |form|
     .space-y-2
       h1.font-bold.text-3xl.mb-4 Aplikuj na zlecenie
@@ -9,6 +8,6 @@
         = render Input::InputComponent.new(name: 'submission[note]', type: 'textarea', placeholder: 'Napisz krótką wiadomość…', rows: 5, value: @submission.note, html_options: { class: 'border-2 border-gray-300 w-full' })
         = hidden_field_tag :step, 0
 
-    .flex.gap-4.fixed.bottom-3.left-0.w-full.bg-white/70.backdrop-blur-md.z-50.p-4.justify-center.items-center.md:justify-end
-      = render Ui::ButtonComponent.new(text: 'Anuluj', path: @task, variant: :secondary, html_options: { class: 'w-1/4'})
-      = render Ui::ButtonComponent.new(text: 'Aplikuj', submit: true, variant: :primary, html_options: { class: 'w-3/4'})
+    .flex.gap-4.fixed.bottom-0.left-0.w-full.bg-white/70.backdrop-blur-md.z-50.p-4.justify-center.items-center.md:justify-end
+      = render Ui::ButtonComponent.new(text: 'Anuluj', path: @task, size: :md, variant: :secondary, html_options: { class: 'w-2/5'})
+      = render Ui::ButtonComponent.new(text: 'Aplikuj', submit: true, size: :md,variant: :primary, html_options: { class: 'w-3/5'})

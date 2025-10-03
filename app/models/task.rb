@@ -32,7 +32,6 @@ class Task < ApplicationRecord
   end
 
   def send_task_created_email
-    # MailgunTemplateJob.perform_later(to: user.email, template: 'welcome_email', subject: 'Witaj w zlecajto :)',
-    #                                  variables: { test: 'test' })
+    MailgunTemplateJob.perform_later(to: user.email, template: 'welcome_email', subject: 'Witaj w zlecajto :)')
   end
 end

@@ -165,6 +165,69 @@ export default class extends Controller {
             maxLength: 'Hasło nie może przekraczać 128 znaków'
           }
         }
+      },
+      // Edit task modal (step 200)
+      200: {
+        'task[title]': {
+          required: true,
+          minLength: 5,
+          maxLength: 100,
+          fieldName: 'Tytuł',
+          errors: {
+            required: 'Tytuł jest wymagany',
+            minLength: 'Tytuł musi mieć co najmniej 5 znaków',
+            maxLength: 'Tytuł nie może przekraczać 100 znaków'
+          }
+        },
+        'task[salary]': {
+          required: true,
+          pattern: /^\d+$/,
+          minValue: 0,
+          fieldName: 'Wynagrodzenie',
+          errors: {
+            pattern: 'Wynagrodzenie musi być liczbą',
+            minValue: 'Kwota nie może być ujemna'
+          }
+        },
+        'task[description]': {
+          required: true,
+          minLength: 20,
+          maxLength: 1000,
+          fieldName: 'Opis',
+          errors: {
+            required: 'Opis jest wymagany',
+            minLength: 'Opis musi mieć co najmniej 20 znaków',
+            maxLength: 'Opis nie może przekraczać 1000 znaków'
+          }
+        },
+        'task[category]': {
+          required: true,
+          fieldName: 'Kategoria',
+          errors: {
+            required: 'Kategoria jest wymagana'
+          }
+        },
+        'task[location]': {
+          required: true,
+          fieldName: 'Lokalizacja',
+          errors: {
+            required: 'Lokalizacja jest wymagana'
+          }
+        },
+        'task[timeslot]': {
+          required: true,
+          fieldName: 'Termin',
+          errors: {
+            required: 'Termin jest wymagany'
+          }
+        },
+        'task[payment_method]': {
+          required: true,
+          fieldName: 'Płatność',
+          errors: {
+            required: 'Metoda płatności jest wymagana'
+          }
+        }
       }
     }
 
@@ -178,7 +241,7 @@ export default class extends Controller {
   attachRealTimeListeners() {
     // Listen for input changes on text fields, textareas, selects, date inputs
     this.element.addEventListener('input', (e) => {
-      if (e.target.matches('input[type="text"], input[type="email"], input[type="date"], textarea, select')) {
+      if (e.target.matches('input[type="text"], input[type="email"], input[type="date"], input[type="number"], textarea, select')) {
         this.validateFieldRealTime(e.target)
       }
     })

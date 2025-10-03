@@ -1,12 +1,8 @@
 .max-w-7xl.mx-auto.px-8.mt-8
-  h1.text-2xl.font-extrabold.text-gray-900
-    | Lokalne zlecenia na 
-    span.text-secondary Strzeszynie 
-    |  i w
-    span.text-secondary Suchym Lesie
-    / | ...
+  h1.text-2xl.font-semibold.text-gray-900.text-center = 'Lokalne zlecenia'
+  p.text-sm.text-gray-600.text-center = 'W Suchym Lesie i na Strzeszynie'
 
-  main.grid.grid-cols-1.md:grid-cols-3.gap-4.mt-5
+  main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
     - @tasks.each do |task|
         = render Tasks::TaskCardComponent.new(task: task, path: task_path(task), variant: :default) do |card|
           - card.with_image do
