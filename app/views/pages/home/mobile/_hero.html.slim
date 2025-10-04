@@ -23,7 +23,7 @@
       p.text-lg.text-gray-700.mb-8.leading-relaxed.font-light = "Tworzymy platformę, na której sąsiedzi mogą zlecać i wykonywać jakiegokolwiek typu zadania!"
       .flex.gap-4
         = render(Ui::ButtonComponent.new(text: 'Opublikuj zlecenie', path: new_task_path, size: :md))
-        = render(Ui::ButtonComponent.new(text: 'Zarób ze zlecajto!', path: tasks_path, size: :md, variant: :primary_2))
+        = render(Ui::ButtonComponent.new(text: 'Zarób ze Zlecajto!', path: tasks_path, size: :md, variant: :primary_2))
     
     / Desktop right column
     .hidden.md:flex.md:items-center.md:justify-center
@@ -31,7 +31,7 @@
 
 / How it works section
 h1.text-start.text-5xl.font-bold.mt-12.px-5.md:max-w-6xl.md:mx-auto.md:mt-8.md:mb-12 = "Lokalna pomoc"
-p.text-start.text-base.font-base.px-5.mt-3 = "Zaoszczedź sobie godziny na codziennych obowiązkach i zleć je sąsiadowi."
+p.text-start.text-base.font-base.px-5.mt-3.md:hidden = "Zaoszczedź sobie godziny na codziennych obowiązkach i zleć je sąsiadowi."
 .px-8.mt-8.md:max-w-6xl.md:mx-auto.md:mt-0
   ul.flex.flex-col.space-y-3.items-start.md:grid.md:grid-cols-3.md:gap-6.md:space-y-0
     - steps = ['Opisz z czym potrzebujesz pomocy',
@@ -52,7 +52,7 @@ p.text-start.text-base.font-base.px-5.mt-3 = "Zaoszczedź sobie godziny na codzi
 / Categories section
 .px-5.mt-16.md:mt-0.md:px-8.md:mb-24
   h1.text-5xl.font-bold.text-start.mt-5.pt-8.md:mb-10.md:max-w-6xl.md:mx-auto = 'Zleć co chcesz'
-  p.text-start.text-base.font-base.mt-3 = "Możesz zlecić wszystko, co przychodzi Ci do głowy, serio wszystko 👀"
+  p.text-start.text-base.font-base.mt-3.md:hidden = "Możesz zlecić wszystko, co przychodzi Ci do głowy, serio wszystko 👀"
   
   .flex.overflow-x-auto.snap-x.snap-mandatory.scroll-smooth.space-x-4.p-8.w-full.md:grid.md:grid-cols-8.md:gap-4.md:overflow-visible.md:max-w-6xl.md:mx-auto.md:p-0.md:mt-0
     - @categories.each do |category, emoji|

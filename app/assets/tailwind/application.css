@@ -9,7 +9,7 @@
 /* Minimal semantic color utilities – kept intentionally tiny. */
 @layer utilities {
 	.bg-primary { background-color: #3478F5}
-	.bg-secondary { background-color: oklch(45.9% 0.187 3.815)} /* gray-100 */
+	.bg-secondary { background-color: #D1345B} /* gray-100 */
 	.text-primary { color: #3454E1 } /* green-200 */
 	.text-secondary { color:oklch(45.9% 0.187 3.815) } /* yellow-200 */
 	.bg-light-green { background-color: #cef6cf}
@@ -25,6 +25,25 @@
 		from { opacity: 1; transform: translateY(0)    scale(1); }
 		to   { opacity: 0; transform: translateY(4px) scale(0.99); }
 	}
+
+	.moving-text {
+		display: inline-flex;
+		white-space: nowrap;
+		will-change: transform;
+		animation: move-text 60s linear infinite;
+	}
+
+	@keyframes move-text {
+		from {
+			transform: translateX(0);
+		}
+		to {
+			transform: translateX(-50%);
+		}
+	}
+
+
+
 
 	/* Apply to overlay or dialog container as needed */
 	.animate-fade-in { animation: fade-in 180ms cubic-bezier(0.2,0,0.2,1) both; }
