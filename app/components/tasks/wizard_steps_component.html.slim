@@ -1,4 +1,4 @@
-nav aria-label="Task creation steps" class="md:w-56 mb-6 md:mb-0"
+nav aria-label="Task creation steps" aria-disabled="true" class="md:w-56 mb-6 md:mb-0 pointer-events-none select-none"
     h2.text-base.font-semibold.uppercase.tracking-wider.text-gray-500.mb-4 Dodaj zlecenie
     ol.space-y-2
         - steps.each_with_index do |label, idx|
@@ -7,11 +7,7 @@ nav aria-label="Task creation steps" class="md:w-56 mb-6 md:mb-0"
             - active = (status == :active)
             li
                 - indicator = active ? content_tag(:span, '|', class: 'mr-2 text-blue-600') : content_tag(:span, ' ', class: 'mr-2')
-                - if [:available, :completed].include?(status)
-                    = link_to step_path(number), data: { turbo_frame: 'task_wizard' }, class: merge_classes('flex items-center transition', active ? 'text-blue-600 font-semibold' : 'text-gray-700 hover:text-blue-600'), aria: { current: (active ? 'step' : nil) }
-                        == indicator
-                        span = label
-                - else
-                    span class=merge_classes('flex items-center', active ? 'text-blue-600 font-semibold' : 'text-gray-400 cursor-not-allowed') aria-current=(active ? 'step' : nil) aria-disabled=(status == :locked ? 'true' : nil)
-                        == indicator
-                        span = label
+                / Render as non-interactive element at all times
+                span class=merge_classes('flex items-center pointer-events-none select-none', active ? 'text-blue-600 font-semibold' : 'text-gray-400 cursor-not-allowed') aria-current=(active ? 'step' : nil) aria-disabled="true" tabindex="-1"
+                    == indicator
+                    span = label

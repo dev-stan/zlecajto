@@ -33,12 +33,12 @@ module Tasks
       true
     end
 
-    def step_path(number)
-      helpers.new_task_path(step: number, task: preserved_params)
+    def step_path(_number)
+      '#'
     end
 
     def previous_step_path
-      step_path(current_step - 1) if current_step > 1
+      '#'
     end
 
     def preserved_params
