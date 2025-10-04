@@ -4,7 +4,7 @@
 
   div data-field-wrapper=""
     p.text-base.text-gray-600.mb-2.font-bold 
-      | Ustal stawkę lub widełki
+      | Ustal stawkę
       span.text-red-500 *
     = render Input::InputComponent.new(name: 'task[salary]', type: 'number', placeholder: '150', value: task.salary, html_options: { class: 'border-2 border-gray-300' })
 
