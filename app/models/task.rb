@@ -43,11 +43,20 @@ class Task < ApplicationRecord
   validates :timeslot, inclusion: { in: TIMESLOTS }, allow_blank: true
   validates :location, inclusion: { in: LOCATIONS }, allow_blank: true
 
+  # Returns true if the task is completed, false otherwise
+  def completed
+    %w[completed Zakończone].include?(status.to_s)
+  end
+  alias completed? completed
+
   def complete!
     transaction do
+      was_completed = completed
       update!(status: 'completed')
-      send_completed_task_email
-      send_completed_submission_email
+      if !was_completed && completed
+        send_completed_task_email
+        send_completed_submission_email
+      end
     end
   end
 
