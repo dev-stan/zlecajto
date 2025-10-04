@@ -35,7 +35,7 @@ nav.relative.flex.items-center data-controller="burger-menu"
               span.absolute.inline-flex.h-full.w-full.rounded-full.bg-red-400.opacity-75.animate-ping
               span.relative.inline-flex.h-3.w-3.rounded-full.bg-red-500.items-center.justify-center
     p.text-xl.text-black.font-bold Pomoc
-    = link_to new_task_path, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
+    = link_to pages_contact_path, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
       i.fas.fa-phone.fa-fw.mr-2
       | Kontakt
     = link_to new_task_path, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
@@ -55,4 +55,5 @@ nav.relative.flex.items-center data-controller="burger-menu"
     - unless @user_signed_in
       .flex.items-center.justify-center.mt-4.gap-3
         = render(Ui::ButtonComponent.new(text: 'Zaloguj się', path: helpers.new_user_session_path, size: :sm, variant: :green, width: 50))
+        = render(Ui::ButtonComponent.new(text: 'Zarejestruj się', path: helpers.new_user_registration_path, size: :sm, variant: :primary_3, width: 50))
 

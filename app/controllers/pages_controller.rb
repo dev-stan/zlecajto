@@ -6,17 +6,17 @@ class PagesController < ApplicationController
                            ['Otrzymaj oferty i wybierz tą która tobie odpowiada', '3']]
 
     @faq_items = [
-      { title: 'Jak zlecić zadanie?',
-        content: 'Kliknij przycisk "Zleć zadanie", wypełnij krótki formularz i poczekaj na oferty wykonawców.' },
-      { title: 'Dlaczego warto wybrać ZlecajTo.pl?',
-        content: 'Łatwo porównujesz oferty, oszczędzasz czas i masz dostęp do lokalnych, zweryfikowanych wykonawców.' },
       { title: 'Czy ZlecajTo.pl coś kosztuje?',
         content: 'Rejestracja jest darmowa. Płacisz jedynie za zrealizowane zlecenia według uzgodnionej ceny.' },
-      { title: 'Jak zostać wykonawcą?',
-        content: 'Załóż konto wykonawcy, uzupełnij profil i zacznij odpowiadać na dostępne ogłoszenia w swojej okolicy.' }
+      { title: 'Czy mogę zlecać i wykonywać?',
+        content: 'Tak, u nas jest możesz zlecać i wykonywać - wszystko na jednej platformie.' },
+      { title: 'Co można zlecać?',
+        content: 'Możesz zlecać dosłownie wszystko, korki, sprzątanie, przeprowadzki czy porządkowanie kabli, które rosły od 2003 roku.' },
+      { title: 'Coś poszło nie tak, co teraz?',
+        content: 'Zadzwoń do nas ( 881 228 832 ) lub napisz do nas maila ( admin@zlecajto.pl ), spróbujemy rozwiązać problem jak najszybciej.' }
     ]
 
-    @categories = Task::CATEGORIES
+    @categories = Task::CATEGORIES_HOME
   end
 
   def profile
@@ -33,4 +33,6 @@ class PagesController < ApplicationController
   def privacy; end
 
   def waitlist; end
+
+  def contact; end
 end

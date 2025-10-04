@@ -2,15 +2,18 @@
 
 module Ui
   class RadioButtonComponent < ApplicationComponent
+    CATEGORIES = %w[Zwierzaki Naprawy Ogród Transport Korki Sprzęt Przeprowadzki Sprzątanie Rower Inne].freeze
     CATEGORY_EMOJIS = {
-      'Sprzątanie' => '🧹', # cleaning
-      'Zakupy' => '🛒',          # shopping
-      'Montaż' => '🛠️',         # assembly / installation
-      'Transport' => '🚗',       # transport
-      'Przeprowadzki' => '📦',   # moving
-      'Opieka' => '🤝',          # care / assistance
-      'Naprawy' => '🔧',         # repairs
-      'Ogrodnictwo' => '🌿'      # gardening
+      'Zwierzaki' => '🐾',
+      'Naprawy' => '🔧',
+      'Ogród' => '🌿',
+      'Transport' => '🚚',
+      'Korki' => '📚',
+      'Eventy' => '🎉',
+      'Przeprowadzki' => '📦',
+      'Sprzątanie' => '🧹',
+      'Rower' => '🚴‍♂️',
+      'Inne' => '✨'
     }.freeze
 
     PAYMENT_METHODS_EMOJIS = {

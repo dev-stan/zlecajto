@@ -11,9 +11,27 @@ class Task < ApplicationRecord
   after_create :send_task_created_email
 
   # [todo] Can i make this cleaner with enum?
-  STATUSES        = ['draft', 'Otwarte', 'W trakcie', 'Zakończone', 'Anulowane', 'accepted', 'completed'].freeze
-  CATEGORIES      = %w[Sprzątanie Zakupy Montaż Transport Przeprowadzki Opieka
-                       Naprawy Ogrodnictwo].freeze
+  STATUSES = ['draft', 'Otwarte', 'W trakcie', 'Zakończone', 'Anulowane', 'accepted', 'completed'].freeze
+  CATEGORIES_HOME = {
+    'Zwierzaki' => '🐾',
+    'Korki' => '📚',
+    'Gotowanie' => '🍳',
+    'Zakupy' => '🛒',
+    'Eventy' => '🎉',
+    'Ogród' => '🌿',
+    'Rower' => '🚴‍♂️',
+    'Komputery' => '💻',
+    'Zdjęcia' => '📸',
+    'Sprzątanie' => '🧹',
+    'Transport' => '🚚',
+    'Montaż' => '🛠️',
+    'Przeprowadzki' => '📦',
+    'Opieka' => '🤝',
+    'Naprawy' => '🔧',
+    'Inne' => '✨'
+  }.freeze
+
+  CATEGORIES = %w[Zwierzaki Naprawy Ogród Transport Korki Eventy Przeprowadzki Sprzątanie Rower Inne].freeze
 
   TIMESLOTS       = %w[Rano Popołudnie Wieczór Obojętnie].freeze
   PAYMENT_METHODS = %w[Przelew Blik Gotówka Czekolada].freeze

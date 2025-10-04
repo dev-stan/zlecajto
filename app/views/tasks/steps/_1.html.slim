@@ -25,7 +25,7 @@
       | Przypisz kategorię do zlecenia
       span.text-red-500 *
     .hidden.md:block data-choice-variant-target="radios"
-      ul.grid.grid-cols-4.gap-3
+      ul.grid.grid-cols-5.gap-3
         - categories.each do |cat|
           - id = "cat_#{cat.parameterize}"
           li
