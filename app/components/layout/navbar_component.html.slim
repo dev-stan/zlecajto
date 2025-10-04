@@ -2,11 +2,16 @@ nav.sticky.top-0.left-0.right-0.bg-white.shadow-sm.z-50
   .max-w-7xl.mx-auto.h-16.flex.items-center.justify-between.gap-4.px-4.relative
     / Left: Back arrow
     .absolute.left-0.top-0.h-full.flex.items-center.pl-2
-      = link_to request.referer || root_path, class: "block md:hidden flex items-center hover:text-primary text-2xl ml-5 pr-2" do
-        i.fas.fa-arrow-left.mr-1 aria-label="Back"
+      - if current_page?(root_path)
+        = link_to new_task_path, class: "block md:hidden bg-primary text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-primary/90 ml-5" do
+          i.fas.fa-plus.text-xl aria-label="New Task"
+
+      - else
+        = link_to request.referer || root_path, class: "block md:hidden flex items-center hover:text-primary text-2xl ml-5 pr-2" do
+          i.fas.fa-arrow-left.mr-1 aria-label="Back"
 
     / Center: Logo (center on mobile, left on md+)
-    .flex-1.flex.justify-center.items-center.md:justify-start
+    .flex-1.flex.justify-center.items-center.md:justify-start.py-2
       = link_to root_path, class: 'flex items-center' do
         = image_tag 'logo_horizontal.png', alt: 'Zlecajto.pl', class: 'h-12 w-auto'
 
