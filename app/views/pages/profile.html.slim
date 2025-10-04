@@ -9,8 +9,11 @@
       .flex.items-center.mt-1.mb-2
         i.fa.fa-phone.fa-fw.text-base.text-gray-500.mr-2
         span.text-gray-600.text-base = @user.phone_number
-      = link_to edit_profile_modal_path, data: { turbo_frame: 'modal' } do
-        = render(Ui::BadgeComponent.new(text: "Edytuj", variant: :blue, html_options: { class: 'px-1.5 ml-0 mt-0 text-sm cursor-pointer' }))
+      .flex
+        = link_to edit_profile_modal_path, data: { turbo_frame: 'modal' } do
+          = render(Ui::BadgeComponent.new(text: "Edytuj", variant: :blue, html_options: { class: 'px-1.5 ml-0 mt-0 text-sm cursor-pointer' }))
+        = link_to destroy_user_session_path, data: { turbo_method: :delete } do
+          = render(Ui::BadgeComponent.new(text: "Wyloguj", variant: :red, html_options: { class: 'px-1.5 ml-2 mt-0 text-sm cursor-pointer hidden md:block' }))
 
 
 .mx-auto.px-4
