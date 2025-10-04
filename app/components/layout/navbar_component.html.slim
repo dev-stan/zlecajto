@@ -7,8 +7,8 @@ nav.sticky.top-0.left-0.right-0.bg-white.shadow-sm.z-50
 
     / Center: Logo (center on mobile, left on md+)
     .flex-1.flex.justify-center.items-center.md:justify-start
-      = link_to root_path, class: 'flex items-center font-extrabold text-4xl text-primary' do
-        span Zlecajto.pl
+      = link_to root_path, class: 'flex items-center' do
+        = image_tag 'logo_horizontal.png', alt: 'Zlecajto.pl', class: 'h-12 w-auto'
 
     / Right side - Mobile Burger Menu (hidden on md+)
     .flex.items-center.md:hidden.absolute.right-0.top-0.h-full.pr-2
@@ -28,7 +28,6 @@ nav.sticky.top-0.left-0.right-0.bg-white.shadow-sm.z-50
           = link_to 'Zarejestruj', helpers.new_user_registration_path
 
   / Red testing banner below navbar
-  / Red testing banner below navbar
 = link_to 'https://tally.so/r/w4e2KB', target: '_blank', rel: 'noopener' do
   .w-full.bg-secondary.text-white.text-center.py-1.text-sm.font-semibold.tracking-wide.overflow-hidden
     .moving-text.flex.whitespace-nowrap
@@ -37,6 +36,8 @@ nav.sticky.top-0.left-0.right-0.bg-white.shadow-sm.z-50
       span.pr-8 🚨 Masz pomysł na nową funkcję? Coś nie działa? Kliknij tu, pomóż nam!🚨
       span.pr-8 🚨 Masz pomysł na nową funkcję? Coś nie działa? Kliknij tu, pomóż nam!🚨
       span.pr-8 🚨 Masz pomysł na nową funkcję? Coś nie działa? Kliknij tu, pomóż nam!🚨
+  .w-full.bg-blue-600.text-center.text-white.text-sm.font-semibold.py-1 
+    | TESTUJEMY, TESTUJEMY, TU NIC NIE JEST NA SERIO
 
 
 

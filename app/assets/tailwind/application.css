@@ -10,7 +10,7 @@
 @layer utilities {
 	.bg-primary { background-color: #3478F5}
 	.bg-secondary { background-color: #D1345B} /* gray-100 */
-	.text-primary { color: #3454E1 } /* green-200 */
+	.text-primary { color: #3478F5 } /* green-200 */
 	.text-secondary { color:oklch(45.9% 0.187 3.815) } /* yellow-200 */
 	.bg-light-green { background-color: #cef6cf}
 	.bg-white-ish { background-color: #F3F7FA}
