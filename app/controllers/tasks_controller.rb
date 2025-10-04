@@ -2,7 +2,7 @@
 
 class TasksController < ApplicationController
   before_action :authenticate_user!, only: %i[update edit my_task]
-  before_action :set_task, only: %i[show edit update created completed destroy]
+  before_action :set_task, only: %i[show edit update created completed destroy completed]
 
   def show
     return unless current_user
@@ -18,7 +18,10 @@ class TasksController < ApplicationController
   end
 
   def created; end
-  def completed; end
+
+  def completed
+    @task.complete!
+  end
 
   def my_task
     @task = current_user.tasks.find(params[:id])
@@ -27,7 +30,7 @@ class TasksController < ApplicationController
   end
 
   def index
-    @tasks = Task.with_attached_photos
+    @tasks = Task.with_attached_photos.where.not(status: :accepted)
   end
 
   def update

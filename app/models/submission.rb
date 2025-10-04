@@ -20,6 +20,7 @@ class Submission < ApplicationRecord
   def accept!
     transaction do
       update!(status: :accepted)
+      task.update!(status: :accepted)
       send_accepted_submission_email
       create_accepted_submission_notification
     end

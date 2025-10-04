@@ -11,7 +11,7 @@ class Task < ApplicationRecord
   after_create :send_task_created_email
 
   # [todo] Can i make this cleaner with enum?
-  STATUSES        = ['draft', 'Otwarte', 'W trakcie', 'Zakończone', 'Anulowane'].freeze
+  STATUSES        = ['draft', 'Otwarte', 'W trakcie', 'Zakończone', 'Anulowane', 'accepted'].freeze
   CATEGORIES      = %w[Sprzątanie Zakupy Montaż Transport Przeprowadzki Opieka
                        Naprawy Ogrodnictwo].freeze
 
@@ -25,6 +25,14 @@ class Task < ApplicationRecord
   validates :timeslot, inclusion: { in: TIMESLOTS }, allow_blank: true
   validates :location, inclusion: { in: LOCATIONS }, allow_blank: true
 
+  def complete!
+    transaction do
+      update!(status: :completed)
+      send_completed_task_email
+      send_completed_submission_email
+    end
+  end
+
   private
 
   def set_default_status
@@ -33,5 +41,15 @@ class Task < ApplicationRecord
 
   def send_task_created_email
     MailgunTemplateJob.perform_later(to: user.email, template: 'welcome_email', subject: 'Witaj w zlecajto :)')
+  end
+
+  def send_completed_task_email
+    MailgunTemplateJob.perform_later(to: user.email, template: 'zakonczenie_zadania_zleceniodawca_fixed',
+                                     subject: 'Twoje zlecenie zostało zakończone :)', variables: { task_title: title })
+  end
+
+  def send_completed_submission_email
+    MailgunTemplateJob.perform_later(to: submissions.accepted.first.user.email, template: 'zakonczenie_zadania_do_wykonawcy_fixed',
+                                     subject: 'Wykonałeś zadanie!', variables: { task_title: title })
   end
 end
