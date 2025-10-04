@@ -16,6 +16,8 @@ pl:
       short_day_and_date: "%a, %d.%m"
   activerecord:
     errors:
+      messages:
+        record_invalid: "Walidacja nie powiodła się: %{errors}"
       models:
         user:
           attributes:

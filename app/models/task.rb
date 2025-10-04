@@ -11,7 +11,7 @@ class Task < ApplicationRecord
   after_create :send_task_created_email
 
   # [todo] Can i make this cleaner with enum?
-  STATUSES        = ['draft', 'Otwarte', 'W trakcie', 'Zakończone', 'Anulowane', 'accepted'].freeze
+  STATUSES        = ['draft', 'Otwarte', 'W trakcie', 'Zakończone', 'Anulowane', 'accepted', 'completed'].freeze
   CATEGORIES      = %w[Sprzątanie Zakupy Montaż Transport Przeprowadzki Opieka
                        Naprawy Ogrodnictwo].freeze
 
@@ -27,7 +27,7 @@ class Task < ApplicationRecord
 
   def complete!
     transaction do
-      update!(status: :completed)
+      update!(status: 'completed')
       send_completed_task_email
       send_completed_submission_email
     end
