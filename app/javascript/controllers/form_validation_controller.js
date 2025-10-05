@@ -25,8 +25,8 @@ export default class extends Controller {
       1: {
         'task[title]': {
           required: true,
-          minLength: 5,
-          maxLength: 100,
+          minLength: 10,
+          maxLength: 50,
           fieldName: 'Tytuł',
           errors: {
             required: 'Tytuł jest wymagany',
