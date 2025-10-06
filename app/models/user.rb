@@ -13,7 +13,7 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :omniauthable, omniauth_providers: [:google_oauth2]
+         :omniauthable, :trackable, omniauth_providers: [:google_oauth2]
 
   after_create :send_welcome_email
 
