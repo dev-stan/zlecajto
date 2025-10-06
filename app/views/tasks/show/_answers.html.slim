@@ -1,10 +1,10 @@
 .mt-2
-- if current_user && (current_user == submission.user || current_user == submission.task.user)
-  - if submission.answers.any?
-    .ml-6.pl-4.border-l.border-gray-200.space-y-3
-      - submission.answers.order(created_at: :asc).each do |answer|
+- if submission.answers.any?
+  .ml-6.pl-4.border-l.border-gray-200.space-y-3
+    - submission.answers.order(created_at: :asc).each do |answer|
         .flex-col
-            .flex.items-center.gap-2.mb-2
-                = render User::AvatarComponent.new(user: answer.user, size: 'sm')
-                p.font-bold.text-gray-800 = answer.user.first_name
-            p.text-sm.text-gray-800.whitespace-pre-line.mb-1 = answer.message
+          .flex.items-center.gap-2.mb-2
+            = render User::AvatarComponent.new(user: answer.user, size: 'sm')
+            p.font-bold.text-gray-800 = answer.user.first_name
+          p.text-sm.text-gray-800.whitespace-pre-line.mb-1 = answer.message
+          

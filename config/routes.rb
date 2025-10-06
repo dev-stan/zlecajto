@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get 'pages/tos'
   get 'pages/privacy'
   get 'pages/contact'
+  get 'pages/categories'
   get 'profile', to: 'pages#profile'
 
   # Confirm modals

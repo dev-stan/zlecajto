@@ -28,6 +28,8 @@ class PagesController < ApplicationController
     current_user.mark_accepted_submissions_seen!
   end
 
+  def categories; end
+
   def tos; end
 
   def privacy; end
