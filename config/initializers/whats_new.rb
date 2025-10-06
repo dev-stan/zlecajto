@@ -1,0 +1,1 @@
+WHATS_NEW_VERSION = 'v1'

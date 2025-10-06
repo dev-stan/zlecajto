@@ -73,5 +73,7 @@ html
         = render Ui::AlertComponent.new(message: notice, variant: :success)
       - if alert
         = render Ui::AlertComponent.new(message: alert, variant: :error)
+      - if @show_whats_new_modal
+        = render 'modals/whats_new_modal'
       = yield
-      = turbo_frame_tag "modal", data: { controller: 'modal' }
+  = turbo_frame_tag "modal", data: { controller: 'modal' }

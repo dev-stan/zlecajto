@@ -29,8 +29,12 @@ export default class extends Controller {
 
   clear() {
     const modalFrame = document.querySelector('turbo-frame#modal')
-    if (!modalFrame) return
-    modalFrame.innerHTML = ""
+    if (modalFrame && modalFrame.contains(this.element)) {
+      modalFrame.innerHTML = ""
+      return
+    }
+    // Fallback for standalone modals not inside the global turbo-frame
+    this.element.remove()
   }
 
 }

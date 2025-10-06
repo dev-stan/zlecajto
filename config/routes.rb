@@ -26,6 +26,9 @@ Rails.application.routes.draw do
   # Close modal
   delete 'modal', to: 'modals#destroy', as: 'close_modal'
 
+  # What's new modal
+  post 'whats_new/dismiss', to: 'whats_new#dismiss', as: :dismiss_whats_new
+
   get 'up', to: 'rails/health#show', as: :rails_health_check
 
   # Devise routes
