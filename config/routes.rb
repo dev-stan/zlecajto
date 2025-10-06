@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   # Confirm modals
   get 'users/sign_out/confirm', to: 'modals#confirm_logout', as: 'confirm_user_logout'
   get 'submissions/:id/confirm_accept', to: 'modals#confirm_submission_accept', as: :confirm_submission_accept_modal
+  get 'submissions/:id/answer_modal', to: 'modals#new_answer', as: :new_answer_modal
   get 'tasks/:id/confirm_complete', to: 'modals#confirm_task_complete', as: :confirm_task_complete_modal
   get 'tasks/:id/delete_modal', to: 'modals#confirm_delete_task', as: :confirm_delete_task_modal
 
@@ -55,6 +56,7 @@ Rails.application.routes.draw do
     get 'create_from_session', to: 'submissions#create_from_session', as: :create_from_session_submission
   end
 
+  resources :answers, only: %i[create]
   # Tasks CRUD routes
   resources :tasks, only: %i[index show edit update destroy] do
     member do

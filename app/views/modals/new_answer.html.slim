@@ -1,0 +1,10 @@
+= turbo_frame_tag 'modal' do
+  = render Ui::FormModalComponent.new(title: 'Odpowiedz na zgłoszenie') do
+    = form_with model: @answer, url: answers_path, method: :post, data: { turbo_frame: 'modal' } do |f|
+      .space-y-3
+        = hidden_field_tag :authenticity_token, form_authenticity_token
+        = f.hidden_field :submission_id, value: @submission.id
+        = render Input::InputComponent.new(name: 'answer[message]', type: 'textarea', label: 'Wiadomość', placeholder: 'Napisz odpowiedź dla wykonawcy...', rows: 5)
+      .mt-4.flex.items-center.gap-3
+        = render(Ui::ButtonComponent.new(text: 'Wyślij', variant: :green, size: :sm, submit: true, html_options: { class: 'w-full' }))
+        = render(Ui::ButtonComponent.new(text: 'Anuluj', variant: :blue, size: :sm, button: true, html_options: { class: 'w-full', data: { action: 'click->modal#close' } }))

@@ -3,6 +3,7 @@
 class User < ApplicationRecord
   has_many :tasks
   has_many :submissions
+  has_many :answers
   has_many :notifications
   has_one_attached :profile_picture
 

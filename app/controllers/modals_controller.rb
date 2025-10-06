@@ -48,6 +48,19 @@ class ModalsController < ApplicationController
     end
   end
 
+  # GET /submissions/:id/answer_modal
+  def new_answer
+    @submission = Submission.find(params[:id])
+    @answer = Answer.new(submission: @submission)
+    unless current_user && (current_user.id == @submission.user_id || current_user.id == @submission.task.user_id)
+      head :forbidden and return
+    end
+
+    respond_to do |format|
+      format.html
+    end
+  end
+
   # Clears the global modal frame
   def destroy
     respond_to do |format|
