@@ -82,6 +82,7 @@ gem 'rubocop-rails'
 gem 'ruby-lsp'
 gem 'view_component'
 gem 'i18n'
+gem 'rails-i18n'
 gem "aws-sdk-s3", require: false
 gem "omniauth"
 gem "omniauth-google-oauth2"
