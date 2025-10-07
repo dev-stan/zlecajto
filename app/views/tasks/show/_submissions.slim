@@ -6,7 +6,7 @@
   - elsif accepted_submission && current_user == accepted_submission.user
     h3.text-lg.font-semibold.text-gray-900.mt-3 Wybrał Cię zleceniodawca! Skontaktuj się z nim.
   - else
-    h3.text-lg.font-semibold.text-gray-900.mt-3 Zgłoszenie zostało już wybrane przez zleceniodawcę.
+    h3.text-lg.font-semibold.text-gray-900.mt-3 Wykonawca wybrał już zleceniodawcę :(
   ul.space-y-4.mt-3
     - task.submissions.limit(1).each do |submission|
       li

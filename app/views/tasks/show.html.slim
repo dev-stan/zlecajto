@@ -1,6 +1,7 @@
 
 - existing_submission = user_signed_in? ? current_user.submissions.find_by(task: @task) : nil
 - accepted_submission_for_current_user = user_signed_in? ? @task.submissions.accepted.find_by(user_id: current_user.id) : nil
+- accepted_submission_exists = @task.submissions.accepted.exists?
 - photos = @task.photos.attachments
 - multiple = photos.size > 1
 
@@ -35,8 +36,10 @@
       = render Ui::ButtonComponent.new(text: 'Zobacz detale zlecenia', path: my_task_path(@task), html_options: { class: 'w-full py-3 block md:hidden'})
     - elsif accepted_submission_for_current_user
       = render Ui::ButtonComponent.new(text: 'Wybrano cię! Co dalej?', variant: :green, path: accepted_submission_path(accepted_submission_for_current_user), html_options: { class: 'w-full py-3 block md:hidden'})
+    - elsif accepted_submission_exists
+      = render Ui::ButtonComponent.new(text: 'Wybrano już wykonawcę', variant: :red, path: '#', html_options: { class: 'w-full py-3 block md:hidden'})
     - elsif existing_submission
-      = render(Ui::ButtonComponent.new(text: 'Już aplikowałeś', path: '#', size: :sm, variant: :primary, method: :get, html_options: { class: 'w-full py-3 block md:hidden'}))
+      = render Ui::ButtonComponent.new(text: 'Już aplikowałeś', path: '#', size: :sm, variant: :primary, html_options: { class: 'w-full py-3 block md:hidden'})
     - else
       = render Ui::ButtonComponent.new(text: 'Aplikuj', path: new_task_submission_path(@task), html_options: { class: 'w-full py-3 block md:hidden'})
   
