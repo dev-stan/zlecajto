@@ -10,5 +10,11 @@ Style/Documentation:
 Metrics/ParameterLists:
   Enabled: false
 
-Lint/LinkMissingSuper:
+Rails/UniqueValidationWithoutIndex:
   Enabled: false
+
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 15

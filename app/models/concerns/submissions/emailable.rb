@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Submission
+module Submissions
   module Emailable
     extend ActiveSupport::Concern
     include Rails.application.routes.url_helpers

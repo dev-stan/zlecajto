@@ -11,20 +11,13 @@ module Tasks
 
     attr_reader :task, :variant, :path
 
-    def initialize(task:, path: nil, variant: :default, show_notification: false)
+    def initialize(task:, path: nil, variant: :default, show_notification: false, current_user: nil)
       super()
       @task = task
       @path = path
       @variant = variant.to_sym
       @show_notification = show_notification
-    end
-
-    def user_signed_in?
-      defined?(Devise) && helpers.user_signed_in?
-    end
-
-    def current_user
-      helpers.current_user if user_signed_in?
+      @current_user = current_user
     end
 
     private

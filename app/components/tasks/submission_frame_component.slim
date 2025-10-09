@@ -5,7 +5,7 @@
     .flex.items-stretch.space-x-8
       .flex.flex-col.justify-center.w-48.space-y-4
         .flex.flex-row.items-start.space-x-4
-          = render(User::AvatarComponent.new(user: submission.user))
+          = render(Users::AvatarComponent.new(user: submission.user, current_user: current_user))
           .flex.flex-col.justify-center.text-left.h-full
             span.font-semibold.text-black.text-lg= submission.user.first_name
             .flex.items-center.space-x-1

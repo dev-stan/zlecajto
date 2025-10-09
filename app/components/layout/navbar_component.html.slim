@@ -17,16 +17,16 @@ nav.sticky.top-0.left-0.right-0.bg-white.shadow-sm.z-50
 
     / Right side - Mobile Burger Menu (hidden on md+)
     .flex.items-center.md:hidden.absolute.right-0.top-0.h-full.pr-2
-      = render Layout::BurgerMenuComponent.new(user_signed_in: user_signed_in?, current_user: current_user)
+      = render Layout::BurgerMenuComponent.new(user_signed_in: @user_signed_in, current_user: @current_user)
 
     / Right side - Desktop Menu (hidden on mobile)
     .hidden.md:flex.items-center.gap-1.absolute.right-0.top-0.h-full.pr-2
       = render(Ui::ButtonComponent.new(text: 'Dodaj zlecenie', path: new_task_path, size: :sm))
       = render(Ui::ButtonComponent.new(text: 'Zacznij Zarabiać', path: tasks_path, size: :sm, variant: :ghost))
-      - if user_signed_in?
+      - if @user_signed_in
         .ml-4.flex.items-center
           = link_to profile_path do
-            = render(User::AvatarComponent.new(user: current_user, show_notification: true))
+            = render(Users::AvatarComponent.new(user: @current_user, show_notification: true,current_user: @current_user))
       - else
         .flex.items-center.gap-2
           = link_to 'Zaloguj', helpers.new_user_session_path

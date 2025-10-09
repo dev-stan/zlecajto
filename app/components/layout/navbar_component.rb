@@ -2,13 +2,10 @@
 
 module Layout
   class NavbarComponent < ApplicationComponent
-    # Basic auth state helpers
-    def user_signed_in?
-      defined?(Devise) && helpers.user_signed_in?
-    end
-
-    def current_user
-      helpers.current_user if user_signed_in?
+    def initialize(current_user:, user_signed_in:)
+      super()
+      @current_user = current_user
+      @user_signed_in = user_signed_in
     end
   end
 end

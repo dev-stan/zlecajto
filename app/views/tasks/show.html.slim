@@ -23,7 +23,7 @@
         = render 'tasks/show/description', task: @task
         = render 'tasks/show/timing_location', task: @task
         .flex.gap-2.items-center.my-5
-          = render User::AvatarComponent.new(user: @task.user, size: 'md')
+          = render Users::AvatarComponent.new(user: @task.user, size: 'md', current_user: current_user)
           p.font-semibold = "Zadanie zleca #{@task.user.first_name}"
         = render 'tasks/show/submissions', task: @task
     // Sidebar (right)

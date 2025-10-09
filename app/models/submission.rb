@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Submission < ApplicationRecord
-  include Submission::Emailable
+  include Submissions::Emailable
   include Submissions::Notifiable
 
   belongs_to :task

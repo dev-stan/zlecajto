@@ -8,7 +8,7 @@
           .flex.items-center.gap-3.mb-1
             - badges.each do |badge|
               = badge
-            - if @show_notification && current_user&.unread_notifications_for_task?(@task)
+            - if @show_notification && @current_user&.unread_notifications_for_task?(@task)
               span.relative.flex.h-4.w-4.items-center.justify-center
                 span.absolute.inline-flex.h-full.w-full.rounded-full.bg-red-400.opacity-75.animate-ping
                 span.relative.inline-flex.h-4.w-4.rounded-full.bg-red-500
@@ -17,7 +17,7 @@
           .flex.gap-3.mb-4.mt-1.items-center
             - badges.each do |badge|
               = badge
-            - if @show_notification && current_user&.unread_notifications_for_task?(@task)
+            - if @show_notification && @current_user&.unread_notifications_for_task?(@task)
               span.relative.flex.h-4.w-4.items-center.justify-center
                 span.absolute.inline-flex.h-full.w-full.rounded-full.bg-red-400.opacity-75.animate-ping
                 span.relative.inline-flex.h-4.w-4.rounded-full.bg-red-500

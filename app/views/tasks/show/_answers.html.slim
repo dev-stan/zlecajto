@@ -4,7 +4,7 @@
     - submission.answers.order(created_at: :asc).each do |answer|
         .flex-col
           .flex.items-center.gap-2.mb-2
-            = render User::AvatarComponent.new(user: answer.user, size: 'sm')
+            = render Users::AvatarComponent.new(user: answer.user, size: 'sm', current_user: current_user)
             p.font-bold.text-gray-800 = answer.user.first_name
           p.text-sm.text-gray-800.whitespace-pre-line.mb-1 = answer.message
           

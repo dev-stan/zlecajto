@@ -4,8 +4,13 @@ class ApplicationController < ActionController::Base
   include LoginRedirect
   before_action :set_whats_new_cookie
   before_action :ensure_persistent_login
+  before_action :set_current_user
 
   protected
+
+  def set_current_user
+    Current.user = current_user
+  end
 
   def after_sign_in_path_for(resource)
     pending_redirect_path || super

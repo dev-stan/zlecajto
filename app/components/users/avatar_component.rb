@@ -1,24 +1,16 @@
 # frozen_string_literal: true
 
-module User
+module Users
   class AvatarComponent < ApplicationComponent
-    def initialize(user:, size: 'md', show_notification: false)
+    def initialize(user:, size: 'md', show_notification: false, current_user: nil)
       super()
       @user = user
       @size = size
       @show_notification = show_notification
+      @current_user = current_user
     end
 
     private
-
-    # [todo] current user should be defined more top-level, not in each component
-    def user_signed_in?
-      defined?(Devise) && helpers.user_signed_in?
-    end
-
-    def current_user
-      helpers.current_user if user_signed_in?
-    end
 
     def image_size
       case @size

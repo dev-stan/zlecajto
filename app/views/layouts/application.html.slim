@@ -66,7 +66,7 @@ html
       iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WQR7ZJ75" height="0" width="0" style="display:none;visibility:hidden"
     / End Google Tag Manager (noscript)
 
-    = render Layout::NavbarComponent.new()
+    = render Layout::NavbarComponent.new(current_user: current_user, user_signed_in: user_signed_in?)
     
     main class="flex-grow"
       - if notice
