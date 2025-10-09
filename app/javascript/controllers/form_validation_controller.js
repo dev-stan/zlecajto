@@ -15,6 +15,22 @@ export default class extends Controller {
           minLength: 25,
           maxLength: 500,
           fieldName: 'Wiadomość',
+          // Custom validator to prevent sharing contact details
+          validator: (value) => {
+            // Detect common email patterns within text
+            const emailPattern = /[^\s@]+@[^\s@]+\.[^\s@]+/i
+            if (emailPattern.test(value)) {
+              return 'Nie podawaj tu swojego adresu email! Gdy zostaniesz wybrany do wykonania zlecenia, zleceniodawca zobaczy email, który widoczny jest na twoim profilu!'
+            }
+
+            // Detect Polish phone numbers within text, e.g. 123456789, 123 456 789, 123-456-789, +48 123 456 789
+            const phonePattern = /(?:\+48\s*)?(?:\d[\s-]?){9}(?!\d)/
+            if (phonePattern.test(value)) {
+              return 'Nie podawaj tu swojego numeru telefonu! Gdy zostaniesz wybrany do wykonania zlecenia, zleceniodawca zobaczy numer, który widoczny jest na twoim profilu!'
+            }
+
+            return null
+          },
           errors: {
             required: 'Wiadomość do zleceniodawcy jest wymagana',
             minLength: 'Wiadomość musi mieć co najmniej 25 znaków',
@@ -283,6 +299,7 @@ export default class extends Controller {
   validate(event) {
     this.updateStepValue()
     this.clearAllErrors()
+    this.clearBanner()
 
     const isValid = this.validateAllFields()
 
@@ -325,15 +342,50 @@ export default class extends Controller {
     }
 
     const value = this.getFieldValue(field)
-    const error = this.checkValidationRules(field, value, rules)
+    // Evaluate base (inline) rules without the custom validator
+    const { validator, ...baseRules } = rules || {}
+    const error = this.checkValidationRules(field, value, baseRules)
+    // Evaluate contact-info separately for step 0 submission note
+    let contactError = null
+    if (this.stepValue === 0 && field.name === 'submission[note]' && typeof validator === 'function') {
+      contactError = validator(value, field)
+    }
 
     if (error) {
+      // Show/hide banner based on contact-info detection independent of inline errors
+      if (this.stepValue === 0 && field.name === 'submission[note]') {
+        if (contactError) {
+          this.showBanner(contactError, { variant: 'warning' })
+        } else {
+          this.clearBanner()
+        }
+      }
+      // Always show inline error for the base rule failure
       this.showError(field, error)
       return false
     }
 
+    // No base error, but if contact-info found then block with banner
+    if (this.stepValue === 0 && field.name === 'submission[note]' && contactError) {
+      this.showBanner(contactError, { variant: 'warning' })
+      // Ensure no inline error remains
+      this.clearError(field)
+      return false
+    }
+
+    // All good: clear inline + banner
     this.clearError(field)
+    if (this.stepValue === 0 && field.name === 'submission[note]') this.clearBanner()
     return true
+  }
+
+
+  showBanner(message, { variant = 'warning' } = {}) {
+    window.dispatchEvent(new CustomEvent('banner:show', { detail: { message, variant } }))
+  }
+
+  clearBanner() {
+    window.dispatchEvent(new CustomEvent('banner:clear'))
   }
 
   checkValidationRules(field, value, rules) {

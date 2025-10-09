@@ -1,8 +1,11 @@
 /. Submission new form with validation (step 0)
 .max-w-2xl.mx-auto.px-4.mt-8
+  // Banner host
+  div.sticky.top-0.z-40.mb-4 data-controller="banner" data-action="banner:show@window->banner#showEvent banner:clear@window->banner#clear"
   = form_with model: [@task, @submission], local: true, class: "space-y-6", data: { controller: 'form-validation', action: 'submit->form-validation#validate' }, html: { novalidate: true } do |form|
     .space-y-2
       h1.font-bold.text-3xl.mb-4 Aplikuj na zlecenie
+      p.text-base.text-gray-600.font-medium = @task.description
       p.text-base.text-gray-600.font-medium Napisz krótką wiadomość do właściciela zadania
       div data-field-wrapper=""
         = render Input::InputComponent.new(name: 'submission[note]', type: 'textarea', placeholder: 'Napisz krótką wiadomość…', rows: 5, value: @submission.note, html_options: { class: 'border-2 border-gray-300 w-full' })
