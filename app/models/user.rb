@@ -56,6 +56,13 @@ class User < ApplicationRecord
     user
   end
 
+  # Always remember users across browser sessions, even if the checkbox wasn't used.
+  # Devise reads this virtual attribute when creating the session.
+  # Returning true here ensures rememberable sets the persistent cookie.
+  def remember_me
+    true
+  end
+
   private
 
   def send_welcome_email
@@ -64,12 +71,5 @@ class User < ApplicationRecord
 
   def google_oauth_user?
     provider.present? && uid.present?
-  end
-
-  # Always remember users across browser sessions, even if the checkbox wasn't used.
-  # Devise reads this virtual attribute when creating the session.
-  # Returning true here ensures rememberable sets the persistent cookie.
-  def remember_me
-    true
   end
 end
