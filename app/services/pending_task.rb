@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PendingTask
   SESSION_KEY = :pending_task_data
   RETURN_TO_KEY = :return_to

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TaskWizardController < ApplicationController
   # Allow unauthenticated users to hit `create` so we can stash the task in session.
   before_action :authenticate_user!, only: %i[create_from_session]
@@ -7,7 +9,8 @@ class TaskWizardController < ApplicationController
     init_wizard(advance: false)
   end
 
-  def wizard # this action advances the wizard / called with form in views
+  # this action advances the wizard / called with form in views
+  def wizard
     init_wizard(advance: request.post?)
     render :new
   end

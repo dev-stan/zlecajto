@@ -4,9 +4,12 @@ require 'test_helper'
 
 class NotificationScopeTest < ActiveSupport::TestCase
   test 'unread_notifications_for_task? true only for related submissions' do
-    user_owner = User.create!(email: 'owner@example.com', password: 'Password1!', first_name: 'Owner', phone_number: '123456789')
-    applicant = User.create!(email: 'applicant@example.com', password: 'Password1!', first_name: 'Applicant', phone_number: '123456789')
-    other_user = User.create!(email: 'other@example.com', password: 'Password1!', first_name: 'Other', phone_number: '123456789')
+    user_owner = User.create!(email: 'owner@example.com', password: 'Password1!', first_name: 'Owner',
+                              phone_number: '123456789')
+    applicant = User.create!(email: 'applicant@example.com', password: 'Password1!', first_name: 'Applicant',
+                             phone_number: '123456789')
+    other_user = User.create!(email: 'other@example.com', password: 'Password1!', first_name: 'Other',
+                              phone_number: '123456789')
 
     task = Task.create!(user: user_owner, title: 'Test task', status: 'Otwarte')
     submission = Submission.create!(task: task, user: applicant, status: :pending)

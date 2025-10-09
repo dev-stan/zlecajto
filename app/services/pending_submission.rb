@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PendingSubmission
   SESSION_KEY = :pending_submission
   RETURN_TO_KEY = :return_to
@@ -16,19 +18,19 @@ class PendingSubmission
   end
 
   def self.create_for_user(user, session)
-  payload = consume(session)
-  return nil unless payload.present?
+    payload = consume(session)
+    return nil unless payload.present?
 
-  # Ensure symbolized keys for strong params-like access
-  payload = payload.deep_symbolize_keys
-  task_id = payload[:task_id]
-  submission_attrs = payload[:data] || {}
+    # Ensure symbolized keys for strong params-like access
+    payload = payload.deep_symbolize_keys
+    task_id = payload[:task_id]
+    submission_attrs = payload[:data] || {}
 
-  return nil if task_id.blank?
+    return nil if task_id.blank?
 
-  task = Task.find_by(id: task_id)
-  return nil unless task
+    task = Task.find_by(id: task_id)
+    return nil unless task
 
-  SubmissionCreator.new(user: user, task: task, params: submission_attrs).call
+    SubmissionCreator.new(user: user, task: task, params: submission_attrs).call
   end
 end

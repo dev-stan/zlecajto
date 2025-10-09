@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # db/migrate/20251006130500_create_answers.rb
 class CreateAnswers < ActiveRecord::Migration[7.1]
   def change

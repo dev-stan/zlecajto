@@ -3,49 +3,37 @@
 class ModalsController < ApplicationController
   # GET /users/sign_out/confirm
   def confirm_logout
-    respond_to do |format|
-      format.html
-    end
+    respond_to(&:html)
   end
 
   # GET /submissions/:id/confirm_accept
   def confirm_submission_accept
     @submission = Submission.find(params[:id])
-    respond_to do |format|
-      format.html
-    end
+    respond_to(&:html)
   end
 
   # GET /tasks/:id/confirm_complete
   def confirm_task_complete
     @task = Task.find(params[:id])
-    respond_to do |format|
-      format.html
-    end
+    respond_to(&:html)
   end
 
   # GET /tasks/:id/delete_modal
   def confirm_delete_task
     @task = Task.find(params[:id])
-    respond_to do |format|
-      format.html
-    end
+    respond_to(&:html)
   end
 
   # GET /tasks/:id/edit_modal
   def edit_task
     @task = Task.find(params[:id])
-    respond_to do |format|
-      format.html
-    end
+    respond_to(&:html)
   end
 
   # GET /users/profile/edit_modal
   def edit_profile
     @user = current_user
-    respond_to do |format|
-      format.html
-    end
+    respond_to(&:html)
   end
 
   # GET /submissions/:id/answer_modal
@@ -56,9 +44,7 @@ class ModalsController < ApplicationController
       head :forbidden and return
     end
 
-    respond_to do |format|
-      format.html
-    end
+    respond_to(&:html)
   end
 
   # Clears the global modal frame

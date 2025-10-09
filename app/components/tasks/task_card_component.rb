@@ -18,7 +18,6 @@ module Tasks
       @variant = variant.to_sym
       @show_notification = show_notification
     end
-    
 
     def user_signed_in?
       defined?(Devise) && helpers.user_signed_in?

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SubmissionCreator
   def initialize(user:, task:, params:)
     @user = user

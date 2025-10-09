@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SubmissionsController < ApplicationController
   before_action :authenticate_user!, except: %i[new create]
   before_action :set_task, only: %i[new create]
@@ -11,7 +13,7 @@ class SubmissionsController < ApplicationController
   def show; end
 
   def confirm_submission_accept
-  render :confirm_submission_accept
+    render :confirm_submission_accept
   end
 
   def new
@@ -20,7 +22,8 @@ class SubmissionsController < ApplicationController
 
   def create
     unless user_signed_in?
-      PendingSubmission.store(session, params: submission_params, task_id: @task.id, return_path: create_from_session_submission_path)
+      PendingSubmission.store(session, params: submission_params, task_id: @task.id,
+                                       return_path: create_from_session_submission_path)
       redirect_to new_user_session_path and return
     end
 
@@ -38,7 +41,7 @@ class SubmissionsController < ApplicationController
     end
   end
 
-    def create_from_session
+  def create_from_session
     submission = PendingSubmission.create_for_user(current_user, session)
 
     if submission&.persisted?
@@ -50,8 +53,7 @@ class SubmissionsController < ApplicationController
 
   def contact; end
 
-  def accepted
-  end
+  def accepted; end
 
   def accept
     @submission.accept!

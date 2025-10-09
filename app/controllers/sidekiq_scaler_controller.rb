@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/controllers/sidekiq_scaler_controller.rb
 class SidekiqScalerController < ApplicationController
   skip_before_action :verify_authenticity_token
@@ -19,7 +21,7 @@ class SidekiqScalerController < ApplicationController
     scheduled_count = Sidekiq::ScheduledSet.new.size
 
     total_jobs = queued_jobs + busy_jobs + retries_count + scheduled_count
-    dynos_needed = total_jobs > 0 ? 1 : 0
+    dynos_needed = total_jobs.positive? ? 1 : 0
 
     scale_worker(dynos_needed)
 

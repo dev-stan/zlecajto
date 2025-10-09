@@ -46,7 +46,7 @@ export default class extends Controller {
           fieldName: 'Tytuł',
           errors: {
             required: 'Tytuł jest wymagany',
-            minLength: 'Tytuł musi mieć co najmniej 5 znaków',
+            minLength: 'Tytuł musi mieć co najmniej 10 znaków',
             maxLength: 'Tytuł nie może przekraczać 100 znaków'
           }
         },

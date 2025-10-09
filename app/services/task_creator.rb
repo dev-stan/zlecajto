@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TaskCreator
   def initialize(user:, params:)
     @user = user

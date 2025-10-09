@@ -15,8 +15,6 @@ class PagesController < ApplicationController
       { title: 'Coś poszło nie tak, co teraz?',
         content: 'Zadzwoń do nas ( 881 228 832 ) lub napisz do nas maila ( admin@zlecajto.pl ), spróbujemy rozwiązać problem jak najszybciej.' }
     ]
-
-    @categories = Task::CATEGORIES_HOME
   end
 
   def profile

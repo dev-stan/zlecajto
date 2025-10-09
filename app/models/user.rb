@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
-  include GoogleAuthenticatable
+  include Users::GoogleAuthenticatable
 
   has_many :tasks
   has_many :submissions

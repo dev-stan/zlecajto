@@ -41,20 +41,20 @@ module Ui
       @confirm_text = confirm_text
       @cancel_text = cancel_text
       @confirm_path = confirm_path
-      @confirm_method = (confirm_method&.to_sym || :post)
+      @confirm_method = confirm_method&.to_sym || :post
       @cancel_path = cancel_path
-      @cancel_method = (cancel_method&.to_sym || :get)
+      @cancel_method = cancel_method&.to_sym || :get
       @confirm_turbo_frame = confirm_turbo_frame
-      @confirm_variant = (confirm_variant&.to_sym || :danger)
-      @cancel_variant = (cancel_variant&.to_sym || :secondary)
+      @confirm_variant = confirm_variant&.to_sym || :danger
+      @cancel_variant = cancel_variant&.to_sym || :secondary
       @footer = footer
-      @size = (size&.to_sym || :md)
+      @size = size&.to_sym || :md
       @html_options = html_options
     end
 
     attr_reader :title, :body, :confirm_text, :cancel_text,
-        :confirm_path, :confirm_method, :cancel_path,
-        :cancel_method, :confirm_turbo_frame, :confirm_variant,
-        :cancel_variant, :footer, :size, :html_options
+                :confirm_path, :confirm_method, :cancel_path,
+                :cancel_method, :confirm_turbo_frame, :confirm_variant,
+                :cancel_variant, :footer, :size, :html_options
   end
 end

@@ -10,5 +10,5 @@ Style/Documentation:
 Metrics/ParameterLists:
   Enabled: false
 
-Link/MissingSuper:
+Lint/LinkMissingSuper:
   Enabled: false

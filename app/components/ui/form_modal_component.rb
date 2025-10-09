@@ -5,7 +5,7 @@ module Ui
     def initialize(title:, size: :md, html_options: {})
       super()
       @title = title
-      @size = (size&.to_sym || :md)
+      @size = size&.to_sym || :md
       @html_options = html_options
     end
 

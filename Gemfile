@@ -73,28 +73,28 @@ gem 'tailwindcss-ruby', '~> 4.1'
 
 gem 'tailwindcss-rails', '~> 4.3'
 
-gem 'slim-rails', '~> 3.7'
+gem 'aws-sdk-s3', require: false
 gem 'devise'
+gem 'dotenv-rails'
 gem 'foreman'
+gem 'i18n'
 gem 'image_processing', '~> 1.2'
+gem 'judoscale-rails'
+gem 'judoscale-sidekiq'
+gem 'letter_opener', group: :development
+gem 'mailgun-ruby'
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-rails_csrf_protection'
+gem 'open-uri'
+gem 'rails-i18n'
+gem 'rollbar'
 gem 'rubocop'
 gem 'rubocop-rails'
 gem 'ruby-lsp'
-gem 'view_component'
-gem 'i18n'
-gem 'rails-i18n'
-gem "aws-sdk-s3", require: false
-gem "omniauth"
-gem "omniauth-google-oauth2"
-gem "omniauth-rails_csrf_protection"
-gem 'mailgun-ruby' 
-gem 'sidekiq'
-gem 'sinatra', require: false  # needed for sidekiq/web UI
-gem 'letter_opener', group: :development
-gem 'open-uri'
-gem "judoscale-rails"
-gem "judoscale-sidekiq"
-gem 'dotenv-rails'
-gem "ultimate_turbo_modal", "~> 2.2"
-gem 'rollbar'
 gem 'scout_apm'
+gem 'sidekiq'
+gem 'sinatra', require: false # needed for sidekiq/web UI
+gem 'slim-rails', '~> 3.7'
+gem 'ultimate_turbo_modal', '~> 2.2'
+gem 'view_component'
