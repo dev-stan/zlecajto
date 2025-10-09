@@ -1,6 +1,6 @@
-# frozen_string_literal: true
-
 class User < ApplicationRecord
+  include GoogleAuthenticatable
+
   has_many :tasks
   has_many :submissions
   has_many :answers
@@ -17,56 +17,18 @@ class User < ApplicationRecord
 
   after_create :send_welcome_email
 
-  def unread_notifications_count
-    notifications.unread.count
-  end
-
-  # Returns true if the user has any unread notifications whose notifiable
-  # is a submission for the provided task.
-  def unread_notifications_for_task?(task)
-    notifications.unread.for_task(task).exists?
-  end
-
-  # Create or find a user from Google OAuth data
-  def self.from_google(auth)
-    # Try to find by provider + uid or email
-    user = find_by(provider: auth.provider, uid: auth.uid)
-    user ||= find_by(email: auth.info.email)
-
-    # If still not found, create a new user
-    if user
-      user.update(provider: auth.provider, uid: auth.uid) if user.provider.blank? || user.uid.blank?
-    else
-      user = create(
-        email: auth.info.email,
-        password: Devise.friendly_token[0, 20],
-        first_name: auth.info.first_name,
-        last_name: auth.info.last_name,
-        provider: auth.provider,
-        uid: auth.uid
-      )
-      if auth.info.image.present?
-        user.profile_picture.attach(
-          io: URI.open(auth.info.image),
-          filename: 'profile.jpg'
-        )
-      end
-    end
-
-    user
-  end
-
-  # Always remember users across browser sessions, even if the checkbox wasn't used.
-  # Devise reads this virtual attribute when creating the session.
-  # Returning true here ensures rememberable sets the persistent cookie.
-  def remember_me
-    true
-  end
+  def unread_notifications_count = notifications.unread.count
+  def unread_notifications_for_task?(task) = notifications.unread.for_task(task).exists?
+  def remember_me = true
 
   private
 
   def send_welcome_email
-    MailgunTemplateJob.perform_later(to: email, template: 'prod_welcome_email', subject: 'Witaj w zlecajto :)')
+    MailgunTemplateJob.perform_later(
+      to: email,
+      template: 'prod_welcome_email',
+      subject: 'Witaj w zlecajto :)'
+    )
   end
 
   def google_oauth_user?

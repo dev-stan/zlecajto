@@ -8,7 +8,6 @@ class Task < ApplicationRecord
   has_many_attached :photos
 
   before_validation :set_default_status
-  after_create :send_task_created_email
 
   # [todo] Can i make this cleaner with enum?
   STATUSES = ['draft', 'Otwarte', 'W trakcie', 'Zakończone', 'Anulowane', 'accepted', 'completed'].freeze
@@ -65,10 +64,6 @@ class Task < ApplicationRecord
   def set_default_status
     self.status ||= 'Otwarte'
   end
-
-  # def send_task_created_email
-  #   MailgunTemplateJob.perform_later(to: user.email, template: 'welcome_email', subject: 'Witaj w zlecajto :)')
-  # end
 
   def send_completed_task_email
     MailgunTemplateJob.perform_later(to: user.email, template: 'zakonczenie_zadania_zleceniodawca_fixed',
