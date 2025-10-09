@@ -66,9 +66,9 @@ class Task < ApplicationRecord
     self.status ||= 'Otwarte'
   end
 
-  def send_task_created_email
-    MailgunTemplateJob.perform_later(to: user.email, template: 'welcome_email', subject: 'Witaj w zlecajto :)')
-  end
+  # def send_task_created_email
+  #   MailgunTemplateJob.perform_later(to: user.email, template: 'welcome_email', subject: 'Witaj w zlecajto :)')
+  # end
 
   def send_completed_task_email
     MailgunTemplateJob.perform_later(to: user.email, template: 'zakonczenie_zadania_zleceniodawca_fixed',

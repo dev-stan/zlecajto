@@ -27,16 +27,7 @@ class User < ApplicationRecord
     notifications.unread.for_task(task).exists?
   end
 
-  private
-
-  def send_welcome_email
-    MailgunTemplateJob.perform_later(to: email, template: 'prod_welcome_email', subject: 'Witaj w zlecajto :)')
-  end
-
-  def google_oauth_user?
-    provider.present? && uid.present?
-  end
-
+  # Create or find a user from Google OAuth data
   def self.from_google(auth)
     # Try to find by provider + uid or email
     user = find_by(provider: auth.provider, uid: auth.uid)
@@ -63,5 +54,22 @@ class User < ApplicationRecord
     end
 
     user
+  end
+
+  private
+
+  def send_welcome_email
+    MailgunTemplateJob.perform_later(to: email, template: 'prod_welcome_email', subject: 'Witaj w zlecajto :)')
+  end
+
+  def google_oauth_user?
+    provider.present? && uid.present?
+  end
+
+  # Always remember users across browser sessions, even if the checkbox wasn't used.
+  # Devise reads this virtual attribute when creating the session.
+  # Returning true here ensures rememberable sets the persistent cookie.
+  def remember_me
+    true
   end
 end
