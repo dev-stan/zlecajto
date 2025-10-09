@@ -30,7 +30,9 @@ class TasksController < ApplicationController
   end
 
   def index
-    @tasks = Task.order(created_at: :desc).with_attached_photos.where.not(status: :accepted)
+    @tasks = Task.order(created_at: :desc)
+                 .with_attached_photos
+                 .where.not(status: Task.statuses[:accepted])
   end
 
   def update
