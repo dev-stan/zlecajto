@@ -1,14 +1,15 @@
-.p-6.flex.items-center.justify-center.gap-6
-  = render(Users::AvatarComponent.new(user: @user, size: 'lg', current_user: current_user))
-  .flex.flex-col
-    h2.text-2xl.font-bold.text-gray-900.mb-1 #{@user.first_name} #{@user&.last_name[0] if @user&.last_name.present?}.
-    .flex.items-center
-      i.fa.fa-envelope.fa-fw.text-base.text-gray-500.mr-2
-      span.text-gray-600.text-base = "#{@user.email[0,9]}..."
-    - if @user.phone_number.present?
-      .flex.items-center.mt-1.mb-2
-        i.fa.fa-phone.fa-fw.text-base.text-gray-500.mr-2
-        span.text-gray-600.text-base = @user.phone_number
+- if user_signed_in?
+  .p-6.flex.items-center.justify-center.gap-6
+    = render(Users::AvatarComponent.new(user: @user, size: 'lg', current_user: current_user))
+    .flex.flex-col
+      h2.text-2xl.font-bold.text-gray-900.mb-1 #{@user.first_name} #{@user&.last_name[0] if @user&.last_name.present?}.
+      .flex.items-center
+        i.fa.fa-envelope.fa-fw.text-base.text-gray-500.mr-2
+        span.text-gray-600.text-base = "#{@user.email[0,9]}..."
+      - if @user.phone_number.present?
+        .flex.items-center.mt-1.mb-2
+          i.fa.fa-phone.fa-fw.text-base.text-gray-500.mr-2
+          span.text-gray-600.text-base = @user.phone_number
       .flex
         = link_to edit_profile_modal_path, data: { turbo_frame: 'modal' } do
           = render(Ui::BadgeComponent.new(text: "Edytuj", variant: :blue, html_options: { class: 'px-1.5 ml-0 mt-0 text-sm cursor-pointer' }))
@@ -16,52 +17,59 @@
           = render(Ui::BadgeComponent.new(text: "Wyloguj", variant: :red, html_options: { class: 'px-1.5 ml-2 mt-0 text-sm cursor-pointer hidden md:block' }))
 
 
-.mx-auto.px-4
-  - requested_tab = params[:tab].presence
-  - active_tab = requested_tab || (@tasks.any? ? 'tasks' : 'submissions')
-  div data-controller="tabs"
-    .flex.flex-row.justify-center
-      nav.flex role="tablist"
-        div.relative.inline-block
-          button.py-3.px-6.text-lg.font-semibold.transition data-action="tabs#show" data-tabs-target="tab" data-tab="tasks" role="tab" aria-selected=(active_tab == 'tasks') class=(active_tab == 'tasks' ? 'text-black' : 'text-gray-500')
-            = 'Zlecam'
-            - if @tasks.any?
-              span.ml-2.inline-flex.items-center.justify-center.text-base.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @tasks.size
-          div class="absolute bottom-0 left-0 w-full h-[4px] bg-blue-700 rounded-full" data-tabs-target="indicator" data-tab="tasks"
-        div.relative.inline-block
-          button.py-3.px-6.text-lg.font-semibold.transition data-action="tabs#show" data-tabs-target="tab" data-tab="submissions" role="tab" aria-selected=(active_tab == 'submissions') class=(active_tab == 'submissions' ? 'text-black' : 'text-gray-500')
-            = 'Wykonuję'
-            - if @submissions.any?
-              span.ml-2.inline-flex.items-center.justify-center.text-base.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @submissions.size
-          div data-tabs-target="indicator" data-tab="submissions"
+  .mx-auto.px-4
+    - requested_tab = params[:tab].presence
+    - active_tab = requested_tab || (@tasks.any? ? 'tasks' : 'submissions')
+    div data-controller="tabs"
+      .flex.flex-row.justify-center
+        nav.flex role="tablist"
+          div.relative.inline-block
+            button.py-3.px-6.text-lg.font-semibold.transition data-action="tabs#show" data-tabs-target="tab" data-tab="tasks" role="tab" aria-selected=(active_tab == 'tasks') class=(active_tab == 'tasks' ? 'text-black' : 'text-gray-500')
+              = 'Zlecam'
+              - if @tasks.any?
+                span.ml-2.inline-flex.items-center.justify-center.text-base.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @tasks.size
+            div class="absolute bottom-0 left-0 w-full h-[4px] bg-blue-700 rounded-full" data-tabs-target="indicator" data-tab="tasks"
+          div.relative.inline-block
+            button.py-3.px-6.text-lg.font-semibold.transition data-action="tabs#show" data-tabs-target="tab" data-tab="submissions" role="tab" aria-selected=(active_tab == 'submissions') class=(active_tab == 'submissions' ? 'text-black' : 'text-gray-500')
+              = 'Wykonuję'
+              - if @submissions.any?
+                span.ml-2.inline-flex.items-center.justify-center.text-base.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @submissions.size
+            div data-tabs-target="indicator" data-tab="submissions"
 
-    .border-t.border-gray-400.-mx-4
-    / Tasks panel
-    .mt-4
-    .space-y-6 data-tabs-target="panel" data-tab="tasks" class=(active_tab == 'tasks' ? '' : 'hidden')
-      - if @tasks.any?
-        .grid.grid-cols-1.md:grid-cols-3.gap-4
-          - @tasks.each do |task|
-            = render Tasks::TaskCardComponent.new(task: task, variant: :owner, path: my_task_path(task), show_notification: true, current_user: current_user) do |card|
-              - card.with_badge do
-                = render Ui::BadgeComponent.new(text: t('tasks.submissions', count: task.submissions.count), variant: :red)
-      - else
-        .text-center.py-12
-          p.text-gray-500.mb-4 = t('dashboard.my_tasks.empty', default: 'Nie masz jeszcze żadnych zadań.')
-          = render Ui::ButtonComponent.new(text: t('dashboard.my_tasks.new', default: 'Dodaj zadanie'), path: new_task_path, variant: :primary)
-
-    / Submissions panel
-    .space-y-6 data-tabs-target="panel" data-tab="submissions" class=(active_tab == 'submissions' ? '' : 'hidden')
-      - if @submissions.any?
-        .grid.grid-cols-1.md:grid-cols-3.gap-4
-          - @submissions.each do |submission|
-              = render Tasks::TaskCardComponent.new(task: submission.task, path: task_path(submission.task), variant: :default, show_notification: true, current_user: current_user) do |card|
+      .border-t.border-gray-400.-mx-4
+      / Tasks panel
+      .mt-4
+      .space-y-6 data-tabs-target="panel" data-tab="tasks" class=(active_tab == 'tasks' ? '' : 'hidden')
+        - if @tasks.any?
+          .grid.grid-cols-1.md:grid-cols-3.gap-4
+            - @tasks.each do |task|
+              = render Tasks::TaskCardComponent.new(task: task, variant: :owner, path: my_task_path(task), show_notification: true, current_user: current_user) do |card|
                 - card.with_badge do
-                  = render Ui::BadgeComponent.new(text: submission.task.category, variant: :blue)
-                - card.with_badge do
-                  = render Ui::BadgeComponent.new(text: submission.task.payment_method, variant: :green)
+                  = render Ui::BadgeComponent.new(text: t('tasks.submissions', count: task.submissions.count), variant: :red)
+        - else
+          .text-center.py-12
+            p.text-gray-500.mb-4 = t('dashboard.my_tasks.empty', default: 'Nie masz jeszcze żadnych zadań.')
+            = render Ui::ButtonComponent.new(text: t('dashboard.my_tasks.new', default: 'Dodaj zadanie'), path: new_task_path, variant: :primary)
 
-      - else
-        .text-center.py-12
-          p.text-gray-500.mb-4 = t('dashboard.my_submissions.empty', default: 'Nie aplikowałeś jeszcze na żadne zadania.')
-          = render Ui::ButtonComponent.new(text: t('dashboard.browse_tasks', default: 'Przeglądaj zadania'), path: tasks_path, variant: :secondary)
+      / Submissions panel
+      .space-y-6 data-tabs-target="panel" data-tab="submissions" class=(active_tab == 'submissions' ? '' : 'hidden')
+        - if @submissions.any?
+          .grid.grid-cols-1.md:grid-cols-3.gap-4
+            - @submissions.each do |submission|
+                = render Tasks::TaskCardComponent.new(task: submission.task, path: task_path(submission.task), variant: :default, show_notification: true, current_user: current_user) do |card|
+                  - card.with_badge do
+                    = render Ui::BadgeComponent.new(text: submission.task.category, variant: :blue)
+                  - card.with_badge do
+                    = render Ui::BadgeComponent.new(text: submission.task.payment_method, variant: :green)
+
+        - else
+          .text-center.py-12
+            p.text-gray-500.mb-4 = t('dashboard.my_submissions.empty', default: 'Nie aplikowałeś jeszcze na żadne zadania.')
+            = render Ui::ButtonComponent.new(text: t('dashboard.browse_tasks', default: 'Przeglądaj zadania'), path: tasks_path, variant: :secondary)
+- else
+  .h-screen.flex.flex-col.items-center.justify-center.text-center.px-4.-mt-24
+    p.text-3xl.font-semibold.px-10
+      | Czekaj czekaj! Zanim zobaczysz swój profil, musisz się zalogować lub zarejestrować...
+    .flex.w-100.mt-10.gap-3.px-10
+      = render(Ui::ButtonComponent.new(text: 'Zaloguj się', path: new_user_session_path, size: :md, variant: :green, width: 100))
+      = render(Ui::ButtonComponent.new(text: 'Zarejestruj się', path: new_user_registration_path, size: :md, variant: :primary_3, width: 100))
