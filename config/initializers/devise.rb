@@ -276,6 +276,12 @@ Devise.setup do |config|
                   Rails.application.credentials.dig(:google_oauth, :client_id),
                   Rails.application.credentials.dig(:google_oauth, :client_secret),
                   {}
+  config.omniauth :facebook,
+                  Rails.application.credentials.dig(:facebook, :app_id),
+                  Rails.application.credentials.dig(:facebook, :app_secret),
+                  scope: 'email,public_profile',
+                  info_fields: 'email,first_name,last_name,picture',
+                  image_size: 'large'
   OmniAuth.config.allowed_request_methods = %i[get]
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

@@ -2,6 +2,7 @@
 
 class User < ApplicationRecord
   include GoogleAuthenticatable
+  include FacebookAuthenticatable
 
   has_many :tasks
   has_many :submissions
@@ -15,7 +16,7 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :omniauthable, :trackable, omniauth_providers: [:google_oauth2]
+         :omniauthable, :trackable, omniauth_providers: %i[google_oauth2 facebook]
 
   after_create :send_welcome_email
 

@@ -9,7 +9,7 @@ class PagesController < ApplicationController
       { title: 'Czy ZlecajTo.pl coś kosztuje?',
         content: 'Rejestracja jest darmowa. Płacisz jedynie za zrealizowane zlecenia według uzgodnionej ceny.' },
       { title: 'Czy mogę zlecać i wykonywać?',
-        content: 'Tak, u nas jest możesz zlecać i wykonywać - wszystko na jednej platformie.' },
+        content: 'Tak, u nas możesz zlecać i wykonywać - wszystko na jednej platformie.' },
       { title: 'Co można zlecać?',
         content: 'Możesz zlecać dosłownie wszystko, korki, sprzątanie, przeprowadzki czy porządkowanie kabli, które rosły od 2003 roku.' },
       { title: 'Coś poszło nie tak, co teraz?',
