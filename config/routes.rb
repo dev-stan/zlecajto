@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   get 'users/sign_out/confirm', to: 'modals#confirm_logout', as: 'confirm_user_logout'
   get 'submissions/:id/confirm_accept', to: 'modals#confirm_submission_accept', as: :confirm_submission_accept_modal
   get 'submissions/:id/answer_modal', to: 'modals#new_answer', as: :new_answer_modal
+  get 'tasks/:id/task_message_modal', to: 'modals#new_task_message', as: :new_task_message_modal
+  get 'task_messages/:id/reply_modal', to: 'modals#reply_task_message', as: :reply_task_message_modal
   get 'tasks/:id/confirm_complete', to: 'modals#confirm_task_complete', as: :confirm_task_complete_modal
   get 'tasks/:id/delete_modal', to: 'modals#confirm_delete_task', as: :confirm_delete_task_modal
 
@@ -61,12 +63,24 @@ Rails.application.routes.draw do
   end
 
   resources :answers, only: %i[create]
+
+  # TaskMessages create-from-session (login redirect completion)
+  scope path: 'task_messages' do
+    get 'create_from_session', to: 'task_messages#create_from_session', as: :create_from_session_task_message
+  end
+
   # Tasks CRUD routes
   resources :tasks, only: %i[index show edit update destroy] do
     member do
       patch :update
       get :created
       get :completed
+    end
+
+    resources :task_messages, only: [:create] do
+      collection do
+        get :create_from_session
+      end
     end
 
     resources :submissions, only: %i[new create] do
