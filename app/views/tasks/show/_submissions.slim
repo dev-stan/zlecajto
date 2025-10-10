@@ -3,6 +3,8 @@
   - accepted_submission = @task.submissions.accepted.first
   - if current_user == task.user
     h3.text-lg.font-semibold.text-gray-900.mt-3 Wybrałeś już wykonawcę :)
+  - elsif current_user == accepted_submission.user && task.completed?
+    h3.text-lg.font-semibold.text-gray-900.mt-3 Gratulacje! Zlecenie zostało zakończone.
   - elsif accepted_submission && current_user == accepted_submission.user
     h3.text-lg.font-semibold.text-gray-900.mt-3 Wybrał Cię zleceniodawca! Skontaktuj się z nim.
   - else
