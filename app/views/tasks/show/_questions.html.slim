@@ -41,11 +41,11 @@
   - else
     .mt-3
       = render Layout::NoContentComponent.new(message: 'Nie ma jeszcze żadnych pytań. Bądź pierwszy!')
-
-  .mt-6.hidden.md:block
-    = render(Ui::ButtonComponent.new(text: 'Zadaj pytanie',
-      variant: :green,
-      size: :sm,
-      path: new_task_message_modal_path(task),
-      method: :get,
-      html_options: { class: 'w-full md:w-auto', data: { turbo_frame: 'modal', turbo: true } }))
+  - unless current_user == task.user
+    .mt-6.hidden.md:block
+        = render(Ui::ButtonComponent.new(text: 'Zadaj pytanie',
+        variant: :green,
+        size: :sm,
+        path: new_task_message_modal_path(task),
+        method: :get,
+        html_options: { class: 'w-full md:w-auto', data: { turbo_frame: 'modal', turbo: true } }))
