@@ -5,6 +5,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update created completed destroy completed]
 
   def show
+    @presenter = TaskShowPresenter.new(@task, current_user)
     return unless current_user
 
     current_user&.notifications&.unread&.for_task(@task)&.first&.mark_as_read!
