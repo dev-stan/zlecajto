@@ -1,71 +1,47 @@
+/ -- submissions section --
+- accepted_submission = @task.submissions.accepted.first
 
-- if @task.submissions.accepted.any?
-  - accepted_submission = @task.submissions.accepted.first
-  - if current_user == task.user
-    h3.text-lg.font-semibold.text-gray-900.mt-3 Wybrałeś już wykonawcę :)
-  - elsif current_user == accepted_submission.user && task.completed?
-    h3.text-lg.font-semibold.text-gray-900.mt-3 Gratulacje! Zlecenie zostało zakończone.
-  - elsif accepted_submission && current_user == accepted_submission.user
-    h3.text-lg.font-semibold.text-gray-900.mt-3 Wybrał Cię zleceniodawca! Skontaktuj się z nim.
-  - else
-    h3.text-lg.font-semibold.text-gray-900.mt-3 Wykonawca wybrał już zleceniodawcę :(
+h3.text-lg.font-semibold.text-gray-900.mt-3 = @presenter.submissions_header
+
+- if accepted_submission
   ul.space-y-4.mt-3
-    - task.submissions.limit(1).each do |submission|
+    - @task.submissions.accepted.limit(1).each do |submission|
       li
         = render Cards::CardComponent.new(padding: 'p-4', shadow: false, html_options: { class: 'rounded-xl bg-white' }) do
           .flex-col
             .flex.items-center.gap-2.mb-2
-              = render Users::AvatarComponent.new(user: submission.user, size: 'sm', current_user: current_user)
+              = render Users::AvatarComponent.new(user: submission.user, size: 'sm', current_user: @presenter.current_user)
               p.font-bold.text-gray-800 = submission.user.first_name
             p.text-base.text-gray-600.mb-1 = truncate(submission.note, length: 200)
             = turbo_frame_tag "answers_#{submission.id}" do
               = render 'tasks/show/answers', submission: submission
 
-- else      
-  h3.text-lg.font-semibold.text-gray-900.mt-3 Zgłoszenia (#{task.submissions.count})
-  - if task.submissions.any?
-    ul.space-y-4.mt-3
-      - task.submissions.limit(5).each do |submission|
-        li
-          = render Cards::CardComponent.new(padding: 'p-4', shadow: false, html_options: { class: 'rounded-xl bg-white' }) do
-            .flex-col
-              .flex.items-center.gap-2.mb-2
-                = render Users::AvatarComponent.new(user: submission.user, size: 'sm', current_user: current_user)
-                p.font-bold.text-gray-800 = submission.user.first_name
-              p.text-base.text-gray-600.mb-1 = truncate(submission.note, length: 200)
-              span.text-base.text-gray-500 = formatted_date(submission.created_at)
-              = turbo_frame_tag "answers_#{submission.id}" do
-                = render 'tasks/show/answers', submission: submission
-              - if current_user == task.user || current_user == submission.user
-                - show_accept = current_user == task.user
-                - show_reply = (current_user == task.user) || (current_user == submission.user)
-                - if show_reply
-                  .mt-3.flex.gap-3
-                    - if show_accept
-                      = render(Ui::ButtonComponent.new(text: 'Akceptuj',
-                        variant: :green,
-                        size: :sm,
-                        path: confirm_submission_accept_modal_path(submission),
-                        method: :get,
-                        html_options: { class: 'w-1/2 font-bold text-lg', data: { turbo_frame: 'modal', turbo: true } }))
-                      = render(Ui::ButtonComponent.new(text: 'Odpowiedz',
-                        variant: :blue,
-                        size: :sm,
-                        path: new_answer_modal_path(submission),
-                        method: :get,
-                        html_options: { class: 'w-1/2 font-bold text-lg', data: { turbo_frame: 'modal', turbo: true } }))
-                    - else
-                      = render(Ui::ButtonComponent.new(text: 'Odpowiedz',
-                        variant: :blue,
-                        size: :sm,
-                        path: new_answer_modal_path(submission),
-                        method: :get,
-                        html_options: { class: 'w-full font-bold text-lg', data: { turbo_frame: 'modal', turbo: true } }))
-                
-  - else
-    - if current_user == task.user
-      .mt-3
-        = render Layout::NoContentComponent.new(message: "Tu pojawią się zgłoszenia od wykonawców, udostępnij zlecenie, aby otrzymać zgłoszenia.")
+- elsif @task.submissions.any?
+
+  ul.space-y-4.mt-3
+    - @task.submissions.limit(5).each do |submission|
+      li
+        = render Cards::CardComponent.new(padding: 'p-4', shadow: false, html_options: { class: 'rounded-xl bg-white' }) do
+          .flex-col
+            .flex.items-center.gap-2.mb-2
+              = render Users::AvatarComponent.new(user: submission.user, size: 'sm', current_user: @presenter.current_user)
+              p.font-bold.text-gray-800 = submission.user.first_name
+            p.text-base.text-gray-600.mb-1 = truncate(submission.note, length: 200)
+            span.text-base.text-gray-500 = formatted_date(submission.created_at)
+            = turbo_frame_tag "answers_#{submission.id}" do
+              = render 'tasks/show/answers', submission: submission
+
+            - if @presenter.can_reply_or_accept?(submission)
+              .mt-3.flex.gap-3
+                - if @presenter.can_accept?(submission)
+                  = render Ui::ButtonComponent.new(text: 'Akceptuj', variant: :green, size: :sm, path: confirm_submission_accept_modal_path(submission), method: :get, html_options: { class: 'w-1/2 font-bold text-lg', data: { turbo_frame: 'modal', turbo: true } })
+                  = render Ui::ButtonComponent.new(text: 'Odpowiedz', variant: :blue, size: :sm, path: new_answer_modal_path(submission), method: :get, html_options: { class: 'w-1/2 font-bold text-lg', data: { turbo_frame: 'modal', turbo: true } })
+                - else
+                  = render Ui::ButtonComponent.new(text: 'Odpowiedz', variant: :blue, size: :sm, path: new_answer_modal_path(submission), method: :get, html_options: { class: 'w-full font-bold text-lg', data: { turbo_frame: 'modal', turbo: true } })
+
+- else
+  .mt-3
+    - if @presenter.owner?
+      = render Layout::NoContentComponent.new(message: "Tu pojawią się zgłoszenia od wykonawców, udostępnij zlecenie, aby otrzymać zgłoszenia.")
     - else
-      .mt-3
-        = render Layout::NoContentComponent.new(message: "Tu pojawią się zgłoszenia od wykonawców, bądź pierwszym, który się zgłosi!")
+      = render Layout::NoContentComponent.new(message: "Tu pojawią się zgłoszenia od wykonawców, bądź pierwszym, który się zgłosi!")
