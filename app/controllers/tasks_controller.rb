@@ -42,10 +42,7 @@ class TasksController < ApplicationController
   end
 
   def update
-    # [todo] i already set a task here, do i need to find it again?
-    @task = current_user.tasks.find(params[:id])
     if @task.update(task_params)
-      # Redirect owner to the dedicated "my task" view after updating via modal
       redirect_to my_task_path(@task), notice: 'Task was successfully updated.'
     else
       render :edit, status: :unprocessable_entity
