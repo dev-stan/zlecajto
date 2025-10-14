@@ -55,6 +55,7 @@ class TaskMessagesController < ApplicationController
           if @task_message.reply?
             @parent_message = @task_message.parent
             render 'modals/reply_task_message', status: :unprocessable_entity
+
           else
             render 'modals/new_task_message', status: :unprocessable_entity
           end

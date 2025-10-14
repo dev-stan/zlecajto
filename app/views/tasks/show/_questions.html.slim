@@ -40,7 +40,10 @@
                     span Odpowiedz
   - else
     .mt-3
-      = render Layout::NoContentComponent.new(message: 'Nie ma jeszcze żadnych pytań. Bądź pierwszy!')
+      - if task.user == current_user
+        = render Layout::NoContentComponent.new(message: 'Nie ma jeszcze żadnych pytań. Gdy potencjalni wykonawcy będą mieli pytania, pojawią się tutaj.')
+      - else
+        = render Layout::NoContentComponent.new(message: 'Nie ma jeszcze żadnych pytań. Bądź pierwszy!')
   - unless current_user == task.user
     .mt-6.hidden.md:block
         = render(Ui::ButtonComponent.new(text: 'Zadaj pytanie',
