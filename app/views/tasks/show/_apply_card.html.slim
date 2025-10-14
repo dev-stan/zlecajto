@@ -1,17 +1,11 @@
 / Apply card (right column)
-- task ||= @task
-- existing_submission ||= nil
-- accepted_submission_exists = task.submissions.accepted.exists?
 = render Cards::CardComponent.new do
-  p.text-2xl.font-semibold.text-gray-900 = formatted_salary(task)
+  p.text-2xl.font-semibold.text-gray-900 = formatted_salary(@presenter.task)
   p.text-base.text-gray-500.leading-snug.pb-5 Aplikując wysyłasz krótką ofertę. Właściciel otrzyma powiadomienie i może się z Tobą skontaktować.
-  - if current_user == task.user
-    = render(Ui::ButtonComponent.new(text: 'Detale zlecenia', path: my_task_path(task), method: :get, size: :sm, variant: :primary, html_options: { class: 'w-full mb-4 font-bold text-lg' }))
-  - elsif accepted_submission_for_current_user
-    = render(Ui::ButtonComponent.new(text: 'Wybrano cię! Co dalej?', variant: :green, path: accepted_submission_path(accepted_submission_for_current_user), method: :get, size: :sm, html_options: { class: 'w-full mb-4 font-bold text-lg', data: { turbo: true } }))
-  - elsif existing_submission
-    = render(Ui::ButtonComponent.new(text: 'Już aplikowałeś', path: '#', size: :sm, variant: :primary, method: :get, html_options: { class: 'w-full mb-4 font-bold text-lg cursor-default pointer-events-none opacity-70' }))
-  - elsif accepted_submission_exists
-    = render(Ui::ButtonComponent.new(text: 'Wybrano już wykonawcę', variant: :red, path: '#', size: :sm, method: :get, html_options: { class: 'w-full mb-4 font-bold text-lg cursor-default pointer-events-none opacity-70' }))
-  - else
-    = render(Ui::ButtonComponent.new(text: 'Aplikuj', path: new_task_submission_path(task), variant: :primary, size: :sm, method: :get, html_options: { class: 'w-full mb-4 font-bold text-lg' }))
+
+  = render Ui::ButtonComponent.new(text: @presenter.button_text,
+      path: @presenter.button_path,
+      variant: @presenter.button_variant,
+      size: :sm,
+      method: :get,
+      html_options: { class: 'w-full mb-4 font-bold text-lg' })

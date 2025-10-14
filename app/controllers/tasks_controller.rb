@@ -5,6 +5,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update created completed destroy completed]
 
   def show
+    @presenter = TaskShowPresenter.new(@task, current_user)
     return unless current_user
 
     current_user&.notifications&.unread&.for_task(@task)&.first&.mark_as_read!
@@ -30,14 +31,18 @@ class TasksController < ApplicationController
   end
 
   def index
-    @tasks = Task.order(created_at: :desc).with_attached_photos.where.not(status: %i[accepted completed])
+    @tasks = Task.order(created_at: :desc)
+                 .with_attached_photos
+                 .where.not(status: %i[accepted completed])
+    @completed_tasks = Task
+                       .order(created_at: :desc)
+                       .with_attached_photos
+                       .where(status: :completed)
+                       .where.not(id: 159)
   end
 
   def update
-    # [todo] i already set a task here, do i need to find it again?
-    @task = current_user.tasks.find(params[:id])
     if @task.update(task_params)
-      # Redirect owner to the dedicated "my task" view after updating via modal
       redirect_to my_task_path(@task), notice: 'Task was successfully updated.'
     else
       render :edit, status: :unprocessable_entity
