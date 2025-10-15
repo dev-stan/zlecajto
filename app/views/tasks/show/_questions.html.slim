@@ -19,10 +19,8 @@
           = render Cards::CardComponent.new(padding: 'p-4', shadow: false, html_options: { class: 'rounded-xl bg-white' }) do
             = render Messages::TaskMessageComponent.new(message: message, current_user: current_user)
 
-            - if message.replies.any?
-              .ml-6.mt-3.pl-4.border-l.border-gray-200.space-y-3
-                - message.replies.order(created_at: :asc).each do |reply|
-                  = render Messages::TaskMessageComponent.new(message: reply, current_user: current_user)
+            .mt-3.ml-6.pl-4.border-l.border-gray-200.space-y-3
+              = render partial: 'tasks/show/task_message_replies', locals: { message: message, current_user: current_user, task: task }
 
             - if user_signed_in? && (current_user == task.user || current_user == message.user)
               .mt-3

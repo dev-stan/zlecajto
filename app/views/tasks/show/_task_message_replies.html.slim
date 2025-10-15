@@ -1,0 +1,6 @@
+/- Renders nested replies for a given message recursively without increasing indentation
+- if message.replies.any?
+  - message.replies.order(created_at: :asc).each do |reply|
+    = render Messages::TaskMessageComponent.new(message: reply, current_user: current_user)
+
+    = render partial: 'tasks/show/task_message_replies', locals: { message: reply, current_user: current_user, task: task }
