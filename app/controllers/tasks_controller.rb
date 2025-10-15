@@ -2,7 +2,7 @@
 
 class TasksController < ApplicationController
   before_action :authenticate_user!, only: %i[update edit my_task]
-  before_action :set_task, only: %i[show edit update created completed destroy completed]
+  before_action :set_task, only: %i[show edit update created completed my_task destroy completed]
 
   def show
     @presenter = TaskShowPresenter.new(@task, current_user)
@@ -25,7 +25,7 @@ class TasksController < ApplicationController
   end
 
   def my_task
-    @task = current_user.tasks.find(params[:id])
+    @presenter = TaskShowPresenter.new(@task, current_user)
     # [todo] this looks like shit, refactor me
     current_user.notifications.unread.for_task(@task).first&.mark_as_read!
   end

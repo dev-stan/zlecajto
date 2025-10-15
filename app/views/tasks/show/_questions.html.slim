@@ -1,0 +1,47 @@
+- root_messages = task.task_messages.root.includes(:user, replies: :user)
+- is_task_owner = current_user == task.user
+
+= turbo_frame_tag 'task_messages' do
+  - unless is_task_owner
+    .flex.items-center.justify-between.mt-3
+      = render(Ui::ButtonComponent.new(text: 'Zadaj pytanie',
+        variant: :green,
+        size: :sm,
+        width: 100,
+        path: new_task_message_modal_path(task),
+        method: :get,
+        html_options: { class: 'md:hidden', data: { turbo_frame: 'modal', turbo: true } }))
+
+  - if root_messages.any?
+    ul.space-y-4.mt-3
+      - root_messages.each do |message|
+        li
+          = render Cards::CardComponent.new(padding: 'p-4', shadow: false, html_options: { class: 'rounded-xl bg-white' }) do
+            = render Messages::TaskMessageComponent.new(message: message, current_user: current_user)
+
+            - if message.replies.any?
+              .ml-6.mt-3.pl-4.border-l.border-gray-200.space-y-3
+                - message.replies.order(created_at: :asc).each do |reply|
+                  = render Messages::TaskMessageComponent.new(message: reply, current_user: current_user)
+
+            - if user_signed_in? && (current_user == task.user || current_user == message.user)
+              .mt-3
+                = link_to reply_task_message_modal_path(message), method: :get, data: { turbo_frame: 'modal', turbo: true }, class: 'inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold text-sm' do
+                  i.fa-solid.fa-reply
+                  span Odpowiedz
+  - else
+    .mt-3
+      - if is_task_owner
+        = render Layout::NoContentComponent.new(message: 'Nie ma jeszcze żadnych pytań. Gdy potencjalni wykonawcy będą mieli pytania, pojawią się tutaj.')
+      - else
+        = render Layout::NoContentComponent.new(message: 'Nie ma jeszcze żadnych pytań. Bądź pierwszy!')
+
+  - unless is_task_owner
+    .mt-6.hidden.md:block
+      = render(Ui::ButtonComponent.new(text: 'Zadaj pytanie',
+        variant: :green,
+        size: :sm,
+        width: 100,
+        path: new_task_message_modal_path(task),
+        method: :get,
+        html_options: { data: { turbo_frame: 'modal', turbo: true } }))

@@ -7,6 +7,7 @@ class Task < ApplicationRecord
   has_many :submissions, dependent: :destroy
   has_many :notifications, as: :notifiable
   has_many_attached :photos
+  has_many :task_messages, dependent: :destroy
 
   enum status: {
     draft: 'draft',

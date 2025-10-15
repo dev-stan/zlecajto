@@ -33,63 +33,26 @@
             = render(Ui::BadgeComponent.new(text: "Usuń", variant: :red, html_options: { class: 'px-1.5 ml-0 mt-0 text-sm cursor-pointer' }))
 
   .mt-10
-    - if @task.submissions.accepted.any?
-      .flex.items-center.gap-2
-        - if @task.completed?
-          h2.text-2xl.font-bold.text-gray-900.mb-0.flex.items-center = @task.submissions.accepted.first.user.first_name + " wykonał/a to zlecenie!"
-        - else
-          h2.text-2xl.font-bold.text-gray-900.mb-0.flex.items-center Wybrałeś już wykonawcę :)
-      .grid.grid-cols-1.md:grid-cols-2.gap-6.mt-6
-        - submission = @task.submissions.accepted.first
-        = render Cards::CardComponent.new(padding: 'p-4', shadow: false, html_options: { class: 'rounded-xl bg-white w-full' }) do
-          .flex-col
-            .flex.items-center.gap-2.mb-2
-              = render Users::AvatarComponent.new(user: submission.user, size: 'sm', current_user: current_user)
-              p.font-bold.text-gray-800 = submission.user.first_name
-            p.text-base.text-gray-600.mb-1 = truncate(submission.note, length: 200)
-            span.text-base.text-gray-500.mb-4 = formatted_date(submission.created_at)
-            = turbo_frame_tag "answers_#{submission.id}" do
-              = render 'tasks/show/answers', submission: submission
-            .mt-3
-            - unless @task.completed?
-              = render Ui::ButtonComponent.new(text: 'Skontaktuj się z wykonawcą!', variant: :blue, path: contact_submission_path(submission), size: :sm, html_options: { class: 'w-full mt-5 text-lg' })
-              = render Ui::ButtonComponent.new(text: 'Potwierdź wykonanie zlecenia',
-                path: confirm_task_complete_modal_path(submission.task),
-                variant: :green,
-                size: :sm,
-                method: :get,
-                html_options: { class: 'w-full mt-4 text-lg', data: { turbo_frame: 'modal', turbo: true } })
+    - requested_tab = params[:tab].presence
+    - active_tab = requested_tab || 'submissions'
+    div data-controller="tabs"
+      .flex.flex-row.justify-center
+        nav.flex role="tablist"
+          div.relative.inline-block
+            button.py-3.px-6.text-lg.font-semibold.transition data-action="tabs#show" data-tabs-target="tab" data-tab="submissions" role="tab" aria-selected=(active_tab == 'submissions') class=(active_tab == 'submissions' ? 'text-black' : 'text-gray-500')
+              = 'Zgłoszenia'
+              - if @task.submissions.any?
+                span.ml-2.inline-flex.items-center.justify-center.text-base.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @task.submissions.count
+            div class="absolute bottom-0 left-0 w-full h-[4px] bg-blue-700 rounded-full" data-tabs-target="indicator" data-tab="submissions"
+          div.relative.inline-block
+            button.py-3.px-6.text-lg.font-semibold.transition data-action="tabs#show" data-tabs-target="tab" data-tab="questions" role="tab" aria-selected=(active_tab == 'questions') class=(active_tab == 'questions' ? 'text-black' : 'text-gray-500')
+              = 'Pytania'
+              - if @task.task_messages.root.any?
+                span.ml-2.inline-flex.items-center.justify-center.text-base.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @task.task_messages.root.count
+            div data-tabs-target="indicator" data-tab="questions"
 
-    - elsif @task.submissions.any?
-      .flex.items-center.gap-2
-        h2.text-2xl.font-bold.text-gray-900.mb-0.flex.items-center Zgłoszenia
-        span.text-gray-500.text-2xl.font-base.flex.items-center= "(#{@task.submissions.count})"
-      .grid.grid-cols-1.md:grid-cols-2.lg:grid-cols-3.gap-6.mt-6
-        - @task.submissions.each do |submission|
-          = render Cards::CardComponent.new(padding: 'p-4', shadow: false, html_options: { class: 'rounded-xl bg-white' }) do
-            .flex-col
-              .flex.items-center.gap-2.mb-2
-                = render Users::AvatarComponent.new(user: submission.user, size: 'sm', current_user: current_user)
-                p.font-bold.text-gray-800 = submission.user.first_name
-              p.text-base.text-gray-600.mb-1 = truncate(submission.note, length: 200)
-              span.text-base.text-gray-500.mb-4 = formatted_date(submission.created_at)
-              = turbo_frame_tag "answers_#{submission.id}" do
-                = render 'tasks/show/answers', submission: submission
-              .mt-3.flex.gap-3
-                = render(Ui::ButtonComponent.new(text: 'Akceptuj',
-                  variant: :green,
-                  size: :sm,
-                  path: confirm_submission_accept_modal_path(submission),
-                  method: :get,
-                  html_options: { class: 'w-1/2 font-bold text-lg', data: { turbo_frame: 'modal', turbo: true } }))
-                = render(Ui::ButtonComponent.new(text: 'Odpowiedz',
-                  variant: :blue,
-                  size: :sm,
-                  path: new_answer_modal_path(submission),
-                  method: :get,
-                  html_options: { class: 'w-1/2 font-bold text-lg', data: { turbo_frame: 'modal', turbo: true } }))
-    - else
-      .flex.items-center.gap-2
-        h2.text-2xl.font-bold.text-gray-900.mb-0.flex.items-center Zgłoszenia
-        span.text-gray-500.text-2xl.font-base.flex.items-center= "(#{@task.submissions.count})"
-      = render Layout::NoContentComponent.new
+      .mt-4
+      .space-y-6 data-tabs-target="panel" data-tab="submissions" class=(active_tab == 'submissions' ? '' : 'hidden')
+        = render 'tasks/show/submissions', task: @task
+      .space-y-6 data-tabs-target="panel" data-tab="questions" class=(active_tab == 'questions' ? '' : 'hidden')
+        = render 'tasks/show/questions', task: @task

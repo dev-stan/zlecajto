@@ -51,11 +51,10 @@ class TaskShowPresenter
     if accepted_submission
       return 'Wybrałeś wykonawcę!' if owner?
       return 'Wybrał Cię zleceniodawca! Skontaktuj się z nim.' if accepted_submission.user == current_user
-      return 'Wybrany wykonawca' if task.submissions.accepted.exists?
+
+      'Wybrany wykonawca' if task.submissions.accepted.exists?
 
     end
-
-    "Zgłoszenia (#{task.submissions.count})"
   end
 
   # Owner or the submission owner can either reply or (owner only) accept
