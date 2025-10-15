@@ -64,7 +64,6 @@ Rails.application.routes.draw do
 
   resources :answers, only: %i[create]
 
-  # TaskMessages create-from-session (login redirect completion)
   scope path: 'task_messages' do
     get 'create_from_session', to: 'task_messages#create_from_session', as: :create_from_session_task_message
   end

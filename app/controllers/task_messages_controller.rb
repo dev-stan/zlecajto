@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class TaskMessagesController < ApplicationController
-  before_action :set_task
+  before_action :set_task, only: %i[create]
   before_action :authenticate_user!, except: %i[create create_from_session]
 
   def create
@@ -16,7 +16,10 @@ class TaskMessagesController < ApplicationController
 
     if @task_message&.persisted?
       @task = @task_message.task
-      handle_message_success
+      respond_to do |format|
+        format.turbo_stream { redirect_to @task, notice: 'Wiadomość została dodana.' }
+        format.html { redirect_to @task, notice: 'Wiadomość została dodana.' }
+      end
     else
       handle_message_failure(alert: 'Coś poszło nie tak, spróbuj ponownie...', fallback: root_path)
     end
@@ -67,7 +70,7 @@ class TaskMessagesController < ApplicationController
       params: task_message_params,
       return_path: create_from_session_task_message_path(task_id: @task&.id)
     )
-    redirect_to new_user_session_path
+    redirect_to new_user_session_path and return
   end
 
   def success_turbo_streams
