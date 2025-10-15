@@ -16,4 +16,18 @@ class PendingTaskMessage
   def self.present?(session)
     session[SESSION_KEY].present?
   end
+
+  def self.create_for_user(user, session)
+    payload = consume(session)
+    return nil unless payload.present?
+
+    data = payload.deep_symbolize_keys
+    task = Task.find_by(id: data[:task_id])
+    return nil unless task
+
+    attrs = (data[:data] || {}).slice(:body, :parent_id, :message_type)
+    task_message = task.task_messages.new(attrs.merge(user: user))
+    task_message.save
+    task_message
+  end
 end
