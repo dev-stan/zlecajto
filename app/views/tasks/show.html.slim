@@ -29,7 +29,7 @@
         - requested_tab = params[:tab].presence
         - active_tab = requested_tab || 'submissions'
         div data-controller="tabs"
-          .flex.flex-row
+          .flex.flex-row.justify-center
             nav.flex role="tablist"
               div.relative.inline-block
                 button.py-3.px-6.text-md.font-semibold.transition data-action="tabs#show" data-tabs-target="tab" data-tab="submissions" role="tab" aria-selected=(active_tab == 'submissions') class=(active_tab == 'submissions' ? 'text-black' : 'text-gray-500')
