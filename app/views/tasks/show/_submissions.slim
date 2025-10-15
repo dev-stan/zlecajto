@@ -14,6 +14,19 @@ h3.text-lg.font-semibold.text-gray-900.mt-3 = @presenter.submissions_header
             p.text-base.text-gray-600.mb-1 = truncate(submission.note, length: 200)
             = turbo_frame_tag "answers_#{submission.id}" do
               = render 'tasks/show/answers', submission: submission
+            - if controller_name == 'tasks' && action_name == 'my_task'
+              - if @task.completed?
+                  = render Ui::ButtonComponent.new(text: "Zlecenie zakończone!", variant: :green, size: :sm, width: 100, path: '#')
+              - else
+                .flex.flex-col.gap-3
+                  = render Ui::ButtonComponent.new(text: "Skontaktuj się z wykonawcą!", variant: :blue, size: :sm, width: 100, path: contact_submission_path(submission))
+                  = render Ui::ButtonComponent.new(text: 'Potwierdź wykonanie zlecenia',
+                    path: confirm_task_complete_modal_path(submission.task),
+                    variant: :green,
+                    size: :sm,
+                    width: 100,
+                    method: :get,
+                    html_options: { data: { turbo_frame: 'modal', turbo: true } })
 
 - elsif @task.submissions.any?
 

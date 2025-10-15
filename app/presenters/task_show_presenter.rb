@@ -12,7 +12,6 @@ class TaskShowPresenter
 
   def button_text
     return 'Zlecenie zakończone' if task.completed?
-    return 'Skontaktuj się z wykonawcą' if owner? && accepted_submission_exists?
     return 'Wybrano cię! Co dalej?' if current_user_accepted_submission?
     return 'Wybrano już wykonawcę' if accepted_submission_exists?
     return 'Już aplikowałeś' if user_has_applied?
@@ -24,7 +23,6 @@ class TaskShowPresenter
   def button_variant
     case button_text
 
-    when 'Skontaktuj się z wykonawcą' then :primary
     when 'Zobacz detale zlecenia' then :primary
     when 'Zlecenie zakończone' then :green
     when 'Wybrano cię! Co dalej?' then :green
@@ -48,13 +46,11 @@ class TaskShowPresenter
   def submissions_header
     return 'Zlecenie wykonane!' if task.completed?
 
-    if accepted_submission
-      return 'Wybrałeś wykonawcę!' if owner?
-      return 'Wybrał Cię zleceniodawca! Skontaktuj się z nim.' if accepted_submission.user == current_user
+    return unless accepted_submission
+    return 'Wybrałeś wykonawcę!' if owner?
+    return 'Wybrał Cię zleceniodawca! Skontaktuj się z nim.' if accepted_submission.user == current_user
 
-      'Wybrany wykonawca' if task.submissions.accepted.exists?
-
-    end
+    'Wybrany wykonawca' if task.submissions.accepted.exists?
   end
 
   # Owner or the submission owner can either reply or (owner only) accept
