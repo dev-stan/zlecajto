@@ -59,6 +59,9 @@ class ModalsController < ApplicationController
   def reply_task_message
     @parent_message = TaskMessage.find(params[:id])
     @task = @parent_message.task
+    # Always reply to the latest message in the thread
+    latest_in_thread = @parent_message.thread_latest_message
+    @parent_message = latest_in_thread
     @task_message = TaskMessage.new(task: @task, parent: @parent_message, message_type: :reply)
     root_author = @parent_message.thread_root.user
     head :forbidden and return unless current_user && (current_user == @task.user || current_user == root_author)
