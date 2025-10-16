@@ -23,7 +23,7 @@ class Task < ApplicationRecord
   TIMESLOTS        = %w[Rano Popołudnie Wieczór Obojętnie].freeze
   PAYMENT_METHODS  = %w[Przelew Blik Gotówka Czekolada].freeze
   LOCATIONS        = ['Stary Strzeszyn', 'Osiedle Literackie', 'Strzeszyn Grecki', 'Osiedle Wojskowe',
-                      'Jelonek', 'Suchy Las Wschód', 'Suchy Las Zachód', 'Złotniki'].freeze
+                      'Jelonek', 'Suchy Las Wschód', 'Suchy Las Zachód', 'Złotniki', 'Zlecenie zdalne'].freeze
 
   validates :category, inclusion: { in: CATEGORIES }
   validates :timeslot, inclusion: { in: TIMESLOTS }

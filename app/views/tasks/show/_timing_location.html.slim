@@ -1,14 +1,17 @@
 / Timing & location section
 - task ||= @task
 section.mt-8
-  .flex.flex-wrap.gap-16.md:gap-24.items-start
+  .flex.flex-wrap.gap-14.md:gap-24.items-start
     .flex.flex-col.items-start.min-w-[160px]
       h3.text-base.font-semibold.text-gray-900.mb-1 Czas i data
       .space-y-1.text-base
         div.flex.items-center.gap-1
           span.text-secondary
             i.fa.fa-calendar.text-base aria-hidden="true"
-          span.text-gray-900 = task.due_date&.strftime('%d.%m.%Y')
+          - if task.due_date.present?
+            span.text-gray-900 = task.due_date.strftime('%d.%m.%Y')
+          - else
+            span.text-gray-900 Do ustalenia
         div.flex.items-center.gap-1
           span.text-secondary
             i.fa.fa-clock.text-base aria-hidden="true"

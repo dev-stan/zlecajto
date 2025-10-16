@@ -46,7 +46,7 @@ class TaskWizardController < ApplicationController
   def task_params
     return {} unless params[:task]
 
-    params.require(:task).permit(:title, :description, :salary, :status, :category, :due_date, :timeslot,
+    params.require(:task).permit(:title, :description, :salary, :status, :category, :due_date, :due_date_any, :timeslot,
                                  :payment_method, :location, photos: [], photo_blob_ids: [])
   end
 
