@@ -29,10 +29,7 @@
           .flex.gap-2
             span.text-gray-400
               i.fa-solid.fa-calendar.fa-fw.text-secondary
-            - if task.due_date.present?
-              span = helpers.formatted_due_date(task)
-            - else
-              span Do ustalenia
+            span = helpers.formatted_due_date(task)
       .div.flex.flex-col.items-end.h-full.justify-between
         .font-extrabold.text-primary.mt-1.text-xl.text-end = helpers.formatted_salary(task)
         .text-gray-400 = helpers.formatted_created_at(task)

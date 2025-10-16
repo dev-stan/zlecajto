@@ -11,7 +11,7 @@ class TaskMessage < ApplicationRecord
 
   include TaskMessages::Emailable
 
-  validates :body, presence: true, length: { maximum: 2000 }
+  validates :body, presence: true, length: { maximum: 200 }
 
   enum message_type: { question: 0, reply: 1 }
 
