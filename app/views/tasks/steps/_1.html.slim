@@ -56,10 +56,10 @@
 
       - any_id = 'due_date_any'
       = render Ui::RadioButtonComponent.new(name: 'task[due_date_any]',
-        value: 'Obojętnie',
+        value: 'Do ustalenia',
         checked: params.dig(:task, :due_date_any).present?,
         id: any_id,
-        label: 'Obojętnie',
+        label: 'Do ustalenia',
         style: :rounded,
         html_options: {data: {'due-date-target': 'any',
             action: 'change->due-date#toggle'}})

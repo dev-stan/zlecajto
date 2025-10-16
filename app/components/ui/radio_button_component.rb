@@ -26,10 +26,9 @@ module Ui
     TIMESLOT_EMOJIS = {
       'Rano' => '🌅',
       'Popołudnie' => '☀️',
-      'Wieczór' => '🌙'
+      'Wieczór' => '🌙',
+      'Obojętnie' => '❓'
     }.freeze
-
-    # Provide a fallback emoji for the due date "Obojętnie" label as well
 
     def initialize(name:, value:, checked: false, id: nil, label: nil, style: :default, html_options: {})
       super()
