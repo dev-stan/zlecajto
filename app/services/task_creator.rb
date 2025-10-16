@@ -18,7 +18,7 @@ class TaskCreator
   attr_reader :user, :params
 
   def task_params_without_photos
-    @params.except(:photo_blob_ids)
+    @params.except(:photo_blob_ids, :due_date_any)
   end
 
   def photo_blob_ids

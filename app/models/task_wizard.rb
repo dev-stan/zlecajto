@@ -2,7 +2,7 @@
 
 class TaskWizard
   STEPS      = ['Tytuł i kategoria', 'Opis', 'Lokalizacja', 'Budżet', 'Zdjęcia'].freeze
-  PERMITTED  = %i[category title description salary due_date timeslot payment_method location].freeze
+  PERMITTED  = %i[category title description salary due_date due_date_any timeslot payment_method location].freeze
 
   attr_reader :current_step, :params_hash
 
@@ -12,6 +12,8 @@ class TaskWizard
     raw = raw.to_unsafe_h if raw.respond_to?(:to_unsafe_h)
     sym = raw.transform_keys(&:to_sym)
     @params_hash = sym.slice(*PERMITTED)
+    # If user selected "Obojętnie", drop concrete due_date and transient flag from the task instance
+    @params_hash.delete(:due_date) if @params_hash[:due_date_any].present?
     advance_step if advance
   end
 
@@ -22,7 +24,9 @@ class TaskWizard
 
   # Unsaved Task built from accumulated params
   def task
-    @task ||= Task.new(params_hash)
+    # Don't include the transient due_date_any attribute in the Task model
+    build_params = params_hash.except(:due_date_any)
+    @task ||= Task.new(build_params)
   end
 
   # Move to the next step (idempotent at end)
