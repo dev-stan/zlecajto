@@ -47,9 +47,12 @@
     p.text-base.text-gray-600.mb-2.font-bold.mt-5 
       | Kiedy potrzebujesz pomocy?
       span.text-red-500 *
-    = render Input::DatePickerComponent.new(name: 'task[due_date]',
-        value: task.due_date&.to_date || params.dig(:task, :due_date),
-        html_options: { class: 'border-2 border-gray-300' })
+    .flex.items-stretch.gap-3 data-controller="due-date"
+      = render Input::DatePickerComponent.new(name: 'task[due_date]', value: task.due_date&.to_date || params.dig(:task, :due_date), html_options: { class: 'border-2 border-gray-300 w-1/2', data: { 'due-date-target': 'input', action: 'input->due-date#uncheckAny change->due-date#uncheckAny' } })
+      .w-1/2.flex
+        = render Ui::RadioButtonComponent.new(name: 'task[due_date_any]', value: 'Do ustalenia', checked: params.dig(:task, :due_date_any).present?, id: 'due_date_any', label: 'Do ustalenia', style: :rounded, html_options: { class: 'w-full', data: { 'due-date-target': 'any', action: 'change->due-date#toggle' } })
+
+
 
   / Time slot
   div data-field-wrapper="" data-controller="choice-variant"

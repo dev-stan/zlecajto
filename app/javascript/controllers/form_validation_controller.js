@@ -389,6 +389,14 @@ export default class extends Controller {
   }
 
   checkValidationRules(field, value, rules) {
+    // Allow skipping due date if "Obojętnie" is selected
+    if (field.name === 'task[due_date]') {
+      const anySelected = this.element.querySelector('input[name="task[due_date_any]"]:checked')
+      if (anySelected) {
+        return null
+      }
+    }
+
     // Required validation
     if (rules.required && !value) {
       return rules.errors?.required || `${rules.fieldName || 'To pole'} jest wymagane`
