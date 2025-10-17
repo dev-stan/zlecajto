@@ -34,11 +34,13 @@ class TasksController < ApplicationController
     @tasks = Task.order(created_at: :desc)
                  .with_attached_photos
                  .where.not(status: %i[accepted completed])
-    @completed_tasks = Task
-                       .order(created_at: :desc)
-                       .with_attached_photos
-                       .where(status: :completed)
-                       .where.not(id: 159)
+    @completed_tasks = Task.order(created_at: :desc)
+                           .with_attached_photos
+                           .where(status: :completed)
+                           .where.not(id: 159)
+    @in_progress_tasks = Task.order(created_at: :desc)
+                             .with_attached_photos
+                             .where(status: :accepted)
   end
 
   def update
