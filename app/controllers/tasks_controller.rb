@@ -33,10 +33,10 @@ class TasksController < ApplicationController
   def index
     @open_tasks = Task.order(created_at: :desc)
                       .with_attached_photos
-                      .where(status: %i[open])
+                      .where(status: :open)
     @accepted_tasks = Task.order(created_at: :desc)
                           .with_attached_photos
-                          .where(status: :status)
+                          .where(status: :accepted)
                           .where.not(id: 157)
     @completed_tasks = Task.order(created_at: :desc)
                            .with_attached_photos
