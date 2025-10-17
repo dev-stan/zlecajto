@@ -1,0 +1,12 @@
+- @task_array.each do |task|
+    = render Tasks::TaskCardComponent.new(task: task, path: task_path(task), variant: :default, current_user: @current_user) do |card|
+        - card.with_image do
+            - if task.photos.attached?
+                = image_tag task.photos.first.variant(resize_to_fill: [640, 360]), class: "hidden md:block w-full h-48 object-cover", alt: task.title, loading: "lazy"
+            - else
+                .hidden.md:flex.h-48.w-full.bg-gray-200.items-center.justify-center
+                    i.fas.fa-image.text-gray-400.text-6xl
+        - card.with_badge do
+            = render Ui::BadgeComponent.new(text: task.category, variant: :blue)
+        - card.with_badge do
+            = render Ui::BadgeComponent.new(text: task.payment_method, variant: :green)
