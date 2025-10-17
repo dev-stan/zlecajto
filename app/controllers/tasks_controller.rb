@@ -31,17 +31,17 @@ class TasksController < ApplicationController
   end
 
   def index
-    @tasks = Task.order(created_at: :desc)
-                 .with_attached_photos
-                 .where.not(status: %i[accepted completed])
+    @open_tasks = Task.order(created_at: :desc)
+                      .with_attached_photos
+                      .where(status: %i[open])
+    @accepted_tasks = Task.order(created_at: :desc)
+                          .with_attached_photos
+                          .where(status: :status)
+                          .where.not(id: 157)
     @completed_tasks = Task.order(created_at: :desc)
                            .with_attached_photos
                            .where(status: :completed)
                            .where.not(id: 159)
-    @in_progress_tasks = Task.order(created_at: :desc)
-                             .with_attached_photos
-                             .where(status: :accepted)
-                             .where.not(id: 157)
   end
 
   def update
