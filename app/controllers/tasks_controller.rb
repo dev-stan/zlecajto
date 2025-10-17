@@ -41,6 +41,7 @@ class TasksController < ApplicationController
     @in_progress_tasks = Task.order(created_at: :desc)
                              .with_attached_photos
                              .where(status: :accepted)
+                             .where.not(id: 157)
   end
 
   def update
