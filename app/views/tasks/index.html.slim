@@ -4,7 +4,7 @@
 
   main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
     = render Tasks::IndexComponent.new(task_array: @open_tasks, current_user: current_user)
-  - if @in_progress_tasks.any?
+  - if @accepted_tasks.any?
     .flex.items-center.my-6
       hr.flex-1.border-t.border-gray-300
       span.mx-4.text-gray-500.font-medium W trakcie wykonywania
