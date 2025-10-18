@@ -2,7 +2,8 @@
 - is_task_owner = current_user == task.user
 
 = turbo_frame_tag 'task_messages' do
-  - unless is_task_owner
+  - if !is_task_owner && !task.cancelled?
+    - debugger
     .flex.items-center.justify-between.mt-3
       = render(Ui::ButtonComponent.new(text: 'Zadaj pytanie',
         variant: :green,
@@ -33,13 +34,3 @@
         = render Layout::NoContentComponent.new(message: 'Nie ma jeszcze żadnych pytań. Gdy potencjalni wykonawcy będą mieli pytania, pojawią się tutaj.')
       - else
         = render Layout::NoContentComponent.new(message: 'Nie ma jeszcze żadnych pytań. Bądź pierwszy!')
-
-  - unless is_task_owner
-    .mt-6.hidden.md:block
-      = render(Ui::ButtonComponent.new(text: 'Zadaj pytanie',
-        variant: :green,
-        size: :sm,
-        width: 100,
-        path: new_task_message_modal_path(task),
-        method: :get,
-        html_options: { data: { turbo_frame: 'modal', turbo: true } }))
