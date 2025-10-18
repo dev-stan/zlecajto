@@ -1,6 +1,7 @@
 - accepted_submission = @task.submissions.accepted.first
 
 h3.text-lg.font-semibold.text-gray-900.mt-3 = @presenter.submissions_header
+
 - if accepted_submission
   ul.space-y-4.mt-3
     - @task.submissions.accepted.limit(1).each do |submission|
@@ -49,6 +50,7 @@ h3.text-lg.font-semibold.text-gray-900.mt-3 = @presenter.submissions_header
                   = render Ui::ButtonComponent.new(text: 'Odpowiedz', variant: :blue, size: :sm, path: new_answer_modal_path(submission), method: :get, html_options: { class: 'w-1/2 font-bold text-lg', data: { turbo_frame: 'modal', turbo: true } })
                 - else
                   = render Ui::ButtonComponent.new(text: 'Odpowiedz', variant: :blue, size: :sm, path: new_answer_modal_path(submission), method: :get, html_options: { class: 'w-full font-bold text-lg', data: { turbo_frame: 'modal', turbo: true } })
+
 - else
   .mt-3
     - if @presenter.owner?
