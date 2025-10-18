@@ -3,7 +3,9 @@
   .bg-primary.rounded-2xl.p-6.flex.flex-col.md:flex-row.items-center.space-y-4.md:space-y-0.md:space-x-8
     .flex-1.relative
         .flex.flex-col.justify-center.h-full
-          - if @task.submissions.accepted.none?
+          - if @task.cancelled?
+            h2.text-5xl.font-bold.text-white.mb-2 = "Zlecenie anulowane..."
+          - elsif @task.submissions.accepted.none?
             h2.text-5xl.font-bold.text-white.mb-2 = "Masz #{t('tasks.submissions', count: @task.submissions.count)}"  
             - if @task.submissions.count > 0
               p.text-white.mb-0 Twoje zlecenie otrzymało właśnie nowe zgłoszenie! Przejrzyj profil wykonawcy i zaakceptuj zlecenie gdy będziesz gotowy
