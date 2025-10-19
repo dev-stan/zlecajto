@@ -47,7 +47,9 @@ Rails.application.routes.draw do
 
   # User-specific routes
   namespace :users do
-    resource :profile, only: %i[edit update]
+    resource :profile, only: %i[edit update] do
+      get :choose_role
+    end
   end
 
   # Task Wizard Routes (separate from CRUD)
