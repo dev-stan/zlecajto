@@ -30,6 +30,15 @@ class Submission < ApplicationRecord
     end
   end
 
+  # Ransack allowlist for ActiveAdmin
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[id task_id user_id note status created_at updated_at]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    %w[task user answers notifications]
+  end
+
   private
 
   def cannot_apply_to_own_task

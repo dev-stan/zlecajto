@@ -20,4 +20,13 @@ class Notification < ApplicationRecord
   def mark_as_read!
     update!(read_at: Time.current) if read_at.nil?
   end
+
+  # Ransack allowlist for ActiveAdmin
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[id user_id subject read_at notifiable_type notifiable_id created_at updated_at]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    %w[user notifiable]
+  end
 end
