@@ -14,5 +14,9 @@ module Users
                                         keys: [:first_name, :last_name, :profile_picture, :phone_number,
                                                { superpowers: [] }])
     end
+
+    def after_sign_up_path_for(_resource)
+      edit_users_profile_path
+    end
   end
 end
