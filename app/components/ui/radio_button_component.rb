@@ -43,7 +43,7 @@ module Ui
 
     private
 
-    attr_reader :name, :value, :checked, :id, :label, :style, :options, :with_emoji
+    attr_reader :name, :value, :checked, :id, :label, :style, :options
 
     def build_id
       [name, value].map { |v| v.to_s.parameterize }.join('_')
