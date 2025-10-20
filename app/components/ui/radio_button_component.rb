@@ -30,8 +30,7 @@ module Ui
       'Obojętnie' => '❓'
     }.freeze
 
-    def initialize(name:, value:, checked: false, id: nil, label: nil, style: :default, with_emoji: true,
-                   html_options: {})
+    def initialize(name:, value:, checked: false, id: nil, label: nil, style: :default, html_options: {})
       super()
       @name = name
       @value = value
@@ -40,7 +39,6 @@ module Ui
       @label = label
       @style = style.to_sym
       @options = html_options
-      @with_emoji = with_emoji
     end
 
     private
@@ -52,8 +50,6 @@ module Ui
     end
 
     def display_emoji
-      return '' unless with_emoji
-
       CATEGORY_EMOJIS[label] || TIMESLOT_EMOJIS[value.to_s] || PAYMENT_METHODS_EMOJIS[label] || ''
     end
   end

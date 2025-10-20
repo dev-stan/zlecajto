@@ -17,7 +17,11 @@ module Users
 
     def update
       if @user.update(profile_params)
-        redirect_to after_sign_in_path_for(@user)
+        if request.referer&.include?('/profile')
+          redirect_to profile_path
+        else
+          redirect_to after_sign_in_path_for(@user)
+        end
       else
         render :edit, status: :unprocessable_entity
       end
