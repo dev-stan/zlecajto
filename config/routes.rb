@@ -3,6 +3,8 @@
 require 'sidekiq/web' # for Sidekiq Web UI
 
 Rails.application.routes.draw do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   # Static pages
   get 'pages/waitlist'
   root 'pages#home'
