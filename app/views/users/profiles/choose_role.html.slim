@@ -6,7 +6,6 @@
             = render "devise/shared/error_messages", resource: @user
             - selected_role = params.dig(:user, :role).presence || @user.role
             .mb-6
-                p.text-sm.text-gray-600.mb-2 Wybierz rolę:
                 ul.grid.grid-cols-2.gap-3.mb-3
                     li
                         = render Ui::RadioButtonComponent.new(name: 'user[role]',
@@ -28,5 +27,6 @@
                     label: 'Chcę zlecać i wykonywać',
                     style: :rounded,
                     html_options: { class: 'required border-gray-300 w-full' })
-            .mt-6
+            
+            .py-6
                 = render Ui::ButtonComponent.new(text: "Zapisz", submit: true, width: 100)

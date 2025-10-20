@@ -9,7 +9,7 @@ module Users
 
     def update
       if @user.update(profile_params)
-        redirect_to profile_path, notice: 'Profil uzupełniony!'
+        redirect_to p_path, notice: 'Profil uzupełniony!'
       else
         render :edit, status: :unprocessable_entity
       end
