@@ -38,4 +38,14 @@ class Task < ApplicationRecord
       send_completed_submission_email
     end
   end
+
+  # Ransack allowlist for ActiveAdmin
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[id title description salary status user_id category due_date location payment_method timeslot created_at
+       updated_at]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    %w[user submissions task_messages notifications]
+  end
 end

@@ -60,6 +60,15 @@ class TaskMessage < ApplicationRecord
     task.user
   end
 
+  # Ransack allowlist for ActiveAdmin
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[id task_id user_id parent_id body message_type created_at updated_at]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    %w[task user parent replies]
+  end
+
   private
 
   # Recursively appends descendants in created_at ascending order

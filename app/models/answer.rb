@@ -6,6 +6,15 @@ class Answer < ApplicationRecord
   after_create :send_new_answer_email
   validates :message, presence: true, length: { maximum: 1000 }
 
+  # Ransack allowlist for ActiveAdmin
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[id user_id submission_id message created_at updated_at]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    %w[user submission]
+  end
+
   private
 
   def send_new_answer_email

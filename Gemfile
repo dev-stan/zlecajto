@@ -99,3 +99,7 @@ gem 'sinatra', require: false # needed for sidekiq/web UI
 gem 'slim-rails', '~> 3.7'
 gem 'ultimate_turbo_modal', '~> 2.2'
 gem 'view_component'
+
+gem "activeadmin", "~> 3.3"
+
+gem "sassc", "~> 2.4"

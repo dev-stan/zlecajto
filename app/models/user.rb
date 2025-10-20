@@ -37,4 +37,9 @@ class User < ApplicationRecord
   def google_oauth_user?
     provider.present? && uid.present?
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    %w[address admin category created_at current_sign_in_at current_sign_in_ip email
+       encrypted_password first_name id id_value last_name last_seen_accepted_submission_at last_sign_in_at last_sign_in_ip phone_number provider remember_created_at reset_password_sent_at reset_password_token role sign_in_count superpowers uid updated_at verified]
+  end
 end
