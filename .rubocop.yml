@@ -19,8 +19,8 @@ Rails/HasManyOrHasOneDependent:
 Metrics/MethodLength:
   Max: 15
 
-Style/GuardClause:
+Style/IfUnlessModifier:
   Enabled: false
 
-Style/IfUnlessModifier:
+Style/GuardClause:
   Enabled: false
