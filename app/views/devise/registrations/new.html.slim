@@ -43,21 +43,21 @@ section.max-w-3xl.mx-auto.px-4.sm:px-6.lg:px-12.pt-8
             value: nil,
             html_options: { autocomplete: 'new-password', type: 'password', class: 'w-full shadow border-2 border-gray-300' })
 
-        = render Input::ImageUploadComponent.new(form: f,
-            name: :profile_picture,
-            label: t('activerecord.attributes.user.profile_picture', default: 'Zdjęcie profilowe'),
-            multiple: false,
-            direct_upload: true,
-            input_id: 'user_profile_picture',
-            required: false,
-            html_options: { class: 'w-full' })
-        .flex.flex-col.gap-3.justify-center.w-full.items-center
-          = render Ui::ButtonComponent.new(text: "Utwórz konto", submit: true, size: :md, html_options: { class: 'w-full shadow' })
-          = link_to user_google_oauth2_omniauth_authorize_path, method: :post, data: { turbo: 'false' }, class: "py-3 w-full flex items-center justify-center gap-3 px-4 rounded-4xl bg-white border border-gray-300 shadow hover:bg-gray-50 transition font-semibold text-gray-700 text-base" do
-            = image_tag 'google.png', alt: 'Google', class: 'h-6 w-6 rounded-full bg-white '
-            | Zarejestruj  się przez Google
-        = hidden_field_tag :step, 100
-  .mt-6.text-center.text-base.text-gray-600
+      = render Input::ImageUploadComponent.new(form: f,
+          name: :profile_picture,
+          label: t('activerecord.attributes.user.profile_picture', default: 'Zdjęcie profilowe'),
+          multiple: false,
+          direct_upload: true,
+          input_id: 'user_profile_picture',
+          required: false,
+          html_options: { class: 'w-full' })
+    .flex.flex-col.gap-3.justify-center.w-full.items-center
+      = render Ui::ButtonComponent.new(text: "Utwórz konto", submit: true, size: :md, html_options: { class: 'w-full shadow' })
+      = link_to user_google_oauth2_omniauth_authorize_path, method: :post, data: { turbo: 'false' }, class: "py-3 w-full flex items-center justify-center gap-3 px-4 rounded-4xl bg-white border border-gray-300 shadow hover:bg-gray-50 transition font-semibold text-gray-700 text-base" do
+        = image_tag 'google.png', alt: 'Google', class: 'h-6 w-6 rounded-full bg-white '
+        | Zarejestruj  się przez Google
+    = hidden_field_tag :step, 100
+  .mt-6.text-center.text-base.text-gray-600.pb-3
     = link_to "Masz już konto? Zaloguj się", new_user_session_path, class: "font-medium text-primary hover:text-blue-800"
 
 
