@@ -1,0 +1,13 @@
+= turbo_frame_tag 'modal' do
+  = render Ui::FormModalComponent.new(title: 'Wybierz kategorię') do
+    = form_with @user, url: users_profile_path, method: :patch, data: { turbo_frame: '_top' } do |f|
+        ul.grid.grid-cols-5.gap-3
+        - @categories.each do |cat|
+          - id = "cat_#{cat.parameterize}"
+          li
+            = render Ui::RadioButtonComponent.new(name: 'task[category]',
+                value: cat,
+                checked: task.category == cat,
+                id: id,
+                label: cat,
+                style: :square)

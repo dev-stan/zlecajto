@@ -1,0 +1,26 @@
+= turbo_frame_tag 'modal' do
+	= render Ui::FormModalComponent.new(title: 'Podgląd zdjęć') do
+		- if @photos.present?
+			.relative.w-full
+				div class="relative bg-black rounded-lg overflow-hidden" data-controller="carousel" data-carousel-index-value=@start_index style="height: 65vh;"
+					/ Slides
+					- @photos.each_with_index do |photo, i|
+						- active = i == @start_index.to_i
+						.absolute.inset-0.flex.items-center.justify-center.transition-opacity.duration-200.ease-out class=(active ? 'opacity-100' : 'opacity-0 pointer-events-none') data-carousel-target="slide"
+							= image_tag photo.variant(resize_to_limit: [1600, 1600]), alt: "Zdjęcie ##{i + 1}", class: 'object-contain w-full h-full'
+					/ Navigation arrows
+					button.absolute.left-2.top-1/2.-translate-y-1/2.bg-white/70.hover:bg-white.text-gray-800.rounded-full.w-10.h-10.flex.items-center.justify-center.shadow.z-10 data-action="click->carousel#prev" aria-label="Poprzednie zdjęcie"
+						i.fa-solid.fa-chevron-left
+					button.absolute.right-2.top-1/2.-translate-y-1/2.bg-white/70.hover:bg-white.text-gray-800.rounded-full.w-10.h-10.flex.items-center.justify-center.shadow.z-10 data-action="click->carousel#next" aria-label="Następne zdjęcie"
+						i.fa-solid.fa-chevron-right
+				/ Indicators
+				.mt-3.flex.items-center.justify-center.gap-2
+					- @photos.each_with_index do |_, i|
+						- active = i == @start_index.to_i
+						button.w-2.h-2.rounded-full.ring-0 class=(active ? 'bg-white ring-2 ring-white' : 'bg-white/50') data-carousel-target="indicator" data-action="click->carousel#go" data-carousel-index-param=i aria-label="Idź do zdjęcia #{i + 1}"
+			.mt-4
+				= render(Ui::ButtonComponent.new(text: 'Zamknij', variant: :blue, size: :sm, button: true, html_options: { class: 'w-full', data: { action: 'click->modal#close' } }))
+		- else
+			.text-center.text-gray-600 Brak zdjęć do wyświetlenia.
+			.mt-4
+				= render(Ui::ButtonComponent.new(text: 'Zamknij', variant: :blue, size: :sm, button: true, html_options: { class: 'w-full', data: { action: 'click->modal#close' } }))

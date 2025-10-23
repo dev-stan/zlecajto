@@ -55,6 +55,12 @@ class ModalsController < ApplicationController
     respond_to(&:html)
   end
 
+  def choose_user_category
+    @user = current_user
+    @categories = Task::CATEGORIES
+    respond_to(&:html)
+  end
+
   # GET /task_messages/:id/reply_modal
   def reply_task_message
     @parent_message = TaskMessage.find(params[:id])
@@ -65,6 +71,16 @@ class ModalsController < ApplicationController
     @task_message = TaskMessage.new(task: @task, parent: @parent_message, message_type: :reply)
     root_author = @parent_message.thread_root.user
     head :forbidden and return unless current_user && (current_user == @task.user || current_user == root_author)
+
+    respond_to(&:html)
+  end
+
+  # GET /task_messages/:id/photos_modal
+  # Shows a gallery of photos attached to a task message
+  def task_message_photos
+    @message = TaskMessage.find(params[:id])
+    @photos = @message&.photos&.attached? ? @message.photos : []
+    @start_index = params[:index].to_i
 
     respond_to(&:html)
   end

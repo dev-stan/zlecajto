@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   # Edit modals
   get 'tasks/:id/edit_modal', to: 'modals#edit_task', as: :edit_task_modal
   get 'users/profile/edit_modal', to: 'modals#edit_profile', as: :edit_profile_modal
+  get 'users/choose_category_modal', to: 'modals#choose_user_category', as: :choose_user_category_modal
 
   # Close modal
   delete 'modal', to: 'modals#destroy', as: 'close_modal'
@@ -69,6 +70,9 @@ Rails.application.routes.draw do
   scope path: 'task_messages' do
     get 'create_from_session', to: 'task_messages#create_from_session', as: :create_from_session_task_message
   end
+
+  # Media viewing modals
+  get 'task_messages/:id/photos_modal', to: 'modals#task_message_photos', as: :task_message_photos_modal
 
   # Tasks CRUD routes
   resources :tasks, only: %i[index show edit update destroy] do
