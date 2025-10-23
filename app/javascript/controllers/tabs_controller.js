@@ -6,7 +6,6 @@ export default class extends Controller {
    connect() {
     requestAnimationFrame(() => {
       const urlParams = new URLSearchParams(window.location.search)
-      const tabFromUrl = urlParams.get("tab")
 
       const initialTab = this.element.dataset.tabsInitialTab ||
                         new URLSearchParams(window.location.search).get("tab") ||

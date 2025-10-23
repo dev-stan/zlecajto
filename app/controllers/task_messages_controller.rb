@@ -93,7 +93,6 @@ class TaskMessagesController < ApplicationController
       @parent_message = task_message.parent
       'modals/reply_task_message'
     else
-      # [asap] Fix this, supper buggy - add text validation to modal as well
       'modals/new_task_message'
     end
   end

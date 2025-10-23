@@ -4,16 +4,12 @@ export default class extends Controller {
   static targets = ["overlay", "content"]
 
   connect() {
-    console.log("Modal controller connected")
-    console.log("Has overlay target:", this.hasOverlayTarget)
-    console.log("Has content target:", this.hasContentTarget)
     
     const content = this.hasContentTarget ? this.contentTarget : this.element.firstElementChild
     content?.classList.add("animate-fade-in")
   }
 
   close(event) {
-    console.log("Close method called", event)
     event?.preventDefault()
 
     const overlay = this.hasOverlayTarget ? this.overlayTarget : null
@@ -47,7 +43,7 @@ export default class extends Controller {
     event.stopPropagation()
   }
 
-  // ✅ NEW: close modal when clicking outside content
+  // close modal when clicking outside content
   closeIfOutside(event) {
     if (!this.hasContentTarget || !this.contentTarget.contains(event.target)) {
       this.close(event)
