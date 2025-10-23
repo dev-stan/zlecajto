@@ -17,7 +17,7 @@ module Users
 
     def update
       if @user.update(profile_params)
-        if request.referer&.include?('/profile')
+        if request.referer&.end_with?('/profile')
           redirect_to profile_path
         else
           redirect_to after_sign_in_path_for(@user)
