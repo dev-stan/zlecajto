@@ -20,21 +20,39 @@
   .mx-auto.px-4
     - requested_tab = params[:tab].presence
     - active_tab = requested_tab || (@tasks.any? ? 'tasks' : 'submissions')
-    div data-controller="tabs"
+    div data-controller="tabs" data-tabs-initial-tab=active_tab
       .flex.flex-row.justify-center
         nav.flex role="tablist"
-          div.relative.inline-block
-            button.py-3.px-6.text-lg.font-semibold.transition data-action="tabs#show" data-tabs-target="tab" data-tab="tasks" role="tab" aria-selected=(active_tab == 'tasks') class=(active_tab == 'tasks' ? 'text-black' : 'text-gray-500')
-              = 'Zlecam'
+          / Tasks tab
+          .relative.inline-block
+            button.py-3.px-6.text-md.font-semibold.transition(
+              data-action="tabs#show"
+              data-tabs-target="tab"
+              data-tab="tasks"
+              role="tab"
+              aria-selected=(active_tab == 'tasks')
+              class=(active_tab == 'tasks' ? 'text-black' : 'text-gray-500')
+            )
+              | Zlecam
               - if @tasks.any?
-                span.ml-2.inline-flex.items-center.justify-center.text-base.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @tasks.size
-            div class="absolute bottom-0 left-0 w-full h-[4px] bg-blue-700 rounded-full" data-tabs-target="indicator" data-tab="tasks"
-          div.relative.inline-block
-            button.py-3.px-6.text-lg.font-semibold.transition data-action="tabs#show" data-tabs-target="tab" data-tab="submissions" role="tab" aria-selected=(active_tab == 'submissions') class=(active_tab == 'submissions' ? 'text-black' : 'text-gray-500')
-              = 'Wykonuję'
+                span.ml-2.inline-flex.items-center.justify-center.text-base.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @tasks.count
+              div(data-tabs-target="indicator" data-tab="tasks")
+
+          / Submissions tab
+          .relative.inline-block
+            button.py-3.px-6.text-md.font-semibold.transition(
+              data-action="tabs#show"
+              data-tabs-target="tab"
+              data-tab="submissions"
+              role="tab"
+              aria-selected=(active_tab == 'submissions')
+              class=(active_tab == 'submissions' ? 'text-black' : 'text-gray-500')
+            )
+              | Wykonuję
               - if @submissions.any?
-                span.ml-2.inline-flex.items-center.justify-center.text-base.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @submissions.size
-            div data-tabs-target="indicator" data-tab="submissions"
+                span.ml-2.inline-flex.items-center.justify-center.text-base.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @submissions.count
+              div(data-tabs-target="indicator" data-tab="submissions")
+
 
       .border-t.border-gray-400.-mx-4
       / Tasks panel
