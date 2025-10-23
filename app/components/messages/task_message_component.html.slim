@@ -5,7 +5,7 @@
   p.text-base.text-gray-600 = message.body
   span.text-base.text-gray-500 = formatted_date(message.created_at) if message.root?
   - if @message&.photos&.attached?
-    .mt-3.grid.grid-cols-3.gap-3
+    .mt-3.flex.gap-4
       - @message.photos.each_with_index do |photo, i|
         = link_to task_message_photos_modal_path(@message, index: i), data: { turbo_frame: 'modal' }, class: 'relative w-17 h-17 rounded-md overflow-hidden bg-gray-200 flex items-center justify-center group' do
           = image_tag photo.variant(resize_to_limit: [256, 256]), alt: 'Task Image', class: 'object-cover w-full h-full'

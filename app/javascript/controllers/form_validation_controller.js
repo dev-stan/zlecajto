@@ -244,6 +244,18 @@ export default class extends Controller {
             required: 'Metoda płatności jest wymagana'
           }
         }
+      },
+      // Task messages (questions/replies) modal (step 300)
+      300: {
+        'task_message[body]': {
+          required: true,
+          maxLength: 2500,
+          fieldName: 'Wiadomość',
+          errors: {
+            required: 'Wiadomość jest wymagana',
+            maxLength: 'Wiadomość nie może przekraczać 2500 znaków'
+          }
+        }
       }
     }
 
