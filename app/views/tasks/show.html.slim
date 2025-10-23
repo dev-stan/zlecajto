@@ -41,10 +41,18 @@
             nav.flex role="tablist"
               / Submissions tab
               .relative.inline-block
-                button.py-3.px-6.text-md.font-semibold.transition(data-action="tabs#show" data-tabs-target="tab" data-tab="submissions" role="tab" aria-selected=(active_tab == 'submissions') class=(active_tab == 'submissions' ? 'text-black' : 'text-gray-500')) Zgłoszenia
-                - if @task.submissions.any?
-                  span.ml-2.inline-flex.items-center.justify-center.text-base.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @task.submissions.count
-                div(data-tabs-target="indicator" data-tab="submissions")
+                button.py-3.px-6.text-md.font-semibold.transition( 
+                  data-action="tabs#show"
+                  data-tabs-target="tab"
+                  data-tab="submissions"
+                  role="tab"
+                  aria-selected=(active_tab == 'submissions')
+                  class=(active_tab == 'submissions' ? 'text-black' : 'text-gray-500')
+                )
+                  | Zgłoszenia
+                  - if @task.submissions.any?
+                    span.ml-2.inline-flex.items-center.justify-center.text-base.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @task.submissions.count
+                  div(data-tabs-target="indicator" data-tab="submissions")
 
               / Questions
               .relative.inline-block
@@ -55,10 +63,11 @@
                   role="tab"
                   aria-selected=(active_tab == 'questions')
                   class=(active_tab == 'questions' ? 'text-black' : 'text-gray-500')
-                ) Pytania
-                - if @task.task_messages.root.any?
-                  span.ml-2.inline-flex.items-center.justify-center.text-base.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @task.task_messages.root.count
-                div(data-tabs-target="indicator" data-tab="questions")
+                ) 
+                  | Pytania
+                  - if @task.task_messages.root.any?
+                    span.ml-2.inline-flex.items-center.justify-center.text-base.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @task.task_messages.root.count
+                  div(data-tabs-target="indicator" data-tab="questions")
 
           .mt-4
           .space-y-6 data-tabs-target="panel" data-tab="submissions" class=(active_tab == 'submissions' ? '' : 'hidden')
