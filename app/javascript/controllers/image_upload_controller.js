@@ -76,7 +76,7 @@ export default class extends Controller {
     const reader = new FileReader()
     reader.onload = e => {
       const wrapper = document.createElement('div')
-      wrapper.className = 'relative w-20 h-20 rounded-md overflow-hidden bg-gray-200 flex items-center justify-center group'
+      wrapper.className = 'relative w-17 h-17 rounded-md overflow-hidden bg-gray-200 flex items-center justify-center group'
       const img = document.createElement('img')
       img.src = e.target.result
       img.alt = file.name

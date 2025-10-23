@@ -69,6 +69,16 @@ class ModalsController < ApplicationController
     respond_to(&:html)
   end
 
+  # GET /task_messages/:id/photos_modal
+  # Shows a gallery of photos attached to a task message
+  def task_message_photos
+    @message = TaskMessage.find(params[:id])
+    @photos = @message&.photos&.attached? ? @message.photos : []
+    @start_index = params[:index].to_i
+
+    respond_to(&:html)
+  end
+
   # Clears the global modal frame
   def destroy
     respond_to do |format|

@@ -70,6 +70,9 @@ Rails.application.routes.draw do
     get 'create_from_session', to: 'task_messages#create_from_session', as: :create_from_session_task_message
   end
 
+  # Media viewing modals
+  get 'task_messages/:id/photos_modal', to: 'modals#task_message_photos', as: :task_message_photos_modal
+
   # Tasks CRUD routes
   resources :tasks, only: %i[index show edit update destroy] do
     member do

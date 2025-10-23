@@ -32,7 +32,8 @@ class TaskMessagesController < ApplicationController
   end
 
   def task_message_params
-    params.require(:task_message).permit(:body, :parent_id, :message_type)
+    # Allow direct uploads via ActiveStorage on :photos
+    params.require(:task_message).permit(:body, :parent_id, :message_type, photos: [])
   end
 
   def handle_message_save(task_message)
@@ -52,9 +53,16 @@ class TaskMessagesController < ApplicationController
 
   def handle_message_error(task_message)
     respond_to do |format|
-      format.turbo_stream { render error_template_for(task_message), status: :unprocessable_entity }
+      # Ensure views have the expected instance variable
+      @task_message = task_message
+
+      format.turbo_stream do
+        # Re-render the modal content inside the global 'modal' frame
+        html = render_to_string(template: error_template_for(task_message), formats: [:html])
+        render turbo_stream: turbo_stream.update('modal', html), status: :unprocessable_entity
+      end
       format.html do
-        redirect_to @task, alert: "Nie udało się dodać wiadomości: #{task_message.errors.full_messages.join(', ')}"
+        render error_template_for(task_message), status: :unprocessable_entity
       end
     end
   end

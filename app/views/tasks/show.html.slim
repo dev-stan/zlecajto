@@ -27,22 +27,38 @@
           = render Users::AvatarComponent.new(user: @task.user, size: 'md', current_user: current_user)
           p.font-semibold = "Zadanie zleca #{@task.user.first_name}"
         - requested_tab = params[:tab].presence
-        - active_tab = requested_tab || 'submissions'
-        div data-controller="tabs"
+        - if requested_tab
+          - active_tab = requested_tab
+        - elsif @task.submissions.any?
+          - active_tab = 'submissions'
+        - elsif @task.task_messages.any?
+          - active_tab = 'questions'
+        - else
+          - active_tab = 'submissions'
+
+        div data-controller="tabs" data-tabs-initial-tab=active_tab
           .flex.flex-row.justify-center
             nav.flex role="tablist"
-              div.relative.inline-block
-                button.py-3.px-6.text-md.font-semibold.transition data-action="tabs#show" data-tabs-target="tab" data-tab="submissions" role="tab" aria-selected=(active_tab == 'submissions') class=(active_tab == 'submissions' ? 'text-black' : 'text-gray-500')
-                  = 'Zgłoszenia'
-                  - if @task.submissions.any?
-                    span.ml-2.inline-flex.items-center.justify-center.text-base.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @task.submissions.count
-                div class="absolute bottom-0 left-0 w-full h-[4px] bg-blue-700 rounded-full" data-tabs-target="indicator" data-tab="submissions"
-              div.relative.inline-block
-                button.py-3.px-6.text-md.font-semibold.transition data-action="tabs#show" data-tabs-target="tab" data-tab="questions" role="tab" aria-selected=(active_tab == 'questions') class=(active_tab == 'questions' ? 'text-black' : 'text-gray-500')
-                  = 'Pytania'
-                  - if @task.task_messages.root.any?
-                    span.ml-2.inline-flex.items-center.justify-center.text-base.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @task.task_messages.root.count
-                div data-tabs-target="indicator" data-tab="questions"
+              / Submissions tab
+              .relative.inline-block
+                button.py-3.px-6.text-md.font-semibold.transition(data-action="tabs#show" data-tabs-target="tab" data-tab="submissions" role="tab" aria-selected=(active_tab == 'submissions') class=(active_tab == 'submissions' ? 'text-black' : 'text-gray-500')) Zgłoszenia
+                - if @task.submissions.any?
+                  span.ml-2.inline-flex.items-center.justify-center.text-base.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @task.submissions.count
+                div(data-tabs-target="indicator" data-tab="submissions")
+
+              / Questions
+              .relative.inline-block
+                button.py-3.px-6.text-md.font-semibold.transition(
+                  data-action="tabs#show"
+                  data-tabs-target="tab"
+                  data-tab="questions"
+                  role="tab"
+                  aria-selected=(active_tab == 'questions')
+                  class=(active_tab == 'questions' ? 'text-black' : 'text-gray-500')
+                ) Pytania
+                - if @task.task_messages.root.any?
+                  span.ml-2.inline-flex.items-center.justify-center.text-base.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @task.task_messages.root.count
+                div(data-tabs-target="indicator" data-tab="questions")
 
           .mt-4
           .space-y-6 data-tabs-target="panel" data-tab="submissions" class=(active_tab == 'submissions' ? '' : 'hidden')

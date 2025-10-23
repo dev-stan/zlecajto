@@ -6,6 +6,9 @@ class TaskMessage < ApplicationRecord
   belongs_to :parent, class_name: 'TaskMessage', optional: true
   has_many :replies, class_name: 'TaskMessage', foreign_key: :parent_id, dependent: :destroy
 
+  # Images attached to this message (e.g., up to 3 screenshots/photos)
+  has_many_attached :photos
+
   after_create :send_new_question_email, if: :question?
   after_create :send_new_reply_email, if: :reply?
 

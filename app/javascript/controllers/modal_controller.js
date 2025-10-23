@@ -4,6 +4,7 @@ export default class extends Controller {
   static targets = ["overlay", "content"]
 
   connect() {
+    
     const content = this.hasContentTarget ? this.contentTarget : this.element.firstElementChild
     content?.classList.add("animate-fade-in")
   }
@@ -23,11 +24,12 @@ export default class extends Controller {
       overlay.classList.add("bg-transparent")
     }
 
-  // Clear shortly after transitions finish; keep in sync with CSS durations
-  setTimeout(() => this.clear(), 300)
+    // Clear shortly after transitions finish; keep in sync with CSS durations
+    setTimeout(() => this.clear(), 300)
   }
 
   clear() {
+    console.log("Clear method called")
     const modalFrame = document.querySelector('turbo-frame#modal')
     if (modalFrame && modalFrame.contains(this.element)) {
       modalFrame.innerHTML = ""
@@ -37,4 +39,14 @@ export default class extends Controller {
     this.element.remove()
   }
 
+  stopPropagation(event) {
+    event.stopPropagation()
+  }
+
+  // close modal when clicking outside content
+  closeIfOutside(event) {
+    if (!this.hasContentTarget || !this.contentTarget.contains(event.target)) {
+      this.close(event)
+    }
+  }
 }

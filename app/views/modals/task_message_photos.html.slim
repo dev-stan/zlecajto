@@ -1,0 +1,50 @@
+= turbo_frame_tag 'modal' do
+  / Overlay background
+  div.fixed.inset-0.z-50.bg-black/50.flex.items-center.justify-center.px-4(
+    data-controller="modal"
+    data-modal-target="overlay"
+    data-action="click->modal#closeIfOutside"
+  )
+
+    / Modal wrapper
+    div.flex.items-center.justify-center.animate-fade-in(
+      data-modal-target="content"
+      data-action="click->modal#stopPropagation"
+    )
+
+      / Carousel wrapper — inline-flex so it grows to image
+      div.relative.inline-flex.items-center.justify-center.overflow-hidden.rounded-lg(
+        data-controller="carousel"
+        data-carousel-index-value=@start_index
+      )
+
+        / Slides
+        - @photos.each_with_index do |photo, i|
+          - active = i == @start_index.to_i
+          div.transition-opacity.duration-300.ease-out(
+            class="#{active ? 'opacity-100 relative z-10' : 'opacity-0 absolute inset-0 pointer-events-none'}"
+            data-carousel-target="slide"
+          )
+            = image_tag photo.variant(resize_to_limit: [1920, 1080]),
+              alt: "Zdjęcie ##{i + 1}",
+              class: "block max-w-[90vw] max-h-[90vh] w-auto h-auto object-contain"
+        - if @photos.many?
+          / Navigation arrows
+          button.absolute.left-2.top-1/2.-translate-y-1/2.bg-white/70.hover:bg-white.text-gray-800.rounded-full.w-10.h-10.flex.items-center.justify-center.shadow.z-20(
+            data-action="click->carousel#prev"
+            aria-label="Poprzednie zdjęcie"
+          )
+            i.fa-solid.fa-chevron-left
+
+          button.absolute.right-2.top-1/2.-translate-y-1/2.bg-white/70.hover:bg-white.text-gray-800.rounded-full.w-10.h-10.flex.items-center.justify-center.shadow.z-20(
+            data-action="click->carousel#next"
+            aria-label="Następne zdjęcie"
+          )
+            i.fa-solid.fa-chevron-right
+
+        / Close button
+        .absolute.top-3.right-3.z-30
+          = render Ui::ButtonComponent.new(text: "Zamknij",
+            variant: :secondary,
+            size: :sm,
+            html_options: { data: { action: "click->modal#close" } })
