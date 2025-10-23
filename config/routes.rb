@@ -26,7 +26,6 @@ Rails.application.routes.draw do
   # Edit modals
   get 'tasks/:id/edit_modal', to: 'modals#edit_task', as: :edit_task_modal
   get 'users/profile/edit_modal', to: 'modals#edit_profile', as: :edit_profile_modal
-  get 'users/choose_category_modal', to: 'modals#choose_user_category', as: :choose_user_category_modal
 
   # Close modal
   delete 'modal', to: 'modals#destroy', as: 'close_modal'

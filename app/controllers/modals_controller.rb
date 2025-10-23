@@ -55,12 +55,6 @@ class ModalsController < ApplicationController
     respond_to(&:html)
   end
 
-  def choose_user_category
-    @user = current_user
-    @categories = Task::CATEGORIES
-    respond_to(&:html)
-  end
-
   # GET /task_messages/:id/reply_modal
   def reply_task_message
     @parent_message = TaskMessage.find(params[:id])

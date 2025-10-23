@@ -5,7 +5,6 @@
             = hidden_field_tag :authenticity_token, form_authenticity_token
             = f.hidden_field :message_type, value: 'reply'
             = f.hidden_field :parent_id, value: @parent_message.id
-                      / Text area with compact image picker (icon in bottom-right)
             .flex.flex-col.gap-2 data-controller="image-upload" data-image-upload-limit="3"
               / Validation wrapper holds the field and error; icon is anchored to the textarea only
               div data-field-wrapper=""
