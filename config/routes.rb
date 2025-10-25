@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   # Static pages
-  get 'pages/waitlist'
   root 'pages#home'
   get 'pages/tos'
   get 'pages/privacy'

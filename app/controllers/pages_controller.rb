@@ -37,7 +37,5 @@ class PagesController < ApplicationController
 
   def privacy; end
 
-  def waitlist; end
-
   def contact; end
 end
