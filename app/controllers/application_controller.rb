@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   before_action :set_whats_new_cookie
   before_action :ensure_persistent_login
   before_action :set_current_user
+  before_action :update_user_last_seen_at, if: :user_signed_in?
 
   protected
 
@@ -43,5 +44,12 @@ class ApplicationController < ActionController::Base
     scope = Devise::Mapping.find_scope!(current_user)
     remember_cookie = "#{scope}_remember_token"
     sign_in(current_user, remember_me: true) unless cookies.signed[remember_cookie].present?
+  end
+
+  def update_user_last_seen_at
+    # Only update if more than 5 minutes have passed
+    if current_user.last_seen_at.nil? || current_user.last_seen_at < 5.minutes.ago
+      current_user.update_column(:last_seen_at, Time.current)
+    end
   end
 end
