@@ -60,15 +60,6 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'my_tasks/:id', to: 'tasks#my_task', as: :my_task
-
-  # Task messages
-  resources :task_messages, only: [] do
-    collection do
-      get 'create_from_session', action: :create_from_session, as: :create_from_session_task_message
-    end
-  end
-
   # Submissions
   resources :submissions, only: %i[index show edit update destroy] do
     member do
@@ -84,6 +75,15 @@ Rails.application.routes.draw do
 
   # Answers
   resources :answers, only: [:create]
+
+  # Task messages
+  resources :task_messages, only: [] do
+    collection do
+      get 'create_from_session', action: :create_from_session, as: :create_from_session_task_message
+    end
+  end
+
+  get 'my_tasks/:id', to: 'tasks#my_task', as: :my_task
 
   # Modals
   scope controller: :modals do
