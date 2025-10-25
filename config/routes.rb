@@ -59,7 +59,9 @@ Rails.application.routes.draw do
       end
     end
   end
-
+  # Submissions from session
+  get 'submissions/create_from_session', to: 'submissions#create_from_session',
+                                         as: :create_from_session_submission
   # Submissions
   resources :submissions, only: %i[index show edit update destroy] do
     member do
@@ -68,20 +70,14 @@ Rails.application.routes.draw do
       get :accepted
       get :contact
     end
-    collection do
-      get 'create_from_session', action: :create_from_session, as: :create_from_session_submission
-    end
   end
 
   # Answers
   resources :answers, only: [:create]
 
-  # Task messages
-  resources :task_messages, only: [] do
-    collection do
-      get 'create_from_session', action: :create_from_session, as: :create_from_session_task_message
-    end
-  end
+  # Task messages from session
+  get 'task_messages/create_from_session', to: 'task_messages#create_from_session',
+                                           as: :create_from_session_task_message
 
   get 'my_tasks/:id', to: 'tasks#my_task', as: :my_task
 
