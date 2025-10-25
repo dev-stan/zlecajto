@@ -14,7 +14,7 @@ module LoginRedirect
 
     # 2. Fall back to pending flow flags
     if PendingSubmission.present?(session)
-      create_from_session_submissions_path
+      create_from_session_submission_path
     elsif PendingTaskMessage.present?(session)
       create_from_session_task_message_path
     elsif PendingTask.present?(session)
