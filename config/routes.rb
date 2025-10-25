@@ -1,96 +1,71 @@
 # frozen_string_literal: true
 
-require 'sidekiq/web' # for Sidekiq Web UI
+require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  devise_for :admin_users, ActiveAdmin::Devise.config
-  ActiveAdmin.routes(self)
-  # Static pages
-  root 'pages#home'
-  get 'pages/tos'
-  get 'pages/privacy'
-  get 'pages/contact'
-  get 'pages/categories'
-  get 'profile', to: 'pages#profile'
-
-  # Confirm modals
-  get 'users/sign_out/confirm', to: 'modals#confirm_logout', as: 'confirm_user_logout'
-  get 'submissions/:id/confirm_accept', to: 'modals#confirm_submission_accept', as: :confirm_submission_accept_modal
-  get 'submissions/:id/answer_modal', to: 'modals#new_answer', as: :new_answer_modal
-  get 'tasks/:id/task_message_modal', to: 'modals#new_task_message', as: :new_task_message_modal
-  get 'task_messages/:id/reply_modal', to: 'modals#reply_task_message', as: :reply_task_message_modal
-  get 'tasks/:id/confirm_complete', to: 'modals#confirm_task_complete', as: :confirm_task_complete_modal
-  get 'tasks/:id/delete_modal', to: 'modals#confirm_delete_task', as: :confirm_delete_task_modal
-
-  # Edit modals
-  get 'tasks/:id/edit_modal', to: 'modals#edit_task', as: :edit_task_modal
-  get 'users/profile/edit_modal', to: 'modals#edit_profile', as: :edit_profile_modal
-
-  # Close modal
-  delete 'modal', to: 'modals#destroy', as: 'close_modal'
-
-  # What's new modal
-  post 'whats_new/dismiss', to: 'whats_new#dismiss', as: :dismiss_whats_new
-
+  # Health check
   get 'up', to: 'rails/health#show', as: :rails_health_check
 
-  # Devise routes
+  # Admin
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
+
+  # Sidekiq Web UI, only for admins
+  authenticate :user, ->(u) { u.admin? } do
+    post '/scaler/scale_worker', to: 'sidekiq_scaler#scale'
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
+  # Static pages
+  root 'pages#home'
+  scope controller: :pages do
+    get 'pages/categories', action: :categories
+    get 'pages/tos', action: :tos
+    get 'pages/privacy', action: :privacy
+    get 'pages/contact', action: :contact
+  end
+
+  # Authentication
   devise_for :users, controllers: {
     registrations: 'users/registrations',
     omniauth_callbacks: 'users/omniauth_callbacks'
   }
 
-  # Sidekiq autoscaler endpoint
-  post '/scaler/scale_worker', to: 'sidekiq_scaler#scale'
-
-  # Sidekiq Web UI ([todo] admin only)
-  mount Sidekiq::Web => '/sidekiq'
-
-  # User-specific routes
+  # User profile
   namespace :users do
-    resource :profile, only: %i[edit update]
+    resource :profile, only: %i[show edit update]
   end
 
-  # Task Wizard Routes (separate from CRUD)
-  scope path: 'tasks' do
-    get 'new', to: 'task_wizard#new', as: :new_task
-    match 'wizard', to: 'task_wizard#wizard', via: %i[get post], as: :task_wizard
-    post 'create', to: 'task_wizard#create', as: :create_task
-    get 'create_from_session', to: 'task_wizard#create_from_session', as: :create_from_session_task
+  # Task wizard
+  scope path: 'tasks', controller: :task_wizard do
+    get 'new', action: :new, as: :new_task
+    match 'wizard', action: :wizard, via: %i[get post], as: :task_wizard
+    post 'create', action: :create, as: :create_task
+    get 'create_from_session', action: :create_from_session, as: :create_from_session_task
   end
 
-  scope path: 'submissions' do
-    get 'create_from_session', to: 'submissions#create_from_session', as: :create_from_session_submission
-  end
-
-  resources :answers, only: %i[create]
-
-  scope path: 'task_messages' do
-    get 'create_from_session', to: 'task_messages#create_from_session', as: :create_from_session_task_message
-  end
-
-  # Media viewing modals
-  get 'task_messages/:id/photos_modal', to: 'modals#task_message_photos', as: :task_message_photos_modal
-
-  # Tasks CRUD routes
+  # Tasks
   resources :tasks, only: %i[index show edit update destroy] do
     member do
-      patch :update
       get :created
       get :completed
     end
 
-    resources :task_messages, only: [:create] do
-      collection do
-        get :create_from_session
-      end
-    end
-
+    resources :task_messages, only: [:create]
     resources :submissions, only: %i[new create] do
       member do
         patch :accept
         patch :reject
       end
+    end
+  end
+
+  get 'my_tasks/:id', to: 'tasks#my_task', as: :my_task
+
+  # Task messages
+  resources :task_messages, only: [] do
+    collection do
+      get 'create_from_session', action: :create_from_session, as: :create_from_session_task_message
     end
   end
 
@@ -103,10 +78,28 @@ Rails.application.routes.draw do
       get :contact
     end
     collection do
-      get :create_from_session
+      get 'create_from_session', action: :create_from_session, as: :create_from_session_submission
     end
   end
 
-  # Custom routes
-  get 'my_tasks/:id', to: 'tasks#my_task', as: :my_task
+  # Answers
+  resources :answers, only: [:create]
+
+  # Modals
+  scope controller: :modals do
+    get 'users/sign_out/confirm', action: :confirm_logout, as: :confirm_user_logout
+    get 'users/profile/edit_modal', action: :edit_profile, as: :edit_profile_modal
+    get 'tasks/:id/edit_modal', action: :edit_task, as: :edit_task_modal
+    get 'tasks/:id/confirm_complete', action: :confirm_task_complete, as: :confirm_task_complete_modal
+    get 'tasks/:id/delete_modal', action: :confirm_delete_task, as: :confirm_delete_task_modal
+    get 'tasks/:id/task_message_modal', action: :new_task_message, as: :new_task_message_modal
+    get 'task_messages/:id/photos_modal', action: :task_message_photos, as: :task_message_photos_modal
+    get 'task_messages/:id/reply_modal', action: :reply_task_message, as: :reply_task_message_modal
+    get 'submissions/:id/confirm_accept', action: :confirm_submission_accept, as: :confirm_submission_accept_modal
+    get 'submissions/:id/answer_modal', action: :new_answer, as: :new_answer_modal
+    delete 'modal', action: :destroy, as: :close_modal
+  end
+
+  # What's new
+  post 'whats_new/dismiss', to: 'whats_new#dismiss', as: :dismiss_whats_new
 end

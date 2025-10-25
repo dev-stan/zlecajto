@@ -16,7 +16,7 @@ module Users
     end
 
     def after_sign_up_path_for(_resource)
-      edit_users_profile_path
+      edit_users_users_profile_path
     end
   end
 end

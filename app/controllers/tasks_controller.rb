@@ -15,7 +15,7 @@ class TasksController < ApplicationController
 
   def destroy
     @task.destroy
-    redirect_to profile_path, notice: 'Usunięto zlecenie.'
+    redirect_to users_profile_path, notice: 'Usunięto zlecenie.'
   end
 
   def created; end

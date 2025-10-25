@@ -6,6 +6,20 @@ module Users
     before_action :set_user
     before_action :set_role_based_on_pending_object, only: [:edit]
 
+    def show
+      @user = current_user
+      if user_signed_in?
+        @tasks = current_user.tasks.includes(:submissions).order(created_at: :desc)
+        @submissions = current_user.submissions.includes(task: :user).order(created_at: :desc)
+        return unless params[:tab] == 'submissions' && @submissions.accepted.exists?
+
+        current_user.mark_accepted_submissions_seen!
+      else
+        @tasks = []
+        @submissions = []
+      end
+    end
+
     def edit
       @pending_object_present = [PendingTask, PendingTaskMessage, PendingSubmission].any? do |klass|
         klass.present?(session)
@@ -18,7 +32,7 @@ module Users
     def update
       if @user.update(profile_params)
         if request.referer&.end_with?('/profile')
-          redirect_to profile_path
+          redirect_to users_profile_path
         else
           redirect_to after_sign_in_path_for(@user)
         end

@@ -17,20 +17,6 @@ class PagesController < ApplicationController
     ]
   end
 
-  def profile
-    @user = current_user
-    if user_signed_in?
-      @tasks = current_user.tasks.includes(:submissions).order(created_at: :desc)
-      @submissions = current_user.submissions.includes(task: :user).order(created_at: :desc)
-      return unless params[:tab] == 'submissions' && @submissions.accepted.exists?
-
-      current_user.mark_accepted_submissions_seen!
-    else
-      @tasks = []
-      @submissions = []
-    end
-  end
-
   def categories; end
 
   def tos; end

@@ -1,6 +1,6 @@
 = turbo_frame_tag 'modal' do
   = render Ui::FormModalComponent.new(title: 'Edytuj profil') do
-    = form_with model: @user, url: users_profile_path, method: :patch, data: { controller: 'form-validation', action: 'submit->form-validation#validate', turbo_frame: '_top' }, html: { class: 'space-y-6', novalidate: true } do |f|
+    = form_with model: @user, url: users_users_profile_path, method: :patch, data: { controller: 'form-validation', action: 'submit->form-validation#validate', turbo_frame: '_top' }, html: { class: 'space-y-6', novalidate: true } do |f|
       .space-y-4
         .flex.flex-row.gap-3
           div data-field-wrapper=""

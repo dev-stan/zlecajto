@@ -25,7 +25,7 @@ nav.sticky.top-0.left-0.right-0.bg-white.shadow-sm.z-50
       = render(Ui::ButtonComponent.new(text: 'Zacznij Zarabiać', path: tasks_path, size: :sm, variant: :ghost))
       - if @user_signed_in
         .ml-4.flex.items-center
-          = link_to profile_path do
+          = link_to users_profile_path do
             = render(Users::AvatarComponent.new(user: @current_user, show_notification: true,current_user: @current_user))
       - else
         .flex.items-center.gap-2

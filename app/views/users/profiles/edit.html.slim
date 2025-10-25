@@ -1,7 +1,7 @@
 .flex.md:items-center.justify-center.h-screen.md:-mt-16
     .w-full.max-w-md.p-10
         h2.text-3xl.font-bold.mb-4 Ostatnia rzecz!
-        = form_for(@user, url: users_profile_path, method: :patch) do |f|
+        = form_for(@user, url: users_users_profile_path, method: :patch) do |f|
             = render "devise/shared/error_messages", resource: @user
             - if @user.phone_number.blank?
                 p.text-lg.font-base.text-gray-600.mb-4 Uzupełnij numer telefonu w celu kontaktu z innymi użytkownikami.
