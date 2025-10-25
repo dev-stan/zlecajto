@@ -18,12 +18,6 @@ ActiveAdmin.register Notification do
     actions
   end
 
-  filter :user
-  filter :subject
-  filter :notifiable_type
-  filter :read_at
-  filter :created_at
-
   show do
     attributes_table do
       row :id

@@ -18,11 +18,6 @@ ActiveAdmin.register Answer do
     actions
   end
 
-  filter :submission
-  filter :user
-  filter :message
-  filter :created_at
-
   show do
     attributes_table do
       row :id

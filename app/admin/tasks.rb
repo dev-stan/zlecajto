@@ -20,16 +20,6 @@ ActiveAdmin.register Task do
     actions
   end
 
-  filter :title
-  filter :status, as: :select, collection: -> { Task.statuses.keys }
-  filter :user
-  filter :category, as: :select, collection: -> { Task::CATEGORIES }
-  filter :location, as: :select, collection: -> { Task::LOCATIONS }
-  filter :payment_method, as: :select, collection: -> { Task::PAYMENT_METHODS }
-  filter :timeslot, as: :select, collection: -> { Task::TIMESLOTS }
-  filter :due_date
-  filter :created_at
-
   show do
     attributes_table do
       row :id

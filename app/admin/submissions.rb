@@ -17,11 +17,6 @@ ActiveAdmin.register Submission do
     actions
   end
 
-  filter :task
-  filter :user
-  filter :status, as: :select, collection: -> { Submission.statuses.keys }
-  filter :created_at
-
   show do
     attributes_table do
       row :id

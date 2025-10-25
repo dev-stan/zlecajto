@@ -15,24 +15,13 @@ ActiveAdmin.register User do
     column :last_name
     column :email
     column :phone_number
-    column :verified
-    column :admin
+    column :last_seen_at
     column :role
     column :category
     column :sign_in_count
     column :created_at
     actions
   end
-
-  filter :first_name
-  filter :last_name
-  filter :email
-  filter :phone_number
-  filter :verified
-  filter :admin
-  filter :role
-  filter :category
-  filter :created_at
 
   show do
     attributes_table do
@@ -42,12 +31,13 @@ ActiveAdmin.register User do
       row :email
       row :phone_number
       row :address
-      row :verified
+      row :last_seen_at
       row :admin
       row :role
       row :category
       row :provider
       row :uid
+      row :verified
       row :superpowers do |u|
         u.superpowers&.join(', ')
       end

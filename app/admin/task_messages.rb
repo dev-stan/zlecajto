@@ -20,12 +20,6 @@ ActiveAdmin.register TaskMessage do
     actions
   end
 
-  filter :task
-  filter :user
-  filter :parent
-  filter :message_type, as: :select, collection: -> { TaskMessage.message_types.keys }
-  filter :created_at
-
   show do
     attributes_table do
       row :id
