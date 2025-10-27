@@ -1,4 +1,5 @@
-
+- if @user && @user.categories.blank?
+    = render 'modals/choose_user_category', user: @user
 = render 'pages/home/mobile/hero'
 / = render 'pages/home/mobile/dupa'
 / = render 'pages/home/mobile/about'
