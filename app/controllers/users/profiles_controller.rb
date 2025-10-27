@@ -44,7 +44,7 @@ module Users
     private
 
     def profile_params
-      params.require(:user).permit(:first_name, :last_name, :email, :phone_number, :role)
+      params.require(:user).permit(:first_name, :last_name, :email, :phone_number, :role, categories: [])
     end
 
     def set_user

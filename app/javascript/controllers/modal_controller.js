@@ -29,7 +29,6 @@ export default class extends Controller {
   }
 
   clear() {
-    console.log("Clear method called")
     const modalFrame = document.querySelector('turbo-frame#modal')
     if (modalFrame && modalFrame.contains(this.element)) {
       modalFrame.innerHTML = ""

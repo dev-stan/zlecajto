@@ -1,0 +1,16 @@
+= turbo_frame_tag 'modal' do
+  = render Ui::FormModalComponent.new(title: 'Wybierz kategorie, które najbardziej pasują do twoich potrzeb...') do
+    = form_with model: @user, url: users_profile_path, method: :patch, data: { controller: 'form-validation', action: 'submit->form-validation#validate', turbo_frame: '_top' }, html: { class: 'space-y-6', novalidate: true } do |f|
+      .space-y-4
+        .flex.flex-row.gap-3.justify-center
+          div data-field-wrapper=""
+            .w-full(data-controller="multi-select")
+              .grid.grid-cols-2.md:grid-cols-4.gap-3
+                - Task::CATEGORIES.each_with_index do |cat, i|
+                  .h-28(data-action='click->multi-select#toggle')
+                    = render Ui::RadioButtonComponent.new(name: "category_#{i}", value: cat, checked: Array(@user.categories).include?(cat), id: "category_#{i}", style: :square, label: cat, html_options: { class: 'w-full' })
+              //- Hidden container for generating user[categories][] inputs
+              .hidden(data-multi-select-target='container')
+        = hidden_field_tag :step, 100
+      .pt-4.border-t.border-gray-100.flex.items-center.justify-center
+        = render(Ui::ButtonComponent.new(text: 'Wybrane!', size: :sm, submit: true, variant: :green, html_options: { class: 'w-3/5 px-4' }))
