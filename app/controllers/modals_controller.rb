@@ -79,6 +79,11 @@ class ModalsController < ApplicationController
     respond_to(&:html)
   end
 
+  def choose_user_category
+    @user = current_user
+    respond_to(&:html)
+  end
+
   # Clears the global modal frame
   def destroy
     respond_to do |format|

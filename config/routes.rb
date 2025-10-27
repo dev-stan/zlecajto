@@ -83,6 +83,7 @@ Rails.application.routes.draw do
 
   # Modals
   scope controller: :modals do
+    get 'users/profile/choose_category', action: :choose_user_category, as: :choose_user_category_modal
     get 'users/sign_out/confirm', action: :confirm_logout, as: :confirm_user_logout
     get 'users/profile/edit_modal', action: :edit_profile, as: :edit_profile_modal
     get 'tasks/:id/edit_modal', action: :edit_task, as: :edit_task_modal

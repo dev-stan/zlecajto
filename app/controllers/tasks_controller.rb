@@ -42,6 +42,8 @@ class TasksController < ApplicationController
                            .with_attached_photos
                            .where(status: :completed)
                            .where.not(id: 159)
+
+    @user = current_user
   end
 
   def update
