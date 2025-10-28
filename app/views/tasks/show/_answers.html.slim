@@ -7,4 +7,7 @@
             = render Users::AvatarComponent.new(user: answer.user, size: 'sm', current_user: current_user)
             p.font-bold.text-gray-800 = answer.user.first_name
           p.text-sm.text-gray-800.whitespace-pre-line.mb-1 = answer.message
-          
+          - if answer.id == 100
+            .flex.bg-red-100.border-2.border-red-300.rounded-lg.p-3.w-full.md:w-1/2
+              p.text-sm.text-gray-800 = 'Ze względu na prywatność użytkowników, numery telefonów są widoczne dopiero gdy zleceniodawca zaakceptuje wykonawcę.'
+            
