@@ -257,11 +257,39 @@ export default class extends Controller {
           }
         }
       }
+      ,
+      400: {
+        'answer[message]': {
+          required: true,
+          fieldName: 'Wiadomość',
+          // Custom validator to prevent sharing contact details
+          validator: (value) => {
+            // Detect common email patterns within text
+            const emailPattern = /[^\s@]+@[^\s@]+\.[^\s@]+/i
+            if (emailPattern.test(value)) {
+              return 'Nie podawaj tu swojego adresu email! Gdy zostaniesz wybrany/a do wykonania zlecenia, zleceniodawca zobaczy email, który możesz zmienić w twoim profilu!'
+            }
+
+            // Detect Polish phone numbers within text, e.g. 123456789, 123 456 789, 123-456-789, +48 123 456 789
+            const phonePattern = /(?:\+48\s*)?(?:\d[\s-]?){9}(?!\d)/
+            if (phonePattern.test(value)) {
+              return 'Nie podawaj tu swojego numeru telefonu! Gdy zostaniesz wybrany/a do wykonania zlecenia, zleceniodawca zobaczy numer, który możesz zmienić w twoim profilu!'
+            }
+
+            return null
+          },
+          errors: {
+            required: 'Wiadomość do zleceniodawcy jest wymagana',
+          }
+        }
+      }
+    
     }
 
   }
 
   connect() {
+    console.log('FormValidationController connected')
     this.updateStepValue()
     this.attachRealTimeListeners()
   }
@@ -300,13 +328,15 @@ export default class extends Controller {
   }
 
   updateStepValue() {
-    const stepInput = this.element.querySelector('input[name="step"]')
+    const stepInput = this.element.querySelector('input[name="step"], input[name="form[step]"]')
     if (stepInput) {
       const parsed = parseInt(stepInput.value)
-      // Allow step 0; only fallback to 1 if NaN
-      this.stepValue = Number.isNaN(parsed) ? 1 : parsed
+      this.stepValue = Number.isNaN(parsed) ? 0 : parsed
+    } else {
+      this.stepValue = 0
     }
   }
+
 
   validate(event) {
     this.updateStepValue()
@@ -354,43 +384,41 @@ export default class extends Controller {
     }
 
     const value = this.getFieldValue(field)
-    // Evaluate base (inline) rules without the custom validator
     const { validator, ...baseRules } = rules || {}
+    
+    // Check base rules WITHOUT custom validator
     const error = this.checkValidationRules(field, value, baseRules)
-    // Evaluate contact-info separately for step 0 submission note
+    
+    // Check custom validator separately
     let contactError = null
-    if (this.stepValue === 0 && field.name === 'submission[note]' && typeof validator === 'function') {
+    if (typeof validator === 'function') {
       contactError = validator(value, field)
     }
 
-    if (error) {
-      // Show/hide banner based on contact-info detection independent of inline errors
-      if (this.stepValue === 0 && field.name === 'submission[note]') {
-        if (contactError) {
-          this.showBanner(contactError, { variant: 'warning' })
-        } else {
-          this.clearBanner()
-        }
-      }
-      // Always show inline error for the base rule failure
-      this.showError(field, error)
-      return false
-    }
-
-    // No base error, but if contact-info found then block with banner
-    if (this.stepValue === 0 && field.name === 'submission[note]' && contactError) {
+    // If contact error exists, block submission regardless of base errors
+    if (contactError) {
       this.showBanner(contactError, { variant: 'warning' })
-      // Ensure no inline error remains
-      this.clearError(field)
+      // Show the contact error as inline error too if no base error
+      if (!error) {
+        this.showError(field, contactError)
+      } else {
+        this.showError(field, error)
+      }
       return false
     }
 
-    // All good: clear inline + banner
+    // Handle base errors
+    if (error) {
+      this.showError(field, error)
+      this.clearBanner()
+      return false
+    }
+
+    // All validations passed
     this.clearError(field)
-    if (this.stepValue === 0 && field.name === 'submission[note]') this.clearBanner()
+    this.clearBanner()
     return true
   }
-
 
   showBanner(message, { variant = 'warning' } = {}) {
     window.dispatchEvent(new CustomEvent('banner:show', { detail: { message, variant } }))
@@ -466,12 +494,6 @@ export default class extends Controller {
       if (selectedDate < today) {
         return rules.errors?.futureDate || 'Data musi być w przyszłości'
       }
-    }
-
-    // Custom validator function
-    if (rules.validator && typeof rules.validator === 'function') {
-      const customError = rules.validator(value, field)
-      if (customError) return customError
     }
 
     return null
