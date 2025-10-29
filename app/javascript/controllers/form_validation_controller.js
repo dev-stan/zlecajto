@@ -251,6 +251,21 @@ export default class extends Controller {
           required: true,
           maxLength: 2500,
           fieldName: 'Wiadomość',
+          validator: (value) => {
+            // Detect common email patterns within text
+            const emailPattern = /[^\s@]+@[^\s@]+\.[^\s@]+/i
+            if (emailPattern.test(value)) {
+              return 'Nie podawaj tu swojego adresu email! Gdy zostaniesz wybrany/a do wykonania zlecenia, zleceniodawca zobaczy email, który możesz zmienić w twoim profilu!'
+            }
+
+            // Detect Polish phone numbers within text, e.g. 123456789, 123 456 789, 123-456-789, +48 123 456 789
+            const phonePattern = /(?:\+48\s*)?(?:\d[\s-]?){9}(?!\d)/
+            if (phonePattern.test(value)) {
+              return 'Nie podawaj tu swojego numeru telefonu! Gdy zostaniesz wybrany/a do wykonania zlecenia, zleceniodawca zobaczy numer, który możesz zmienić w twoim profilu!'
+            }
+
+            return null
+          },
           errors: {
             required: 'Wiadomość jest wymagana',
             maxLength: 'Wiadomość nie może przekraczać 2500 znaków'
