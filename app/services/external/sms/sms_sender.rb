@@ -24,7 +24,8 @@ module External
         client.sms.send(
           from: @from,
           to: @to,
-          text: @body
+          text: @body,
+          type: 'unicode'
         )
       end
 
