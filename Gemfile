@@ -99,7 +99,7 @@ gem 'sidekiq'
 gem 'sinatra', require: false # needed for sidekiq/web UI
 gem 'slim-rails', '~> 3.7'
 gem 'view_component'
-
+gem 'vonage'
 gem "activeadmin", "~> 3.3"
 
 gem "sassc", "~> 2.4"

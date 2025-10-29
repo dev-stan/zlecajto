@@ -2,6 +2,7 @@
 
 class Submission < ApplicationRecord
   include Submissions::Emailable
+  include Submissions::Smsable
   include Submissions::Notifiable
 
   belongs_to :task
