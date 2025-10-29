@@ -16,7 +16,8 @@ class Task < ApplicationRecord
     finished: 'Zakończone',
     cancelled: 'Anulowane',
     accepted: 'accepted',
-    completed: 'completed'
+    completed: 'completed',
+    overdue: 'overdue'
   }
 
   CATEGORIES       = %w[Zwierzaki Naprawy Ogród Transport Korki Eventy Przeprowadzki Sprzątanie Rower Inne].freeze

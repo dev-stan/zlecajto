@@ -12,6 +12,7 @@ class TaskShowPresenter
 
   def button_text
     return 'Anulowano zlecenie' if task.cancelled?
+    return 'Upłynął termin' if task.overdue?
     return 'Zlecenie zakończone' if task.completed?
     return 'Wybrano cię! Co dalej?' if current_user_accepted_submission?
     return 'Wybrano już wykonawcę' if accepted_submission_exists?
@@ -24,6 +25,7 @@ class TaskShowPresenter
   def button_variant
     case button_text
     when 'Anulowano zlecenie' then :red
+    when 'Upłynął termin' then :red
     when 'Zobacz detale zlecenia' then :primary
     when 'Zlecenie zakończone' then :green
     when 'Wybrano cię! Co dalej?' then :green
@@ -46,6 +48,7 @@ class TaskShowPresenter
 
   def submissions_header
     return 'Zlecenie wykonane!' if task.completed?
+    return 'Upłynął termin zlecenia' if task.overdue?
 
     return unless accepted_submission
     return 'Wybrałeś wykonawcę!' if owner?
@@ -56,7 +59,7 @@ class TaskShowPresenter
 
   # Owner or the submission owner can either reply or (owner only) accept
   def can_reply_or_accept?(submission)
-    (can_reply?(submission) || can_accept?(submission)) && !task.cancelled?
+    (can_reply?(submission) || can_accept?(submission)) && !task.cancelled? && !task.completed? && !task.overdue?
   end
 
   # Owner may accept a submission only if the task isn't completed and no one is accepted yet
