@@ -42,6 +42,7 @@ class TaskShowPresenter
     return accepted_submission_path(current_user_accepted_submission) if current_user_accepted_submission?
     return '#' if accepted_submission_exists?
     return '#' if user_has_applied?
+    return '#' if task.overdue? || task.cancelled?
 
     new_task_submission_path(task)
   end
