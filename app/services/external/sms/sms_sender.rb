@@ -6,10 +6,6 @@ module External
     class SmsSender
       DEFAULT_FROM = 'ZlecajTo'
 
-      def self.send_later(to:, body:, from: nil)
-        SendSmsJob.perform_later(to: to, body: body, from: from)
-      end
-
       def self.send_now(to:, body:, from: nil)
         new(to: to, body: body, from: from).call
       end
