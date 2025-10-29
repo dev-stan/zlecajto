@@ -30,7 +30,8 @@ module Ui
       'Obojętnie' => '❓'
     }.freeze
 
-    def initialize(name:, value:, checked: false, id: nil, label: nil, style: :default, html_options: {})
+    def initialize(name:, value:, checked: false, id: nil, label: nil, with_emoji: true, style: :default,
+                   html_options: {})
       super()
       @name = name
       @value = value
@@ -39,17 +40,20 @@ module Ui
       @label = label
       @style = style.to_sym
       @options = html_options
+      @with_emoji = with_emoji
     end
 
     private
 
-    attr_reader :name, :value, :checked, :id, :label, :style, :options
+    attr_reader :name, :value, :checked, :id, :label, :style, :options, :with_emoji
 
     def build_id
       [name, value].map { |v| v.to_s.parameterize }.join('_')
     end
 
     def display_emoji
+      return '' unless with_emoji
+
       CATEGORY_EMOJIS[label] || TIMESLOT_EMOJIS[value.to_s] || PAYMENT_METHODS_EMOJIS[label] || ''
     end
   end

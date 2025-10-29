@@ -6,9 +6,17 @@
           div data-field-wrapper=""
             .w-full(data-controller="multi-select")
               .grid.grid-cols-2.md:grid-cols-4.gap-3
-                - Task::CATEGORIES.each_with_index do |cat, i|
-                  .h-28(data-action='click->multi-select#toggle')
-                    = render Ui::RadioButtonComponent.new(name: "category_#{i}", value: cat, checked: Array(@user.categories).include?(cat), id: "category_#{i}", style: :square, label: cat, html_options: { class: 'w-full' })
+               - Task::CATEGORIES.each_with_index do |cat, i|
+                .h-10(data-action='click->multi-select#toggle')
+                  = render Ui::RadioButtonComponent.new(name: "category_#{i}",
+                    value: cat,
+                    with_emoji: false,
+                    checked: Array(@user.categories).include?(cat),
+                    id: "category_#{i}",
+                    style: :square,
+                    label: cat,
+                    html_options: { class: 'w-full h-full' })
+
               //- Hidden container for generating user[categories][] inputs
               .hidden(data-multi-select-target='container')
         = hidden_field_tag :step, 100
