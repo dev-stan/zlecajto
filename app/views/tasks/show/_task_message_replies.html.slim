@@ -2,5 +2,8 @@
 - if message.replies.any?
   - message.replies.order(created_at: :asc).each do |reply|
     = render Messages::TaskMessageComponent.new(message: reply, current_user: current_user)
+    - if message.id == 71
+      .flex.bg-red-100.border-2.border-red-300.rounded-lg.p-3.w-full.md:w-1/2
+        p.text-sm.text-gray-800 = 'Ze względu na prywatność użytkowników, numery telefonów są widoczne dopiero gdy zleceniodawca zaakceptuje wykonawcę.'
 
     = render partial: 'tasks/show/task_message_replies', locals: { message: reply, current_user: current_user, task: task }

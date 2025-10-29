@@ -18,6 +18,9 @@
         li
           = render Cards::CardComponent.new(padding: 'p-4', shadow: false, html_options: { class: 'rounded-xl bg-white' }) do
             = render Messages::TaskMessageComponent.new(message: message, current_user: current_user)
+            - if message.id == 70
+              .flex.bg-red-100.border-2.border-red-300.rounded-lg.p-3.w-full.md:w-1/2
+                p.text-sm.text-gray-800 = 'Ze względu na prywatność użytkowników, numery telefonów są widoczne dopiero gdy zleceniodawca zaakceptuje wykonawcę.'
 
             .mt-3.ml-6.pl-4.border-l.border-gray-200.space-y-3
               = render partial: 'tasks/show/task_message_replies', locals: { message: message, current_user: current_user, task: task }
