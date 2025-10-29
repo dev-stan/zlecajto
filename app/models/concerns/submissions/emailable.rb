@@ -13,7 +13,7 @@ module Submissions
         template: 'prod_submission_accepted',
         subject: 'Twoje zgłoszenie zostało zaakceptowane!',
         variables: {
-          due_date: task.due_date.strftime('%d/%m/%Y'),
+          due_date: task.due_date&.strftime('%d/%m/%Y') || 'Obojętnie',
           location: task.location,
           salary: task.salary,
           timeslot: task.timeslot,
