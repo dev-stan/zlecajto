@@ -24,14 +24,14 @@ class User < ApplicationRecord
   def unread_notifications_for_task?(task) = notifications.unread.for_task(task).exists?
   def remember_me = true
 
-  def phone_number
-    return if super.blank?
+  # def phone_number
+  #   return if super.blank?
 
-    number = super.to_s.strip.gsub(/\D/, '') # remove all non-digit chars
+  #   number = super.to_s.strip.gsub(/\D/, '') # remove all non-digit chars
 
-    # Add +48 if it doesn't already have a country code
-    number.start_with?('48') ? "+#{number}" : "+48#{number.sub(/^0/, '')}"
-  end
+  #   # Add +48 if it doesn't already have a country code
+  #   number.start_with?('48') ? "+#{number}" : "+48#{number.sub(/^0/, '')}"
+  # end
 
   private
 
