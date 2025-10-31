@@ -11,7 +11,7 @@
       p = "Tworzymy platformę, na której sąsiedzi mogą zlecać i wykonywać wszelkiego typu zlecenia!"
     .flex.flex-col.p-5.gap-3.px-8.md:hidden
       = render(Ui::ButtonComponent.new(text: 'Opublikuj zlecenie', path: new_task_path, size: :md))
-      = render(Ui::ButtonComponent.new(text: 'Zarób po swojemu', path: tasks_path, size: :md, variant: :primary_2))
+      = render(Ui::ButtonComponent.new(text: 'Przeglądaj zlecenia', path: tasks_path, size: :md, variant: :primary_2))
     
     / Desktop left column
     .hidden.md:block
@@ -59,7 +59,6 @@ p.text-start.text-base.font-base.px-5.mt-3.md:hidden = "Zaoszczedź sobie godzin
       = link_to new_task_path, class: 'snap-start shrink-0 w-36 flex flex-col items-center gap-2 p-4 border border-amber-200 bg-amber-50/60 rounded-md hover:bg-amber-50 transition shadow-sm md:w-full md:p-5 md:border-gray-200 md:bg-white md:rounded-xl md:shadow-sm md:hover:shadow-md md:hover:-translate-y-1 md:transition-all md:cursor-pointer' do
         span.text-2xl.md:text-3xl = emoji
         span.text-base.font-medium.text-gray-700.md:text-sm.md:mt-2.md:font-semibold = category
-
 
 / Earn money section
 .relative.mt-12.overflow-hidden.md:mt-0.md:mb-24
@@ -129,7 +128,32 @@ p.text-start.text-base.font-base.px-5.mt-3.md:hidden = "Zaoszczedź sobie godzin
       h2.text-white.w-2/5.mb.4.text-xl.font-semibold = 'O nas i naszym pomyśle'
       p.text-white.w-2/5.mb-3 = 'Jesteśmy dwójką spłukanych studentów z Suchego Lasu i Strzeszyna. Zauważyliśmy, że sąsiedzi na grupkach na FB mieli problem ze znalezieniem chętnych do pomocy, a nam i naszym znajomym często brakowało kasy.'
       p.text-white.w-2/5.mb-3 = 'Postanowiliśmy stworzyć platformę, na której każdy w prosty i przejrzysty sposób mógłby znaleźć pomoc w swojej okolicy lub znaleźć sposób na dodatkowy zarobek.'
-  
+
+/ App section
+.relative.mt-12.md:hidden
+  / PWA install guide with image carousel (blue background)
+  .relative.bg-primary.px-6.py-10.rounded-3xl.mx-4.md:rounded-3xl.md:max-w-6xl.md:mx-auto.md:px-12.md:py-14
+    h1.text-4xl.font-bold.text-white.text-start.mb-3.md:text-5xl = 'Zainstaluj aplikację'
+    p.text-white.text-base.opacity-90.mb-6.md:text-lg = 'Dodaj Zlecajto do ekranu głównego i używaj jak zwykłej aplikacji.'
+
+    / Carousel (mirrors the category carousel behavior)
+    .flex.overflow-x-auto.snap-x.snap-mandatory.scroll-smooth.space-x-4.p-2.w-full
+      - if browser.platform.ios?
+        - app_steps = [{ img: 'ios_app_1.png', text: '1. Kliknij ikonę Udostępnij' },
+          { img: 'ios_app_2.png', text: '2. Wybierz „Dodaj do ekranu początkowego”' },
+          { img: 'ios_app_3.png', text: '3. Naciśnij „Dodaj”' },
+          { img: 'ios_app_4.png', text: '4. Gotowe!' }]
+      - else
+        - app_steps = [{ img: 'android_app_1.png', text: '1. Stuknij ikonę menu (trzy kropki)' },
+          { img: 'android_app_2.png', text: '2. Wybierz „Zainstaluj aplikację”' },
+          { img: 'android_app_3.png', text: '3. Potwierdź „Zainstaluj”' },
+          { img: 'android_app_4.png', text: '4. Gotowe!' }]
+      - app_steps.each do |step|
+        .snap-start.shrink-0.w-64.md:w-72.flex.flex-col.items-center.gap-3
+          .w-64.h-64.md:w-72.md:h-72.bg-white/10.border.border-white/20.rounded-2xl.flex.items-center.justify-center.overflow-hidden.p-4.md:p-6
+            = image_tag(step[:img], class: 'w-full h-full object-contain', alt: 'Instrukcja instalacji PWA')
+          p.text-center.text-white.text-base.md:text-base.leading-snug.px-2 = step[:text]
+
 / FAQ section
 .px-12.md:max-w-5xl.md:mx-auto.md:mt-0.md:mb-20.md:px-8
   h1.text-5xl.font-bold.text-start.mt-18.mb-8.md:mb-10 = "FAQ"
