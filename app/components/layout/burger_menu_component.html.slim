@@ -39,6 +39,17 @@ nav.relative.flex.items-center data-controller="burger-menu"
       i.fas.fa-phone.fa-fw.mr-2
       | Kontakt
     p.text-xl.text-black.font-bold Inne
+    = link_to root_path(anchor: 'app', refresh: true), class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
+      i.fas.fa-mobile-screen.fa-fw.mr-2
+      | Aplikacja
+      span.relative.flex.items-center.justify-center.ml-1
+        / Pulse background, same size as badge
+        span.absolute.inline-flex.rounded-full.bg-red-400.opacity-75.animate-ping.h-full.w-full.scale-75
+        / Badge
+        span class="relative inline-flex rounded-full bg-red-500 text-white text-[9px] font-semibold items-center justify-center px-2 h-5"
+          | Nowość
+
+
     = link_to pages_tos_path, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
       i.fas.fa-book.fa-fw.mr-2
       | Regulamin
