@@ -54,7 +54,7 @@ class TasksController < ApplicationController
 
   def cancell
     @task.cancell!
-    redirect_to my_task_path(@task), notice: 'Zlecenie anulowane.'
+    redirect_to my_task_path(@task), notice: 'Zlecenie usunięte.'
   end
 
   private

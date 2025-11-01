@@ -4,7 +4,7 @@
     .flex-1.relative
         .flex.flex-col.justify-center.h-full
           - if @task.cancelled?
-            h2.text-5xl.font-bold.text-white.mb-2 = "Zlecenie anulowane..."
+            h2.text-5xl.font-bold.text-white.mb-2 = "Zlecenie usunięte..."
           - elsif @task.submissions.accepted.none?
             h2.text-5xl.font-bold.text-white.mb-2 = "Masz #{t('tasks.submissions', count: @task.submissions.count)}"  
             - if @task.submissions.count > 0
@@ -33,7 +33,7 @@
             = render(Ui::BadgeComponent.new(text: "Edytuj", variant: :blue, html_options: { class: 'px-1.5 ml-0 mt-0 text-sm cursor-pointer' }))
           - if !@task.cancelled? && !@task.completed? && @task.submissions.accepted.none?
             = link_to confirm_cancell_task_modal_path(@task), data: { turbo_frame: 'modal' } do
-              = render(Ui::BadgeComponent.new(text: "Anuluj", variant: :red, html_options: { class: 'px-1.5 ml-0 mt-0 text-sm cursor-pointer' }))
+              = render(Ui::BadgeComponent.new(text: "Usuń", variant: :red, html_options: { class: 'px-1.5 ml-0 mt-0 text-sm cursor-pointer' }))
             
 
   .mt-10
