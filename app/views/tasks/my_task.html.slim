@@ -31,8 +31,10 @@
         .mt-2.flex.gap-2
           = link_to edit_task_modal_path(@task), data: { turbo_frame: 'modal' } do
             = render(Ui::BadgeComponent.new(text: "Edytuj", variant: :blue, html_options: { class: 'px-1.5 ml-0 mt-0 text-sm cursor-pointer' }))
-          = link_to confirm_delete_task_modal_path(@task), data: { turbo_frame: 'modal' } do
-            = render(Ui::BadgeComponent.new(text: "Usuń", variant: :red, html_options: { class: 'px-1.5 ml-0 mt-0 text-sm cursor-pointer' }))
+          - if !@task.cancelled? && !@task.completed? && @task.submissions.accepted.none?
+            = link_to confirm_cancell_task_modal_path(@task), data: { turbo_frame: 'modal' } do
+              = render(Ui::BadgeComponent.new(text: "Anuluj", variant: :red, html_options: { class: 'px-1.5 ml-0 mt-0 text-sm cursor-pointer' }))
+            
 
   .mt-10
     - requested_tab = params[:tab].presence

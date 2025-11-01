@@ -19,7 +19,7 @@ class ModalsController < ApplicationController
   end
 
   # GET /tasks/:id/delete_modal
-  def confirm_delete_task
+  def confirm_cancell_task
     @task = Task.find(params[:id])
     respond_to(&:html)
   end
