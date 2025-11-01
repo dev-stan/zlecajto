@@ -44,6 +44,21 @@ export default class extends Controller {
           minLength: 10,
           maxLength: 50,
           fieldName: 'Tytuł',
+          validator: (value) => {
+            // Detect common email patterns within text
+            const emailPattern = /[^\s@]+@[^\s@]+\.[^\s@]+/i
+            if (emailPattern.test(value)) {
+              return 'Nie podawaj tu swojego adresu email! Będzie on widoczny po wybraniu wykonawcy.'
+            }
+
+            // Detect Polish phone numbers within text, e.g. 123456789, 123 456 789, 123-456-789, +48 123 456 789
+            const phonePattern = /(?:\+48\s*)?(?:\d[\s-]?){9}(?!\d)/
+            if (phonePattern.test(value)) {
+              return 'Nie podawaj tu swojego numeru telefonu! Będzie on widoczny po wybraniu wykonawcy.'
+            }
+
+            return null
+          },
           errors: {
             required: 'Tytuł jest wymagany',
             minLength: 'Tytuł musi mieć co najmniej 10 znaków',
@@ -80,6 +95,21 @@ export default class extends Controller {
           minLength: 20,
           maxLength: 1000,
           fieldName: 'Opis',
+          validator: (value) => {
+            // Detect common email patterns within text
+            const emailPattern = /[^\s@]+@[^\s@]+\.[^\s@]+/i
+            if (emailPattern.test(value)) {
+              return 'Nie podawaj tu swojego adresu email! Będzie on widoczny po wybraniu wykonawcy.'
+            }
+
+            // Detect Polish phone numbers within text, e.g. 123456789, 123 456 789, 123-456-789, +48 123 456 789
+            const phonePattern = /(?:\+48\s*)?(?:\d[\s-]?){9}(?!\d)/
+            if (phonePattern.test(value)) {
+              return 'Nie podawaj tu swojego numeru telefonu! Będzie on widoczny po wybraniu wykonawcy.'
+            }
+
+            return null
+          },
           errors: {
             required: 'Opis zadania jest wymagany',
             minLength: 'Opis musi mieć co najmniej 20 znaków',
