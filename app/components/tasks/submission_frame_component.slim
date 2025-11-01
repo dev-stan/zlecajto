@@ -7,7 +7,7 @@
         .flex.flex-row.items-start.space-x-4
           = render(Users::AvatarComponent.new(user: submission.user, current_user: current_user))
           .flex.flex-col.justify-center.text-left.h-full
-            span.font-semibold.text-black.text-lg= submission.user.first_name
+            span.font-semibold.text-black.text-lg= submission.user.display_name
             .flex.items-center.space-x-1
               span.font-semibold.text-black.text-base 5.0
               span.text-yellow-500.text-base ★

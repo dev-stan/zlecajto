@@ -26,7 +26,7 @@
         = render 'tasks/show/timing_location', task: @task
         .flex.gap-2.items-center.my-5
           = render Users::AvatarComponent.new(user: @task.user, size: 'md', current_user: current_user)
-          p.font-semibold = "Zadanie zleca #{@task.user.first_name}"
+          p.font-semibold = "Zadanie zleca #{@task.user.display_name}"
         - requested_tab = params[:tab].presence
         - if requested_tab
           - active_tab = requested_tab
