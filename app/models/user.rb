@@ -32,6 +32,11 @@ class User < ApplicationRecord
   #   # Add +48 if it doesn't already have a country code
   #   number.start_with?('48') ? "+#{number}" : "+48#{number.sub(/^0/, '')}"
   # end
+  #
+
+  def display_name
+    "#{first_name} #{last_name.first.upcase if last_name.present?}"
+  end
 
   private
 

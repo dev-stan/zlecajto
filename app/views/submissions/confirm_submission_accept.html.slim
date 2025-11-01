@@ -1,6 +1,6 @@
 = turbo_frame_tag 'modal' do
   = render(Ui::ConfirmModalComponent.new(title: 'Potwierdź akceptację',
-    body: "Czy na pewno chcesz zaakceptować zgłoszenie użytkownika #{@submission.user.first_name}?",
+    body: "Czy na pewno chcesz zaakceptować zgłoszenie użytkownika #{@submission.user.display_name}?",
     confirm_text: 'Potwierdź',
     cancel_text: 'Anuluj',
     confirm_path: accept_task_submission_path(@submission.task, @submission),
