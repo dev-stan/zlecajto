@@ -22,11 +22,6 @@ module Users
         @accepted_submissions   = @user.submissions.accepted_submissions
         @completed_submissions  = @user.submissions.completed_task_submissions
         @rejected_submissions   = @user.submissions.rejected_submissions
-
-        # Mark accepted submissions seen if tab is submissions
-        if params[:tab] == 'submissions' && @submissions.accepted.exists?
-          @user.mark_accepted_submissions_seen!
-        end
       else
         @tasks = []
         @submissions = []
