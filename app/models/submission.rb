@@ -19,26 +19,20 @@ class Submission < ApplicationRecord
 
   scope :with_task, -> { includes(:task) }
 
-  scope :open_submissions, lambda {
-    pending.joins(:task).merge(Task.open).order(created_at: :desc)
+  # Filter by one or more task statuses
+  scope :for_task_statuses, ->(statuses) { joins(:task).where(tasks: { status: Array(statuses) }) }
+
+  scope :open_submissions, -> { pending.for_task_statuses(:open).order(created_at: :desc) }
+  scope :accepted_submissions, -> { where(status: :accepted).for_task_statuses(:accepted).order(created_at: :desc) }
+  scope :completed_task_submissions, lambda {
+    where(status: :accepted).for_task_statuses(:completed).order(created_at: :desc)
   }
 
-  scope :accepted_submissions, lambda {
-    accepted.joins(:task).merge(Task.accepted).order(created_at: :desc)
-  }
-
-  scope :completed_tasks, lambda {
-    accepted.joins(:task).merge(Task.completed).order(created_at: :desc)
-  }
-
-  scope :rejected_for_user, lambda { |user|
-    joins(:task)
-      .where(tasks: { status: %i[accepted completed cancelled overdue] })
-      .where.not(id: Submission.accepted.where(user: user).select(:id))
+  scope :rejected_submissions, lambda {
+    for_task_statuses(%i[accepted completed cancelled overdue])
+      .where.not(id: where(status: :accepted).select(:id))
       .order(created_at: :desc)
   }
-
-  scope :for_user, ->(user) { where(user: user) }
 
   # after_create :send_new_submission_sms
   after_create :send_new_submission_email

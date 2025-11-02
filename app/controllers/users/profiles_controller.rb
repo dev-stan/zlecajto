@@ -9,19 +9,19 @@ module Users
     def show
       if user_signed_in?
         # Tasks
-        @tasks           = @user.tasks.with_submissions
-        @open_tasks      = @user.tasks.open.with_submissions
-        @accepted_tasks  = @user.tasks.accepted.with_submissions
-        @completed_tasks = @user.tasks.completed.with_submissions
-        @overdue_tasks   = @user.tasks.overdue.with_submissions
-        @cancelled_tasks = @user.tasks.cancelled.with_submissions
+        @tasks = @user.tasks
+        @open_tasks = @user.tasks.open
+        @accepted_tasks = @user.tasks.accepted
+        @completed_tasks = @user.tasks.completed
+        @overdue_tasks = @user.tasks.overdue
+        @cancelled_tasks = @user.tasks.cancelled
 
         # Submissions
-        @submissions           = @user.submissions.with_task
-        @open_submissions      = @user.submissions.for_user(@user).open_submissions
-        @accepted_submissions  = @user.submissions.for_user(@user).accepted_submissions
-        @completed_submissions = @user.submissions.for_user(@user).completed_tasks
-        @rejected_submissions  = @user.submissions.for_user(@user).rejected_for_user(@user)
+        @submissions = @user.submissions
+        @open_submissions       = @user.submissions.open_submissions
+        @accepted_submissions   = @user.submissions.accepted_submissions
+        @completed_submissions  = @user.submissions.completed_task_submissions
+        @rejected_submissions   = @user.submissions.rejected_submissions
 
         # Mark accepted submissions seen if tab is submissions
         if params[:tab] == 'submissions' && @submissions.accepted.exists?
