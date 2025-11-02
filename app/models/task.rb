@@ -20,6 +20,8 @@ class Task < ApplicationRecord
     overdue: 'overdue'
   }
 
+  scope :with_submissions, -> { includes(:submissions) }
+
   CATEGORIES       = %w[Zwierzaki Naprawy Ogród Transport Korki Eventy Przeprowadzki Sprzątanie Rower Inne].freeze
   TIMESLOTS        = %w[Rano Popołudnie Wieczór Obojętnie].freeze
   PAYMENT_METHODS  = %w[Przelew Blik Gotówka Czekolada].freeze
@@ -37,6 +39,14 @@ class Task < ApplicationRecord
       update!(status: :completed)
       send_completed_task_email
       send_completed_submission_email
+    end
+  end
+
+  def cancell!
+    return if cancelled?
+
+    transaction do
+      update!(status: :cancelled)
     end
   end
 

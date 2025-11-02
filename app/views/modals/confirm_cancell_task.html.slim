@@ -1,0 +1,10 @@
+= turbo_frame_tag 'modal' do
+    = render Ui::ConfirmModalComponent.new(title: 'Uwaga, uwaga!',
+      body: "Czy na pewno chcesz usunąć to zlecenie?",
+      footer: 'Tego się nie da cofnąć!',
+      confirm_text: 'Tak, chcę usunąć!',
+      confirm_method: :patch,
+      cancel_text: 'Cofnij',
+      cancel_variant: :green,
+      confirm_path: cancell_task_path(@task),
+      confirm_variant: :red)

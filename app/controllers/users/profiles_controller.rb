@@ -7,13 +7,21 @@ module Users
     before_action :set_role_based_on_pending_object, only: [:edit]
 
     def show
-      @user = current_user
       if user_signed_in?
-        @tasks = current_user.tasks.includes(:submissions).order(created_at: :desc)
-        @submissions = current_user.submissions.includes(task: :user).order(created_at: :desc)
-        return unless params[:tab] == 'submissions' && @submissions.accepted.exists?
+        # Tasks
+        @tasks = @user.tasks
+        @open_tasks = @user.tasks.open
+        @accepted_tasks = @user.tasks.accepted
+        @completed_tasks = @user.tasks.completed
+        @overdue_tasks = @user.tasks.overdue
+        @cancelled_tasks = @user.tasks.cancelled
 
-        current_user.mark_accepted_submissions_seen!
+        # Submissions
+        @submissions = @user.submissions
+        @open_submissions       = @user.submissions.open_submissions
+        @accepted_submissions   = @user.submissions.accepted_submissions
+        @completed_submissions  = @user.submissions.completed_task_submissions
+        @rejected_submissions   = @user.submissions.rejected_submissions
       else
         @tasks = []
         @submissions = []

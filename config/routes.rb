@@ -49,6 +49,7 @@ Rails.application.routes.draw do
     member do
       get :created
       get :completed
+      patch :cancell
     end
 
     resources :task_messages, only: [:create]
@@ -88,7 +89,7 @@ Rails.application.routes.draw do
     get 'users/profile/edit_modal', action: :edit_profile, as: :edit_profile_modal
     get 'tasks/:id/edit_modal', action: :edit_task, as: :edit_task_modal
     get 'tasks/:id/confirm_complete', action: :confirm_task_complete, as: :confirm_task_complete_modal
-    get 'tasks/:id/delete_modal', action: :confirm_delete_task, as: :confirm_delete_task_modal
+    get 'tasks/:id/delete_modal', action: :confirm_cancell_task, as: :confirm_cancell_task_modal
     get 'tasks/:id/task_message_modal', action: :new_task_message, as: :new_task_message_modal
     get 'task_messages/:id/photos_modal', action: :task_message_photos, as: :task_message_photos_modal
     get 'task_messages/:id/reply_modal', action: :reply_task_message, as: :reply_task_message_modal

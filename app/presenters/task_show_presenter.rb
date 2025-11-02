@@ -11,7 +11,7 @@ class TaskShowPresenter
   end
 
   def button_text
-    return 'Anulowano zlecenie' if task.cancelled?
+    return 'Usunięto zlecenie' if task.cancelled?
     return 'Upłynął termin' if task.overdue?
     return 'Zlecenie zakończone' if task.completed?
     return 'Wybrano cię! Co dalej?' if current_user_accepted_submission?
@@ -24,7 +24,7 @@ class TaskShowPresenter
 
   def button_variant
     case button_text
-    when 'Anulowano zlecenie' then :red
+    when 'Usunięto zlecenie' then :red
     when 'Upłynął termin' then :red
     when 'Zobacz detale zlecenia' then :primary
     when 'Zlecenie zakończone' then :green

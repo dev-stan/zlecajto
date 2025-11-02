@@ -2,7 +2,7 @@
 
 class TasksController < ApplicationController
   before_action :authenticate_user!, only: %i[update edit my_task]
-  before_action :set_task, only: %i[show edit update created completed my_task destroy completed]
+  before_action :set_task, only: %i[show edit update created completed my_task destroy completed cancell]
 
   def show
     @presenter = TaskShowPresenter.new(@task, current_user)
@@ -50,6 +50,11 @@ class TasksController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def cancell
+    @task.cancell!
+    redirect_to my_task_path(@task), notice: 'Zlecenie usunięte.'
   end
 
   private

@@ -17,6 +17,23 @@ class Submission < ApplicationRecord
 
   enum status: { pending: 0, accepted: 1, rejected: 2 }
 
+  scope :with_task, -> { includes(:task) }
+
+  # Filter by one or more task statuses
+  scope :for_task_statuses, ->(statuses) { joins(:task).where(tasks: { status: Array(statuses) }) }
+
+  scope :open_submissions, -> { pending.for_task_statuses(:open).order(created_at: :desc) }
+  scope :accepted_submissions, -> { where(status: :accepted).for_task_statuses(:accepted).order(created_at: :desc) }
+  scope :completed_task_submissions, lambda {
+    where(status: :accepted).for_task_statuses(:completed).order(created_at: :desc)
+  }
+
+  scope :rejected_submissions, lambda {
+    for_task_statuses(%i[accepted completed cancelled overdue])
+      .where.not(id: where(status: :accepted).select(:id))
+      .order(created_at: :desc)
+  }
+
   # after_create :send_new_submission_sms
   after_create :send_new_submission_email
   after_create :create_new_submission_notification
