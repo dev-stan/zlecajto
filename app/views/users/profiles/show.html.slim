@@ -70,6 +70,10 @@
           = render Ui::DividerWithLabelComponent.new(label: 'Wykonane zlecenia')
           main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
             = render Tasks::IndexComponent.new(task_array: @completed_tasks, current_user: current_user)
+        - if @overdue_tasks.any?
+          = render Ui::DividerWithLabelComponent.new(label: 'Zlecenia przeterminowane')
+          main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
+            = render Tasks::IndexComponent.new(task_array: @overdue_tasks, current_user: current_user)
         - if @cancelled_tasks.any?
           = render Ui::DividerWithLabelComponent.new(label: 'Usunięte zlecenia')
           main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5

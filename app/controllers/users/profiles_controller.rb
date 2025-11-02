@@ -8,39 +8,25 @@ module Users
 
     def show
       if user_signed_in?
-        @tasks = @user.tasks.with_submissions
-        @open_tasks = @user.tasks.with_submissions.where(status: :open)
-        @accepted_tasks = @user.tasks.with_submissions.where(status: :accepted)
-        @completed_tasks = @user.tasks.with_submissions.where(status: :completed)
-        @cancelled_tasks = @user.tasks.with_submissions.where(status: :cancelled)
+        # Tasks
+        @tasks           = @user.tasks.with_submissions
+        @open_tasks      = @user.tasks.open.with_submissions
+        @accepted_tasks  = @user.tasks.accepted.with_submissions
+        @completed_tasks = @user.tasks.completed.with_submissions
+        @overdue_tasks   = @user.tasks.overdue.with_submissions
+        @cancelled_tasks = @user.tasks.cancelled.with_submissions
 
-        @submissions = @user.submissions.includes(task: :user)
-        @open_submissions = @user.submissions
-                                 .includes(task: :user)
-                                 .where(status: :pending, tasks: { status: :open })
-                                 .order(created_at: :desc)
+        # Submissions
+        @submissions           = @user.submissions.with_task
+        @open_submissions      = @user.submissions.for_user(@user).open_submissions
+        @accepted_submissions  = @user.submissions.for_user(@user).accepted_submissions
+        @completed_submissions = @user.submissions.for_user(@user).completed_tasks
+        @rejected_submissions  = @user.submissions.for_user(@user).rejected_for_user(@user)
 
-        @accepted_submissions = @user.submissions
-                                     .includes(task: :user)
-                                     .where(status: :accepted, tasks: { status: :accepted })
-                                     .order(created_at: :desc)
-
-        @rejected_submissions = @user.submissions
-                                     .includes(task: :user)
-                                     .joins(:task)
-                                     .where(tasks: { status: %i[accepted completed cancelled overdue] })
-                                     .where.not(task_id: Submission.where(status: :accepted,
-                                                                          user_id: @user.id).select(:task_id))
-                                     .order(created_at: :desc)
-
-        @completed_submissions = @user.submissions
-                                      .includes(task: :user)
-                                      .joins(:task)
-                                      .where(status: :accepted, tasks: { status: :completed })
-
-        return unless params[:tab] == 'submissions' && @submissions.accepted.exists?
-
-        @user.mark_accepted_submissions_seen!
+        # Mark accepted submissions seen if tab is submissions
+        if params[:tab] == 'submissions' && @submissions.accepted.exists?
+          @user.mark_accepted_submissions_seen!
+        end
       else
         @tasks = []
         @submissions = []
