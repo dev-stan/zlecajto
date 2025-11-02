@@ -7,13 +7,40 @@ module Users
     before_action :set_role_based_on_pending_object, only: [:edit]
 
     def show
-      @user = current_user
       if user_signed_in?
-        @tasks = current_user.tasks.includes(:submissions).order(created_at: :desc)
-        @submissions = current_user.submissions.includes(task: :user).order(created_at: :desc)
+        @tasks = @user.tasks.with_submissions
+        @open_tasks = @user.tasks.with_submissions.where(status: :open)
+        @accepted_tasks = @user.tasks.with_submissions.where(status: :accepted)
+        @completed_tasks = @user.tasks.with_submissions.where(status: :completed)
+        @cancelled_tasks = @user.tasks.with_submissions.where(status: :cancelled)
+
+        @submissions = @user.submissions.includes(task: :user)
+        @open_submissions = @user.submissions
+                                 .includes(task: :user)
+                                 .where(status: :pending, tasks: { status: :open })
+                                 .order(created_at: :desc)
+
+        @accepted_submissions = @user.submissions
+                                     .includes(task: :user)
+                                     .where(status: :accepted, tasks: { status: :accepted })
+                                     .order(created_at: :desc)
+
+        @rejected_submissions = @user.submissions
+                                     .includes(task: :user)
+                                     .joins(:task)
+                                     .where(tasks: { status: %i[accepted completed cancelled overdue] })
+                                     .where.not(task_id: Submission.where(status: :accepted,
+                                                                          user_id: @user.id).select(:task_id))
+                                     .order(created_at: :desc)
+
+        @completed_submissions = @user.submissions
+                                      .includes(task: :user)
+                                      .joins(:task)
+                                      .where(status: :accepted, tasks: { status: :completed })
+
         return unless params[:tab] == 'submissions' && @submissions.accepted.exists?
 
-        current_user.mark_accepted_submissions_seen!
+        @user.mark_accepted_submissions_seen!
       else
         @tasks = []
         @submissions = []

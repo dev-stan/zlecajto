@@ -20,6 +20,8 @@ class Task < ApplicationRecord
     overdue: 'overdue'
   }
 
+  scope :with_submissions, -> { includes(:submissions) }
+
   CATEGORIES       = %w[Zwierzaki Naprawy Ogród Transport Korki Eventy Przeprowadzki Sprzątanie Rower Inne].freeze
   TIMESLOTS        = %w[Rano Popołudnie Wieczór Obojętnie].freeze
   PAYMENT_METHODS  = %w[Przelew Blik Gotówka Czekolada].freeze

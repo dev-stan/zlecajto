@@ -58,36 +58,49 @@
       / Tasks panel
       .mt-4
       .space-y-6 data-tabs-target="panel" data-tab="tasks" class=(active_tab == 'tasks' ? '' : 'hidden')
-        - if @tasks.any?
-          .grid.grid-cols-1.md:grid-cols-3.gap-4
-            - @tasks.each do |task|
-              = render Tasks::TaskCardComponent.new(task: task, variant: :owner, path: my_task_path(task), show_notification: true, current_user: current_user) do |card|
-                - card.with_badge do
-                  = render Ui::BadgeComponent.new(text: t('tasks.submissions', count: task.submissions.count), variant: :red)
-                  - if task.cancelled?
-                    = render Ui::BadgeComponent.new(text: "Usunięto", variant: :red)
-        - else
+        - if @open_tasks.any?
+          / By default no divider for this section
+          main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
+            = render Tasks::IndexComponent.new(task_array: @open_tasks, current_user: current_user)
+        - if @accepted_tasks.any?
+          = render Ui::DividerWithLabelComponent.new(label: 'W trakcie wykonywania')
+          main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
+            = render Tasks::IndexComponent.new(task_array: @accepted_tasks, current_user: current_user)
+        - if @completed_tasks.any?
+          = render Ui::DividerWithLabelComponent.new(label: 'Wykonane zlecenia')
+          main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
+            = render Tasks::IndexComponent.new(task_array: @completed_tasks, current_user: current_user)
+        - if @cancelled_tasks.any?
+          = render Ui::DividerWithLabelComponent.new(label: 'Usunięte zlecenia')
+          main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
+            = render Tasks::IndexComponent.new(task_array: @cancelled_tasks, current_user: current_user)
+        - if @tasks.empty?
           .text-center.py-12
             p.text-gray-500.mb-4 = t('dashboard.my_tasks.empty', default: 'Nie masz jeszcze żadnych zadań.')
             = render Ui::ButtonComponent.new(text: t('dashboard.my_tasks.new', default: 'Dodaj zadanie'), path: new_task_path, variant: :primary)
 
       / Submissions panel
       .space-y-6 data-tabs-target="panel" data-tab="submissions" class=(active_tab == 'submissions' ? '' : 'hidden')
-        - if @submissions.any?
-          .grid.grid-cols-1.md:grid-cols-3.gap-4
-            - @submissions.each do |submission|
-                = render Tasks::TaskCardComponent.new(task: submission.task, path: task_path(submission.task), variant: :default, show_notification: true, current_user: current_user) do |card|
-                  - card.with_badge do
-                    = render Ui::BadgeComponent.new(text: submission.task.category, variant: :blue)
-                    - if !submission.task.cancelled?
-                      = render Ui::BadgeComponent.new(text: submission.task.payment_method, variant: :green)
-                    - if submission.task.cancelled?
-                        = render Ui::BadgeComponent.new(text: "Usunięto", variant: :red)
-
-        - else
+        - if @accepted_submissions.any?
+          = render Ui::DividerWithLabelComponent.new(label: 'Zaakceptowane zgłoszenia')
+          main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
+            = render Tasks::IndexComponent.new(task_array: @accepted_submissions.map(&:task), current_user: current_user)
+        - if @open_submissions.any?
+          = render Ui::DividerWithLabelComponent.new(label: 'Oczekujące na akceptację')
+          main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
+            = render Tasks::IndexComponent.new(task_array: @open_submissions.map(&:task), current_user: current_user)
+        - if @completed_submissions.any?
+          = render Ui::DividerWithLabelComponent.new(label: 'Ukończone zlecenia')
+          main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
+            = render Tasks::IndexComponent.new(task_array: @completed_submissions.map(&:task), current_user: current_user)
+        - if @rejected_submissions.any?
+          = render Ui::DividerWithLabelComponent.new(label: 'Odrzucone zlecenia')
+          main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
+            = render Tasks::IndexComponent.new(task_array: @rejected_submissions.map(&:task), current_user: current_user)
+        - if @submissions.empty?
           .text-center.py-12
-            p.text-gray-500.mb-4 = t('dashboard.my_submissions.empty', default: 'Nie aplikowałeś jeszcze na żadne zadania.')
-            = render Ui::ButtonComponent.new(text: t('dashboard.browse_tasks', default: 'Przeglądaj zadania'), path: tasks_path, variant: :secondary)
+            p.text-gray-500.mb-4 = "Nie aplikowałeś/aś jeszcze na żadne zadania"
+            = render Ui::ButtonComponent.new(text: 'Przeglądaj zadania', path: tasks_path, variant: :secondary)
 - else
   .h-screen.flex.flex-col.items-center.justify-center.text-center.px-4.-mt-24
     p.text-3xl.font-semibold.px-10
