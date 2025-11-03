@@ -1,7 +1,6 @@
-.flex.flex-col.items-center.justify-center.min-h-screen
-
+div class="flex flex-col items-center justify-center h-[calc(100vh-6rem)] overflow-hidden"
     .px-10.text-center
-        p.text-lg.mt-3.font-bold.mb-3 Wybrałeś wykonawcę do realizacji zlecenia
+        p.text-lg.mt-3.font-bold.mb-3 Wybrano wykonawcę do realizacji zlecenia
     .px-4
         = render Cards::CardComponent.new do
             .flex.flex-col.space-y-6.items-start.items
@@ -14,11 +13,11 @@
                 li.flex.items-center.gap-4
                     .flex-shrink-0
                         span.flex.items-center.justify-center.w-8.h-8.rounded-full.bg-blue-50.text-blue-600.font-semibold.border.border-blue-200 = 2
-                    p.text-base.text-gray-600.leading-relaxed = 'Ustal szczegóły realizacji ze zleceniodawcą'
+                    p.text-base.text-gray-600.leading-relaxed = 'Ustal szczegóły realizacji z wykonawcą.'
                 li.flex.items-center.gap-4
                     .flex-shrink-0
                         span.flex.items-center.justify-center.w-8.h-8.rounded-full.bg-blue-50.text-blue-600.font-semibold.border.border-blue-200 = 3
-                    p.text-base.text-gray-600.leading-relaxed = 'Gdy zlecenie zostanie wykonane, potwierdź jego realizację w aplikacji'
+                    p.text-base.text-gray-600.leading-relaxed = 'Gdy zlecenie zostanie wykonane, potwierdź jego realizację.'
         = render Ui::ButtonComponent.new(text: 'Wróć do ogłoszenia', path: my_task_path(@submission.task), variant: :primary, size: :md, html_options: { class: 'w-full mt-5' })
         = render Ui::ButtonComponent.new(text: 'Potwierdź wykonanie zlecenia',
             path: confirm_task_complete_modal_path(@submission.task),

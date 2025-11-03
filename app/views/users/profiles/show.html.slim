@@ -61,23 +61,23 @@
         - if @open_tasks.any?
           / By default no divider for this section
           main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
-            = render Tasks::IndexComponent.new(task_array: @open_tasks, current_user: current_user, show_notification: true)
+            = render Tasks::IndexComponent.new(task_array: @open_tasks, current_user: current_user, show_notification: true, path: :my_task_path)
         - if @accepted_tasks.any?
           = render Ui::DividerWithLabelComponent.new(label: 'W trakcie wykonywania')
           main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
-            = render Tasks::IndexComponent.new(task_array: @accepted_tasks, current_user: current_user, show_notification: true)
+            = render Tasks::IndexComponent.new(task_array: @accepted_tasks, current_user: current_user, show_notification: true, path: :my_task_path)
         - if @completed_tasks.any?
           = render Ui::DividerWithLabelComponent.new(label: 'Wykonane zlecenia')
           main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
-            = render Tasks::IndexComponent.new(task_array: @completed_tasks, current_user: current_user, show_notification: true)
+            = render Tasks::IndexComponent.new(task_array: @completed_tasks, current_user: current_user, show_notification: true, path: :my_task_path)
         - if @overdue_tasks.any?
           = render Ui::DividerWithLabelComponent.new(label: 'Zlecenia przeterminowane')
           main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
-            = render Tasks::IndexComponent.new(task_array: @overdue_tasks, current_user: current_user, show_notification: true)
+            = render Tasks::IndexComponent.new(task_array: @overdue_tasks, current_user: current_user, show_notification: true, path: :my_task_path)
         - if @cancelled_tasks.any?
           = render Ui::DividerWithLabelComponent.new(label: 'Usunięte zlecenia')
           main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
-            = render Tasks::IndexComponent.new(task_array: @cancelled_tasks, current_user: current_user, show_notification: true)
+            = render Tasks::IndexComponent.new(task_array: @cancelled_tasks, current_user: current_user, show_notification: true, path: :my_task_path)
         - if @tasks.empty?
           .text-center.py-12
             p.text-gray-500.mb-4 = t('dashboard.my_tasks.empty', default: 'Nie masz jeszcze żadnych zadań.')

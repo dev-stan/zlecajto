@@ -3,7 +3,8 @@
 class SubmissionsController < ApplicationController
   before_action :authenticate_user!, except: %i[new create]
   before_action :set_task, only: %i[new create]
-  before_action :set_submission, only: %i[show accept contact accepted confirm_submission_accept cancell]
+  before_action :set_submission,
+                only: %i[show accept contact accepted confirm_submission_accept cancell_chosen]
   before_action :authorize_task_owner!, only: %i[accept confirm_submission_accept]
 
   def index
@@ -21,8 +22,8 @@ class SubmissionsController < ApplicationController
   end
 
   def cancell_chosen
-    @submission.task.submissions.update_all(status: :pending)
-    redirect_to task_path(@submission.task), notice: 'Teraz możesz wybrać innego wykonawcę.'
+    @submission.cancell_chosen!
+    redirect_to my_task_path(@submission.task), notice: 'Teraz możesz wybrać innego wykonawcę.'
   end
 
   def create

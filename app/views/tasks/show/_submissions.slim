@@ -4,7 +4,7 @@ h3.text-lg.font-semibold.text-gray-900.mt-3 = @presenter.submissions_header
 
 - if accepted_submission
   ul.space-y-4.mt-3
-    - @task.submissions.each do |submission|
+    - @task.submissions.sort_by { |s| s == accepted_submission ? 0 : 1 }.each do |submission|
       li
         = render Cards::CardComponent.new(padding: 'p-4', shadow: false, html_options: { class: 'rounded-xl bg-white' }) do
           .flex-col
@@ -19,16 +19,22 @@ h3.text-lg.font-semibold.text-gray-900.mt-3 = @presenter.submissions_header
             - if controller_name == 'tasks' && action_name == 'my_task'
               - if @task.completed?
                   = render Ui::ButtonComponent.new(text: "Zlecenie zakończone!", variant: :green, size: :sm, width: 100, path: '#')
-              - else
+              - if submission == accepted_submission && !@task.completed?
                 .flex.flex-col.gap-3
-                  = render Ui::ButtonComponent.new(text: "Skontaktuj się z wykonawcą!", variant: :blue, size: :sm, width: 100, path: contact_submission_path(submission))
-                  = render Ui::ButtonComponent.new(text: 'Potwierdź wykonanie zlecenia',
-                    path: confirm_task_complete_modal_path(submission.task),
-                    variant: :green,
-                    size: :sm,
-                    width: 100,
-                    method: :get,
-                    html_options: { data: { turbo_frame: 'modal', turbo: true } })
+                  = render Ui::ButtonComponent.new(text: "Kontakt z wykonawcą", variant: :blue, size: :sm, width: 100, path: contact_submission_path(submission))
+                  .flex.gap-2
+                    = render Ui::ButtonComponent.new(text: 'Potwierdź wykonanie',
+                      path: confirm_task_complete_modal_path(submission.task),
+                      variant: :green,
+                      size: :sm,
+                      method: :get,
+                      html_options: { data: { turbo_frame: 'modal', turbo: true } })
+                    = render Ui::ButtonComponent.new(text: 'Zmiana wykonawcy',
+                      path: confirm_cancell_chosen_submission_modal_path(submission),
+                      variant: :red,
+                      size: :sm,
+                      method: :get,
+                      html_options: { data: { turbo_frame: 'modal', turbo: true } })
 
 - elsif @task.submissions.any?
 
