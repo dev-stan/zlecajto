@@ -1,0 +1,10 @@
+= turbo_frame_tag 'modal' do
+    = render Ui::ConfirmModalComponent.new(title: 'Uwaga, uwaga!',
+      body: "Czy na pewno chcesz zmienić wykonawcę zlecenia?",
+      footer: 'Używaj tej opcji tylko jeśli wybrany wcześniej wykonawca nie może zrealizować zlecenia.',
+      confirm_text: 'Tak, potwierdzam!',
+      confirm_method: :patch,
+      cancel_text: 'Cofnij',
+      cancel_variant: :green,
+      confirm_path: cancell_chosen_submission_path(@submission),
+      confirm_variant: :red)

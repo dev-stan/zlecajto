@@ -24,6 +24,11 @@ class ModalsController < ApplicationController
     respond_to(&:html)
   end
 
+  def confirm_cancell_chosen_submission
+    @submission = Submission.find(params[:id])
+    respond_to(&:html)
+  end
+
   # GET /tasks/:id/edit_modal
   def edit_task
     @task = Task.find(params[:id])

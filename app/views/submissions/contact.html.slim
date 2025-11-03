@@ -26,3 +26,9 @@
             size: :md,
             method: :get,
             html_options: { class: 'w-full mt-4', data: { turbo_frame: 'modal', turbo: true } })
+        = render Ui::ButtonComponent.new(text: 'Wybierz innego wykonawcę',
+            path: confirm_cancell_chosen_submission_modal_path(@submission),
+            variant: :red,
+            size: :md,
+            method: :get,
+            html_options: { class: 'w-full mt-4', data: { turbo_frame: 'modal', turbo: true } })
