@@ -3,10 +3,20 @@
     .px-6.border-b.border-gray-100.flex.items-center.justify-between
       h3.text-lg.font-bold.text-gray-900.pt-8 = 'Pojawiło się coś nowego 👀'
     .px-6.py-2
-      p.text-gray-700.mt-1 ✅ Dodaliśmy możliwość dodawania zdjęć w zakładce "pytania" pod zleceniami.
-      p.text-gray-700.mt-1 ✅ Naprawiliśmy kilka błędów technicznych.
-      p.text-gray-700.mt-1 ➡️ Pracujemy nad rozbudowaniem profili użytkowników!
+      p.text-gray-700.mt-1 
+        |✅ Dodaliśmy funkcję 
+        span.font-bold usunięcia zlecenia
+      p.text-gray-700.mt-1 
+        |✅ Dodaliśmy funkcję 
+        span.font-bold zmiany wykonawcy
+      p.text-gray-700.mt-1
+        |✅ Uporządkowaliśmy zlecenia 
+        span.font-bold w profilu
+      p.text-gray-700.mt-1 
+        |➡️ Pracujemy nad funkcją 
+        span.font-bold chatu!
       
+      p.text-gray-700.mt-5 Dziękujemy za wasz feedback, to dzięki niemu powstają nowe funkcje!
     .px-6.py-4.flex.justify-center
       = render Ui::ButtonComponent.new(text: 'Ekstra, rozumiem!',
         button: true,
