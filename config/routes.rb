@@ -68,6 +68,7 @@ Rails.application.routes.draw do
     member do
       patch :accept
       patch :reject
+      patch :cancell_chosen # When task.user wants to choose different submission
       get :accepted
       get :contact
     end
@@ -95,6 +96,8 @@ Rails.application.routes.draw do
     get 'task_messages/:id/reply_modal', action: :reply_task_message, as: :reply_task_message_modal
     get 'submissions/:id/confirm_accept', action: :confirm_submission_accept, as: :confirm_submission_accept_modal
     get 'submissions/:id/answer_modal', action: :new_answer, as: :new_answer_modal
+    get 'submissions/:id/cancell_chosen_submission', action: :confirm_cancell_chosen_submission,
+                                                     as: :confirm_cancell_chosen_submission_modal
     delete 'modal', action: :destroy, as: :close_modal
   end
 

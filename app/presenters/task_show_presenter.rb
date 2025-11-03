@@ -14,10 +14,10 @@ class TaskShowPresenter
     return 'Usunięto zlecenie' if task.cancelled?
     return 'Upłynął termin' if task.overdue?
     return 'Zlecenie zakończone' if task.completed?
+    return 'Zobacz detale zlecenia' if owner?
     return 'Wybrano cię! Co dalej?' if current_user_accepted_submission?
     return 'Wybrano już wykonawcę' if accepted_submission_exists?
     return 'Już aplikowałeś' if user_has_applied?
-    return 'Zobacz detale zlecenia' if owner?
 
     'Aplikuj'
   end
@@ -36,7 +36,6 @@ class TaskShowPresenter
   end
 
   def button_path
-    return contact_submission_path(task.submissions.accepted.first) if owner? && accepted_submission_exists?
     return my_task_path(task) if owner?
     return '#' if completed_submission_for_current_user?
     return accepted_submission_path(current_user_accepted_submission) if current_user_accepted_submission?
@@ -52,7 +51,7 @@ class TaskShowPresenter
     return 'Upłynął termin zlecenia' if task.overdue?
 
     return unless accepted_submission
-    return 'Wybrałeś wykonawcę!' if owner?
+    return 'Wybrano wykonawcę!' if owner?
     return 'Wybrał Cię zleceniodawca! Skontaktuj się z nim.' if accepted_submission.user == current_user
 
     'Wybrany wykonawca' if task.submissions.accepted.exists?
