@@ -63,7 +63,7 @@
           main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
             = render Tasks::IndexComponent.new(task_array: @open_tasks, current_user: current_user, show_notification: true, path: :my_task_path)
         - if @accepted_tasks.any?
-          = render Ui::DividerWithLabelComponent.new(label: 'W trakcie wykonywania')
+          = render Ui::DividerWithLabelComponent.new(label: 'Wybrano wykonawcę')
           main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
             = render Tasks::IndexComponent.new(task_array: @accepted_tasks, current_user: current_user, show_notification: true, path: :my_task_path)
         - if @completed_tasks.any?
