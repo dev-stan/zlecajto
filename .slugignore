@@ -1,0 +1,11 @@
+log/
+tmp/
+node_modules/
+spec/
+test/
+storage/
+coverage/
+public/uploads/
+.git/
+.gitignore
+README.md
