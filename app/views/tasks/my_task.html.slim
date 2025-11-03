@@ -5,8 +5,11 @@
         .flex.flex-col.justify-center.h-full
           - if @task.cancelled?
             h2.text-5xl.font-bold.text-white.mb-2 = "Zlecenie usunięte..."
-            p.text-white.mb-0 
-              | Daj nam znać dlaczego usunąłęś(aś) zlecenie, potrzebujemy twojego feedbacku!
+            p.text-white.mb-0
+              | Daj nam znać (
+              = link_to "tutaj!", "https://tally.so/r/w4e2KB", target: "_blank", rel: "noopener", class: "underline"
+              | ) dlaczego usunąłęś(aś) zlecenie, potrzebujemy twojego feedbacku!
+
           - elsif @task.submissions.accepted.none?
             h2.text-5xl.font-bold.text-white.mb-2 = "Masz #{t('tasks.submissions', count: @task.submissions.count)}"  
             - if @task.submissions.count > 0

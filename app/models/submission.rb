@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Submission < ApplicationRecord
-  # include Submissions::Emailable
+  include Submissions::Emailable
   # include Submissions::Smsable
   include Submissions::Notifiable
 
@@ -44,7 +44,7 @@ class Submission < ApplicationRecord
     transaction do
       update!(status: :accepted)
       task.update!(status: :accepted)
-      # send_accepted_submission_email
+      send_accepted_submission_email
       create_accepted_submission_notification
     end
   end
