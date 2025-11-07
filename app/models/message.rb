@@ -6,5 +6,5 @@ class Message < ApplicationRecord
 
   validates :content, presence: true, length: { maximum: 2000 }
 
-  after_create_commit -> { broadcast_append_to conversation }
+  after_create_commit -> { ConversationChannel.broadcast_to(conversation, MessageSerializer.new(self).as_json) }
 end
