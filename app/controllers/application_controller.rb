@@ -6,11 +6,16 @@ class ApplicationController < ActionController::Base
   before_action :ensure_persistent_login
   before_action :set_current_user
   before_action :update_user_last_seen_at, if: :user_signed_in?
+  after_action :set_user_cookie
 
   protected
 
   def set_current_user
     Current.user = current_user
+  end
+
+  def set_user_cookie
+    cookies.signed[:user_id] = current_user.id if current_user
   end
 
   def after_sign_in_path_for(resource)
