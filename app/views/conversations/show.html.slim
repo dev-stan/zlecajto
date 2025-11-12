@@ -1,0 +1,11 @@
+section data-controller="conversation" data-conversation-id=@conversation.id
+  .messages data-conversation-target="messages" id="messages"
+    - @conversation.messages.each do |message|
+      .message
+        strong = message.user.display_name
+        | : 
+        = message.content
+
+  form data-conversation-target="form" data-action="submit->conversation#send"
+    input type="text" data-conversation-target="input" placeholder="Type a message..."
+    button type="submit" Send

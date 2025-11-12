@@ -6,5 +6,16 @@ class Message < ApplicationRecord
 
   validates :content, presence: true, length: { maximum: 2000 }
 
-  after_create_commit -> { ConversationChannel.broadcast_to(conversation, MessageSerializer.new(self).as_json) }
+  after_create_commit :broadcast_message
+
+  private
+
+  def broadcast_message
+    ConversationChannel.broadcast_to(conversation, {
+                                       id: id,
+                                       user_name: user.display_name,
+                                       content: content,
+                                       created_at: created_at.strftime('%H:%M')
+                                     })
+  end
 end

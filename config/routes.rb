@@ -81,6 +81,10 @@ Rails.application.routes.draw do
   get 'task_messages/create_from_session', to: 'task_messages#create_from_session',
                                            as: :create_from_session_task_message
 
+  resources :conversations, only: [:show] do
+    resources :messages, only: [:create]
+  end
+
   get 'my_tasks/:id', to: 'tasks#my_task', as: :my_task
 
   # Modals
