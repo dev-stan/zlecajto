@@ -102,5 +102,6 @@ gem 'view_component'
 gem 'vonage'
 gem "activeadmin", "~> 3.3"
 gem 'browser'
+gem 'active_model_serializers'
 
 gem "sassc", "~> 2.4"
