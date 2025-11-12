@@ -7,7 +7,6 @@ class ConversationChannel < ApplicationCable::Channel
   end
 
   def receive(data)
-    Rails.logger.info ">>> Received data from client: #{data.inspect}"
     @conversation.messages.create!(
       content: data['content'],
       user: current_user

@@ -1,4 +1,3 @@
-// app/javascript/controllers/conversation_controller.js
 import { Controller } from "@hotwired/stimulus"
 import { createConversationChannel } from "../channels/conversation_channel"
 
