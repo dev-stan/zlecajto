@@ -11,4 +11,10 @@ class Conversation < ApplicationRecord
   scope :between, lambda { |sender_id, recipient_id|
     where(sender_id:, recipient_id:).or(where(sender_id: recipient_id, recipient_id: sender_id))
   }
+
+  def participant?(user)
+    return false if user.nil?
+
+    user.id == sender_id || user.id == recipient_id
+  end
 end

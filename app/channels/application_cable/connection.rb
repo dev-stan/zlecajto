@@ -6,6 +6,11 @@ module ApplicationCable
 
     def connect
       self.current_user = find_verified_user
+      Rails.logger.info "[ActionCable] CONNECTED: #{current_user.id} (#{current_user.email})"
+    end
+
+    def disconnect
+      Rails.logger.info "[ActionCable] DISCONNECTED: #{current_user.id}"
     end
 
     private
