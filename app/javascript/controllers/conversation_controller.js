@@ -30,7 +30,6 @@ export default class extends Controller {
       this.messagesTarget.appendChild(message)
     }
 
-    // Smooth auto-scroll to new message
     this.scrollToBottom(true)
   }
 
@@ -42,7 +41,6 @@ export default class extends Controller {
     this.channel.perform("receive", { content })
     this.inputTarget.value = ""
     
-    // Scroll after sending (will scroll again when message arrives)
     this.scrollToBottom(true)
   }
 
