@@ -11,11 +11,13 @@ class Message < ApplicationRecord
   private
 
   def broadcast_message
-    ConversationChannel.broadcast_to(conversation, {
-                                       id: id,
-                                       user_name: user.display_name,
-                                       content: content,
-                                       created_at: created_at.strftime('%H:%M')
-                                     })
+    [conversation.sender, conversation.recipient].each do |participant|
+      html = ApplicationController.renderer.render(
+        Messages::MessageComponent.new(message: self, current_user: participant),
+        layout: false
+      )
+
+      ConversationChannel.broadcast_to([conversation, participant], { html: html })
+    end
   end
 end

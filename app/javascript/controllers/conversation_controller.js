@@ -6,28 +6,52 @@ export default class extends Controller {
 
   connect() {
     this.conversationId = this.element.dataset.conversationId
-    this.channel = createConversationChannel(this.conversationId, this.receiveMessage.bind(this))
+    this.channel = createConversationChannel(
+      this.conversationId,
+      this.receiveMessage.bind(this)
+    )
+
+    // Scroll to bottom on initial load after a brief delay to ensure content is rendered
+    requestAnimationFrame(() => {
+      this.scrollToBottom()
+    })
   }
 
   disconnect() {
-    this.channel.unsubscribe()
+    if (this.channel) this.channel.unsubscribe()
   }
 
   receiveMessage(data) {
-    const message = document.createElement("div")
-    message.innerHTML = `<strong>${data.user_name}</strong>: ${data.content} <small>${data.created_at}</small>`
-    this.messagesTarget.appendChild(message)
-    this.messagesTarget.scrollTop = this.messagesTarget.scrollHeight
-  }
+    if (data.html) {
+      this.messagesTarget.insertAdjacentHTML("beforeend", data.html)
+    } else {
+      const message = document.createElement("div")
+      message.innerHTML = `<strong>${data.user_name}</strong>: ${data.content} <small>${data.created_at}</small>`
+      this.messagesTarget.appendChild(message)
+    }
 
+    this.scrollToBottom(true)
+  }
 
   send(event) {
     event.preventDefault()
-
     const content = this.inputTarget.value.trim()
     if (content === "") return
 
     this.channel.perform("receive", { content })
     this.inputTarget.value = ""
+    
+    this.scrollToBottom(true)
+  }
+
+  scrollToBottom(smooth = false) {
+    if (smooth) {
+      this.messagesTarget.scrollTo({
+        top: this.messagesTarget.scrollHeight,
+        behavior: "smooth"
+      })
+    } else {
+      this.messagesTarget.scrollTop = this.messagesTarget.scrollHeight
+    }
   }
 }
