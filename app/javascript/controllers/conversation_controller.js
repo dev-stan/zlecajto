@@ -1,4 +1,3 @@
-// app/javascript/controllers/conversation_controller.js
 import { Controller } from "@hotwired/stimulus"
 import { createConversationChannel } from "../channels/conversation_channel"
 
@@ -13,7 +12,6 @@ export default class extends Controller {
       this.receiveMessage.bind(this)
     )
 
-    // Scroll on initial load
     requestAnimationFrame(() => this.scrollToBottom())
   }
 
@@ -23,18 +21,7 @@ export default class extends Controller {
 
   // Called by ActionCable when a message is broadcast
   receiveMessage(data) {
-    if (data.html) {
-      this.messagesTarget.insertAdjacentHTML("beforeend", data.html)
-    } else {
-      const el = document.createElement("div")
-      el.innerHTML = `
-        <strong>${data.user_name}</strong>:
-        ${data.content}
-        <small>${data.created_at}</small>
-      `
-      this.messagesTarget.appendChild(el)
-    }
-
+    this.messagesTarget.insertAdjacentHTML("beforeend", data.html)
     this.scrollToBottom(true)
   }
 

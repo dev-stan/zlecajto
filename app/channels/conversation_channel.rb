@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'base64'
-require 'stringio'
-
 class ConversationChannel < ApplicationCable::Channel
   def subscribed
     @conversation = Conversation.find(params[:conversation_id])
