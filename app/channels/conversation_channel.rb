@@ -12,14 +12,16 @@ class ConversationChannel < ApplicationCable::Channel
     stream_for [@conversation, current_user]
   end
 
-  def unsubscribed
-    Rails.logger.info "[Cable] #{current_user.id} unsubscribed"
-  end
-
   def receive(data)
-    @conversation.messages.create!(
+    message = @conversation.messages.build(
       content: data['content'],
       user: current_user
     )
+
+    Array.wrap(data['attachments']).each do |signed_id|
+      message.photos.attach(signed_id)
+    end
+
+    message.save!
   end
 end

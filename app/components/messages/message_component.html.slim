@@ -4,8 +4,14 @@ div class="w-full mb-1 flex #{current_user_message? ? 'justify-end' : 'justify-s
       .flex-shrink-0.self-end
         = render Users::AvatarComponent.new(user: message.user, size: 'sm', current_user: current_user)
     .flex.flex-col.gap-1
-      div class="rounded-3xl px-5 py-3" class=(current_user_message? ? 'bg-blue-100 border-1 border-blue-300 text-gray-900' : 'bg-red text-gray-900 border border-gray-300')
-        p.text-base.leading-relaxed.break-words.whitespace-normal = message.content
+      - if message.content.present? && message.content != '[image]'
+        div class="rounded-3xl px-5 py-3" class=(current_user_message? ? 'bg-blue-100 border-1 border-blue-300 text-gray-900' : 'bg-red text-gray-900 border border-gray-300')
+          p.text-base.leading-relaxed.break-words.whitespace-normal = message.content
+      - if message.photos.attached?
+        .mt-2.grid.gap-2 class=(message.photos.size > 1 ? 'grid-cols-3' : 'grid-cols-1')
+          - message.photos.each_with_index do |photo, i|
+            = link_to message_photos_modal_path(message, index: i), data: { turbo_frame: 'modal' }, class: 'group relative block overflow-hidden rounded-xl border border-gray-200 bg-white aspect-square w-24 h-24' do
+              = image_tag photo.variant(resize_to_limit: [256, 256]), alt: 'Wiadomość - zdjęcie', class: 'object-cover w-full h-full transition-transform duration-200 group-hover:scale-105'
       span.text-xs.text-gray-400.px-2 class=(current_user_message? ? 'text-right' : 'text-left') = message.created_at.strftime('%d.%m')
     - if current_user_message?
       .flex-shrink-0.self-end

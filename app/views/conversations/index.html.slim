@@ -1,0 +1,6 @@
+.p-5
+  - @conversations.each do |conversation|
+    = link_to conversation_path(conversation), class: "block" do
+      .flex.flex-col.bg-white.border.border-gray-200.p-2.rounded-2xl
+        p = conversation.task.title
+        p.text-green-400 = conversation.task.status

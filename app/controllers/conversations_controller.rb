@@ -8,6 +8,11 @@ class ConversationsController < ApplicationController
     @messages = @conversation.messages.includes(:user).order(:created_at)
   end
 
+  def index
+    @hide_navbar = true
+    @conversations = Conversation.for_user(current_user).includes(:task, :sender, :recipient).order(updated_at: :desc)
+  end
+
   def create
     @conversation = Conversation.between(current_user.id, params[:recipient_id]).first_or_create!(
       sender_id: current_user.id,

@@ -3,6 +3,7 @@
 class Conversation < ApplicationRecord
   belongs_to :sender, class_name: 'User'
   belongs_to :recipient, class_name: 'User'
+  belongs_to :task
 
   has_many :messages, dependent: :destroy
 
@@ -11,6 +12,8 @@ class Conversation < ApplicationRecord
   scope :between, lambda { |sender_id, recipient_id|
     where(sender_id:, recipient_id:).or(where(sender_id: recipient_id, recipient_id: sender_id))
   }
+
+  scope :for_user, ->(user) { where('sender_id = ? OR recipient_id = ?', user.id, user.id) }
 
   def participant?(user)
     return false if user.nil?
