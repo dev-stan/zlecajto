@@ -5,7 +5,9 @@ class ConversationsController < ApplicationController
 
   def show
     @hide_navbar = true
-    @messages = @conversation.messages.includes(:user).order(:created_at)
+    @conversation = Conversation.find(params[:id])
+    @conversation.mark_seen_by(current_user)
+    @messages = @conversation.messages.includes(:user, photos_attachments: :blob)
   end
 
   def index

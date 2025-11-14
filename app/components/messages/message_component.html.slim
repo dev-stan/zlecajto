@@ -1,4 +1,4 @@
-div class="w-full mb-1 flex #{current_user_message? ? 'justify-end' : 'justify-start'}"
+div class="w-full mb-2 flex #{current_user_message? ? 'justify-end' : 'justify-start'}"
   div class="flex gap-2"
     - if !current_user_message?
       .flex-shrink-0.self-end
@@ -12,7 +12,7 @@ div class="w-full mb-1 flex #{current_user_message? ? 'justify-end' : 'justify-s
           - message.photos.each_with_index do |photo, i|
             = link_to message_photos_modal_path(message, index: i), data: { turbo_frame: 'modal' }, class: 'group relative block overflow-hidden rounded-xl border border-gray-200 bg-white aspect-square w-24 h-24' do
               = image_tag photo.variant(resize_to_limit: [256, 256]), alt: 'Wiadomość - zdjęcie', class: 'object-cover w-full h-full transition-transform duration-200 group-hover:scale-105'
-      span.text-xs.text-gray-400.px-2 class=(current_user_message? ? 'text-right' : 'text-left') = message.created_at.strftime('%d.%m')
+      span.text-xs.text-gray-400.px-2 class=(current_user_message? ? 'text-right' : 'text-left') = l(message.created_at, format: :short)
     - if current_user_message?
       .flex-shrink-0.self-end
         = render Users::AvatarComponent.new(user: message.user, size: 'sm', current_user: current_user)

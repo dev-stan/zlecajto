@@ -5,3 +5,9 @@ import "controllers"
 
 import * as ActiveStorage from "@rails/activestorage"
 ActiveStorage.start()
+
+function setVh() {
+  document.documentElement.style.setProperty("--vh", `${window.innerHeight * 0.01}px`);
+}
+setVh();
+window.addEventListener("resize", setVh);

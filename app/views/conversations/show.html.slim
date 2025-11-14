@@ -1,44 +1,44 @@
-.flex.flex-col.h-screen
+.flex.flex-col style="height: calc(var(--vh) * 100);"
   / Header
-  .flex.items-center.justify-between.px-4.py-2.bg-white
-    .flex.items-center
-      = link_to request.referer || root_path, class: "flex items-center hover:text-primary text-2xl" do
-        i.fas.fa-arrow-left aria-label="Back"
-    .flex-1.flex.justify-center
-      p.font-bold
-        = @conversation.sender.display_name
-    .flex.items-center
-      = render Users::AvatarComponent.new(user: @conversation.sender, size: 'sm', current_user: current_user)
+  .bg-white
+    .flex.items-center.justify-between.px-4.py-2.pt-6
+      .flex.items-center
+        = link_to conversations_path, class: "flex items-center hover:text-primary text-2xl" do
+          i.fas.fa-arrow-left aria-label="Back"
+      .flex-1.flex.justify-center
+        p.text-2xl.font-bold
+          = @conversation.sender.display_name
+      .flex.items-center
+        = render Users::AvatarComponent.new(user: @conversation.other_participant(current_user), size: 'sm', current_user: current_user)
 
-  / Service Info
-  .flex.items-center.gap-3.p-4.bg-white
-    .w-1/4.flex.items-center.justify-center
-      - if @conversation.task.photos.attached?
-        = image_tag @conversation.task.photos.first, 
-            alt: 'Service Image', 
-            class: 'rounded-lg h-12 w-auto'
-      - else
-        i.fas.fa-image.text-gray-400.text-6xl
-    .w-3/4.flex.flex-col
-      p.font-medium.truncate = @conversation.task.title
-      .flex.justify-between.text-sm.w-full
-        p.text-green-600 = @conversation.task.status
-        p.font-semibold = formatted_salary(@conversation.task)
+    / Service Info
+    .flex.items-center.gap-3.pb-4.px-4.border-b-2.border-gray-200
+      .w-1/4.flex.items-center.justify-center
+        - if @conversation.task.photos.attached?
+          = image_tag @conversation.task.photos.first, 
+              alt: 'Service Image', 
+              class: 'rounded-lg h-12 w-auto'
+        - else
+            i.fas.fa-image.text-gray-400.text-6xl
+      .w-3/4.flex.flex-col
+        p.font-medium.truncate = @conversation.task.title
+        .flex.justify-between.text-sm.w-full
+          p.text-green-600 = @conversation.task.status
+          p.font-semibold = formatted_salary(@conversation.task)
 
   / First Message
 
   / Messages Section (scrollable)
-  section.flex-1.flex.flex-col.bg-gray-100.overflow-hidden data-controller="conversation" data-conversation-id=@conversation.id
-    .flex-1.overflow-y-auto.px-3.py-6 data-conversation-target="messages" id="messages"
+  section.flex-1.flex.flex-col.overflow-hidden data-controller="conversation" data-conversation-id=@conversation.id
+    .flex-1.min-h-0.overflow-y-auto.px-3.py-6.mb-15 data-conversation-target="messages" id="messages"
       .flex.justify-center.px-4.py-3
         .bg-white.rounded-lg.p-4.mb-5.flex.flex-col.items-center.gap-2.text-center.border.border-blue-300
           = image_tag 'zlecajto_favicon.png', class: 'h-12 w-auto rounded-lg'
           p.font-medium Wybrano wykonawcę 🔥
       - @conversation.messages.each do |message|
         = render Messages::MessageComponent.new(message: message, current_user: current_user)
-    
     / Input Form - fixed at bottom
-    .bg-gray-100.py-4.px-3
+    .fixed.bottom-0.left-0.right-0.bg-white.px-3.py-4.z-50 style="padding-bottom: calc(1rem + env(safe-area-inset-bottom));"
       / Attach the image upload controller to the form for previews & file input
       form.flex.flex-col.gap-3.w-full data-controller="conversation-image-upload" data-conversation-target="form" data-action="submit->conversation#send conversation:sent->conversation-image-upload#clear"
         / Preview strip

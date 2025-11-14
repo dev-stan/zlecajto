@@ -16,8 +16,12 @@ nav.sticky.top-0.left-0.right-0.bg-white.shadow-sm.z-50
         = image_tag 'logo_horizontal.png', alt: 'Zlecajto.pl', class: 'h-12 w-auto'
 
     / Right side - Mobile Burger Menu (hidden on md+)
-    .flex.items-center.md:hidden.absolute.right-0.top-0.h-full.pr-2
+    .flex.items-center.md:hidden.absolute.right-0.top-0.h-full.pr-2.gap-2
+      = link_to conversations_path, class: "block text-xl hover:text-primary/80" do
+        i.fas.fa-paper-plane aria-label="Conversations"
+      
       = render Layout::BurgerMenuComponent.new(user_signed_in: @user_signed_in, current_user: @current_user)
+
 
     / Right side - Desktop Menu (hidden on mobile)
     .hidden.md:flex.items-center.gap-1.absolute.right-0.top-0.h-full.pr-2
