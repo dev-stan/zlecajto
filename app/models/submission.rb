@@ -44,6 +44,7 @@ class Submission < ApplicationRecord
     transaction do
       update!(status: :accepted)
       task.update!(status: :accepted)
+      create_conversation
       send_accepted_submission_email
       create_accepted_submission_notification
     end
@@ -54,6 +55,10 @@ class Submission < ApplicationRecord
       task.submissions.each { |submission| submission.update!(status: :pending) }
       task.update!(status: :open)
     end
+  end
+
+  def create_conversation
+    Conversation.create!(sender_id: user.id, recipient_id: task.user.id, task: task)
   end
 
   # Ransack allowlist for ActiveAdmin

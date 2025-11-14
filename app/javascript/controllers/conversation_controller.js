@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 import { createConversationChannel } from "../channels/conversation_channel"
 
 export default class extends Controller {
-  static targets = ["messages", "form", "input"]
+  static targets = ["messages", "form", "input", "images"]
 
   connect() {
     this.conversationId = this.element.dataset.conversationId
@@ -36,10 +36,22 @@ export default class extends Controller {
   send(event) {
     event.preventDefault()
     const content = this.inputTarget.value.trim()
-    if (content === "") return
+    let images = []
+    if (this.hasImagesTarget && this.imagesTarget.value) {
+      try {
+        images = JSON.parse(this.imagesTarget.value) || []
+      } catch (_) {
+        images = []
+      }
+    }
 
-    this.channel.perform("receive", { content })
+    if (content === "" && images.length === 0) return
+
+    this.channel.perform("receive", { content, images })
     this.inputTarget.value = ""
+    if (this.hasImagesTarget) this.imagesTarget.value = ""
+    // Notify sibling controller to clear previews
+    this.formTarget.dispatchEvent(new CustomEvent("conversation:sent"))
     
     this.scrollToBottom(true)
   }
