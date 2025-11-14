@@ -13,6 +13,8 @@ class Conversation < ApplicationRecord
     where(sender_id:, recipient_id:).or(where(sender_id: recipient_id, recipient_id: sender_id))
   }
 
+  scope :for_user, ->(user) { where('sender_id = ? OR recipient_id = ?', user.id, user.id) }
+
   def participant?(user)
     return false if user.nil?
 

@@ -10,7 +10,7 @@ class ConversationsController < ApplicationController
 
   def index
     @hide_navbar = true
-    @conversations = Conversation.all
+    @conversations = Conversation.for_user(current_user).includes(:task, :sender, :recipient).order(updated_at: :desc)
   end
 
   def create
