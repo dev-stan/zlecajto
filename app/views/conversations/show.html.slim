@@ -13,14 +13,18 @@
   / Service Info
   .flex.items-center.gap-3.p-4.bg-white
     .w-1/4.flex.items-center.justify-center
-      = image_tag 'zlecajto_favicon.png', 
-          alt: 'Service Image', 
-          class: 'rounded-lg h-12 w-auto'
+      - if @conversation.task.photos.attached?
+        = image_tag @conversation.task.photos.first, 
+            alt: 'Service Image', 
+            class: 'rounded-lg h-12 w-auto'
+      - else
+        .hidden.md:flex.h-48.w-full.bg-gray-200.items-center.justify-center
+          i.fas.fa-image.text-gray-400.text-6xl
     .w-3/4.flex.flex-col
-      p.font-medium.truncate Pomoc w ogrodzie - koszenie trawnika
+      p.font-medium.truncate = @conversation.task.title
       .flex.justify-between.text-sm.w-full
-        p.text-green-600 Aktywne
-        p.font-semibold 100PLN
+        p.text-green-600 = @conversation.task.status
+        p.font-semibold = formatted_salary(@conversation.task)
 
   / First Message
 

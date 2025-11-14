@@ -7,8 +7,6 @@ class Message < ApplicationRecord
   # Simple MVP: allow attaching multiple photos to a message
   has_many_attached :photos
 
-  validates :content, presence: true, length: { maximum: 2000 }
-
   after_create_commit :broadcast_message
 
   private

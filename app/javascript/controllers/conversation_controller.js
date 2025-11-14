@@ -1,3 +1,4 @@
+// app/javascript/controllers/conversation_controller.js
 import { Controller } from "@hotwired/stimulus"
 import { createConversationChannel } from "../channels/conversation_channel"
 
@@ -6,28 +7,32 @@ export default class extends Controller {
 
   connect() {
     this.conversationId = this.element.dataset.conversationId
+
     this.channel = createConversationChannel(
       this.conversationId,
       this.receiveMessage.bind(this)
     )
 
-    // Scroll to bottom on initial load after a brief delay to ensure content is rendered
-    requestAnimationFrame(() => {
-      this.scrollToBottom()
-    })
+    // Scroll on initial load
+    requestAnimationFrame(() => this.scrollToBottom())
   }
 
   disconnect() {
     if (this.channel) this.channel.unsubscribe()
   }
 
+  // Called by ActionCable when a message is broadcast
   receiveMessage(data) {
     if (data.html) {
       this.messagesTarget.insertAdjacentHTML("beforeend", data.html)
     } else {
-      const message = document.createElement("div")
-      message.innerHTML = `<strong>${data.user_name}</strong>: ${data.content} <small>${data.created_at}</small>`
-      this.messagesTarget.appendChild(message)
+      const el = document.createElement("div")
+      el.innerHTML = `
+        <strong>${data.user_name}</strong>:
+        ${data.content}
+        <small>${data.created_at}</small>
+      `
+      this.messagesTarget.appendChild(el)
     }
 
     this.scrollToBottom(true)
@@ -35,24 +40,34 @@ export default class extends Controller {
 
   send(event) {
     event.preventDefault()
+
     const content = this.inputTarget.value.trim()
-    let images = []
+    let attachments = []
+
     if (this.hasImagesTarget && this.imagesTarget.value) {
       try {
-        images = JSON.parse(this.imagesTarget.value) || []
-      } catch (_) {
-        images = []
+        attachments = JSON.parse(this.imagesTarget.value)
+      } catch {
+        attachments = []
       }
     }
 
-    if (content === "" && images.length === 0) return
+    // Do not send empty messages
+    if (content === "" && attachments.length === 0) return
 
-    this.channel.perform("receive", { content, images })
+    // Send via ActionCable
+    this.channel.perform("receive", {
+      content,
+      attachments
+    })
+
+    // Reset UI
     this.inputTarget.value = ""
     if (this.hasImagesTarget) this.imagesTarget.value = ""
-    // Notify sibling controller to clear previews
+
+    // Tell the image controller to clear previews
     this.formTarget.dispatchEvent(new CustomEvent("conversation:sent"))
-    
+
     this.scrollToBottom(true)
   }
 
