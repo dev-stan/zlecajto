@@ -21,29 +21,9 @@ export default class extends Controller {
 
   // Called by ActionCable when a message is broadcast
   receiveMessage(data) {
-    if (data.type === "conversation_closed") {
-      this.showConversationClosedBanner()
-      this.scrollToBottom(true)
-      return
-    }
     this.messagesTarget.insertAdjacentHTML("beforeend", data.html)
     this.scrollToBottom(true)
   }
-
-  showConversationClosedBanner() {
-    const banner = document.createElement("div")
-    banner.className = "flex justify-center px-4 py-3"
-    banner.innerHTML = `
-      <div class="bg-green-200 rounded-lg p-4 mb-5 flex flex-col items-center gap-2 text-center border border-green-300">
-        <img src="/assets/zlecajto_favicon.png" class="h-12 w-auto rounded-lg" />
-        <p class="font-medium">Odwołano</p>
-      </div>
-    `
-
-    this.messagesTarget.appendChild(banner)
-    this.messagesTarget.scrollTop = this.messagesTarget.scrollHeight
-  }
-
 
   send(event) {
     event.preventDefault()

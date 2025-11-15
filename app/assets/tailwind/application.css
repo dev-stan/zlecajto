@@ -15,10 +15,6 @@
 	.bg-light-green { background-color: #cef6cf}
 	.bg-white-ish { background-color: #F3F7FA}
 
-	.pb-safe {
-		padding-bottom: env(safe-area-inset-bottom);
-	}
-
 	/* Simple fade animations for modals */
 	@keyframes fade-in {
 		from { opacity: 0; transform: translateY(4px) scale(0.99); }
