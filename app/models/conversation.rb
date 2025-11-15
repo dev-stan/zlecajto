@@ -70,11 +70,4 @@ class Conversation < ApplicationRecord
     seen_at = last_seen_at_for(user)
     seen_at.nil? || last.created_at > seen_at
   end
-
-  # Count unread incoming messages for user
-  def unread_count_for(user)
-    seen_at = last_seen_at_for(user)
-    scope = messages.where.not(user_id: user.id)
-    seen_at ? scope.where('created_at > ?', seen_at).count : scope.count
-  end
 end
