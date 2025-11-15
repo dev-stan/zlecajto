@@ -15,7 +15,7 @@ class Submission < ApplicationRecord
   validates :user_id, uniqueness: { scope: :task_id, message: 'has already applied to this task' }
   validate :cannot_apply_to_own_task
 
-  enum status: { pending: 0, accepted: 1, rejected: 2 }
+  enum status: { pending: 0, accepted: 1, rejected: 2, cancell_chosen: 3 }
 
   scope :with_task, -> { includes(:task) }
 
@@ -44,7 +44,7 @@ class Submission < ApplicationRecord
     transaction do
       update!(status: :accepted)
       task.update!(status: :accepted)
-      create_conversation
+      create_conversation unless Conversation.between(user.id, task.user.id).exists?
       send_accepted_submission_email
       create_accepted_submission_notification
     end
@@ -54,6 +54,7 @@ class Submission < ApplicationRecord
     transaction do
       task.submissions.each { |submission| submission.update!(status: :pending) }
       task.update!(status: :open)
+      update!(status: :cancell_chosen)
     end
   end
 

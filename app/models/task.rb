@@ -16,7 +16,7 @@ class Task < ApplicationRecord
     in_progress: 'W trakcie',
     finished: 'Zakończone',
     cancelled: 'Anulowane',
-    accepted: 'accepted',
+    accepted: 'Wybrano wykonawcę',
     completed: 'completed',
     overdue: 'overdue'
   }

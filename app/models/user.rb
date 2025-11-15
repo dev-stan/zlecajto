@@ -8,6 +8,9 @@ class User < ApplicationRecord
   has_many :submissions
   has_many :answers
   has_many :notifications
+  has_many :conversations_as_sender, class_name: 'Conversation', foreign_key: 'sender_id', dependent: :destroy
+  has_many :conversations_as_recipient, class_name: 'Conversation', foreign_key: 'recipient_id', dependent: :destroy
+
   has_one_attached :profile_picture
 
   validates :first_name, presence: true
