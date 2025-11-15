@@ -20,6 +20,7 @@ class Message < ApplicationRecord
   def broadcast_message
     [conversation.sender, conversation.recipient].each do |participant|
       html = ApplicationController.renderer.render(
+        # Use self (the current Message instance). `message` local was undefined and prevented rendering.
         Messages::MessageComponent.new(message: self, current_user: participant),
         layout: false
       )

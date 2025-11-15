@@ -4,6 +4,8 @@ class ConversationChannel < ApplicationCable::Channel
   def subscribed
     @conversation = Conversation.find(params[:conversation_id])
 
+    Rails.logger.info "🔥 SUBSCRIBED to conversation=#{@conversation.id} as current_user=#{current_user.id}"
+
     # Authorize: only participants can subscribe
     unless [@conversation.sender_id, @conversation.recipient_id].include?(current_user.id)
       reject

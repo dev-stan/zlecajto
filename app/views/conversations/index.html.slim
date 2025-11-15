@@ -17,7 +17,9 @@
         .w-3/4.flex.flex-col
           p.font-bold.truncate = conversation.task.title
           .flex.flex-col.text-sm.w-full
-            p.text-green-600 = conversation.task.status_before_type_cast
+            p.text-sm class=(conversation.task.status == 'open' ? 'text-red-600' : 'text-green-600')
+              = conversation.task.status == 'open' ? 'Anulowano wykonanie' : conversation.task.status_before_type_cast.capitalize
+
             - last_message = conversation.messages.last
             - if last_message
               - unread = conversation.unread_for?(current_user)

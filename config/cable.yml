@@ -1,5 +1,9 @@
 development:
-  adapter: async
+  # Using async prevents cross-process delivery (web server vs separate rails console).
+  # Switch to redis so console broadcasts are received by the running ActionCable server.
+  adapter: redis
+  url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/2" } %>
+  channel_prefix: zlecajto_development
 
 test:
   adapter: test

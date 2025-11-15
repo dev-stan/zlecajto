@@ -8,6 +8,9 @@ class ConversationsController < ApplicationController
     @conversation = Conversation.find(params[:id])
     @conversation.mark_seen_by(current_user)
     @messages = @conversation.messages.includes(:user, photos_attachments: :blob)
+    @accepted_submission = @conversation.task.submissions.accepted.first
+    @participant = @conversation.other_participant(current_user)
+    @participant_submission = @conversation.task.submissions.find_by(user_id: @participant.id)
   end
 
   def index
