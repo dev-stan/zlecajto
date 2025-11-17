@@ -8,30 +8,35 @@
 
 
     .px-8.text-start.md:hidden
-      p = t('.platform_intro_mobile')
+      p = "Tworzymy platformę, na której sąsiedzi mogą zlecać i wykonywać wszelkiego typu zlecenia!"
     .flex.flex-col.p-5.gap-3.px-8.md:hidden
-      = render(Ui::ButtonComponent.new(text: t('.publish_task_button'), path: new_task_path, size: :md))
-      = render(Ui::ButtonComponent.new(text: t('.browse_tasks_button'), path: tasks_path, size: :md, variant: :primary_2))
+      = render(Ui::ButtonComponent.new(text: 'Opublikuj zlecenie', path: new_task_path, size: :md))
+      = render(Ui::ButtonComponent.new(text: 'Przeglądaj zlecenia', path: tasks_path, size: :md, variant: :primary_2))
     
     / Desktop left column
     .hidden.md:block
-      h1.text-6xl.font-bold.leading-tight.mb-3 = t('.unlock_heading_html')
-      p.text-sm.text-gray-500.mb-6 = t('.unlock_note')
-      p.text-lg.text-gray-700.mb-8.leading-relaxed.font-light = t('.platform_intro_desktop')
+      h1.text-6xl.font-bold.leading-tight.mb-3
+        | Odblokuj swój czas ze 
+        span.text-primary = "Zlecajto"
+        span.text-3xl = "*"
+      p.text-sm.text-gray-500.mb-6 = "*To banalnie proste :)"
+      p.text-lg.text-gray-700.mb-8.leading-relaxed.font-light = "Tworzymy platformę, na której sąsiedzi mogą zlecać i wykonywać jakiegokolwiek typu zadania!"
       .flex.gap-4
-        = render(Ui::ButtonComponent.new(text: t('.publish_task_button'), path: new_task_path, size: :md))
-        = render(Ui::ButtonComponent.new(text: t('.earn_with_button'), path: tasks_path, size: :md, variant: :primary_2))
+        = render(Ui::ButtonComponent.new(text: 'Opublikuj zlecenie', path: new_task_path, size: :md))
+        = render(Ui::ButtonComponent.new(text: 'Zarób ze Zlecajto!', path: tasks_path, size: :md, variant: :primary_2))
     
     / Desktop right column
     .hidden.md:flex.md:items-center.md:justify-center
       = video_tag('home_video.mp4', autoplay: true, loop: true, muted: true, playsinline: true, controls: false, class: 'max-w-md rounded-lg')
 
 / How it works section
-h1.text-start.text-5xl.font-bold.mt-12.px-5.md:max-w-6xl.md:mx-auto.md:mt-8.md:mb-12 = t('.how_it_works_heading')
-p.text-start.text-base.font-base.px-5.mt-3.md:hidden = t('.how_it_works_subheading_mobile')
+h1.text-start.text-5xl.font-bold.mt-12.px-5.md:max-w-6xl.md:mx-auto.md:mt-8.md:mb-12 = "Lokalna pomoc"
+p.text-start.text-base.font-base.px-5.mt-3.md:hidden = "Zaoszczedź sobie godziny na codziennych obowiązkach i zleć je sąsiadowi."
 .px-8.mt-8.md:max-w-6xl.md:mx-auto.md:mt-0
   ul.flex.flex-col.space-y-3.items-start.md:grid.md:grid-cols-3.md:gap-6.md:space-y-0
-    - steps = t('.how_it_works_steps')
+    - steps = ['Opisz z czym potrzebujesz pomocy',
+      'Znajdż odpowiedniego wykonawcę',
+      'No i gotowe, zadanie wykonane']
 
     - steps.each_with_index do |step, index|
       li.flex.items-center.gap-4.md:flex-col.md:items-start.md:p-6.md:rounded-2xl.md:bg-white.md:border.md:border-gray-200.md:hover:border-blue-400.md:hover:shadow-lg.md:transition-all
@@ -40,14 +45,14 @@ p.text-start.text-base.font-base.px-5.mt-3.md:hidden = t('.how_it_works_subheadi
         p.text-base.text-gray-700.leading-relaxed = step
 
 .md:hidden.flex.justify-center.px-8.mt-8.md:mt-12.md:mb-24
-  = render(Ui::ButtonComponent.new(text: t('.delegate_task_button'), path: new_task_path, size: :md, variant: :primary, width: 100))
+  = render(Ui::ButtonComponent.new(text: 'Zleć zadanie', path: new_task_path, size: :md, variant: :primary, width: 100))
 .hidden.md:flex.justify-center.px-8.mt-12.mb-24
-  = render(Ui::ButtonComponent.new(text: t('.delegate_task_button'), path: new_task_path, size: :md, variant: :primary, width: 25))
+  = render(Ui::ButtonComponent.new(text: 'Zleć zadanie', path: new_task_path, size: :md, variant: :primary, width: 25))
 
 / Categories section
 .px-5.mt-16.md:mt-0.md:px-8.md:mb-24
-  h1.text-5xl.font-bold.text-start.mt-5.pt-8.md:mb-10.md:max-w-6xl.md:mx-auto = t('.categories_heading')
-  p.text-start.text-base.font-base.mt-3.md:hidden = t('.categories_subheading_mobile')
+  h1.text-5xl.font-bold.text-start.mt-5.pt-8.md:mb-10.md:max-w-6xl.md:mx-auto = 'Zleć co chcesz'
+  p.text-start.text-base.font-base.mt-3.md:hidden = "Możesz zlecić wszystko, co przychodzi Ci do głowy, serio wszystko 👀"
   
   .flex.overflow-x-auto.snap-x.snap-mandatory.scroll-smooth.space-x-4.p-8.w-full.md:grid.md:grid-cols-8.md:gap-4.md:overflow-visible.md:max-w-6xl.md:mx-auto.md:p-0.md:mt-0
     - TaskCategoriesDisplayHelper::CATEGORIES_HOME.each do |category, emoji|
@@ -66,17 +71,19 @@ p.text-start.text-base.font-base.px-5.mt-3.md:hidden = t('.how_it_works_subheadi
     .md:grid.md:grid-cols-5.md:gap-10.md:items-center
       / Left column
       div class="md:col-span-3"
-        h1.text-start.text-5xl.font-bold.text-white.pb-10.md:text-left.md:text-5xl.md:pb-6.md:leading-tight = t('.earn_heading')
-        p.text-white.pb-3.md:text-lg.md:pb-0.md:leading-relaxed.md:font-light = t('.earn_paragraph')
+        h1.text-start.text-5xl.font-bold.text-white.pb-10.md:text-left.md:text-5xl.md:pb-6.md:leading-tight = "Zarób po swojemu!"
+        p.text-white.pb-3.md:text-lg.md:pb-0.md:leading-relaxed.md:font-light = 'Nieważne czy jesteś wielbicielem psów, udzielasz korków z matmy czy zajmujesz się przeprowadzkami, tu znajdziesz zlecenie dla siebie!'
 
         / Desktop only button
         .hidden.md:block.md:mt-8
-          = render(Ui::ButtonComponent.new(text: t('.earn_button_desktop'), path: tasks_path, size: :md, variant: :ghost_2))
+          = render(Ui::ButtonComponent.new(text: 'Zarób po swojemu 😎', path: tasks_path, size: :md, variant: :ghost_2))
       
       / Right column
       div class="md:col-span-2"
         ul.flex.flex-col.space-y-4.items-start.p-8.md:p-6.md:space-y-4.md:bg-white/10.md:backdrop-blur-sm.md:rounded-2xl.md:border.md:border-white/20
-          - earn_steps = t('.earn_steps')
+          - earn_steps = ['Lokalna społeczność',
+              'Za darmo, dla wykonawców i zlecających',
+              'Zarób dodatkową kasę na swoich warunkach']
           - earn_steps.each do |step|
             li.flex.items-center.gap-4
               i.fa-solid.fa-check.text-white.md:text-lg
@@ -84,7 +91,7 @@ p.text-start.text-base.font-base.px-5.mt-3.md:hidden = t('.how_it_works_subheadi
     
     / Mobile button
     .flex.justify-center.px-8.md:hidden
-      = render(Ui::ButtonComponent.new(text: t('.earn_button_mobile'), path: tasks_path, size: :md, variant: :ghost_2, width: 100))
+      = render(Ui::ButtonComponent.new(text: 'Zacznij zarabiać 😎', path: tasks_path, size: :md, variant: :ghost_2, width: 100))
 
   / Curved bottom background element - MOBILE ONLY
   .w-full.flex.items-center.justify-center.md:hidden
@@ -93,7 +100,7 @@ p.text-start.text-base.font-base.px-5.mt-3.md:hidden = t('.how_it_works_subheadi
 / About us section
 .relative.mt-24.mb-24.md:mt-32.md:mb-32
   / Section header - mobile first
-  h1.text-5xl.font-bold.text-center.mb-12.md:mb-16 = t('.about_heading')
+  h1.text-5xl.font-bold.text-center.mb-12.md:mb-16 = "Kim jesteśmy?"
   
   / Mobile image
   .md:hidden
@@ -109,32 +116,38 @@ p.text-start.text-base.font-base.px-5.mt-3.md:hidden = t('.how_it_works_subheadi
       
       / Right column - Text content
       div
-        h2.text-3xl.font-bold.mb-6.leading-tight = t('.team_heading')
-        p.text-gray-600.text-base.leading-relaxed.mb-8.font-normal = t('.team_paragraph1')
-        p.text-gray-600.text-base.leading-relaxed.font-normal = t('.team_paragraph2')
+        h2.text-3xl.font-bold.mb-6.leading-tight = 'Zgrana ekipa'
+        p.text-gray-600.text-base.leading-relaxed.mb-8.font-normal = 'Jesteśmy dwójką spłukanych studentów z Suchego Lasu i Strzeszyna. Zauważyliśmy, że sąsiedzi na grupkach na FB mieli problem ze znalezieniem chętnych do pomocy, a nam i naszym znajomym często brakowało kasy.'
+        p.text-gray-600.text-base.leading-relaxed.font-normal = 'Postanowiliśmy stworzyć platformę, na której każdy w prosty i przejrzysty sposób mógłby znaleźć pomoc w swojej okolicy lub znaleźć sposób na dodatkowy zarobek.'
 / Origin story section
 .relative.overflow-hidden.md:bg-primary.md:mb-24.-mt-32
   / Curved top background element - MOBILE ONLY
   .w-full.flex.items-center.justify-center.z-10.md:hidden
     div class="bg-primary rounded-[60%] h-90 w-[200%] flex-shrink-0 flex flex-col items-center justify-center"
       / h2.text-white.text-xl.font-bold.mb-3 = 'Skąd pomysł na ZlecajTo.pl?'
-      h2.text-white.w-2/5.mb.4.text-xl.font-semibold = t('.origin_heading')
-      p.text-white.w-2/5.mb-3 = t('.origin_paragraph1')
-      p.text-white.w-2/5.mb-3 = t('.origin_paragraph2')
+      h2.text-white.w-2/5.mb.4.text-xl.font-semibold = 'O nas i naszym pomyśle'
+      p.text-white.w-2/5.mb-3 = 'Jesteśmy dwójką spłukanych studentów z Suchego Lasu i Strzeszyna. Zauważyliśmy, że sąsiedzi na grupkach na FB mieli problem ze znalezieniem chętnych do pomocy, a nam i naszym znajomym często brakowało kasy.'
+      p.text-white.w-2/5.mb-3 = 'Postanowiliśmy stworzyć platformę, na której każdy w prosty i przejrzysty sposób mógłby znaleźć pomoc w swojej okolicy lub znaleźć sposób na dodatkowy zarobek.'
 div#app.pb-10
 / App section
 .relative.mt-12.md:hidden
   / PWA install guide with image carousel (blue background)
   .relative.bg-primary.px-6.py-10.rounded-3xl.mx-4.md:rounded-3xl.md:max-w-6xl.md:mx-auto.md:px-12.md:py-14
-    h1.text-4xl.font-bold.text-white.text-start.mb-3.md:text-5xl = t('.app_heading')
-    p.text-white.text-base.opacity-90.mb-6.md:text-lg = t('.app_paragraph')
+    h1.text-4xl.font-bold.text-white.text-start.mb-3.md:text-5xl = 'Zainstaluj aplikację'
+    p.text-white.text-base.opacity-90.mb-6.md:text-lg = 'Dodaj Zlecajto do ekranu głównego i używaj jak zwykłej aplikacji.'
 
     / Carousel (mirrors the category carousel behavior)
     .flex.overflow-x-auto.snap-x.snap-mandatory.scroll-smooth.space-x-4.p-2.w-full
       - if browser.platform.ios?
-        - app_steps = t('.app_steps_ios')
+        - app_steps = [{ img: 'ios_app_1.png', text: '1. Kliknij ikonę Udostępnij' },
+          { img: 'ios_app_2.png', text: '2. Wybierz „Dodaj do ekranu początkowego”' },
+          { img: 'ios_app_3.png', text: '3. Naciśnij „Dodaj”' },
+          { img: 'ios_app_4.png', text: '4. Gotowe!' }]
       - else
-        - app_steps = t('.app_steps_android')
+        - app_steps = [{ img: 'android_app_1.png', text: '1. Stuknij ikonę menu (trzy kropki)' },
+          { img: 'android_app_2.png', text: '2. Wybierz „Zainstaluj aplikację”' },
+          { img: 'android_app_3.png', text: '3. Potwierdź „Zainstaluj”' },
+          { img: 'android_app_4.png', text: '4. Gotowe!' }]
       - app_steps.each do |step|
         .snap-start.shrink-0.w-64.md:w-72.flex.flex-col.items-center.gap-3
           .w-64.h-64.md:w-72.md:h-72.bg-white/10.border.border-white/20.rounded-2xl.flex.items-center.justify-center.overflow-hidden.p-4.md:p-6
@@ -143,7 +156,7 @@ div#app.pb-10
 
 / FAQ section
 .px-12.md:max-w-5xl.md:mx-auto.md:mt-0.md:mb-20.md:px-8
-  h1.text-5xl.font-bold.text-start.mt-18.mb-8.md:mb-10 = t('.faq_heading')
+  h1.text-5xl.font-bold.text-start.mt-18.mb-8.md:mb-10 = "FAQ"
   = render Interactive::AccordionComponent.new(items: @faq_items)
 
 .mt-12
