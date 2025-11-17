@@ -1,0 +1,12 @@
+pl:
+  modals:
+    task_message_photos:
+      photo_alt: "Zdjęcie #%{index}"
+      prev_photo: "Poprzednie zdjęcie"
+      next_photo: "Następne zdjęcie"
+en:
+  modals:
+    task_message_photos:
+      photo_alt: "Photo #%{index}"
+      prev_photo: "Previous photo"
+      next_photo: "Next photo"

@@ -1,0 +1,18 @@
+pl:
+  models:
+    task_wizard:
+      steps:
+        - "Tytuł i kategoria"
+        - "Opis"
+        - "Lokalizacja"
+        - "Budżet"
+        - "Zdjęcia"
+en:
+  models:
+    task_wizard:
+      steps:
+        - "Title and category"
+        - "Description"
+        - "Location"
+        - "Budget"
+        - "Photos"

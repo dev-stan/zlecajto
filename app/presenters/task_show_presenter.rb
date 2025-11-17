@@ -11,15 +11,15 @@ class TaskShowPresenter
   end
 
   def button_text
-    return 'Usunięto zlecenie' if task.cancelled?
-    return 'Upłynął termin' if task.overdue?
-    return 'Zlecenie zakończone' if task.completed?
-    return 'Zobacz detale zlecenia' if owner?
-    return 'Wybrano cię! Co dalej?' if current_user_accepted_submission?
-    return 'Wybrano już wykonawcę' if accepted_submission_exists?
-    return 'Już aplikowałeś' if user_has_applied?
+    return t('button_text.cancelled') if task.cancelled?
+    return t('button_text.overdue') if task.overdue?
+    return t('button_text.completed') if task.completed?
+    return t('button_text.owner') if owner?
+    return t('button_text.you_were_chosen') if current_user_accepted_submission?
+    return t('button_text.executor_chosen') if accepted_submission_exists?
+    return t('button_text.already_applied') if user_has_applied?
 
-    'Aplikuj'
+    t('button_text.apply')
   end
 
   def button_variant
@@ -46,14 +46,14 @@ class TaskShowPresenter
   end
 
   def submissions_header
-    return 'Zlecenie wykonane!' if task.completed?
-    return 'Upłynął termin zlecenia' if task.overdue?
+    return t('submissions_header.completed') if task.completed?
+    return t('submissions_header.overdue') if task.overdue?
 
     return unless accepted_submission
-    return 'Wybrano wykonawcę!' if owner?
-    return 'Wybrał Cię zleceniodawca! Skontaktuj się z nim.' if accepted_submission.user == current_user
+    return t('submissions_header.chosen_owner') if owner?
+    return t('submissions_header.chosen_for_you') if accepted_submission.user == current_user
 
-    'Wybrany wykonawca' if task.submissions.accepted.exists?
+    t('submissions_header.chosen_executor') if task.submissions.accepted.exists?
   end
 
   # Owner or the submission owner can either reply or (owner only) accept
@@ -82,6 +82,10 @@ class TaskShowPresenter
   end
 
   private
+
+  def t(key, **opts)
+    I18n.t("presenters.task_show_presenter.#{key}", **opts)
+  end
 
   def user_has_applied?
     current_user_submission.present?

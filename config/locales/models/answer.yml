@@ -1,0 +1,10 @@
+pl:
+  models:
+    answer:
+      email_subjects:
+        new_answer: "Otrzymałeś nową odpowiedź!"
+en:
+  models:
+    answer:
+      email_subjects:
+        new_answer: "You received a new reply!"

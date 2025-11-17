@@ -1,0 +1,12 @@
+pl:
+  submissions:
+    new:
+      apply_for_task: "Aplikuj do zlecenia"
+      write_short_message: "Napisz krótką wiadomość dlaczego jesteś odpowiednią osobą"
+      note_placeholder: "Twoja wiadomość do zleceniodawcy"
+en:
+  submissions:
+    new:
+      apply_for_task: "Apply for the task"
+      write_short_message: "Write a short message explaining why you're the right person"
+      note_placeholder: "Your message to the task owner"

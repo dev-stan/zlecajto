@@ -10,3 +10,15 @@ pl:
     flash:
       accepted: "Oferta została zaakceptowana"
       rejected: "Oferta została odrzucona"
+en:
+  submissions:
+    applied_at: "Applied %{date}"
+    owner: "Owner: %{email}"
+    view_task: "View task"
+    status:
+      pending: "Pending"
+      accepted: "Accepted"
+      rejected: "Rejected"
+    flash:
+      accepted: "Offer was accepted"
+      rejected: "Offer was rejected"

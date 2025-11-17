@@ -1,0 +1,14 @@
+pl:
+  modals:
+    new_task_message:
+      title: "Zadaj pytanie do zlecenia"
+      message_label: "Wiadomość"
+      message_placeholder: "Zadaj pytanie dotyczące zlecenia…"
+      add_photos: "Dodaj zdjęcia"
+en:
+  modals:
+    new_task_message:
+      title: "Ask a question about the task"
+      message_label: "Message"
+      message_placeholder: "Ask a question about the task…"
+      add_photos: "Add photos"

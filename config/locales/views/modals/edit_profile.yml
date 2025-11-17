@@ -1,0 +1,24 @@
+pl:
+  modals:
+    edit_profile:
+      title: "Edytuj profil"
+      first_name_label: "Imię"
+      first_name_placeholder: "Podaj imię"
+      last_name_label: "Nazwisko"
+      last_name_placeholder: "Podaj nazwisko"
+      email_label: "Email"
+      email_placeholder: "Podaj email"
+      phone_label: "Telefon"
+      phone_placeholder: "Podaj numer telefonu"
+en:
+  modals:
+    edit_profile:
+      title: "Edit profile"
+      first_name_label: "First name"
+      first_name_placeholder: "Enter first name"
+      last_name_label: "Last name"
+      last_name_placeholder: "Enter last name"
+      email_label: "Email"
+      email_placeholder: "Enter email"
+      phone_label: "Phone"
+      phone_placeholder: "Enter phone number"

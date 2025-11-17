@@ -1,0 +1,28 @@
+pl:
+  tasks:
+    my_task:
+      cancelled_heading: "Zlecenie usunięte..."
+      cancelled_feedback_prefix: "Daj nam znać ("
+      here_link_text: "tutaj!"
+      cancelled_feedback_suffix: ") dlaczego usunąłeś(aś) zlecenie, potrzebujemy Twojego feedbacku!"
+      submissions_count: "Masz %{count} zgłoszeń"
+      new_submission_notice: "Twoje zlecenie otrzymało właśnie nowe zgłoszenie!"
+      no_submissions_help: "Możesz edytować zlecenie lub je udostępnić aby zwiększyć szanse na znalezienie wykonawcy."
+      task_completed_heading: "Zlecenie zakończone!"
+      executor_chosen_heading: "Wybrano już wykonawcę!"
+      submissions_tab: "Zgłoszenia"
+      questions_tab: "Pytania"
+en:
+  tasks:
+    my_task:
+      cancelled_heading: "Task deleted..."
+      cancelled_feedback_prefix: "Let us know ("
+      here_link_text: "here!"
+      cancelled_feedback_suffix: ") why you deleted the task – we value your feedback!"
+      submissions_count: "You have %{count} submissions"
+      new_submission_notice: "Your task just received a new submission!"
+      no_submissions_help: "You can edit the task or share it to increase your chances of finding a contractor."
+      task_completed_heading: "Task completed!"
+      executor_chosen_heading: "An executor has been chosen!"
+      submissions_tab: "Submissions"
+      questions_tab: "Questions"

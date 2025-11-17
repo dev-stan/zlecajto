@@ -1,0 +1,12 @@
+pl:
+  models:
+    task:
+      email_subjects:
+        completed_for_owner: "Twoje zlecenie zostało zakończone :)"
+        completed_for_executor: "Wykonałeś zadanie!"
+en:
+  models:
+    task:
+      email_subjects:
+        completed_for_owner: "Your task has been completed :)"
+        completed_for_executor: "You completed the task!"

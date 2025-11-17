@@ -1,0 +1,16 @@
+pl:
+  submissions:
+    contact:
+      heading: "Wybrano wykonawcę do realizacji zlecenia"
+      step_1_html_prefix: "Skontaktuj się z wykonawcą przez numer telefonu"
+      step_1_html_suffix: "."
+      step_2: "Ustal szczegóły realizacji z wykonawcą."
+      step_3: "Gdy zlecenie zostanie wykonane, potwierdź jego realizację."
+en:
+  submissions:
+    contact:
+      heading: "An executor has been chosen to carry out the task"
+      step_1_html_prefix: "Contact the executor via phone number"
+      step_1_html_suffix: "."
+      step_2: "Agree on execution details with the executor."
+      step_3: "Once the task is done, confirm its completion."

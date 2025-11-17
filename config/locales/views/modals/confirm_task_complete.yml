@@ -1,0 +1,14 @@
+pl:
+  modals:
+    confirm_task_complete:
+      title: "Potwierdzić wykonanie?"
+      body: "Czy zlecenie zostało wykonane zgodnie z umową i chcesz je zakończyć?"
+      footer: "Tego się nie da cofnąć!"
+      confirm_text: "Potwierdź wykonanie"
+en:
+  modals:
+    confirm_task_complete:
+      title: "Confirm completion?"
+      body: "Has the task been completed as agreed and do you want to finish it?"
+      footer: "This cannot be undone!"
+      confirm_text: "Confirm completion"

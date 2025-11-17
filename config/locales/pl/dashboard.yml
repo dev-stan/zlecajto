@@ -10,3 +10,15 @@ pl:
       title: "Moje aplikacje"
       empty: "Nie aplikowałeś jeszcze na żadne zadania."
     browse_tasks: "Przeglądaj zadania"
+en:
+  dashboard:
+    title: "Dashboard"
+    subtitle: "Your tasks and applications in one place"
+    my_tasks:
+      title: "My tasks"
+      empty: "You don't have any tasks yet."
+      new: "Add task"
+    my_submissions:
+      title: "My applications"
+      empty: "You haven't applied to any tasks yet."
+    browse_tasks: "Browse tasks"

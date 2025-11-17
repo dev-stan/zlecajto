@@ -1,0 +1,10 @@
+pl:
+  submissions:
+    confirm_submission_accept:
+      title: "Potwierdź akceptację"
+      body: "Czy na pewno chcesz zaakceptować zgłoszenie użytkownika %{user}?"
+en:
+  submissions:
+    confirm_submission_accept:
+      title: "Confirm acceptance"
+      body: "Are you sure you want to accept the submission by %{user}?"

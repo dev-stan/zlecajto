@@ -1,0 +1,18 @@
+pl:
+  tasks:
+    created:
+      heading: "Woohoo!"
+      added_notice: "Twoje zlecenie zostało dodane"
+      what_next: "Co teraz?"
+      step_1: "Opisz z czym potrzebujesz pomocy"
+      step_2: "Zdefiniuj cenę usługi"
+      step_3: "Otrzymaj oferty i wybierz wykonawcę"
+en:
+  tasks:
+    created:
+      heading: "Woohoo!"
+      added_notice: "Your task has been added"
+      what_next: "What next?"
+      step_1: "Describe what you need help with"
+      step_2: "Define the service price"
+      step_3: "Receive offers and choose a contractor"

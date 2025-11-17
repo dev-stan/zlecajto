@@ -21,26 +21,26 @@ nav.sticky.top-0.left-0.right-0.bg-white.shadow-sm.z-50
 
     / Right side - Desktop Menu (hidden on mobile)
     .hidden.md:flex.items-center.gap-1.absolute.right-0.top-0.h-full.pr-2
-      = render(Ui::ButtonComponent.new(text: 'Dodaj zlecenie', path: new_task_path, size: :sm))
-      = render(Ui::ButtonComponent.new(text: 'Zacznij Zarabiać', path: tasks_path, size: :sm, variant: :ghost))
+      = render(Ui::ButtonComponent.new(text: t('components.layout.navbar.new_task'), path: new_task_path, size: :sm))
+      = render(Ui::ButtonComponent.new(text: t('components.layout.navbar.start_earning'), path: tasks_path, size: :sm, variant: :ghost))
       - if @user_signed_in
         .ml-4.flex.items-center
           = link_to users_profile_path do
             = render(Users::AvatarComponent.new(user: @current_user, show_notification: true,current_user: @current_user))
       - else
         .flex.items-center.gap-2
-          = link_to 'Zaloguj', helpers.new_user_session_path
-          = link_to 'Zarejestruj', helpers.new_user_registration_path
+          = link_to t('components.layout.navbar.login'), helpers.new_user_session_path
+          = link_to t('components.layout.navbar.register'), helpers.new_user_registration_path
 
   / Red testing banner below navbar
 = link_to 'https://tally.so/r/w4e2KB', target: '_blank', rel: 'noopener' do
   .w-full.bg-secondary.text-white.text-center.py-1.text-sm.font-semibold.tracking-wide.overflow-hidden
     .moving-text.flex.whitespace-nowrap
-      span.pr-8 🚨 Masz pomysł na nową funkcję? Coś nie działa? Kliknij tu, pomóż nam! 🚨
-      span.pr-8 🚨 Masz pomysł na nową funkcję? Coś nie działa? Kliknij tu, pomóż nam! 🚨
-      span.pr-8 🚨 Masz pomysł na nową funkcję? Coś nie działa? Kliknij tu, pomóż nam! 🚨
-      span.pr-8 🚨 Masz pomysł na nową funkcję? Coś nie działa? Kliknij tu, pomóż nam! 🚨
-      span.pr-8 🚨 Masz pomysł na nową funkcję? Coś nie działa? Kliknij tu, pomóż nam! 🚨
+      span.pr-8 = t('components.layout.navbar.feedback_banner')
+      span.pr-8 = t('components.layout.navbar.feedback_banner')
+      span.pr-8 = t('components.layout.navbar.feedback_banner')
+      span.pr-8 = t('components.layout.navbar.feedback_banner')
+      span.pr-8 = t('components.layout.navbar.feedback_banner')
 
 
 

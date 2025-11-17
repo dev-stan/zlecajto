@@ -1,0 +1,10 @@
+pl:
+  modals:
+    confirm_logout:
+      title: "Czekaj, czekaj!"
+      body: "Czy na pewno chcesz się wylogować? Będziemy tęsknić! 😢"
+en:
+  modals:
+    confirm_logout:
+      title: "Hold on!"
+      body: "Are you sure you want to log out? We'll miss you! 😢"

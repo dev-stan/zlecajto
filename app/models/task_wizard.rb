@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class TaskWizard
-  STEPS      = ['Tytuł i kategoria', 'Opis', 'Lokalizacja', 'Budżet', 'Zdjęcia'].freeze
-  PERMITTED  = %i[category title description salary due_date due_date_any timeslot payment_method location].freeze
+  # Step labels now sourced from I18n for full localization support
+  STEPS = I18n.t('models.task_wizard.steps').freeze
+  PERMITTED = %i[category title description salary due_date due_date_any timeslot payment_method location].freeze
 
   attr_reader :current_step, :params_hash
 

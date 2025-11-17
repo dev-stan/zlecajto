@@ -1,5 +1,5 @@
 = turbo_frame_tag 'modal' do
-  = render Ui::FormModalComponent.new(title: 'Wybierz kategorie, które najbardziej pasują do twoich potrzeb...') do
+  = render Ui::FormModalComponent.new(title: t('.title')) do
     = form_with model: @user, url: users_profile_path, method: :patch, data: { controller: 'form-validation', action: 'submit->form-validation#validate', turbo_frame: '_top' }, html: { class: 'space-y-6', novalidate: true } do |f|
       .space-y-4
         .flex.flex-row.gap-3.justify-center
@@ -21,4 +21,4 @@
               .hidden(data-multi-select-target='container')
         = hidden_field_tag :step, 100
       .pt-4.border-t.border-gray-100.flex.items-center.justify-center
-        = render(Ui::ButtonComponent.new(text: 'Wybrane!', size: :sm, submit: true, variant: :green, html_options: { class: 'w-3/5 px-4' }))
+        = render(Ui::ButtonComponent.new(text: t('.submit'), size: :sm, submit: true, variant: :green, html_options: { class: 'w-3/5 px-4' }))

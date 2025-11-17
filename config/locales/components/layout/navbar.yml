@@ -1,0 +1,26 @@
+pl:
+  components:
+    layout:
+      navbar:
+        new_task: "Dodaj zlecenie"
+        start_earning: "Zacznij Zarabiać"
+        login: "Zaloguj"
+        register: "Zarejestruj"
+        feedback_banner: "🚨 Masz pomysł na nową funkcję? Coś nie działa? Kliknij tu, pomóż nam! 🚨"
+        back_aria: "Wstecz"
+        new_task_aria: "Nowe zlecenie"
+        logo_alt: "Zlecajto.pl"
+        plus_aria: "Dodaj"
+en:
+  components:
+    layout:
+      navbar:
+        new_task: "Add task"
+        start_earning: "Start earning"
+        login: "Login"
+        register: "Register"
+        feedback_banner: "🚨 Got a feature idea? Something broken? Click here, help us! 🚨"
+        back_aria: "Back"
+        new_task_aria: "New task"
+        logo_alt: "Zlecajto.pl"
+        plus_aria: "Add"
