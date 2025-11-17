@@ -1,0 +1,86 @@
+pl:
+  tasks:
+    show:
+      tabs:
+        submissions: "Zgłoszenia"
+        questions: "Pytania"
+      owner_line: "Zadanie zleca %{name}"
+      questions:
+        ask_question: "Zadaj pytanie"
+        privacy_notice: "Ze względu na prywatność użytkowników, numery telefonów są widoczne dopiero gdy zleceniodawca zaakceptuje wykonawcę."
+        reply: "Odpowiedz"
+        no_questions_owner: "Nie ma jeszcze żadnych pytań. Gdy potencjalni wykonawcy będą mieli pytania, pojawią się tutaj."
+        no_questions_first: "Nie ma jeszcze żadnych pytań. Bądź pierwszy!"
+      apply_card:
+        apply_help: "Aplikując wysyłasz krótką ofertę. Właściciel otrzyma powiadomienie i może się z Tobą skontaktować."
+      description:
+        title: "Co dokładnie trzeba zrobić?"
+      info_card:
+        how_it_works_title: "Jak to działa?"
+        how_it_works_body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur euismod, nunc at facilisis facilisis, lectus orci posuere urna, et laoreet risus dolor sed quam."
+      media:
+        prev_photo: "Poprzednie zdjęcie"
+        next_photo: "Następne zdjęcie"
+        go_to_photo: "Przejdź do zdjęcia #%{index}"
+      submissions:
+        executor: "Wykonawca"
+        task_completed: "Zlecenie zakończone!"
+        contact_executor: "Kontakt z wykonawcą"
+        confirm_completion: "Potwierdź wykonanie"
+        change_executor: "Zmiana wykonawcy"
+        accept: "Akceptuj"
+        reply: "Odpowiedz"
+        no_submissions_owner: "Tu pojawią się zgłoszenia od wykonawców, udostępnij zlecenie, aby otrzymać zgłoszenia."
+        no_submissions_first: "Tu pojawią się zgłoszenia od wykonawców, bądź pierwszym, który się zgłosi!"
+      support_card:
+        questions_title: "Masz pytania?"
+        questions_body: "Skontaktuj się z nami - odpowiadamy szybko i chętnie pomożemy."
+        email_label: "E-mail"
+        phone_label: "Telefon"
+      timing_location:
+        time_and_date: "Czas i data"
+        to_be_determined: "Do ustalenia"
+        location_title: "Lokalizacja"
+en:
+  tasks:
+    show:
+      tabs:
+        submissions: "Submissions"
+        questions: "Questions"
+      owner_line: "Task posted by %{name}"
+      questions:
+        ask_question: "Ask a question"
+        privacy_notice: "For user privacy, phone numbers are visible only after the task owner accepts an executor."
+        reply: "Reply"
+        no_questions_owner: "No questions yet. When executors have questions they'll appear here."
+        no_questions_first: "No questions yet. Be the first!"
+      apply_card:
+        apply_help: "Applying sends a short offer. The owner will get a notification and can contact you."
+      description:
+        title: "What exactly needs to be done?"
+      info_card:
+        how_it_works_title: "How does it work?"
+        how_it_works_body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur euismod, nunc at facilisis facilisis, lectus orci posuere urna, et laoreet risus dolor sed quam."
+      media:
+        prev_photo: "Previous photo"
+        next_photo: "Next photo"
+        go_to_photo: "Go to photo #%{index}"
+      submissions:
+        executor: "Executor"
+        task_completed: "Task completed!"
+        contact_executor: "Contact executor"
+        confirm_completion: "Confirm completion"
+        change_executor: "Change executor"
+        accept: "Accept"
+        reply: "Reply"
+        no_submissions_owner: "Submissions from executors will appear here; share the task to receive submissions."
+        no_submissions_first: "Submissions from executors will appear here; be the first to submit!"
+      support_card:
+        questions_title: "Have questions?"
+        questions_body: "Contact us—we respond quickly and are happy to help."
+        email_label: "Email"
+        phone_label: "Phone"
+      timing_location:
+        time_and_date: "Time and date"
+        to_be_determined: "To be determined"
+        location_title: "Location"

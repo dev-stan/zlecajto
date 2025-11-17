@@ -1,24 +1,24 @@
 .fixed.inset-0.z-50.bg-black/50.flex.items-center.justify-center.animate-fade-in.transition-colors.duration-200.ease-out data-controller="modal whats-new" data-modal-target="overlay"
   .relative.bg-white-ish.rounded-2xl.shadow-xl.max-w-2xl.mx-4.w-full.animate-fade-in data-modal-target="content"
     .px-6.border-b.border-gray-100.flex.items-center.justify-between
-      h3.text-lg.font-bold.text-gray-900.pt-8 = 'Pojawiło się coś nowego 👀'
+      h3.text-lg.font-bold.text-gray-900.pt-8 = t('.title')
     .px-6.py-2
       p.text-gray-700.mt-1 
-        |✅ Dodaliśmy funkcję 
-        span.font-bold usunięcia zlecenia
+        |✅ #{t('.added_feature')} 
+        span.font-bold = t('.delete_task')
       p.text-gray-700.mt-1 
-        |✅ Dodaliśmy funkcję 
-        span.font-bold zmiany wykonawcy
+        |✅ #{t('.added_feature')} 
+        span.font-bold = t('.change_executor')
       p.text-gray-700.mt-1
-        |✅ Uporządkowaliśmy zlecenia 
-        span.font-bold w profilu
+        |✅ #{t('.organized_tasks')} 
+        span.font-bold = t('.in_profile')
       p.text-gray-700.mt-1 
-        |➡️ Pracujemy nad funkcją 
-        span.font-bold chatu!
+        |➡️ #{t('.working_on_feature')} 
+        span.font-bold = t('.chat')
       
-      p.text-gray-700.mt-5 Dziękujemy za wasz feedback, to dzięki niemu powstają nowe funkcje!
+      p.text-gray-700.mt-5 = t('.thanks_feedback')
     .px-6.py-4.flex.justify-center
-      = render Ui::ButtonComponent.new(text: 'Ekstra, rozumiem!',
+      = render Ui::ButtonComponent.new(text: t('.dismiss'),
         button: true,
         size: :sm,
         variant: :green,

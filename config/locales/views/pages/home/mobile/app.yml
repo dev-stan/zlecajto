@@ -1,0 +1,14 @@
+pl:
+  pages:
+    home:
+      mobile:
+        app:
+          heading: "Aplikacja mobilna"
+          faq_heading: "FAQ"
+en:
+  pages:
+    home:
+      mobile:
+        app:
+          heading: "Mobile app"
+          faq_heading: "FAQ"

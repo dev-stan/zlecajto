@@ -20,7 +20,7 @@ class Answer < ApplicationRecord
   def send_new_answer_email
     recipient_user = user == submission.user ? submission.task.user : submission.user
 
-    MailgunTemplateJob.perform_later(to: recipient_user.email, template: 'prod_new_answer', subject: 'Otrzymałeś nową odpowiedź!',
+    MailgunTemplateJob.perform_later(to: recipient_user.email, template: 'prod_new_answer', subject: I18n.t('models.answer.email_subjects.new_answer'),
                                      variables: { first_name: recipient_user.first_name, answer_message: message })
   end
 end

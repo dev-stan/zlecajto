@@ -1,0 +1,18 @@
+pl:
+  pages:
+    home:
+      mobile:
+        about:
+          heading: "Kim jesteśmy?"
+          tagline: "Trzech kumpli wychowanych razem w Suchym Lesie i Strzeszynie"
+          idea_heading: "Skąd pomysł na ZlecajTo.pl?"
+          idea_body: "Jako studenci często sami przeglądamy grupki w poszukiwaniu dorywczej pracy, która pomoże nam dorzucić coś do czynszu"
+en:
+  pages:
+    home:
+      mobile:
+        about:
+          heading: "Who are we?"
+          tagline: "Three friends who grew up together in Suchy Las and Strzeszyn"
+          idea_heading: "Where did the idea for ZlecajTo.pl come from?"
+          idea_body: "As students we often browse local groups looking for side gigs to help pay the rent"

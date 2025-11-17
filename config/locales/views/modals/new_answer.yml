@@ -1,0 +1,12 @@
+pl:
+  modals:
+    new_answer:
+      title: "Odpowiedz na zgłoszenie"
+      message_label: "Wiadomość"
+      message_placeholder: "Napisz odpowiedź dla wykonawcy..."
+en:
+  modals:
+    new_answer:
+      title: "Reply to submission"
+      message_label: "Message"
+      message_placeholder: "Write a response to the executor..."

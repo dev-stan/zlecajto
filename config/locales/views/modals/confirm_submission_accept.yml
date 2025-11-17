@@ -1,0 +1,14 @@
+pl:
+  modals:
+    confirm_submission_accept:
+      title: "Wybierasz wykonawcę zadania 👀"
+      body: "Czy na pewno chcesz żeby %{name} wykonywał(a) twoje zadanie?"
+      footer: "Wykonawca dostanie powiadomienie!"
+      confirm_text: "Na pewno!"
+en:
+  modals:
+    confirm_submission_accept:
+      title: "Selecting the executor 👀"
+      body: "Are you sure you want %{name} to execute your task?"
+      footer: "The executor will receive a notification!"
+      confirm_text: "Confirm"

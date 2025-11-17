@@ -1,20 +1,20 @@
 .flex.flex-col.items-center.justify-center.min-h-screen
-    h1.text-7xl.font-bold Woohoo!
-    p.text-lg.mt-3.font-bold.mb-3 Twoja zlecenie zostało dodane
+    h1.text-7xl.font-bold = t('.heading')
+    p.text-lg.mt-3.font-bold.mb-3 = t('.added_notice')
     = image_tag "thumbs_up.png", width: 150, height: 150, class: "object-cover", alt: "Profile", loading: "lazy"
-    p.text-lg.mt-3.font-bold.mb-3 Co teraz?
+    p.text-lg.mt-3.font-bold.mb-3 = t('.what_next')
     = render Cards::CardComponent.new do 
         .flex.flex-col.space-y-6.items-start
             li.flex.items-center.gap-4
                 .flex-shrink-0
                     span.flex.items-center.justify-center.w-8.h-8.rounded-full.bg-blue-50.text-blue-600.font-semibold.border.border-blue-200 = 1
-                p.text-base.text-gray-600.leading-relaxed = 'Opisz z czym potrzebujesz pomocy'
+                p.text-base.text-gray-600.leading-relaxed = t('.step_1')
             li.flex.items-center.gap-4
                 .flex-shrink-0
                     span.flex.items-center.justify-center.w-8.h-8.rounded-full.bg-blue-50.text-blue-600.font-semibold.border.border-blue-200 = 2
-                p.text-base.text-gray-600.leading-relaxed = 'Zdefiniuj cenę usługi'
+                p.text-base.text-gray-600.leading-relaxed = t('.step_2')
             li.flex.items-center.gap-4
                 .flex-shrink-0
                     span.flex.items-center.justify-center.w-8.h-8.rounded-full.bg-blue-50.text-blue-600.font-semibold.border.border-blue-200 = 3
-                p.text-base.text-gray-600.leading-relaxed = 'Otrzymaj oferty i wybierz wykonawcę'
-        = render Ui::ButtonComponent.new(text: 'Wróć do ogłoszenia', path: task_path(@task), variant: :primary, size: :md, html_options: { class: 'w-full mt-5' })
+                p.text-base.text-gray-600.leading-relaxed = t('.step_3')
+        = render Ui::ButtonComponent.new(text: t('shared.buttons.view_listing'), path: task_path(@task), variant: :primary, size: :md, html_options: { class: 'w-full mt-5' })

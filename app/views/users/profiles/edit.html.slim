@@ -1,37 +1,37 @@
 .flex.md:items-center.justify-center.h-screen.md:-mt-16
     .w-full.max-w-md.p-10
-        h2.text-3xl.font-bold.mb-4 Ostatnia rzecz!
+        h2.text-3xl.font-bold.mb-4 = t('.heading')
         = form_for(@user, url: users_profile_path, method: :patch) do |f|
             = render "devise/shared/error_messages", resource: @user
             - if @user.phone_number.blank?
-                p.text-lg.font-base.text-gray-600.mb-4 Uzupełnij numer telefonu w celu kontaktu z innymi użytkownikami.
+                p.text-lg.font-base.text-gray-600.mb-4 = t('.phone_number_prompt')
                 .mb-4
-                    = render Input::InputComponent.new(name: 'user[phone_number]', placeholder: 'Wpisz numer telefonu', value: @user.phone_number, html_options: { autocomplete: 'tel' })
+                    = render Input::InputComponent.new(name: 'user[phone_number]', placeholder: t('.phone_number_placeholder'), value: @user.phone_number, html_options: { autocomplete: 'tel' })
             - if !@pending_object_present
                 - selected_role = params.dig(:user, :role).presence || @user.role
                 .mb-6
-                    p.text-lg.font-base.text-gray-600.mb-4 Jak będziesz korzystać ze ZlecajTo?
+                    p.text-lg.font-base.text-gray-600.mb-4 = t('.role_question')
                     ul.grid.grid-cols-2.gap-3.mb-3
                         li
                             = render Ui::RadioButtonComponent.new(name: 'user[role]',
                                 value: 'wykonawca',
                                 checked: selected_role == 'wykonawca',
-                                label: 'Wykonawca',
+                                label: t('.role_executor'),
                                 style: :rounded,
                                 html_options: { class: 'required' })
                         li
                             = render Ui::RadioButtonComponent.new(name: 'user[role]',
                                 value: 'zleceniodawca',
                                 checked: selected_role == 'zleceniodawca',
-                                label: 'Zleceniodawca',
+                                label: t('.role_owner'),
                                 style: :rounded,
                                 html_options: { class: 'required' })
                     = render Ui::RadioButtonComponent.new(name: 'user[role]',
                         value: 'both',
                         checked: selected_role == 'both',
-                        label: 'Chcę zlecać i wykonywać',
+                        label: t('.role_both'),
                         style: :rounded,
                         html_options: { class: 'required w-full' })
             
             .py-6
-                = render Ui::ButtonComponent.new(text: "Zapisz", submit: true, width: 100)
+                = render Ui::ButtonComponent.new(text: t('shared.buttons.save'), submit: true, width: 100)

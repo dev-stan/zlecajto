@@ -4,22 +4,22 @@
     .flex-1.relative
         .flex.flex-col.justify-center.h-full
           - if @task.cancelled?
-            h2.text-5xl.font-bold.text-white.mb-2 = "Zlecenie usunięte..."
+            h2.text-5xl.font-bold.text-white.mb-2 = t('.cancelled_heading')
             p.text-white.mb-0
-              | Daj nam znać (
-              = link_to "tutaj!", "https://tally.so/r/w4e2KB", target: "_blank", rel: "noopener", class: "underline"
-              | ) dlaczego usunąłęś(aś) zlecenie, potrzebujemy twojego feedbacku!
+              = t('.cancelled_feedback_prefix')
+              = link_to t('.here_link_text'), "https://tally.so/r/w4e2KB", target: "_blank", rel: "noopener", class: "underline"
+              = t('.cancelled_feedback_suffix')
 
           - elsif @task.submissions.accepted.none?
-            h2.text-5xl.font-bold.text-white.mb-2 = "Masz #{t('tasks.submissions', count: @task.submissions.count)}"  
+            h2.text-5xl.font-bold.text-white.mb-2 = t('.submissions_count', count: @task.submissions.count)
             - if @task.submissions.count > 0
-              p.text-white.mb-0 Twoje zlecenie otrzymało właśnie nowe zgłoszenie!
+              p.text-white.mb-0 = t('.new_submission_notice')
             - else
-              p.text-white.mb-0 Możesz edytować zgłoszenie lub je udostępnić aby zwiększyć szanse na znalezienie wykonawcy.
+              p.text-white.mb-0 = t('.no_submissions_help')
           - elsif @task.completed?
-            h2.text-5xl.font-bold.text-white.mb-2 = "Zlecenie zakończone!"
+            h2.text-5xl.font-bold.text-white.mb-2 = t('.task_completed_heading')
           - elsif @task.submissions.accepted.any?
-            h2.text-5xl.font-bold.text-white.mb-2 = "Wybrano już wykonawcę!"
+            h2.text-5xl.font-bold.text-white.mb-2 = t('.executor_chosen_heading')
     .flex.md:flex-1.flex-col.w-full
       .bg-blue-50.rounded-2xl.p-5.flex.flex-col.space-y-2
         h3.font-bold.text-black.text-xl.mb-1 = @task.title
@@ -35,10 +35,10 @@
           span = formatted_salary(@task)
         .mt-2.flex.gap-2
           = link_to edit_task_modal_path(@task), data: { turbo_frame: 'modal' } do
-            = render(Ui::BadgeComponent.new(text: "Edytuj", variant: :blue, html_options: { class: 'px-1.5 ml-0 mt-0 text-sm cursor-pointer' }))
+            = render(Ui::BadgeComponent.new(text: t('shared.buttons.edit'), variant: :blue, html_options: { class: 'px-1.5 ml-0 mt-0 text-sm cursor-pointer' }))
           - if !@task.cancelled? && !@task.completed? && @task.submissions.accepted.none?
             = link_to confirm_cancell_task_modal_path(@task), data: { turbo_frame: 'modal' } do
-              = render(Ui::BadgeComponent.new(text: "Usuń", variant: :red, html_options: { class: 'px-1.5 ml-0 mt-0 text-sm cursor-pointer' }))
+              = render(Ui::BadgeComponent.new(text: t('shared.buttons.delete'), variant: :red, html_options: { class: 'px-1.5 ml-0 mt-0 text-sm cursor-pointer' }))
             
 
   .mt-10
@@ -57,7 +57,7 @@
               aria-selected=(active_tab == 'submissions')
               class=(active_tab == 'submissions' ? 'text-black' : 'text-gray-500')
             )
-              | Zgłoszenia
+              = t('.submissions_tab')
               - if @task.submissions.any?
                 span.ml-2.inline-flex.items-center.justify-center.text-base.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @task.submissions.count
               div(data-tabs-target="indicator" data-tab="submissions")
@@ -72,7 +72,7 @@
               aria-selected=(active_tab == 'questions')
               class=(active_tab == 'questions' ? 'text-black' : 'text-gray-500')
             ) 
-              | Pytania
+              = t('.questions_tab')
               - if @task.task_messages.root.any?
                 span.ml-2.inline-flex.items-center.justify-center.text-base.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @task.task_messages.root.count
               div(data-tabs-target="indicator" data-tab="questions")

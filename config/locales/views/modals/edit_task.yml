@@ -1,0 +1,36 @@
+pl:
+  modals:
+    edit_task:
+      title: "Edytuj zlecenie"
+      title_label: "Tytuł"
+      title_placeholder: "Podaj tytuł zlecenia"
+      salary_label: "Wynagrodzenie"
+      salary_placeholder: "150"
+      description_label: "Opis"
+      description_placeholder: "Opisz szczegóły zadania"
+      category_label: "Kategoria"
+      category_select: "Wybierz kategorię"
+      location_label: "Lokalizacja"
+      location_select: "Wybierz lokalizację"
+      timeslot_label: "Termin"
+      timeslot_select: "Wybierz przedział czasowy"
+      payment_label: "Płatność"
+      payment_select: "Wybierz metodę płatności"
+en:
+  modals:
+    edit_task:
+      title: "Edit task"
+      title_label: "Title"
+      title_placeholder: "Enter task title"
+      salary_label: "Payment"
+      salary_placeholder: "150"
+      description_label: "Description"
+      description_placeholder: "Describe task details"
+      category_label: "Category"
+      category_select: "Select category"
+      location_label: "Location"
+      location_select: "Select location"
+      timeslot_label: "Deadline"
+      timeslot_select: "Select time slot"
+      payment_label: "Payment method"
+      payment_select: "Select payment method"

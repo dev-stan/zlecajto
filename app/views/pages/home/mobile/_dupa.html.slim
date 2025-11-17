@@ -1,5 +1,5 @@
 .flex.flex-col.bg-blue-700.rounded-3xl.p-8
-    h1.text-center.text-5xl.font-bold.text-white.pb-5 = "Chcesz zarobić ze Zlecajto?"
-    p.text-white.pb-3 = 'Nieważne czy jesteśmistrzem excela, miłośnikiem sportu czy studentem matematyki, znajdź zlecenie dla ciebei na ZlecajTo!'
+    h1.text-center.text-5xl.font-bold.text-white.pb-5 = t('.heading')
+    p.text-white.pb-3 = t('.intro')
 
-    = render(Ui::ButtonComponent.new(text: 'Zacznij Zarabiać', path: tasks_path, size: :sm, variant: :ghost))
+    = render(Ui::ButtonComponent.new(text: t('components.layout.navbar.start_earning'), path: tasks_path, size: :sm, variant: :ghost))

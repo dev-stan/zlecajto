@@ -7,3 +7,12 @@ pl:
     register: "Zarejestruj"
     logout: "Wyloguj"
     greeting: "Witaj, %{name}!"
+en:
+  unauthorized: "Unauthorized"
+  nav:
+    apps: "My applications"
+    profile: "Profile"
+    login: "Login"
+    register: "Register"
+    logout: "Logout"
+    greeting: "Hello, %{name}!"

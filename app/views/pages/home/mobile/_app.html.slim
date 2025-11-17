@@ -1,4 +1,4 @@
-h1.text-5xl.font-bold = "Aplikacja mobilna"
+h1.text-5xl.font-bold = t('.heading')
 / Horizontal scroll snap (mobile first)
 - @items = ['mobile_app_1', 'mobile_app_2', 'mobile_app_3', 'mobile_app_4']
 .flex.overflow-x-auto.snap-x.snap-mandatory.scroll-smooth.space-x-4.p-8.w-full
@@ -9,5 +9,5 @@ h1.text-5xl.font-bold = "Aplikacja mobilna"
 .py-20
     .max-w-7xl.mx-auto.px-6.lg:px-12
         div
-            h2.text-xl.font-bold.mb-10 FAQ
+            h2.text-xl.font-bold.mb-10 = t('.faq_heading')
             = render Interactive::AccordionComponent.new(items: @faq_items)

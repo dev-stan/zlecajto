@@ -20,3 +20,24 @@ pl:
     form:
       title_placeholder: "Krótki tytuł"
       description_placeholder: "Opisz dokładnie zadanie..."
+en:
+  tasks:
+    wizard:
+      steps:
+        1: "Title & category"
+        2: "Description"
+        3: "Location"
+        4: "Budget"
+        5: "Photos"
+      back: "Back"
+      next: "Next"
+      create: "Create task"
+    flash:
+      created: "Task created successfully"
+      created_after_login: "Task created and logged in successfully!"
+      creation_error: "There was a problem creating the task. Please try again."
+    show:
+      submissions: "Submissions"
+    form:
+      title_placeholder: "Short title"
+      description_placeholder: "Describe the task in detail..."

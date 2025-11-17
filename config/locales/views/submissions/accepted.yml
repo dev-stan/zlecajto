@@ -1,0 +1,16 @@
+pl:
+  submissions:
+    accepted:
+      heading: "Zostałeś wybrany do realizacji zlecenia"
+      what_next: "Co teraz?"
+      step_1: "Skontaktuj się ze zleceniodawcą przez telefon %{phone}"
+      step_2: "Ustal szczegóły realizacji ze zleceniodawcą"
+      step_3: "Wykonaj zlecenie i otrzymaj płatność od zleceniodawcy"
+en:
+  submissions:
+    accepted:
+      heading: "You have been selected to carry out the task"
+      what_next: "What next?"
+      step_1: "Contact the task owner by phone %{phone}"
+      step_2: "Agree on execution details with the task owner"
+      step_3: "Complete the task and receive payment from the owner"

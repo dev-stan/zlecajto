@@ -1,19 +1,19 @@
 .max-w-7xl.mx-auto.px-6.mt-8
-  h1.text-2xl.font-semibold.text-gray-900.text-center = 'Lokalne zlecenia'
-  p.text-sm.text-gray-600.text-center = 'W Suchym Lesie i na Strzeszynie'
+  h1.text-2xl.font-semibold.text-gray-900.text-center = t('.heading')
+  p.text-sm.text-gray-600.text-center = t('.subheading')
 
   main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
     = render Tasks::IndexComponent.new(task_array: @open_tasks, current_user: current_user)
   - if @accepted_tasks.any?
     .flex.items-center.my-6
       hr.flex-1.border-t.border-gray-300
-      span.mx-4.text-gray-500.font-medium W trakcie wykonywania
+      span.mx-4.text-gray-500.font-medium = t('.in_progress_heading')
       hr.flex-1.border-t.border-gray-300
     main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
       = render Tasks::IndexComponent.new(task_array: @accepted_tasks, current_user: current_user)
   .flex.items-center.my-6
     hr.flex-1.border-t.border-gray-300
-    span.mx-4.text-gray-500.font-medium Wykonane zlecenia
+    span.mx-4.text-gray-500.font-medium = t('.completed_heading')
     hr.flex-1.border-t.border-gray-300
   main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
     = render Tasks::IndexComponent.new(task_array: @completed_tasks, current_user: current_user)

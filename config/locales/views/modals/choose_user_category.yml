@@ -1,0 +1,10 @@
+pl:
+  modals:
+    choose_user_category:
+      title: "Wybierz kategorie, które najbardziej pasują do twoich potrzeb..."
+      submit: "Wybrane!"
+en:
+  modals:
+    choose_user_category:
+      title: "Choose the categories that best match your needs..."
+      submit: "Chosen!"

@@ -1,0 +1,14 @@
+pl:
+  modals:
+    confirm_cancell_chosen_submission:
+      title: "Uwaga, uwaga!"
+      body: "Czy na pewno chcesz zmienić wykonawcę zlecenia?"
+      footer: "Używaj tej opcji tylko jeśli wybrany wcześniej wykonawca nie może zrealizować zlecenia."
+      confirm_text: "Tak, potwierdzam!"
+en:
+  modals:
+    confirm_cancell_chosen_submission:
+      title: "Attention!"
+      body: "Are you sure you want to change the task's executor?"
+      footer: "Use this only if the chosen executor cannot complete the task."
+      confirm_text: "Yes, confirm!"

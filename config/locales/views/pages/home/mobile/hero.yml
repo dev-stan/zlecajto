@@ -1,0 +1,98 @@
+pl:
+  pages:
+    home:
+      mobile:
+        hero:
+          platform_intro_mobile: "Tworzymy platformę, na której sąsiedzi mogą zlecać i wykonywać wszelkiego typu zlecenia!"
+          publish_task_button: "Opublikuj zlecenie"
+          browse_tasks_button: "Przeglądaj zlecenia"
+          unlock_heading_html: "Odblokuj swój czas ze <span class='text-primary'>Zlecajto</span><span class='text-3xl'>*</span>"
+          unlock_note: "*To banalnie proste :)"
+          platform_intro_desktop: "Tworzymy platformę, na której sąsiedzi mogą zlecać i wykonywać jakiegokolwiek typu zadania!"
+          earn_with_button: "Zarób ze Zlecajto!"
+          how_it_works_heading: "Lokalna pomoc"
+          how_it_works_subheading_mobile: "Zaoszczędź sobie godziny na codziennych obowiązkach i zleć je sąsiadowi."
+          how_it_works_steps:
+            - "Opisz z czym potrzebujesz pomocy"
+            - "Znajdź odpowiedniego wykonawcę"
+            - "No i gotowe, zadanie wykonane"
+          delegate_task_button: "Zleć zadanie"
+          categories_heading: "Zleć co chcesz"
+          categories_subheading_mobile: "Możesz zlecić wszystko, co przychodzi Ci do głowy, serio wszystko 👀"
+          earn_heading: "Zarób po swojemu!"
+          earn_paragraph: "Nieważne czy jesteś wielbicielem psów, udzielasz korków z matmy czy zajmujesz się przeprowadzkami, tu znajdziesz zlecenie dla siebie!"
+          earn_button_desktop: "Zarób po swojemu 😎"
+          earn_steps:
+            - "Lokalna społeczność"
+            - "Za darmo, dla wykonawców i zlecających"
+            - "Zarób dodatkową kasę na swoich warunkach"
+          earn_button_mobile: "Zacznij zarabiać 😎"
+          about_heading: "Kim jesteśmy?"
+          team_heading: "Zgrana ekipa"
+          team_paragraph1: "Jesteśmy dwójką spłukanych studentów z Suchego Lasu i Strzeszyna. Zauważyliśmy, że sąsiedzi na grupkach na FB mieli problem ze znalezieniem chętnych do pomocy, a nam i naszym znajomym często brakowało kasy."
+          team_paragraph2: "Postanowiliśmy stworzyć platformę, na której każdy w prosty i przejrzysty sposób mógłby znaleźć pomoc w swojej okolicy lub znaleźć sposób na dodatkowy zarobek."
+          origin_heading: "O nas i naszym pomyśle"
+          origin_paragraph1: "Jesteśmy dwójką spłukanych studentów z Suchego Lasu i Strzeszyna. Zauważyliśmy, że sąsiedzi na grupkach na FB mieli problem ze znalezieniem chętnych do pomocy, a nam i naszym znajomym często brakowało kasy."
+          origin_paragraph2: "Postanowiliśmy stworzyć platformę, na której każdy w prosty i przejrzysty sposób mógłby znaleźć pomoc w swojej okolicy lub znaleźć sposób na dodatkowy zarobek."
+          app_heading: "Zainstaluj aplikację"
+          app_paragraph: "Dodaj Zlecajto do ekranu głównego i używaj jak zwykłej aplikacji."
+          app_steps_ios:
+            - { img: 'ios_app_1.png', text: '1. Kliknij ikonę Udostępnij' }
+            - { img: 'ios_app_2.png', text: '2. Wybierz „Dodaj do ekranu początkowego”' }
+            - { img: 'ios_app_3.png', text: '3. Naciśnij „Dodaj”' }
+            - { img: 'ios_app_4.png', text: '4. Gotowe!' }
+          app_steps_android:
+            - { img: 'android_app_1.png', text: '1. Stuknij ikonę menu (trzy kropki)' }
+            - { img: 'android_app_2.png', text: '2. Wybierz „Zainstaluj aplikację”' }
+            - { img: 'android_app_3.png', text: '3. Potwierdź „Zainstaluj”' }
+            - { img: 'android_app_4.png', text: '4. Gotowe!' }
+          faq_heading: "FAQ"
+en:
+  pages:
+    home:
+      mobile:
+        hero:
+          platform_intro_mobile: "We are building a platform where neighbours can post and complete all kinds of local tasks!"
+          publish_task_button: "Post a task"
+          browse_tasks_button: "Browse tasks"
+          unlock_heading_html: "Unlock your time with <span class='text-primary'>Zlecajto</span><span class='text-3xl'>*</span>"
+          unlock_note: "*It's super easy :)"
+          platform_intro_desktop: "We are creating a platform where neighbours can post and complete any type of task!"
+          earn_with_button: "Earn with Zlecajto!"
+          how_it_works_heading: "Local help"
+          how_it_works_subheading_mobile: "Save hours on daily chores by delegating them to a neighbour."
+          how_it_works_steps:
+            - "Describe what you need help with"
+            - "Find the right executor"
+            - "Done – task completed"
+          delegate_task_button: "Delegate a task"
+          categories_heading: "Post whatever you want"
+          categories_subheading_mobile: "You can post anything that comes to mind – seriously anything 👀"
+          earn_heading: "Earn your way!"
+          earn_paragraph: "Whether you love dogs, tutor maths or help with moving – find a task that fits you!"
+          earn_button_desktop: "Earn your way 😎"
+          earn_steps:
+            - "Local community"
+            - "Free for executors and posters"
+            - "Earn extra money on your terms"
+          earn_button_mobile: "Start earning 😎"
+          about_heading: "Who are we?"
+          team_heading: "Tight-knit crew"
+          team_paragraph1: "We are two broke students from Suchy Las and Strzeszyn. We noticed people on FB groups struggled to find helpers while we and our friends often lacked cash."
+          team_paragraph2: "So we decided to build a platform where anyone can easily find help locally or a way to earn extra money."
+          origin_heading: "About us and our idea"
+          origin_paragraph1: "We are two broke students from Suchy Las and Strzeszyn. We noticed neighbours on FB groups had trouble finding helpers and we often needed extra money."
+          origin_paragraph2: "We set out to build a platform where anyone could clearly find help nearby or a way to earn more."
+          app_heading: "Install the app"
+          app_paragraph: "Add Zlecajto to your home screen and use it like a normal app."
+          app_steps_ios:
+            - { img: 'ios_app_1.png', text: '1. Tap the Share icon' }
+            - { img: 'ios_app_2.png', text: '2. Choose “Add to Home Screen”' }
+            - { img: 'ios_app_3.png', text: '3. Tap “Add”' }
+            - { img: 'ios_app_4.png', text: '4. Done!' }
+          app_steps_android:
+            - { img: 'android_app_1.png', text: '1. Tap the menu (three dots)' }
+            - { img: 'android_app_2.png', text: '2. Select “Install app”' }
+            - { img: 'android_app_3.png', text: '3. Confirm “Install”' }
+            - { img: 'android_app_4.png', text: '4. Done!' }
+          faq_heading: "FAQ"

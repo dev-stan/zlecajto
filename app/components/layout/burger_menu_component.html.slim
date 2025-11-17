@@ -18,50 +18,50 @@ nav.relative.flex.items-center data-controller="burger-menu"
 
   / Mobile menu (hidden by default, toggled by Stimulus)
   .fixed.inset-0.top-14.bg-white.shadow-lg.px-4.pt-6.pb-8.pl-6.z-50.hidden.flex.flex-col.gap-2 data-burger-menu-target="menu"
-    p.text-xl.text-black.font-bold Zlecenia
+    p.text-xl.text-black.font-bold = t('components.layout.burger_menu.tasks_section')
     = link_to tasks_path, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
       i.fas.fa-bolt.fa-fw.mr-2
-      | Przeglądaj zlecenia
+      = t('components.layout.burger_menu.browse_tasks')
     = link_to new_task_path, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
       i.fas.fa-plus.fa-fw.mr-2
-      | Dodaj zlecenie
+      = t('components.layout.burger_menu.add_task')
     - if @user_signed_in
       = link_to users_profile_path, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
         i.fas.fa-circle-user.fa-fw.mr-2
         span.flex.items-center.gap-2
-          | Mój profil
+          = t('components.layout.burger_menu.my_profile')
           - if @user_signed_in && @current_user.unread_notifications_count > 0
             span.relative.flex.h-3.w-3.items-center.justify-center
               span.absolute.inline-flex.h-full.w-full.rounded-full.bg-red-400.opacity-75.animate-ping
               span.relative.inline-flex.h-3.w-3.rounded-full.bg-red-500.items-center.justify-center
-    p.text-xl.text-black.font-bold Pomoc
+    p.text-xl.text-black.font-bold = t('components.layout.burger_menu.help_section')
     = link_to pages_contact_path, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
       i.fas.fa-phone.fa-fw.mr-2
-      | Kontakt
-    p.text-xl.text-black.font-bold Inne
+      = t('components.layout.burger_menu.contact')
+    p.text-xl.text-black.font-bold = t('components.layout.burger_menu.other_section')
     = link_to root_path(anchor: 'app', refresh: true), class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
       i.fas.fa-mobile-screen.fa-fw.mr-2
-      | Aplikacja
+      = t('components.layout.burger_menu.app')
       span.relative.flex.items-center.justify-center.ml-1
         / Pulse background, same size as badge
         span.absolute.inline-flex.rounded-full.bg-red-400.opacity-75.animate-ping.h-full.w-full.scale-75
         / Badge
         span class="relative inline-flex rounded-full bg-red-500 text-white text-[9px] font-semibold items-center justify-center px-2 h-5"
-          | Nowość
+          = t('components.layout.burger_menu.new_badge')
 
 
     = link_to pages_tos_path, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
       i.fas.fa-book.fa-fw.mr-2
-      | Regulamin
+      = t('components.layout.burger_menu.tos')
     = link_to pages_privacy_path, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
       i.fas.fa-user-shield.fa-fw.mr-2
-      | Polityka prywatności
+      = t('components.layout.burger_menu.privacy')
     - if @user_signed_in
       = link_to confirm_user_logout_path, data: { turbo_frame: 'modal' }, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
           i.fas.fa-sign-out-alt.fa-fw.mr-2
-          | Wyloguj się
+          = t('components.layout.burger_menu.logout')
     - unless @user_signed_in
       .flex.items-center.justify-center.mt-4.gap-3
-        = render(Ui::ButtonComponent.new(text: 'Zaloguj się', path: helpers.new_user_session_path, size: :sm, variant: :green, width: 50))
-        = render(Ui::ButtonComponent.new(text: 'Zarejestruj się', path: helpers.new_user_registration_path, size: :sm, variant: :primary_3, width: 50))
+        = render(Ui::ButtonComponent.new(text: t('components.layout.burger_menu.login'), path: helpers.new_user_session_path, size: :sm, variant: :green, width: 50))
+        = render(Ui::ButtonComponent.new(text: t('components.layout.burger_menu.register'), path: helpers.new_user_registration_path, size: :sm, variant: :primary_3, width: 50))
 
