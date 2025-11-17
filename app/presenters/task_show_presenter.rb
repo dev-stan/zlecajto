@@ -23,16 +23,15 @@ class TaskShowPresenter
   end
 
   def button_variant
-    case button_text
-    when 'Usunięto zlecenie' then :red
-    when 'Upłynął termin' then :red
-    when 'Zobacz detale zlecenia' then :primary
-    when 'Zlecenie zakończone' then :green
-    when 'Wybrano cię! Co dalej?' then :green
-    when 'Wybrano już wykonawcę' then :red
-    when 'Już aplikowałeś' then :primary
-    when 'Aplikuj' then :primary
-    end
+    return :red if task.cancelled?
+    return :red    if task.overdue?
+    return :green  if task.completed?
+    return :primary if owner?
+    return :green  if current_user_accepted_submission?
+    return :red    if accepted_submission_exists?
+    return :primary if user_has_applied?
+
+    :primary
   end
 
   def button_path
