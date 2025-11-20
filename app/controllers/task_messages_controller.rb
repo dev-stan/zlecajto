@@ -7,7 +7,7 @@ class TaskMessagesController < ApplicationController
   def create
     return store_pending_message_and_redirect unless user_signed_in?
 
-    task_message = TaskMessageCreator.new(user: current_user, task: @task, params: task_message_params).call
+    task_message = TaskMessages::Creator.new(user: current_user, task: @task, params: task_message_params).call
     handle_message_save(task_message)
   end
 
