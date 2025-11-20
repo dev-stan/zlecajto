@@ -1,4 +1,5 @@
-# app/services/messages/broadcast_service.rb
+# frozen_string_literal: true
+
 module Messages
   class BroadcastService
     def self.call(message)

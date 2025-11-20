@@ -6,7 +6,6 @@ module Conversations
       @conversation = conversation
     end
 
-    # Returns the database column used to track last_seen for a given user
     def last_seen_column_for(user)
       return unless participant?(user)
 
@@ -17,19 +16,16 @@ module Conversations
       end
     end
 
-    # Returns the timestamp when the user last saw the conversation
     def last_seen_at_for(user)
       col = last_seen_column_for(user)
       col && conversation[col]
     end
 
-    # Marks the conversation as seen by the given user
     def mark_seen_by(user, time = Time.current)
       col = last_seen_column_for(user)
       conversation.update_column(col, time) if col # rubocop:disable Rails/SkipsModelValidations
     end
 
-    # Returns true if the conversation has unread messages for the user
     def unread_for?(user)
       last_message = conversation.messages.last
       return false unless last_message

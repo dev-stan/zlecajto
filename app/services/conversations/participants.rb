@@ -1,10 +1,11 @@
+# frozen_string_literal: true
+
 module Conversations
   class Participants
     def initialize(conversation)
       @conversation = conversation
     end
 
-    # Matches delegate names
     def participants
       [conversation.submission_owner, conversation.task_owner].freeze
     end
