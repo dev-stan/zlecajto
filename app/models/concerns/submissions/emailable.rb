@@ -5,8 +5,6 @@ module Submissions
     extend ActiveSupport::Concern
     include Rails.application.routes.url_helpers
 
-    private
-
     def send_accepted_submission_email
       MailgunTemplateJob.perform_later(
         to: user.email,

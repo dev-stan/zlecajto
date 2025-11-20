@@ -22,7 +22,7 @@ class SubmissionsController < ApplicationController
   end
 
   def cancell_chosen
-    @submission.cancell_chosen!
+    Submissions::CancellChosenService.new(@submission).call
     redirect_to my_task_path(@submission.task), notice: 'Teraz możesz wybrać innego wykonawcę.'
   end
 
@@ -62,7 +62,7 @@ class SubmissionsController < ApplicationController
   def accepted; end
 
   def accept
-    @submission.accept!
+    Submissions::AcceptService.new(@submission).call
     redirect_to contact_submission_path(@submission)
   rescue ActiveRecord::RecordInvalid => e
     redirect_back fallback_location: @submission.task, alert: e.message
