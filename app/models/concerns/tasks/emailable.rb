@@ -4,8 +4,6 @@ module Tasks
   module Emailable
     extend ActiveSupport::Concern
 
-    private
-
     def send_completed_task_email
       MailgunTemplateJob.perform_later(
         to: user.email,
