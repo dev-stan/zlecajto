@@ -7,7 +7,7 @@
           .hidden.md:block
             = render Tasks::WizardStepsComponent.new(current_step: @step, task: @task, steps: wizard_steps)
         .flex-1.max-w-3xl.w-full
-          = render "tasks/steps/#{@step}", task: @task, categories: @categories, step: @step
+          = render @wizard.step_partial, task: @task, categories: @categories, step: @step
 
       - nav_task_params = { category: @task.category, title: @task.title, description: @task.description, salary: @task.salary, payment_method: @task.payment_method, due_date: @task.due_date, due_date_any: params.dig(:task, :due_date_any), timeslot: @task.timeslot, location: @task.location }
       .mt-24.flex.items-center.justify-center.gap-4

@@ -38,10 +38,11 @@ Rails.application.routes.draw do
 
   # Task wizard
   scope path: 'tasks', controller: :task_wizard do
-    get 'new', action: :new, as: :new_task
-    match 'wizard', action: :wizard, via: %i[get post], as: :task_wizard
+    get  'new', action: :new, as: :new_task
+    get  'steps/:step', action: :show_step, as: :task_wizard_step
+    post 'steps/:step', action: :advance_step, as: :advance_task_wizard_step
     post 'create', action: :create, as: :create_task
-    get 'create_from_session', action: :create_from_session, as: :create_from_session_task
+    get  'create_from_session', action: :create_from_session, as: :create_from_session_task
   end
 
   # Tasks
