@@ -29,24 +29,6 @@ class Task < ApplicationRecord
   validates :timeslot, inclusion: { in: TIMESLOTS }
   validates :location, inclusion: { in: LOCATIONS }
 
-  def complete!
-    return if completed?
-
-    transaction do
-      update!(status: :completed)
-      send_completed_task_email
-      send_completed_submission_email
-    end
-  end
-
-  def cancell!
-    return if cancelled?
-
-    transaction do
-      update!(status: :cancelled)
-    end
-  end
-
   # Ransack allowlist for ActiveAdmin
   def self.ransackable_attributes(_auth_object = nil)
     %w[id title description salary status user_id category due_date location payment_method timeslot created_at
