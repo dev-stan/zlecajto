@@ -35,10 +35,6 @@ class TaskWizard
     [current_step + 1, total_steps].min
   end
 
-  def back_step_number
-    [current_step - 1, 1].max
-  end
-
   def advance!
     @current_step = next_step_number
   end
