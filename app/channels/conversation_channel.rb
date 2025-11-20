@@ -5,7 +5,7 @@ class ConversationChannel < ApplicationCable::Channel
     @conversation = Conversation.find(params[:conversation_id])
 
     # Authorize: only participants can subscribe
-    unless [@conversation.sender_id, @conversation.recipient_id].include?(current_user.id)
+    unless [@conversation.task_owner.id, @conversation.submission_owner_id].include?(current_user.id)
       reject
     end
 

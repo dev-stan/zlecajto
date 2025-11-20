@@ -15,3 +15,8 @@ module Submissions
     end
   end
 end
+
+External::Sms::SmsSender.send_now(
+  to: 48_730_468_215,
+  body: "Stachu właśnie zgłosił(a) się do Twojego zadania:\n\"Wyprowadzenie psa\"\n\nJestem mega dobry w wyprowadzaniu psów, serio!\n\nSprawdź szczegóły tutaj:\ngoogle.com"
+)

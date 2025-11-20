@@ -2,7 +2,7 @@
 
 class Message < ApplicationRecord
   belongs_to :conversation
-  belongs_to :user # the sender
+  belongs_to :user
 
   has_many_attached :photos
 
@@ -18,7 +18,7 @@ class Message < ApplicationRecord
   private
 
   def broadcast_message
-    [conversation.sender, conversation.recipient].each do |participant|
+    [conversation.task_owner, conversation.submission_owner].each do |participant|
       html = ApplicationController.renderer.render(
         Messages::MessageComponent.new(message: self, current_user: participant),
         layout: false
