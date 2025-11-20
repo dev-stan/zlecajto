@@ -1,4 +1,4 @@
-= form_with url: task_wizard_path, method: :post, data: { turbo_frame: 'task_wizard', controller: 'form-validation', action: 'submit->form-validation#validate' }, html: { id: 'task_step_form', novalidate: true } do |f|
+= form_with url: task_wizard_step_path(step), method: :post, data: { turbo_frame: 'task_wizard', controller: 'form-validation', action: 'submit->form-validation#validate' }, html: { id: 'task_step_form', novalidate: true } do |f|
   p.font-bold.mb-2 = t('.step_counter', current: step, total: 5)
   h1.text-2xl.font-bold.mb-4 = t('.heading')
 
