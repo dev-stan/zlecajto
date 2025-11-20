@@ -31,6 +31,6 @@ class PendingSubmission
     task = Task.find_by(id: task_id)
     return nil unless task
 
-    SubmissionCreator.new(user: user, task: task, params: submission_attrs).call
+    Submissions::Creator.new(user: user, task: task, params: submission_attrs).call
   end
 end

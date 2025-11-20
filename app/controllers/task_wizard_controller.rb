@@ -22,7 +22,7 @@ class TaskWizardController < ApplicationController
       return
     end
 
-    task = TaskCreator.new(user: current_user, params: task_params).call
+    task = Tasks::Creator.new(user: current_user, params: task_params).call
 
     if task.persisted?
       redirect_to created_task_path(task)
