@@ -23,6 +23,6 @@ class PendingTask
 
     # Ensure symbolized keys for strong params-like access
     data = data.deep_symbolize_keys
-    TaskCreator.new(user: user, params: data).call
+    Tasks::Creator.new(user: user, params: data).call
   end
 end

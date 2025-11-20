@@ -37,7 +37,7 @@ class SubmissionsController < ApplicationController
       redirect_back fallback_location: @task, alert: 'Nie możesz zgłosić się do własnego zadania' and return
     end
 
-    submission = SubmissionCreator.new(user: current_user, task: @task, params: submission_params).call
+    submission = Submissions::Creator.new(user: current_user, task: @task, params: submission_params).call
 
     if submission.persisted?
       redirect_to @task, notice: 'Pomyslnie złożono zgłoszenie do zadania.'
