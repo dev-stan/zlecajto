@@ -1,73 +1,40 @@
 # frozen_string_literal: true
 
 class Conversation < ApplicationRecord
-  belongs_to :sender, class_name: 'User'
-  belongs_to :recipient, class_name: 'User'
-
-  alias submitter sender
-  alias task_owner recipient
-
+  belongs_to :submission_owner, class_name: 'User'
+  belongs_to :task_owner, class_name: 'User'
   belongs_to :task
 
   has_many :messages, dependent: :destroy
 
-  validates :sender_id, uniqueness: { scope: :recipient_id }
+  validates :submission_owner_id, uniqueness: { scope: :task_owner_id }
 
-  scope :between, lambda { |sender_id, recipient_id|
-    where(sender_id:, recipient_id:).or(where(sender_id: recipient_id, recipient_id: sender_id))
+  scope :between, lambda { |user1_id, user2_id|
+    where(submission_owner_id: user1_id, task_owner_id: user2_id)
+      .or(where(submission_owner_id: user2_id, task_owner_id: user1_id))
   }
 
-  scope :for_user, ->(user) { where('sender_id = ? OR recipient_id = ?', user.id, user.id) }
+  scope :for_user, lambda { |user|
+    where('submission_owner_id = :id OR task_owner_id = :id', id: user.id)
+  }
 
-  def participant?(user)
-    return false if user.nil?
-
-    user.id == sender_id || user.id == recipient_id
+  def participants_service
+    @participants_service ||= Conversations::Participants.new(self)
   end
 
-  def participants
-    [task_owner, submitter]
+  def read_tracker
+    @read_tracker ||= Conversations::ReadTracker.new(self)
   end
 
-  def other_participant(user)
-    return nil unless participant?(user)
-
-    user.id == task_owner.id ? submitter : task_owner
+  def status_checker
+    @status_checker ||= Conversations::StatusChecker.new(self)
   end
 
-  def role_for(user)
-    return :task_owner if user.id == task_owner.id
-    return :submitter if user.id == submitter.id
+  delegate :participants, :participant?, :other_participant, to: :participants_service
+  delegate :unread_for?, :mark_seen_by, :last_seen_at_for, :last_seen_column_for, to: :read_tracker
+  delegate :status, to: :status_checker
 
-    nil
-  end
-
-  def last_seen_column_for(user)
-    return nil unless participant?(user)
-
-    user.id == sender_id ? :sender_last_seen_at : :recipient_last_seen_at
-  end
-
-  def last_seen_at_for(user)
-    col = last_seen_column_for(user)
-    col ? self[col] : nil
-  end
-
-  # Mark the conversation as seen by user (defaults to now)
-  def mark_seen_by(user, time = Time.current)
-    col = last_seen_column_for(user)
-    return unless col
-
-    update_column(col, time)
-  end
-
-  # Unread if the last incoming message is newer than last_seen
-  def unread_for?(user)
-    last = messages.last
-    return false unless last
-    return false if last.user_id == user.id # own messages are never "unread" for author
-
-    seen_at = last_seen_at_for(user)
-    seen_at.nil? || last.created_at > seen_at
+  def submission_for(user)
+    task.submissions.find_by(user_id: user.id)
   end
 end

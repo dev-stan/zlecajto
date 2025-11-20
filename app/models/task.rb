@@ -33,6 +33,10 @@ class Task < ApplicationRecord
   validates :timeslot, inclusion: { in: TIMESLOTS }
   validates :location, inclusion: { in: LOCATIONS }
 
+  def accepted_submission
+    submissions.where(status: :accepted).first
+  end
+
   def complete!
     return if completed?
 

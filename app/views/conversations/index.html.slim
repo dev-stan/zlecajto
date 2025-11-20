@@ -17,8 +17,10 @@
         .w-3/4.flex.flex-col
           p.font-bold.truncate = conversation.task.title
           .flex.flex-col.text-sm.w-full
-            p.text-sm class=(conversation.task.status == 'open' ? 'text-red-600' : 'text-green-600')
-              = conversation.task.status == 'open' ? 'Anulowano wykonanie' : conversation.task.status_before_type_cast.capitalize
+            - if conversation.task.accepted_submission == conversation.task.submissions.find_by(user_id: conversation.submission_owner.id)
+              p.text-sm.text-green-600 = "Zaakceptowano"
+            - else
+              p.text-sm.text-red-600 = "Anulowano"
 
             - last_message = conversation.messages.last
             - if last_message
@@ -33,4 +35,9 @@
                 i aria-hidden="true" class=(unread ? "text-gray-400" : "text-green-500")
                 span.sr-only = (unread ? "Nieprzeczytane" : "Przeczytane")
             - else
-              p.text-gray-400.brak-wiadomosci Napisz pierwszą wiadomość!
+              p.text-gray-400
+                - if @status == :active
+                  | Napisz pierwszą wiadomość!
+                - else
+                  | Konwersacja nieaktywna
+

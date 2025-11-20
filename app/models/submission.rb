@@ -59,7 +59,7 @@ class Submission < ApplicationRecord
   end
 
   def create_conversation
-    Conversation.create!(sender_id: user.id, recipient_id: task.user.id, task: task)
+    Conversation.create!(submission_owner_id: user.id, task_owner_id: task.user.id, task: task)
   end
 
   # Ransack allowlist for ActiveAdmin

@@ -8,8 +8,17 @@ class User < ApplicationRecord
   has_many :submissions
   has_many :answers
   has_many :notifications
-  has_many :conversations_as_sender, class_name: 'Conversation', foreign_key: 'sender_id', dependent: :destroy
-  has_many :conversations_as_recipient, class_name: 'Conversation', foreign_key: 'recipient_id', dependent: :destroy
+
+  # Updated associations for renamed conversation columns
+  has_many :conversations_as_submission_owner,
+           class_name: 'Conversation',
+           foreign_key: 'submission_owner_id',
+           dependent: :destroy
+
+  has_many :conversations_as_task_owner,
+           class_name: 'Conversation',
+           foreign_key: 'task_owner_id',
+           dependent: :destroy
 
   has_one_attached :profile_picture
 
@@ -29,13 +38,10 @@ class User < ApplicationRecord
 
   # def phone_number
   #   return if super.blank?
-
+  #
   #   number = super.to_s.strip.gsub(/\D/, '') # remove all non-digit chars
-
-  #   # Add +48 if it doesn't already have a country code
   #   number.start_with?('48') ? "+#{number}" : "+48#{number.sub(/^0/, '')}"
   # end
-  #
 
   def display_name
     "#{first_name} #{last_name.first.upcase if last_name.present?}"
