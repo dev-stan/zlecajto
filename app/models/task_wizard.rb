@@ -8,7 +8,7 @@ class TaskWizard
 
   attr_reader :current_step, :params_hash
 
-  def self.from_params(params, session = {})
+  def self.build_from_params(params)
     new(step: params[:step], params: params[:task])
   end
 

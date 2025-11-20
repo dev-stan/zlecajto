@@ -5,21 +5,21 @@ class TaskWizardController < ApplicationController
   before_action :load_wizard_collections, only: %i[new show_step advance_step create]
 
   def new
-    @wizard = TaskWizard.from_params(params)
+    @wizard = TaskWizard.build_from_params(params)
     @task = @wizard.task
     @step = @wizard.current_step
     render :new
   end
 
   def show_step
-    @wizard = TaskWizard.from_params(params)
+    @wizard = TaskWizard.build_from_params(params)
     @task = @wizard.task
     @step = @wizard.current_step
     render :new
   end
 
   def advance_step
-    @wizard = TaskWizard.from_params(params)
+    @wizard = TaskWizard.build_from_params(params)
     @wizard.advance!
     @task = @wizard.task
     @step = @wizard.current_step
