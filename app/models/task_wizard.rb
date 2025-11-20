@@ -8,10 +8,18 @@ class TaskWizard
 
   attr_reader :current_step, :params_hash
 
-  def initialize(step: 1, params: {}, advance: false)
+  def self.from_params(params, session = {})
+    new(step: params[:step], params: params[:task])
+  end
+
+  def initialize(step: 1, params: {})
     @current_step = normalize_step(step)
-    @params_hash = process_params(params)
-    advance_step if advance
+    @params_hash = clean_params(params)
+  end
+
+  # Build unsaved Task
+  def task
+    @task ||= Task.new(params_hash.except(:due_date_any))
   end
 
   # Step helpers
@@ -27,32 +35,32 @@ class TaskWizard
     [current_step + 1, total_steps].min
   end
 
-  def advance_step
+  def back_step_number
+    [current_step - 1, 1].max
+  end
+
+  def advance!
     @current_step = next_step_number
   end
 
-  def labels
-    STEPS
+  def step_partial
+    "tasks/steps/#{current_step}"
   end
 
-  # Build unsaved Task from wizard params
-  def task
-    @task ||= Task.new(params_hash.except(:due_date_any))
+  def params_for_step
+    params_hash.slice(*PERMITTED_PARAMS)
   end
 
   private
 
-  # Clean and normalize incoming params
-  def process_params(raw_params)
-    raw_params = raw_params.to_unsafe_h if raw_params.respond_to?(:to_unsafe_h)
+  def clean_params(raw_params)
     raw_params ||= {}
-
-    clean = raw_params.transform_keys(&:to_sym).slice(*PERMITTED_PARAMS)
-    clean.delete(:due_date) if clean[:due_date_any].present?
-    clean
+    raw_params = raw_params.to_unsafe_h if raw_params.respond_to?(:to_unsafe_h)
+    cleaned = raw_params.transform_keys(&:to_sym).slice(*PERMITTED_PARAMS)
+    cleaned.delete(:due_date) if cleaned[:due_date_any].present?
+    cleaned
   end
 
-  # Ensure step is within valid range
   def normalize_step(step)
     step = step.to_i
     return 1 if step < 1

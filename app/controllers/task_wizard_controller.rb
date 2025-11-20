@@ -1,17 +1,20 @@
 # frozen_string_literal: true
 
 class TaskWizardController < ApplicationController
-  # Allow unauthenticated users to hit `create` so we can stash the task in session.
   before_action :authenticate_user!, only: %i[create_from_session]
   before_action :load_wizard_collections, only: %i[new wizard create]
 
   def new
-    init_wizard(advance: false)
+    @wizard = TaskWizard.from_params(params)
+    @task = @wizard.task
+    @step = @wizard.current_step
   end
 
-  # this action advances the wizard / called with form in views
   def wizard
-    init_wizard(advance: request.post?)
+    @wizard = TaskWizard.from_params(params)
+    @wizard.advance! if request.post?
+    @task = @wizard.task
+    @step = @wizard.current_step
     render :new
   end
 
@@ -46,8 +49,11 @@ class TaskWizardController < ApplicationController
   def task_params
     return {} unless params[:task]
 
-    params.require(:task).permit(:title, :description, :salary, :status, :category, :due_date, :due_date_any, :timeslot,
-                                 :payment_method, :location, photos: [], photo_blob_ids: [])
+    params.require(:task).permit(
+      :title, :description, :salary, :status, :category,
+      :due_date, :due_date_any, :timeslot, :payment_method, :location,
+      photos: [], photo_blob_ids: []
+    )
   end
 
   def load_wizard_collections
@@ -55,11 +61,5 @@ class TaskWizardController < ApplicationController
     @time_slots = Task::TIMESLOTS
     @payment_methods = Task::PAYMENT_METHODS
     @locations = Task::LOCATIONS
-  end
-
-  def init_wizard(advance: false)
-    @wizard = TaskWizard.new(step: params[:step], params: task_params, advance: advance)
-    @task = @wizard.task
-    @step = @wizard.current_step
   end
 end
