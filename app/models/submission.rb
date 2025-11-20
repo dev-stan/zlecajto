@@ -38,24 +38,6 @@ class Submission < ApplicationRecord
   after_create :send_new_submission_email
   after_create :create_new_submission_notification
 
-  def accept!
-    return if accepted?
-
-    transaction do
-      update!(status: :accepted)
-      task.update!(status: :accepted)
-      send_accepted_submission_email
-      create_accepted_submission_notification
-    end
-  end
-
-  def cancell_chosen!
-    transaction do
-      task.submissions.each { |submission| submission.update!(status: :pending) }
-      task.update!(status: :open)
-    end
-  end
-
   # Ransack allowlist for ActiveAdmin
   def self.ransackable_attributes(_auth_object = nil)
     %w[id task_id user_id note status created_at updated_at]
