@@ -4,7 +4,6 @@ class TaskWizardController < ApplicationController
   before_action :authenticate_user!, only: %i[create_from_session]
   before_action :load_wizard_collections, only: %i[new show_step advance_step create]
 
-  # First step of the wizard
   def new
     @wizard = TaskWizard.from_params(params)
     @task = @wizard.task
@@ -12,8 +11,6 @@ class TaskWizardController < ApplicationController
     render :new
   end
 
-  # GET /tasks/steps/:step
-  # Just renders the requested step
   def show_step
     @wizard = TaskWizard.from_params(params)
     @task = @wizard.task
@@ -21,8 +18,6 @@ class TaskWizardController < ApplicationController
     render :new
   end
 
-  # POST /tasks/steps/:step
-  # Advances the wizard to the next step
   def advance_step
     @wizard = TaskWizard.from_params(params)
     @wizard.advance!
@@ -31,7 +26,6 @@ class TaskWizardController < ApplicationController
     render :new
   end
 
-  # POST /tasks/create
   def create
     unless user_signed_in?
       PendingTask.store(session, params: task_params, return_path: create_from_session_task_path)
