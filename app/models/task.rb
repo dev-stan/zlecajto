@@ -10,11 +10,8 @@ class Task < ApplicationRecord
   has_many :task_messages, dependent: :destroy
 
   enum status: {
-    draft: 'draft',
-    open: 'Otwarte',
-    in_progress: 'W trakcie',
-    finished: 'Zakończone',
-    cancelled: 'Anulowane',
+    open: 'open',
+    cancelled: 'cancelled',
     accepted: 'accepted',
     completed: 'completed',
     overdue: 'overdue'
