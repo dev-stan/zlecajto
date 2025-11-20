@@ -49,13 +49,6 @@ class Conversation < ApplicationRecord
     (participants - [user]).first
   end
 
-  # Returns the role of a user in the conversation
-  def role_for(user)
-    return :submission_owner if user.id == submission_owner_id
-
-    :task_owner if user.id == task_owner_id
-  end
-
   # Column for tracking when a user last saw the conversation
   def last_seen_column_for(user)
     return unless participant?(user)

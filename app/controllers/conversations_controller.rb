@@ -15,7 +15,6 @@ class ConversationsController < ApplicationController
   end
 
   def show
-    console
     @hide_navbar = true
     @conversation.mark_seen_by(current_user)
   end
