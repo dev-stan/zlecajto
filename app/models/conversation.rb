@@ -19,10 +19,6 @@ class Conversation < ApplicationRecord
     where('submission_owner_id = :id OR task_owner_id = :id', id: user.id)
   }
 
-  def for_submission(submission)
-    Conversation.where(submission_id: submission.id)
-  end
-
   def participants_service
     @participants_service ||= Conversations::Participants.new(self)
   end
