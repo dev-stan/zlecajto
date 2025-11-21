@@ -22,7 +22,7 @@ module Submissions
 
     def create_conversation
       Conversation.create!(submission_owner_id: @submission.user.id, task_owner_id: @submission.task.user.id,
-                           task: @submission.task)
+                           task: @submission.task, submission: @submission)
     end
   end
 end

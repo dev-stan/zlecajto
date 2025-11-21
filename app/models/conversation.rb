@@ -4,6 +4,7 @@ class Conversation < ApplicationRecord
   belongs_to :submission_owner, class_name: 'User'
   belongs_to :task_owner, class_name: 'User'
   belongs_to :task
+  belongs_to :submission
 
   has_many :messages, dependent: :destroy
 
