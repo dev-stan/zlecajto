@@ -1,0 +1,10 @@
+pl:
+  tasks:
+    completed:
+      heading: "Udało się!"
+      completed_notice: "Twoje zlecenie zostało wykonane"
+en:
+  tasks:
+    completed:
+      heading: "Success!"
+      completed_notice: "Your task has been completed"

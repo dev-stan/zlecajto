@@ -1,0 +1,18 @@
+pl:
+  components:
+    layout:
+      footer:
+        contact_heading: "Kontakt"
+        terms_heading: "Warunki"
+        tos: "Regulamin"
+        privacy: "Prywatność"
+        copyright: "2025 © ZlecajTo.pl"
+en:
+  components:
+    layout:
+      footer:
+        contact_heading: "Contact"
+        terms_heading: "Terms"
+        tos: "Terms of Service"
+        privacy: "Privacy"
+        copyright: "2025 © ZlecajTo.pl"

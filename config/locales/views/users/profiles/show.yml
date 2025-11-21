@@ -1,0 +1,36 @@
+pl:
+  users:
+    profiles:
+      show:
+        tasks_tab: "Zlecam"
+        submissions_tab: "Wykonuję"
+        executor_chosen_divider: "Wybrano wykonawcę"
+        completed_tasks_divider: "Wykonane zlecenia"
+        overdue_tasks_divider: "Zlecenia przeterminowane"
+        deleted_tasks_divider: "Usunięte zlecenia"
+        my_tasks_empty: "Nie masz jeszcze żadnych zadań."
+        my_tasks_new: "Dodaj zadanie"
+        accepted_submissions_divider: "Zaakceptowane zgłoszenia"
+        pending_submissions_divider: "Oczekujące na akceptację"
+        completed_submissions_divider: "Ukończone zlecenia"
+        rejected_submissions_divider: "Odrzucone zlecenia"
+        no_submissions_notice: "Nie aplikowałeś/aś jeszcze na żadne zadania"
+        login_required_message: "Czekaj czekaj! Zanim zobaczysz swój profil, musisz się zalogować lub zarejestrować..."
+en:
+  users:
+    profiles:
+      show:
+        tasks_tab: "My tasks"
+        submissions_tab: "My submissions"
+        executor_chosen_divider: "Executor chosen"
+        completed_tasks_divider: "Completed tasks"
+        overdue_tasks_divider: "Overdue tasks"
+        deleted_tasks_divider: "Deleted tasks"
+        my_tasks_empty: "You don't have any tasks yet."
+        my_tasks_new: "Add task"
+        accepted_submissions_divider: "Accepted submissions"
+        pending_submissions_divider: "Pending acceptance"
+        completed_submissions_divider: "Completed submissions"
+        rejected_submissions_divider: "Rejected submissions"
+        no_submissions_notice: "You haven't applied for any tasks yet"
+        login_required_message: "Hold on! To view your profile, you need to log in or register first..."

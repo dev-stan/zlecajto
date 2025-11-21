@@ -26,7 +26,7 @@
         = render 'tasks/show/timing_location', task: @task
         .flex.gap-2.items-center.my-5
           = render Users::AvatarComponent.new(user: @task.user, size: 'md', current_user: current_user)
-          p.font-semibold = "Zadanie zleca #{@task.user.display_name}"
+          p.font-semibold = t('tasks.show.owner_line', name: @task.user.display_name)
         - requested_tab = params[:tab].presence
         - if requested_tab
           - active_tab = requested_tab
@@ -50,7 +50,7 @@
                   aria-selected=(active_tab == 'submissions')
                   class=(active_tab == 'submissions' ? 'text-black' : 'text-gray-500')
                 )
-                  | Zgłoszenia
+                  = t('tasks.show.tabs.submissions')
                   - if @task.submissions.any?
                     span.ml-2.inline-flex.items-center.justify-center.text-base.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @task.submissions.count
                   div(data-tabs-target="indicator" data-tab="submissions")
@@ -65,7 +65,7 @@
                   aria-selected=(active_tab == 'questions')
                   class=(active_tab == 'questions' ? 'text-black' : 'text-gray-500')
                 ) 
-                  | Pytania
+                  = t('tasks.show.tabs.questions')
                   - if @task.task_messages.root.any?
                     span.ml-2.inline-flex.items-center.justify-center.text-base.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @task.task_messages.root.count
                   div(data-tabs-target="indicator" data-tab="questions")

@@ -38,30 +38,6 @@ class Submission < ApplicationRecord
   after_create :send_new_submission_email
   after_create :create_new_submission_notification
 
-  def accept!
-    return if accepted?
-
-    transaction do
-      update!(status: :accepted)
-      task.update!(status: :accepted)
-      create_conversation unless Conversation.between(user.id, task.user.id).exists?
-      send_accepted_submission_email
-      create_accepted_submission_notification
-    end
-  end
-
-  def cancell_chosen!
-    transaction do
-      task.submissions.each { |submission| submission.update!(status: :pending) }
-      task.update!(status: :open)
-      update!(status: :cancell_chosen)
-    end
-  end
-
-  def create_conversation
-    Conversation.create!(submission_owner_id: user.id, task_owner_id: task.user.id, task: task)
-  end
-
   # Ransack allowlist for ActiveAdmin
   def self.ransackable_attributes(_auth_object = nil)
     %w[id task_id user_id note status created_at updated_at]
@@ -79,3 +55,7 @@ class Submission < ApplicationRecord
     errors.add(:base, 'Nie możesz zgłosić się do własnego zadania')
   end
 end
+
+# def create_conversation
+#   Conversation.create!(submission_owner_id: user.id, task_owner_id: task.user.id, task: task)
+# end

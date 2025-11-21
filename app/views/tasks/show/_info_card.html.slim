@@ -1,5 +1,5 @@
 / Green info card (using Ui::CardComponent, styling preserved)
 section.mt-6
   = render Cards::CardComponent.new(padding: 'p-4', shadow: false, html_options: { class: 'rounded-xl bg-blue-50 border border-blue-200' }) do
-    h4.text-base.font-semibold.text-blue-900.mb-1 Jak to działa?
-    p.text-base.text-blue-800.leading-relaxed Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur euismod, nunc at facilisis facilisis, lectus orci posuere urna, et laoreet risus dolor sed quam.
+    h4.text-base.font-semibold.text-blue-900.mb-1 = t('.how_it_works_title')
+    p.text-base.text-blue-800.leading-relaxed = t('.how_it_works_body')

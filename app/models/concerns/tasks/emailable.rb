@@ -4,13 +4,11 @@ module Tasks
   module Emailable
     extend ActiveSupport::Concern
 
-    private
-
     def send_completed_task_email
       MailgunTemplateJob.perform_later(
         to: user.email,
         template: 'zakonczenie_zadania_zleceniodawca_fixed',
-        subject: 'Twoje zlecenie zostało zakończone :)',
+        subject: I18n.t('models.task.email_subjects.completed_for_owner'),
         variables: { task_title: title }
       )
     end
@@ -22,7 +20,7 @@ module Tasks
       MailgunTemplateJob.perform_later(
         to: accepted_submission.user.email,
         template: 'zakonczenie_zadania_do_wykonawcy_fixed',
-        subject: 'Wykonałeś zadanie!',
+        subject: I18n.t('models.task.email_subjects.completed_for_executor'),
         variables: { task_title: title }
       )
     end

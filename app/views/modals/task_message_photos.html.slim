@@ -26,25 +26,25 @@
             data-carousel-target="slide"
           )
             = image_tag photo.variant(resize_to_limit: [1920, 1080]),
-              alt: "Zdjęcie ##{i + 1}",
+              alt: t('.photo_alt', index: i + 1),
               class: "block max-w-[90vw] max-h-[90vh] w-auto h-auto object-contain"
         - if @photos.many?
           / Navigation arrows
           button.absolute.left-2.top-1/2.-translate-y-1/2.bg-white/70.hover:bg-white.text-gray-800.rounded-full.w-10.h-10.flex.items-center.justify-center.shadow.z-20(
             data-action="click->carousel#prev"
-            aria-label="Poprzednie zdjęcie"
+            aria-label=t('.prev_photo')
           )
             i.fa-solid.fa-chevron-left
 
           button.absolute.right-2.top-1/2.-translate-y-1/2.bg-white/70.hover:bg-white.text-gray-800.rounded-full.w-10.h-10.flex.items-center.justify-center.shadow.z-20(
             data-action="click->carousel#next"
-            aria-label="Następne zdjęcie"
+            aria-label=t('.next_photo')
           )
             i.fa-solid.fa-chevron-right
 
         / Close button
         .absolute.top-3.right-3.z-30
-          = render Ui::ButtonComponent.new(text: "Zamknij",
+          = render Ui::ButtonComponent.new(text: t('shared.buttons.close'),
             variant: :secondary,
             size: :sm,
             html_options: { data: { action: "click->modal#close" } })

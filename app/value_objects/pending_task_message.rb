@@ -22,6 +22,6 @@ class PendingTaskMessage
     task = Task.find_by(id: payload&.dig(:task_id))
     return unless payload && task
 
-    TaskMessageCreator.new(user: user, task: task, params: payload[:data] || {}).call
+    TaskMessages::Creator.new(user: user, task: task, params: payload[:data] || {}).call
   end
 end

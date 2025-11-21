@@ -1,0 +1,14 @@
+pl:
+  tasks:
+    index:
+      heading: "Lokalne zlecenia"
+      subheading: "W Suchym Lesie i na Strzeszynie"
+      in_progress_heading: "W trakcie wykonywania"
+      completed_heading: "Wykonane zlecenia"
+en:
+  tasks:
+    index:
+      heading: "Local tasks"
+      subheading: "In Suchy Las and Strzeszyn"
+      in_progress_heading: "In progress"
+      completed_heading: "Completed tasks"

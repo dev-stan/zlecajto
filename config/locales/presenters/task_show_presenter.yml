@@ -1,0 +1,36 @@
+pl:
+  presenters:
+    task_show_presenter:
+      button_text:
+        cancelled: "Usunięto zlecenie"
+        overdue: "Upłynął termin"
+        completed: "Zlecenie zakończone"
+        owner: "Zobacz detale zlecenia"
+        you_were_chosen: "Wybrano cię! Co dalej?"
+        executor_chosen: "Wybrano już wykonawcę"
+        already_applied: "Już aplikowałeś"
+        apply: "Aplikuj"
+      submissions_header:
+        completed: "Zlecenie wykonane!"
+        overdue: "Upłynął termin zlecenia"
+        chosen_owner: "Wybrano wykonawcę!"
+        chosen_for_you: "Wybrał Cię zleceniodawca! Skontaktuj się z nim."
+        chosen_executor: "Wybrany wykonawca"
+en:
+  presenters:
+    task_show_presenter:
+      button_text:
+        cancelled: "Task cancelled"
+        overdue: "Deadline passed"
+        completed: "Task completed"
+        owner: "View task details"
+        you_were_chosen: "You were chosen! What's next?"
+        executor_chosen: "Executor chosen"
+        already_applied: "Already applied"
+        apply: "Apply"
+      submissions_header:
+        completed: "Task completed!"
+        overdue: "Task deadline passed"
+        chosen_owner: "Executor chosen!"
+        chosen_for_you: "The task owner chose you! Get in touch."
+        chosen_executor: "Chosen executor"

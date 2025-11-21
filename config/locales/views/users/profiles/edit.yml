@@ -1,0 +1,22 @@
+pl:
+  users:
+    profiles:
+      edit:
+        heading: "Ostatnia rzecz!"
+        phone_number_prompt: "Uzupełnij numer telefonu w celu kontaktu z innymi użytkownikami."
+        phone_number_placeholder: "Wpisz numer telefonu"
+        role_question: "Jak będziesz korzystać ze ZlecajTo?"
+        role_executor: "Wykonawca"
+        role_owner: "Zleceniodawca"
+        role_both: "Chcę zlecać i wykonywać"
+en:
+  users:
+    profiles:
+      edit:
+        heading: "One last thing!"
+        phone_number_prompt: "Add your phone number so others can contact you."
+        phone_number_placeholder: "Enter phone number"
+        role_question: "How will you use ZlecajTo?"
+        role_executor: "Executor"
+        role_owner: "Task owner"
+        role_both: "I want to post and execute tasks"

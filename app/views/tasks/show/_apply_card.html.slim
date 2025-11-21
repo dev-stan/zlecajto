@@ -1,7 +1,7 @@
 / Apply card (right column)
 = render Cards::CardComponent.new do
   p.text-2xl.font-semibold.text-gray-900 = formatted_salary(@presenter.task)
-  p.text-base.text-gray-500.leading-snug.pb-5 Aplikując wysyłasz krótką ofertę. Właściciel otrzyma powiadomienie i może się z Tobą skontaktować.
+  p.text-base.text-gray-500.leading-snug.pb-5 = t('.apply_help')
 
   = render Ui::ButtonComponent.new(text: @presenter.button_text,
       path: @presenter.button_path,

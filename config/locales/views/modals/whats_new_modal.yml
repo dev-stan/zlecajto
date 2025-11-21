@@ -1,0 +1,26 @@
+pl:
+  modals:
+    whats_new_modal:
+      title: "Pojawiło się coś nowego 👀"
+      added_feature: "Dodaliśmy funkcję"
+      delete_task: "usunięcia zlecenia"
+      change_executor: "zmiany wykonawcy"
+      organized_tasks: "Uporządkowaliśmy zlecenia"
+      in_profile: "w profilu"
+      working_on_feature: "Pracujemy nad funkcją"
+      chat: "chatu!"
+      thanks_feedback: "Dziękujemy za wasz feedback, to dzięki niemu powstają nowe funkcje!"
+      dismiss: "Ekstra, rozumiem!"
+en:
+  modals:
+    whats_new_modal:
+      title: "Something new appeared 👀"
+      added_feature: "We added the feature"
+      delete_task: "task deletion"
+      change_executor: "changing executor"
+      organized_tasks: "We organized tasks"
+      in_profile: "in the profile"
+      working_on_feature: "We're working on the feature"
+      chat: "chat!"
+      thanks_feedback: "Thanks for your feedback—it's what creates new features!"
+      dismiss: "Great, got it!"

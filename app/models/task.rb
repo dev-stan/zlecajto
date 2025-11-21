@@ -11,12 +11,9 @@ class Task < ApplicationRecord
   has_many :conversations # should ideally have one - has more if submission.user changes
 
   enum status: {
-    draft: 'draft',
-    open: 'Otwarte',
-    in_progress: 'W trakcie',
-    finished: 'Zakończone',
-    cancelled: 'Anulowane',
-    accepted: 'Wybrano wykonawcę',
+    open: 'open',
+    cancelled: 'cancelled',
+    accepted: 'accepted',
     completed: 'completed',
     overdue: 'overdue'
   }
@@ -33,28 +30,6 @@ class Task < ApplicationRecord
   validates :timeslot, inclusion: { in: TIMESLOTS }
   validates :location, inclusion: { in: LOCATIONS }
 
-  def accepted_submission
-    submissions.where(status: :accepted).first
-  end
-
-  def complete!
-    return if completed?
-
-    transaction do
-      update!(status: :completed)
-      send_completed_task_email
-      send_completed_submission_email
-    end
-  end
-
-  def cancell!
-    return if cancelled?
-
-    transaction do
-      update!(status: :cancelled)
-    end
-  end
-
   # Ransack allowlist for ActiveAdmin
   def self.ransackable_attributes(_auth_object = nil)
     %w[id title description salary status user_id category due_date location payment_method timeslot created_at
@@ -65,3 +40,7 @@ class Task < ApplicationRecord
     %w[user submissions task_messages notifications]
   end
 end
+
+# def accepted_submission
+#   submissions.where(status: :accepted).first
+# end

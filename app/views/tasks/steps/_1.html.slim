@@ -1,4 +1,4 @@
-= form_with url: task_wizard_path, 
+= form_with url: task_wizard_step_path(step), 
             method: :post, 
             data: { turbo_frame: "task_wizard", 
               controller: 'form-validation', 
@@ -7,22 +7,22 @@
               id: 'task_step_form', 
               novalidate: true } do |f|
 
-  p.font-bold.mb-2 Krok 1/5
-  h1.text-2xl.font-bold.mb-4 Z czym potrzebujesz pomocy?
+  p.font-bold.mb-2 = t('.step_counter', current: step, total: 5)
+  h1.text-2xl.font-bold.mb-4 = t('.heading')
 
   / Title field
   div data-field-wrapper=""
     p.text-base.text-gray-600.mb-2.font-bold.mt-5 
-      | Nadaj krótki tytuł swojemu zleceniu
+      = t('.title_label')
       span.text-red-500 *
     = render Input::InputComponent.new(name: 'task[title]',
-        placeholder: 'Krótki tytuł',
+        placeholder: t('.title_placeholder'),
         value: task.title,html_options: { class: 'border-2 border-gray-300' })
 
   / Category
   div data-field-wrapper="" data-controller="choice-variant"
     p.text-base.text-gray-600.mb-2.font-bold.mt-5 
-      | Przypisz kategorię do zlecenia
+      = t('.category_label')
       span.text-red-500 *
     .hidden.md:block data-choice-variant-target="radios"
       ul.grid.grid-cols-5.gap-3
@@ -39,25 +39,25 @@
       = render Input::SelectComponent.new(form: f, 
           options: @categories, 
           selected: task.category, 
-          label: 'Wybierz kategorię', 
+          label: t('.select_category'), 
           field: :category)
 
   / Date picker
   div data-field-wrapper=""
     p.text-base.text-gray-600.mb-2.font-bold.mt-5 
-      | Kiedy potrzebujesz pomocy?
+      = t('.due_date_label')
       span.text-red-500 *
     .flex.items-stretch.gap-3 data-controller="due-date"
       = render Input::DatePickerComponent.new(name: 'task[due_date]', value: task.due_date&.to_date || params.dig(:task, :due_date), html_options: { class: 'border-2 border-gray-300 w-1/2', data: { 'due-date-target': 'input', action: 'input->due-date#uncheckAny change->due-date#uncheckAny' } })
       .w-1/2.flex
-        = render Ui::RadioButtonComponent.new(name: 'task[due_date_any]', value: 'Do ustalenia', checked: params.dig(:task, :due_date_any).present?, id: 'due_date_any', label: 'Do ustalenia', style: :rounded, html_options: { class: 'w-full', data: { 'due-date-target': 'any', action: 'change->due-date#toggle' } })
+        = render Ui::RadioButtonComponent.new(name: 'task[due_date_any]', value: 'Do ustalenia', checked: params.dig(:task, :due_date_any).present?, id: 'due_date_any', label: t('.due_date_any'), style: :rounded, html_options: { class: 'w-full', data: { 'due-date-target': 'any', action: 'change->due-date#toggle' } })
 
 
 
   / Time slot
   div data-field-wrapper="" data-controller="choice-variant"
     p.text-base.text-gray-600.mb-2.font-bold.mt-5 
-      | O której godzinie?
+      = t('.timeslot_label')
       span.text-red-500 *
     .hidden.md:block data-choice-variant-target="radios"
       ul.grid.grid-cols-1.sm:grid-cols-3.gap-3
@@ -74,7 +74,7 @@
       = render Input::SelectComponent.new(form: f, 
           options: @time_slots, 
           selected: task.timeslot, 
-          label: 'Wybierz przedział czasowy', 
+          label: t('.select_timeslot'), 
           field: :timeslot)
 
   = hidden_field_tag :step, 1

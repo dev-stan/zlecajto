@@ -4,14 +4,12 @@ module Submissions
   module Notifiable
     extend ActiveSupport::Concern
 
-    private
-
     def create_new_submission_notification
-      NotificationService.notify_new_submission(self)
+      Notifications::NewSubmission.new(self).call
     end
 
     def create_accepted_submission_notification
-      NotificationService.notify_accepted_submission(self)
+      Notifications::SubmissionAccepted.new(self).call
     end
   end
 end

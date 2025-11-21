@@ -1,19 +1,18 @@
-/ Support contact card
 = render Cards::CardComponent.new do
-  h3.text-lg.font-semibold.text-gray-900 Masz pytania?
-  p.text-base.text-gray-500.leading-snug.pb-5 Skontaktuj się z nami - odpowiadamy szybko i chętnie pomożemy.
+  h3.text-lg.font-semibold.text-gray-900 = t('.questions_title')
+  p.text-base.text-gray-500.leading-snug.pb-5 = t('.questions_body')
   ul.space-y-3.text-base
     li.flex.items-start.gap-3
       span.text-gray-400
         i.fa.fa-envelope.text-base aria-hidden="true"
       div
-        span.font-medium.text-gray-700 E-mail
+        span.font-medium.text-gray-700 = t('.email_label')
         br
         a.text-blue-700.hover:underline href="admin:admin@zlecajto.pl" admin@zlecajto.pl
     li.flex.items-start.gap-3
       span.text-gray-400
         i.fa.fa-phone.text-base aria-hidden="true"
       div
-        span.font-medium.text-gray-700 Telefon
+        span.font-medium.text-gray-700 = t('.phone_label')
         br
         a.text-blue-700.hover:underline href="tel:+48881228832" +48 881 228 832

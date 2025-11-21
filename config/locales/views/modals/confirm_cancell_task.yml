@@ -1,0 +1,14 @@
+pl:
+  modals:
+    confirm_cancell_task:
+      title: "Uwaga, uwaga!"
+      body: "Czy na pewno chcesz usunąć to zlecenie?"
+      footer: "Tego się nie da cofnąć!"
+      confirm_text: "Tak, chcę usunąć!"
+en:
+  modals:
+    confirm_cancell_task:
+      title: "Attention!"
+      body: "Are you sure you want to delete this task?"
+      footer: "This cannot be undone!"
+      confirm_text: "Yes, delete it!"

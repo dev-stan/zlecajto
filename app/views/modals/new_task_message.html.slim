@@ -1,5 +1,5 @@
 = turbo_frame_tag 'modal' do
-  = render Ui::FormModalComponent.new(title: 'Zadaj pytanie do zlecenia') do
+  = render Ui::FormModalComponent.new(title: t('.title')) do
     = form_with model: @task_message, url: task_task_messages_path(@task), method: :post, data: { controller: 'form-validation', action: 'submit->form-validation#validate', turbo_frame: '_top' }, html: { novalidate: true } do |f|
         .space-y-3
           = hidden_field_tag :authenticity_token, form_authenticity_token
@@ -11,9 +11,9 @@
             / Validation wrapper holds the field and error; icon is anchored to the textarea only
             div data-field-wrapper=""
               .relative
-                = render Input::InputComponent.new(name: 'task_message[body]', type: 'textarea', label: 'Wiadomość', placeholder: 'Zadaj pytanie dotyczące zlecenia…', rows: 5)
+                = render Input::InputComponent.new(name: 'task_message[body]', type: 'textarea', label: t('.message_label'), placeholder: t('.message_placeholder'), rows: 5)
                 / Compact icon button pinned to the bottom-right of the textarea
-                button.absolute.bottom-3.right-3.text-gray-500.hover:text-gray-700(type="button" aria-label="Dodaj zdjęcia" data-action="image-upload#pick")
+                button.absolute.bottom-3.right-3.text-gray-500.hover:text-gray-700(type="button" aria-label=t('.add_photos') data-action="image-upload#pick")
                   i.fa-solid.fa-image.text-2xl
               = hidden_field_tag :step, 300
 
@@ -30,5 +30,5 @@
             span.text-xs.text-gray-500 data-image-upload-target="count"
 
         .mt-4.flex.items-center.gap-3
-            = render(Ui::ButtonComponent.new(text: 'Anuluj', variant: :blue, size: :sm, button: true, html_options: { class: 'w-full', data: { action: 'click->modal#close' } }))
-            = render(Ui::ButtonComponent.new(text: 'Wyślij', variant: :green, size: :sm, submit: true, html_options: { class: 'w-full' }))
+            = render(Ui::ButtonComponent.new(text: t('shared.buttons.cancel'), variant: :blue, size: :sm, button: true, html_options: { class: 'w-full', data: { action: 'click->modal#close' } }))
+            = render(Ui::ButtonComponent.new(text: t('shared.buttons.send'), variant: :green, size: :sm, submit: true, html_options: { class: 'w-full' }))

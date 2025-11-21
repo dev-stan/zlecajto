@@ -6,13 +6,13 @@
         - visible = i.zero?
         .absolute.inset-0.transition-opacity.duration-300.opacity-0 data-carousel-target="slide" class=(visible ? 'opacity-100' : '')
           = image_tag photo.variant(resize_to_fill: [900, 600]), class: 'w-full h-64 md:h-100 md:rounded-xl object-cover', alt: task.title
-      button.absolute.left-2.top-1/2.-translate-y-1/2.bg-white/80.text-gray-700.rounded-full.h-9.w-9.flex.items-center.justify-center.shadow.z-10 data-action="click->carousel#prev" aria-label="Poprzednie zdjęcie"
+      button.absolute.left-2.top-1/2.-translate-y-1/2.bg-white/80.text-gray-700.rounded-full.h-9.w-9.flex.items-center.justify-center.shadow.z-10 data-action="click->carousel#prev" aria-label=t('.prev_photo')
           i.fas.fa-arrow-left
-      button.absolute.right-2.top-1/2.-translate-y-1/2.bg-white/80.text-gray-700.rounded-full.h-9.w-9.flex.items-center.justify-center.shadow.z-10 data-action="click->carousel#next" aria-label="Następne zdjęcie"
+      button.absolute.right-2.top-1/2.-translate-y-1/2.bg-white/80.text-gray-700.rounded-full.h-9.w-9.flex.items-center.justify-center.shadow.z-10 data-action="click->carousel#next" aria-label=t('.next_photo')
         i.fas.fa-arrow-right
       .absolute.bottom-2.left-0.right-0.flex.items-center.justify-center.gap-1
         - photos.each_with_index do |_, i|
-          button.h-2.w-2.rounded-full.bg-white/50.border.border-white.transition data-carousel-target="indicator" data-action="click->carousel#go" data-carousel-index-param=i aria-label="Przejdź do zdjęcia #{i + 1}"
+          button.h-2.w-2.rounded-full.bg-white/50.border.border-white.transition data-carousel-target="indicator" data-action="click->carousel#go" data-carousel-index-param=i aria-label=t('.go_to_photo', index: i + 1)
     - else
       - photo = photos.first
       = image_tag photo.variant(resize_to_fill: [900, 600]), class: 'w-full h-64 md:h-100 md:rounded-xl object-cover', alt: task.title

@@ -21,7 +21,7 @@ class TasksController < ApplicationController
   def created; end
 
   def completed
-    @task.complete!
+    Tasks::CompleteService.new(@task).call
   end
 
   def my_task
@@ -53,7 +53,7 @@ class TasksController < ApplicationController
   end
 
   def cancell
-    @task.cancell!
+    Tasks::CancelService.new(@task).call
     redirect_to my_task_path(@task), notice: 'Zlecenie usunięte.'
   end
 

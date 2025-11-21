@@ -1,0 +1,36 @@
+pl:
+  components:
+    layout:
+      burger_menu:
+        tasks_section: "Zlecenia"
+        browse_tasks: "Przeglądaj zlecenia"
+        add_task: "Dodaj zlecenie"
+        my_profile: "Mój profil"
+        help_section: "Pomoc"
+        contact: "Kontakt"
+        other_section: "Inne"
+        app: "Aplikacja"
+        new_badge: "Nowość"
+        tos: "Regulamin"
+        privacy: "Polityka prywatności"
+        logout: "Wyloguj się"
+        login: "Zaloguj się"
+        register: "Zarejestruj się"
+en:
+  components:
+    layout:
+      burger_menu:
+        tasks_section: "Tasks"
+        browse_tasks: "Browse tasks"
+        add_task: "Add task"
+        my_profile: "My profile"
+        help_section: "Help"
+        contact: "Contact"
+        other_section: "Other"
+        app: "App"
+        new_badge: "New"
+        tos: "Terms"
+        privacy: "Privacy policy"
+        logout: "Log out"
+        login: "Log in"
+        register: "Register"

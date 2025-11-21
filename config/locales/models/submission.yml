@@ -1,0 +1,25 @@
+pl:
+  models:
+    submission:
+      sms:
+        new_submission: |-
+          %{name} właśnie zgłosił(a) się do Twojego zadania:
+          "%{title}"
+
+          %{note}
+
+          Sprawdź szczegóły tutaj:
+          %{url}
+
+en:
+  models:
+    submission:
+      sms:
+        new_submission: |-
+          %{name} just applied to your task:
+          "%{title}"
+
+          %{note}
+
+          Check details here:
+          %{url}

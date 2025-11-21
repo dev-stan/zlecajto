@@ -2,13 +2,13 @@ footer.bg-primary.text-white.rounded-t-3xl
   .container.mx-auto.max-w-3xl.px-8.pt-8.pb-6
     .grid.grid-cols-2.gap-12.text-center.md:text-left.justify-center
       div
-        h2.text-2xl.font-bold.mb-2.md:text-center Kontakt
+        h2.text-2xl.font-bold.mb-2.md:text-center = t('components.layout.footer.contact_heading')
         p.text-sm.md:text-center 881 228 832
         p.text-sm.md:text-center admin@zlecajto.pl
       div
-        h2.text-2xl.font-bold.mb-2.md:text-center Warunki
+        h2.text-2xl.font-bold.mb-2.md:text-center = t('components.layout.footer.terms_heading')
         ul
-          li.md:text-center = link_to 'Regulamin', pages_tos_path, class: 'text-sm hover:underline block'
-          li.md:text-center = link_to 'Prywatność', pages_privacy_path, class: 'text-sm hover:underline block'
+          li.md:text-center = link_to t('components.layout.footer.tos'), pages_tos_path, class: 'text-sm hover:underline block'
+          li.md:text-center = link_to t('components.layout.footer.privacy'), pages_privacy_path, class: 'text-sm hover:underline block'
 
-    p.text-sm.text-center.text-blue-200.mt-5 2025 © ZlecajTo.pl
+    p.text-sm.text-center.text-blue-200.mt-5 = t('components.layout.footer.copyright')

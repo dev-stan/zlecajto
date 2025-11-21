@@ -1,0 +1,66 @@
+pl:
+  tasks:
+    steps:
+      '1':
+        step_counter: "Krok %{current}/%{total}"
+        heading: "Z czym potrzebujesz pomocy?"
+        title_label: "Nadaj krótki tytuł swojemu zleceniu"
+        title_placeholder: "Krótki tytuł"
+        category_label: "Przypisz kategorię do zlecenia"
+        select_category: "Wybierz kategorię"
+        due_date_label: "Kiedy potrzebujesz pomocy?"
+        due_date_any: "Do ustalenia"
+        timeslot_label: "O której godzinie?"
+        select_timeslot: "Wybierz przedział czasowy"
+      '2':
+        step_counter: "Krok %{current}/%{total}"
+        heading: "Opis zadania"
+        details_label: "Dodaj więcej szczegółów"
+        description_placeholder: "Opisz dokładnie zadanie..."
+      '3':
+        step_counter: "Krok %{current}/%{total}"
+        heading: "Gdzie wykonać zadanie?"
+        location_label: "Wybierz lokalizację"
+      '4':
+        step_counter: "Krok %{current}/%{total}"
+        heading: "Budżet"
+        rate_label: "Ustal stawkę"
+        salary_placeholder: "150"
+        payment_label: "Jak zapłacisz wykonawcy?"
+      '5':
+        step_counter: "Krok %{current}/%{total}"
+        heading: "Zdjęcia"
+        add_photos_label: "Dodaj zdjęcia"
+en:
+  tasks:
+    steps:
+      '1':
+        step_counter: "Step %{current}/%{total}"
+        heading: "What do you need help with?"
+        title_label: "Give your task a short title"
+        title_placeholder: "Short title"
+        category_label: "Assign a category to the task"
+        select_category: "Select a category"
+        due_date_label: "When do you need help?"
+        due_date_any: "To be determined"
+        timeslot_label: "At what time?"
+        select_timeslot: "Select a time slot"
+      '2':
+        step_counter: "Step %{current}/%{total}"
+        heading: "Task description"
+        details_label: "Add more details"
+        description_placeholder: "Describe the task in detail..."
+      '3':
+        step_counter: "Step %{current}/%{total}"
+        heading: "Where will the task be done?"
+        location_label: "Choose a location"
+      '4':
+        step_counter: "Step %{current}/%{total}"
+        heading: "Budget"
+        rate_label: "Set the rate"
+        salary_placeholder: "150"
+        payment_label: "How will you pay the executor?"
+      '5':
+        step_counter: "Step %{current}/%{total}"
+        heading: "Photos"
+        add_photos_label: "Add photos"

@@ -1,18 +1,18 @@
 = turbo_frame_tag 'modal' do
-  = render Ui::FormModalComponent.new(title: 'Edytuj profil') do
+  = render Ui::FormModalComponent.new(title: t('.title')) do
     = form_with model: @user, url: users_profile_path, method: :patch, data: { controller: 'form-validation', action: 'submit->form-validation#validate', turbo_frame: '_top' }, html: { class: 'space-y-6', novalidate: true } do |f|
       .space-y-4
         .flex.flex-row.gap-3
           div data-field-wrapper=""
-            = render Input::InputComponent.new(name: 'user[first_name]', label: 'Imię', value: @user.first_name, placeholder: 'Podaj imię', html_options: { class: 'w-full', required: true })
+            = render Input::InputComponent.new(name: 'user[first_name]', label: t('.first_name_label'), value: @user.first_name, placeholder: t('.first_name_placeholder'), html_options: { class: 'w-full', required: true })
           div data-field-wrapper=""
-            = render Input::InputComponent.new(name: 'user[last_name]', label: 'Nazwisko', value: @user.last_name, placeholder: 'Podaj nazwisko', html_options: { class: 'w-full' })
+            = render Input::InputComponent.new(name: 'user[last_name]', label: t('.last_name_label'), value: @user.last_name, placeholder: t('.last_name_placeholder'), html_options: { class: 'w-full' })
         .flex.flex-row.gap-3
           div data-field-wrapper=""
-            = render Input::InputComponent.new(name: 'user[email]', type: 'email', label: 'Email', value: @user.email, placeholder: 'Podaj email', html_options: { class: 'w-full', required: true })
+            = render Input::InputComponent.new(name: 'user[email]', type: 'email', label: t('.email_label'), value: @user.email, placeholder: t('.email_placeholder'), html_options: { class: 'w-full', required: true })
           div data-field-wrapper=""
-            = render Input::InputComponent.new(name: 'user[phone_number]', type: 'tel', label: 'Telefon', value: @user.phone_number, placeholder: 'Podaj numer telefonu', html_options: { class: 'w-full' })
+            = render Input::InputComponent.new(name: 'user[phone_number]', type: 'tel', label: t('.phone_label'), value: @user.phone_number, placeholder: t('.phone_placeholder'), html_options: { class: 'w-full' })
         = hidden_field_tag :step, 100
       .pt-4.border-t.border-gray-100.flex.items-center.gap-3
-        = render(Ui::ButtonComponent.new(text: 'Anuluj', size: :sm, button: true, variant: :secondary, html_options: { class: 'w-2/5', data: { action: 'click->modal#close' } }))
-        = render(Ui::ButtonComponent.new(text: 'Zapisz', size: :sm, submit: true, variant: :green, html_options: { class: 'w-3/5 px-4' }))
+        = render(Ui::ButtonComponent.new(text: t('shared.buttons.cancel'), size: :sm, button: true, variant: :secondary, html_options: { class: 'w-2/5', data: { action: 'click->modal#close' } }))
+        = render(Ui::ButtonComponent.new(text: t('shared.buttons.save'), size: :sm, submit: true, variant: :green, html_options: { class: 'w-3/5 px-4' }))

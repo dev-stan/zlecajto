@@ -3,18 +3,18 @@
     = turbo_frame_tag "task_wizard" do
       .flex.flex-col.md:flex-row.gap-10.items-start
         .md:w-48.md:flex-shrink-0
-          - wizard_steps = ['Tytuł i kategoria', 'Opis', 'Lokalizacja', 'Budżet', 'Zdjęcia']
+          - wizard_steps = I18n.t('models.task_wizard.steps')
           .hidden.md:block
             = render Tasks::WizardStepsComponent.new(current_step: @step, task: @task, steps: wizard_steps)
         .flex-1.max-w-3xl.w-full
-          = render "tasks/steps/#{@step}", task: @task, categories: @categories, step: @step
+          = render @wizard.step_partial, task: @task, categories: @categories, step: @step
 
       - nav_task_params = { category: @task.category, title: @task.title, description: @task.description, salary: @task.salary, payment_method: @task.payment_method, due_date: @task.due_date, due_date_any: params.dig(:task, :due_date_any), timeslot: @task.timeslot, location: @task.location }
       .mt-24.flex.items-center.justify-center.gap-4
         .flex.gap-4.fixed.bottom-0.left-0.w-full.bg-transparent.z-50.p-4.justify-center.items-center.md:justify-end
           - if @step > 1
-            = render Ui::ButtonComponent.new(text: 'Cofnij', path: new_task_path(step: @step - 1, task: nav_task_params), variant: :ghost, size: :md, html_options: { data: { turbo_frame: 'task_wizard' } })
+            = render Ui::ButtonComponent.new(text: t('shared.buttons.back'), path: new_task_path(step: @step - 1, task: nav_task_params), variant: :ghost, size: :md, html_options: { data: { turbo_frame: 'task_wizard' } })
           - if @step < 5
-            = render Ui::ButtonComponent.new(text: 'Dalej', submit: true, size: :md, html_options: { form: 'task_step_form', class: 'w-full md:w-48'})
+            = render Ui::ButtonComponent.new(text: t('shared.buttons.next'), submit: true, size: :md, html_options: { form: 'task_step_form', class: 'w-full md:w-48'})
           - elsif @step == 5
-            = render Ui::ButtonComponent.new(text: 'Utwórz zlecenie', submit: true, size: :md, html_options: { form: 'task_step_form', class: 'w-full ' })
+            = render Ui::ButtonComponent.new(text: t('shared.buttons.create_task'), submit: true, size: :md, html_options: { form: 'task_step_form', class: 'w-full ' })

@@ -1,17 +1,17 @@
-= form_with url: task_wizard_path, method: :post, data: { turbo_frame: 'task_wizard', controller: 'form-validation', action: 'submit->form-validation#validate' }, html: { id: 'task_step_form', novalidate: true } do |f|
-  p.font-bold.mb-2 Krok 4/5
-  h1.text-2xl.font-bold.mb-4 Budżet
+= form_with url: task_wizard_step_path(step), method: :post, data: { turbo_frame: 'task_wizard', controller: 'form-validation', action: 'submit->form-validation#validate' }, html: { id: 'task_step_form', novalidate: true } do |f|
+  p.font-bold.mb-2 = t('.step_counter', current: step, total: 5)
+  h1.text-2xl.font-bold.mb-4 = t('.heading')
 
   div data-field-wrapper=""
     p.text-base.text-gray-600.mb-2.font-bold 
-      | Ustal stawkę
+      = t('.rate_label')
       span.text-red-500 *
-    = render Input::InputComponent.new(name: 'task[salary]', type: 'number', placeholder: '150', value: task.salary, html_options: { class: 'border-2 border-gray-300' })
+    = render Input::InputComponent.new(name: 'task[salary]', type: 'number', placeholder: t('.salary_placeholder'), value: task.salary, html_options: { class: 'border-2 border-gray-300' })
 
   div data-field-wrapper=""
     fieldset.space-y-3.pt-5
       p.text-base.text-gray-600.mb-2.font-bold 
-        | Jak zapłacisz wykonawcy?
+        = t('.payment_label')
         span.text-red-500 *
       ul.grid.grid-cols-2.md:grid-cols-3.gap-4
         - @payment_methods.each do |method|
