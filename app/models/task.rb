@@ -30,6 +30,10 @@ class Task < ApplicationRecord
   validates :timeslot, inclusion: { in: TIMESLOTS }
   validates :location, inclusion: { in: LOCATIONS }
 
+  def accepted_submission
+    submissions.where(status: :accepted).first
+  end
+
   # Ransack allowlist for ActiveAdmin
   def self.ransackable_attributes(_auth_object = nil)
     %w[id title description salary status user_id category due_date location payment_method timeslot created_at
@@ -40,7 +44,3 @@ class Task < ApplicationRecord
     %w[user submissions task_messages notifications]
   end
 end
-
-# def accepted_submission
-#   submissions.where(status: :accepted).first
-# end

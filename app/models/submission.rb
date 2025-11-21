@@ -55,7 +55,3 @@ class Submission < ApplicationRecord
     errors.add(:base, 'Nie możesz zgłosić się do własnego zadania')
   end
 end
-
-# def create_conversation
-#   Conversation.create!(submission_owner_id: user.id, task_owner_id: task.user.id, task: task)
-# end
