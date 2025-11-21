@@ -1,4 +1,4 @@
-class AddLastSeenToConversations < ActiveRecord::Migration[7.1]
+class AddLastSeenColumnsToConversations < ActiveRecord::Migration[7.1]
   def change
     add_column :conversations, :sender_last_seen_at, :datetime
     add_column :conversations, :recipient_last_seen_at, :datetime

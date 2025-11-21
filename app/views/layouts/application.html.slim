@@ -60,13 +60,13 @@ html
     link rel="manifest" href=asset_path("manifest.json")
     meta name="theme-color" content="#ffffff"
 
-  body class="flex flex-col min-h-screen"
+  body class="flex flex-col min-h-screen overflow-x-hidden"
     / Google Tag Manager (noscript)
     noscript
       iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WQR7ZJ75" height="0" width="0" style="display:none;visibility:hidden"
     / End Google Tag Manager (noscript)
-
-    = render Layout::NavbarComponent.new(current_user: current_user, user_signed_in: user_signed_in?)
+    - unless @hide_navbar
+      = render Layout::NavbarComponent.new(current_user: current_user, user_signed_in: user_signed_in?)
     
     main class="flex-grow"
       - if notice
