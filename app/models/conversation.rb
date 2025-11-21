@@ -4,6 +4,7 @@ class Conversation < ApplicationRecord
   belongs_to :submission_owner, class_name: 'User'
   belongs_to :task_owner, class_name: 'User'
   belongs_to :task
+  belongs_to :submission
 
   has_many :messages, dependent: :destroy
 
@@ -17,6 +18,10 @@ class Conversation < ApplicationRecord
   scope :for_user, lambda { |user|
     where('submission_owner_id = :id OR task_owner_id = :id', id: user.id)
   }
+
+  def for_submission(submission)
+    Conversation.where(submission_id: submission.id)
+  end
 
   def participants_service
     @participants_service ||= Conversations::Participants.new(self)
