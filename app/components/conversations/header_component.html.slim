@@ -1,0 +1,19 @@
+.bg-white.border-b-2.border-gray-200
+    .flex.items-center.justify-between.px-4.pt-6
+        = link_to conversations_path, class: "text-2xl pb-2" do
+            i.fas.fa-arrow-left aria-label="Back"
+        .justify-center
+            p.text-2xl.font-bold = other_participant.display_name
+        = render Users::AvatarComponent.new(user: other_participant, size: 'sm', current_user: current_user)
+
+    .flex.gap-3.items-center.pb-4.px-4
+        .w-1/4.flex.items-center.justify-center
+            - if task.photos.attached?
+                = image_tag task.photos.first, class: 'rounded-lg'
+            - else
+                i.fas.fa-image.text-gray-400.text-6xl
+        .w-3/4.flex.flex-col
+            p.font-medium.truncate = task.title
+            .flex.justify-between
+                p.text-sm class=status_color = task_status.to_s.capitalize
+                p.font-semibold = formatted_task_salary

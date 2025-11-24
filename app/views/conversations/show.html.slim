@@ -1,27 +1,6 @@
 .flex.flex-col data-controller="conversation" data-conversation-id=@conversation.id style="height: calc(var(--vh) * 100);"
   / Header
-  .bg-white.border-b-2.border-gray-200
-    .flex.items-center.justify-between.px-4.pt-6
-      = link_to conversations_path, class: "text-2xl pb-2" do
-        i.fas.fa-arrow-left aria-label="Back"
-      .justify-center
-        p.text-2xl.font-bold = @conversation.other_participant(current_user).display_name
-      = render Users::AvatarComponent.new(user: @conversation.other_participant(current_user), size: 'sm', current_user: current_user)
-
-    .flex.gap-3.items-center.pb-4.px-4
-      .w-1/4.flex.items-center.justify-center
-        - if @conversation.task.photos.attached?
-          = image_tag @conversation.task.photos.first, class: 'rounded-lg'
-        - else
-          i.fas.fa-image.text-gray-400.text-6xl
-      .w-3/4.flex.flex-col
-        p.font-medium.truncate = @conversation.task.title
-        .flex.justify-between
-          - if @status == :active
-            p.text-sm.text-green-600 = "Zaakceptowano"
-          - else
-            p.text-sm.text-red-600 = "Anulowano"
-          p.font-semibold = formatted_salary(@conversation.task)
+  = render Conversations::HeaderComponent.new(conversation: @conversation, current_user: current_user)
 
   section.flex-1.flex.flex-col.overflow-hidden
     .flex-1.min-h-0.overflow-y-auto.px-3.py-6.mb-15 data-conversation-target="messages" id="messages"
