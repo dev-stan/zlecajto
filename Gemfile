@@ -50,6 +50,8 @@ group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri windows]
   gem 'faker'
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
 end
 
 group :development do
@@ -102,5 +104,8 @@ gem 'view_component'
 gem 'vonage'
 gem "activeadmin", "~> 3.3"
 gem 'browser'
+<<<<<<< HEAD
 gem 'redis'
+=======
+>>>>>>> 5f14bf7 (Feature: Rspec - Add model tests (#49))
 gem "sassc", "~> 2.4"
