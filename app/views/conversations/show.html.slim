@@ -1,39 +1,25 @@
 .flex.flex-col data-controller="conversation" data-conversation-id=@conversation.id style="height: calc(var(--vh) * 100);"
   / Header
-  = render Conversations::HeaderComponent.new(conversation: @conversation, current_user: current_user)
+  = render Conversations::Header::HeaderComponent.new(conversation: @conversation, current_user: current_user, status: @status)
 
   section.flex-1.flex.flex-col.overflow-hidden
     .flex-1.min-h-0.overflow-y-auto.px-3.py-6.mb-15 data-conversation-target="messages" id="messages"
-      .flex.justify-center
-        .bg-white.rounded-lg.mb-5.flex.flex-col.items-center.gap-2.text-center.border.border-blue-300.p-10
-          = image_tag 'zlecajto_favicon.png', class: 'h-12 rounded-lg'
-          p.font-medium Wybrano wykonawcę 🔥
+      = render Conversations::SystemMessage::SystemMessageComponent.new \
+        title: 'Wybrano wykonawcę',
+        subtitle: 'Czas działać! Skontaktuj się z wykonawcą i ustał szczegóły',
+        color: :blue
 
       - @conversation.messages.each do |message|
-        = render Messages::MessageComponent.new(message: message, current_user: current_user)
-
+        = render Messages::MessageComponent.new \
+          message: message, 
+          current_user: current_user
       - if @status == :cancelled
-        .flex.justify-center
-          .bg-white.rounded-lg.mb-5.flex.flex-col.items-center.gap-2.text-center.border.border-blue-300.p-10
-            = image_tag 'zlecajto_favicon.png', class: 'h-12 rounded-lg'
-            p.font-medium Anulowano zlecenie ❌
-      - elsif @status == :wrong_submission
-        .flex.justify-center
-          .bg-white.rounded-lg.mb-5.flex.flex-col.items-center.gap-2.text-center.border.border-blue-300.p-10
-            = image_tag 'zlecajto_favicon.png', class: 'h-12 rounded-lg'
-            p.font-medium Anulowano wykonanie ❌
+        = render Conversations::SystemMessage::SystemMessageComponent.new \
+          title: 'Anulowano zlecenie',
+          subtitle: 'Zlecenie zostało anulowane.'
+      - if @status == :wrong_submission
+        = render Conversations::SystemMessage::SystemMessageComponent.new \
+          title: 'Zmieniono wykonawcę',
+          subtitle: 'Wygląda na to, że zmienił się wykonawca zlecenia'
 
-  - if @status == :active
-    .fixed.bottom-0.left-0.right-0.bg-white.px-3.py-4.z-50 style="padding-bottom: calc(1rem + env(safe-area-inset-bottom));"
-      form.flex.flex-col.gap-3.w-full data-controller="conversation-image-upload" data-conversation-target="form" data-action="submit->conversation#send conversation:sent->conversation-image-upload#clear"
-        .hidden data-conversation-image-upload-target="previews"
-
-        .flex.items-center.gap-3
-          button.bg-primary.text-white.rounded-xl.hover:bg-blue-600.flex.items-center.justify-center.w-12.h-12 type="button" data-action="conversation-image-upload#chooseFiles"
-            i.fa-solid.fa-image.text-white.text-xl
-          input.flex-1.rounded-full.border-2.pl-3.border-blue-400.py-3.text-base.focus:outline-none.focus:border-blue-600.bg-white type="text" data-conversation-target="input" placeholder="Wiadomość..."
-          button.bg-primary.text-white.rounded-xl.hover:bg-blue-600.flex.items-center.justify-center.w-12.h-12 type="submit"
-            i.fa-solid.fa-arrow-up.text-white.text-xl
-
-        input(type="file" accept="image/*" multiple hidden data-conversation-image-upload-target="fileInput" data-action="change->conversation-image-upload#fileChanged")
-        input(type="hidden" data-conversation-target="images" data-conversation-image-upload-target="imagesField")
+  = render Conversations::MessageForm::MessageFormComponent.new(conversation: @conversation, current_user: current_user, status: @status)

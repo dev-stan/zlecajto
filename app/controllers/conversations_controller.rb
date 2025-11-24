@@ -36,5 +36,6 @@ class ConversationsController < ApplicationController
     participant_submission = @conversation.submission_for(@conversation.submission_owner)
 
     @status = @conversation.status(accepted_submission, participant_submission)
+    @status = :wrong_submission
   end
 end
