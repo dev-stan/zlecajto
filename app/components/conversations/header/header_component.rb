@@ -24,8 +24,8 @@ module Conversations
 
       def status_text
         case @status
-        when :active then 'Otwarte'
-        when :cancelled then 'Usunięte'
+        when :active then 'Zaakceptowano'
+        when :cancelled then 'Anulowano'
         when :wrong_submission then 'Zmieniono wykonawcę'
         end
       end

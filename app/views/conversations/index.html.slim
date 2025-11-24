@@ -17,10 +17,17 @@
         .w-3/4.flex.flex-col
           p.font-bold.truncate = conversation.task.title
           .flex.flex-col.text-sm.w-full
-            - if conversation.task.accepted_submission == conversation.task.submissions.find_by(user_id: conversation.submission_owner.id)
-              p.text-sm.text-green-600 = "Zaakceptowano"
-            - else
-              p.text-sm.text-red-600 = "Anulowano"
+            - case conversation.status
+              - when :active
+                p.text-sm.text-green-600 Zaakceptowano
+              - when :cancelled
+                p.text-sm.text-red-600 Anulowano
+              - when :wrong_submission
+                p.text-sm.text-yellow-600 Zmieniono wykonawcę
+              - else
+                p.text-sm.text-gray-600 Status nieznany
+                small.text-gray-500 Skontaktuj się z administratorem.
+
 
             - last_message = conversation.messages.last
             - if last_message

@@ -4,9 +4,8 @@ class ConversationsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_conversation, only: [:show]
   before_action :ensure_participant!, only: [:show]
-  before_action :set_conversation_status, only: [:show]
-
   def index
+    console
     @hide_navbar = true
     @conversations = Conversation
                      .for_user(current_user)
@@ -15,6 +14,7 @@ class ConversationsController < ApplicationController
   end
 
   def show
+    @status = @conversation.status
     @hide_navbar = true
     @conversation.mark_seen_by(current_user)
   end
@@ -29,13 +29,5 @@ class ConversationsController < ApplicationController
     return if @conversation.participant?(current_user)
 
     redirect_to root_path, alert: 'Nie masz dostępu do tej rozmowy.'
-  end
-
-  def set_conversation_status
-    accepted_submission = @conversation.task.accepted_submission
-    participant_submission = @conversation.submission_for(@conversation.submission_owner)
-
-    @status = @conversation.status(accepted_submission, participant_submission)
-    @status = :wrong_submission
   end
 end
