@@ -25,6 +25,7 @@ class Task < ApplicationRecord
   LOCATIONS        = ['Stary Strzeszyn', 'Osiedle Literackie', 'Strzeszyn Grecki', 'Osiedle Wojskowe',
                       'Jelonek', 'Suchy Las Wschód', 'Suchy Las Zachód', 'Złotniki', 'Zlecenie zdalne'].freeze
 
+  validates :title, presence: true
   validates :category, inclusion: { in: CATEGORIES }
   validates :timeslot, inclusion: { in: TIMESLOTS }
   validates :location, inclusion: { in: LOCATIONS }
