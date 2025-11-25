@@ -7,6 +7,7 @@ class Submission < ApplicationRecord
 
   belongs_to :task
   belongs_to :user
+  has_one :conversation, dependent: :destroy
 
   has_many :answers, dependent: :destroy
   has_many :notifications, as: :notifiable

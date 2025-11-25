@@ -8,3 +8,4 @@ pin_all_from 'app/javascript/controllers', under: 'controllers'
 pin '@rails/activestorage', to: 'activestorage.esm.js' # enable direct uploads for ActiveStorage
 pin '@rails/actioncable', to: 'actioncable.esm.js'
 pin_all_from 'app/javascript/channels', under: 'channels'
+pin "headroom.js" # @0.12.0

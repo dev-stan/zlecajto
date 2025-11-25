@@ -1,0 +1,28 @@
+= link_to conversation_path(conversation), class: "block" do
+  .flex.items-center.gap-3.p-4.bg-white.rounded-2xl.mb-2
+    .w-1/4.flex.items-center.justify-center
+      = render Users::AvatarComponent.new \
+          user: other_user,
+          size: "l",
+          current_user: current_user
+
+    .w-3/4.flex.flex-col
+      p.font-bold.truncate = conversation.task.title
+
+      .flex.flex-col.text-sm.w-full
+        p class=status_class = status_text
+
+        - if last_message
+          p.truncate class=(unread? ? "text-black" : "text-gray-400")
+            = message_preview
+
+          .flex.items-center.gap-2.text-xs.text-gray-400.mt-1
+            = l(last_message.created_at, format: :short)
+            i aria-hidden="true" class=reading_icon_class
+            span.sr-only = (unread? ? "Nieprzeczytane" : "Przeczytane")
+        - else
+          p.text-gray-400
+            - if Conversations::StatusChecker.new(conversation).status == :active
+              | Napisz pierwszą wiadomość!
+            - else
+              | Konwersacja nieaktywna
