@@ -6,11 +6,16 @@ module Conversations
       @conversation = conversation
     end
 
-    def status(accepted_submission, participant_submission)
+    def status
+      accepted_submission = conversation.task.accepted_submission
+      participant_submission = conversation.submission_for(conversation.submission_owner)
+
       return :cancelled if conversation.task.cancelled?
       return :wrong_submission unless accepted_submission == participant_submission
 
       :active
+    rescue StandardError
+      :wrong_submission
     end
 
     private
