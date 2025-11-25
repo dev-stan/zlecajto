@@ -2,49 +2,15 @@
   .flex.items-center
     = link_to root_path, class: "flex items-center hover:text-primary text-2xl" do
       i.fas.fa-arrow-left aria-label="Back"
+
   .flex-1.flex.justify-center
-    p.text-2xl.font-bold
-      | Wiadomości
+    p.text-2xl.font-bold Wiadomości
+
   .flex.items-center
     = render Users::AvatarComponent.new(user: current_user, size: 'sm', current_user: current_user)
 
 .p-5
   - @conversations.each do |conversation|
-    = link_to conversation_path(conversation), class: "block" do
-      .flex.items-center.gap-3.p-4.bg-white.rounded-2xl.mb-2
-        .w-1/4.flex.items-center.justify-center
-          = render Users::AvatarComponent.new(user: conversation.other_participant(current_user), size: 'md', current_user: current_user)
-        .w-3/4.flex.flex-col
-          p.font-bold.truncate = conversation.task.title
-          .flex.flex-col.text-sm.w-full
-            - case conversation.status
-              - when :active
-                p.text-sm.text-green-600 Zaakceptowano
-              - when :cancelled
-                p.text-sm.text-red-600 Anulowano
-              - when :wrong_submission
-                p.text-sm.text-yellow-600 Zmieniono wykonawcę
-              - else
-                p.text-sm.text-gray-600 Status nieznany
-                small.text-gray-500 Skontaktuj się z administratorem.
-
-
-            - last_message = conversation.messages.last
-            - if last_message
-              - unread = conversation.unread_for?(current_user)
-              p.truncate class=(unread ? "text-black" : "text-gray-400")
-                - if last_message.content.present?
-                    = last_message.content
-                - else
-                  | Wysłano zdjęcie
-              .flex.items-center.gap-2.text-xs.text-gray-400.mt-1
-                = l(last_message.created_at, format: :short)
-                i aria-hidden="true" class=(unread ? "text-gray-400" : "text-green-500")
-                span.sr-only = (unread ? "Nieprzeczytane" : "Przeczytane")
-            - else
-              p.text-gray-400
-                - if @status == :active
-                  | Napisz pierwszą wiadomość!
-                - else
-                  | Konwersacja nieaktywna
-
+    = render Conversations::ConversationItem::ConversationItemComponent.new \
+        conversation: conversation,
+        current_user: current_user

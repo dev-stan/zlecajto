@@ -1,9 +1,8 @@
 .flex.flex-col data-controller="conversation" data-conversation-id=@conversation.id style="height: calc(var(--vh) * 100);"
-  / Header
   = render Conversations::Header::HeaderComponent.new(conversation: @conversation, current_user: current_user, status: @status)
 
   section.flex-1.flex.flex-col.overflow-hidden
-    .flex-1.min-h-0.overflow-y-auto.px-3.py-6.mb-15 data-conversation-target="messages" id="messages"
+    .flex-1.min-h-0.overflow-y-auto.px-3.py-6.mb-20#messages
       = render Conversations::SystemMessage::SystemMessageComponent.new \
         title: 'Wybrano wykonawcę',
         subtitle: 'Czas działać! Skontaktuj się z wykonawcą i ustał szczegóły',
@@ -21,5 +20,5 @@
         = render Conversations::SystemMessage::SystemMessageComponent.new \
           title: 'Zmieniono wykonawcę',
           subtitle: 'Wygląda na to, że zmienił się wykonawca zlecenia'
-
-  = render Conversations::MessageForm::MessageFormComponent.new(conversation: @conversation, current_user: current_user, status: @status)
+  .mt-15
+    = render Conversations::MessageForm::MessageFormComponent.new(conversation: @conversation, current_user: current_user, status: @status)

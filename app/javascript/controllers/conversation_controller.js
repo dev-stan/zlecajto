@@ -22,8 +22,11 @@ export default class extends Controller {
   // Called by ActionCable when a message is broadcast
   receiveMessage(data) {
     this.messagesTarget.insertAdjacentHTML("beforeend", data.html)
-    this.scrollToBottom(true)
+    setTimeout(() => this.scrollToBottom(true), 500)
+    console.log("hello world")
   }
+
+
 
   send(event) {
     event.preventDefault()
@@ -59,13 +62,22 @@ export default class extends Controller {
   }
 
   scrollToBottom(smooth = false) {
-    if (smooth) {
-      this.messagesTarget.scrollTo({
-        top: this.messagesTarget.scrollHeight,
-        behavior: "smooth"
-      })
-    } else {
-      this.messagesTarget.scrollTop = this.messagesTarget.scrollHeight
+    if (!this.hasMessagesTarget) return
+
+    const el = this.messagesTarget
+
+    const doScroll = () => {
+      if (smooth) {
+        el.scrollTo({
+          top: el.scrollHeight,
+          behavior: "smooth"
+        })
+      } else {
+        el.scrollTop = el.scrollHeight
+      }
     }
+
+    // Defer to the next frame so DOM/layout reflects new content
+    requestAnimationFrame(doScroll)
   }
 }

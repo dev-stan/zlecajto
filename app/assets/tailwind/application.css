@@ -42,6 +42,37 @@
 		}
 	}
 
+	/* Sliding header animation */
+	/* Smooth slide animations for header */
+	/* Slide the bottom part under the top bar */
+	/* Animate only the bottom part */
+	.hide-wrapper {
+  		transition: transform 0.35s ease-in-out, opacity 0.35s ease-in-out;
+	}
+
+	.slideUp {
+		transform: translateY(-100%); /* fully behind top bar */
+		opacity: 0;
+	}
+
+	.slideDown {
+		transform: translateY(0);
+		opacity: 1;
+	}
+
+
+
+
+
+
+	@media (prefers-reduced-motion: reduce) {
+		.hide-on-scroll-section {
+			transition: none;
+		}
+	}
+
+
+
 
 
 

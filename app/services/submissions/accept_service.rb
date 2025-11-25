@@ -21,8 +21,13 @@ module Submissions
     end
 
     def create_conversation
+<<<<<<< HEAD
       Conversation.create!(submission_owner_id: @submission.user.id, task_owner_id: @submission.task.user.id,
                            task: @submission.task, submission: @submission)
+=======
+      Conversation.find_or_create_by!(submission_owner_id: @submission.user.id, task_owner_id: @submission.task.user.id,
+                                      task: @submission.task, submission: @submission)
+>>>>>>> 6220422 (changes)
     end
   end
 end

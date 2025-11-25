@@ -3,6 +3,7 @@
 module Conversations
   module Header
     class HeaderComponent < ViewComponent::Base
+      include ApplicationHelper
       def initialize(conversation:, current_user:, status:)
         super()
         @conversation = conversation
@@ -23,11 +24,11 @@ module Conversations
       end
 
       def status_text
-        case @status
-        when :active then 'Zaakceptowano'
-        when :cancelled then 'Anulowano'
-        when :wrong_submission then 'Zmieniono wykonawcę'
-        end
+        {
+          active: 'Zaakceptowano',
+          cancelled: 'Anulowano',
+          wrong_submission: 'Zmieniono wykonawcę'
+        }[@status] || 'Status nieznany'
       end
 
       def status_color
