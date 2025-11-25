@@ -5,7 +5,6 @@ class ConversationsController < ApplicationController
   before_action :set_conversation, only: [:show]
   before_action :ensure_participant!, only: [:show]
   def index
-    console
     @hide_navbar = true
     @conversations = Conversation
                      .for_user(current_user)

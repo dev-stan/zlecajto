@@ -42,10 +42,6 @@
 		}
 	}
 
-	/* Sliding header animation */
-	/* Smooth slide animations for header */
-	/* Slide the bottom part under the top bar */
-	/* Animate only the bottom part */
 	.hide-wrapper {
   		transition: transform 0.35s ease-in-out, opacity 0.35s ease-in-out;
 	}
@@ -59,22 +55,6 @@
 		transform: translateY(0);
 		opacity: 1;
 	}
-
-
-
-
-
-
-	@media (prefers-reduced-motion: reduce) {
-		.hide-on-scroll-section {
-			transition: none;
-		}
-	}
-
-
-
-
-
 
 	/* Apply to overlay or dialog container as needed */
 	.animate-fade-in { animation: fade-in 180ms cubic-bezier(0.2,0,0.2,1) both; }

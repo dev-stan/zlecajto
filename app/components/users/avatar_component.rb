@@ -14,8 +14,6 @@ module Users
 
     def image_size
       case @size
-      when 'xs'
-        [24, 24]
       when 'sm'
         [36, 36]
       when 'md'

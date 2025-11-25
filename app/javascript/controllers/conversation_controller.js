@@ -23,10 +23,7 @@ export default class extends Controller {
   receiveMessage(data) {
     this.messagesTarget.insertAdjacentHTML("beforeend", data.html)
     setTimeout(() => this.scrollToBottom(true), 500)
-    console.log("hello world")
   }
-
-
 
   send(event) {
     event.preventDefault()

@@ -61,12 +61,7 @@ class SubmissionsController < ApplicationController
 
   def accept
     Submissions::AcceptService.new(@submission).call
-<<<<<<< HEAD
-    @conversation = Conversation.find_by(submission_id: @submission.id)
-    redirect_to conversation_path(@conversation)
-=======
     redirect_to conversation_path(@submission.conversation)
->>>>>>> 6220422 (changes)
   rescue ActiveRecord::RecordInvalid => e
     redirect_back fallback_location: @submission.task, alert: e.message
   end
