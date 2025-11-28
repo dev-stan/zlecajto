@@ -104,8 +104,5 @@ gem 'view_component'
 gem 'vonage'
 gem "activeadmin", "~> 3.3"
 gem 'browser'
-<<<<<<< HEAD
 gem 'redis'
-=======
->>>>>>> 5f14bf7 (Feature: Rspec - Add model tests (#49))
 gem "sassc", "~> 2.4"

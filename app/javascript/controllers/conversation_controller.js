@@ -4,7 +4,14 @@ import { createConversationChannel } from "../channels/conversation_channel"
 export default class extends Controller {
   static targets = ["messages", "form", "input", "images"]
 
+  setVh() {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  }
+
   connect() {
+    this.setVh();
+    window.addEventListener('resize', this.setVh.bind(this));
     this.conversationId = this.element.dataset.conversationId
 
     this.channel = createConversationChannel(
@@ -22,7 +29,7 @@ export default class extends Controller {
   // Called by ActionCable when a message is broadcast
   receiveMessage(data) {
     this.messagesTarget.insertAdjacentHTML("beforeend", data.html)
-    setTimeout(() => this.scrollToBottom(true), 500)
+    setTimeout(() => this.scrollToBottom(true), 50)
   }
 
   send(event) {
@@ -60,7 +67,7 @@ export default class extends Controller {
 
   scrollToBottom(smooth = false) {
     if (!this.hasMessagesTarget) return
-
+    console.log("Scrolling to bottom", { smooth })
     const el = this.messagesTarget
 
     const doScroll = () => {
@@ -74,7 +81,6 @@ export default class extends Controller {
       }
     }
 
-    // Defer to the next frame so DOM/layout reflects new content
     requestAnimationFrame(doScroll)
   }
 }

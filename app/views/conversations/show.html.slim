@@ -2,23 +2,23 @@
   = render Conversations::Header::HeaderComponent.new(conversation: @conversation, current_user: current_user, status: @status)
 
   section.flex-1.flex.flex-col.overflow-hidden
-    .flex-1.min-h-0.overflow-y-auto.px-3.py-6.mb-20#messages
-      = render Conversations::SystemMessage::SystemMessageComponent.new \
-        title: 'Wybrano wykonawcę',
-        subtitle: 'Czas działać! Skontaktuj się z wykonawcą i ustał szczegóły',
-        color: :blue
+    .flex-1.min-h-0.overflow-y-auto.px-3.py-6.pb-20#messages data-conversation-target="messages"
+        = render Conversations::SystemMessage::SystemMessageComponent.new \
+          title: 'Wybrano wykonawcę',
+          subtitle: 'Czas działać! Skontaktuj się z wykonawcą i ustał szczegóły',
+          color: :blue
 
-      - @conversation.messages.each do |message|
-        = render Messages::MessageComponent.new \
-          message: message, 
-          current_user: current_user
-      - if @status == :cancelled
-        = render Conversations::SystemMessage::SystemMessageComponent.new \
-          title: 'Anulowano zlecenie',
-          subtitle: 'Zlecenie zostało anulowane.'
-      - if @status == :wrong_submission
-        = render Conversations::SystemMessage::SystemMessageComponent.new \
-          title: 'Zmieniono wykonawcę',
-          subtitle: 'Wygląda na to, że zmienił się wykonawca zlecenia'
+        - @conversation.messages.each do |message|
+          = render Messages::MessageComponent.new \
+            message: message, 
+            current_user: current_user
+        - if @status == :cancelled
+          = render Conversations::SystemMessage::SystemMessageComponent.new \
+            title: 'Anulowano zlecenie',
+            subtitle: 'Zlecenie zostało anulowane.'
+        - if @status == :wrong_submission
+          = render Conversations::SystemMessage::SystemMessageComponent.new \
+            title: 'Zmieniono wykonawcę',
+            subtitle: 'Wygląda na to, że zmienił się wykonawca zlecenia'
   .mt-15
     = render Conversations::MessageForm::MessageFormComponent.new(conversation: @conversation, current_user: current_user, status: @status)
