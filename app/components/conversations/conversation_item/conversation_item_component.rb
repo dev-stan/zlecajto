@@ -29,7 +29,8 @@ module Conversations
         {
           active: 'Zaakceptowano',
           cancelled: 'Anulowano',
-          wrong_submission: 'Zmieniono wykonawcę'
+          wrong_submission: 'Zmieniono wykonawcę',
+          completed: 'Zakończono'
         }[conversation.status] || 'Status nieznany'
       end
 
@@ -37,7 +38,8 @@ module Conversations
         {
           active: 'text-green-600',
           cancelled: 'text-red-600',
-          wrong_submission: 'text-red-600'
+          wrong_submission: 'text-red-600',
+          completed: 'text-green-600'
         }[conversation.status] || 'text-gray-600'
       end
 

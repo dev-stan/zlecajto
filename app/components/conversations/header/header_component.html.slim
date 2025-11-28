@@ -7,7 +7,7 @@
 
     .h-0
     / Bottom part slides up/down behind top bar
-    div class="hide-wrapper hide-on-scroll-section bg-white relative z-10 pb-3 mt-[-1px]" data-controller="headroom"
+    div class="hide-wrapper hide-on-scroll-section bg-white relative z-10 pb-3 mt-[-1px]" id="animated-header" data-controller="headroom"
         = link_to task_path(task), class: "block" do
             .flex.gap-3.items-center.px-4
                 .w-1/4.flex.items-center.justify-center
@@ -20,7 +20,7 @@
                     .flex.justify-between
                         p.text-sm.font-medium class=status_color = status_text
                         p.text-primary.font-semibold = formatted_task_salary
-        - if current_user == @conversation.task.user && @status == :accepted
+        - if current_user == @conversation.task.user && @status == :active
             .flex.justify-start.pb-4.pt-3.px-4.gap-2
                 .w-3/5
                     = render(Ui::ButtonComponent.new(text: 'Potwierdź wykonanie', path: helpers.confirm_task_complete_modal_path(task), size: :sm, variant: :green, width: 100, html_options: { data: { turbo_frame: 'modal', turbo: true } }))

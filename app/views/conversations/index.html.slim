@@ -10,7 +10,10 @@
     = render Users::AvatarComponent.new(user: current_user, size: 'sm', current_user: current_user)
 
 .p-5
-  - @conversations.each do |conversation|
-    = render Conversations::ConversationItem::ConversationItemComponent.new \
-        conversation: conversation,
-        current_user: current_user
+  - if @conversations.empty?
+    = render Layout::NoContentComponent.new(message: "Nie masz jeszcze żadnych chatów. Gdy ktoś skontaktuje się z Tobą, pojawi się tutaj lista rozmów.")
+  - else
+    - @conversations.each do |conversation|
+      = render Conversations::ConversationItem::ConversationItemComponent.new \
+          conversation: conversation,
+          current_user: current_user

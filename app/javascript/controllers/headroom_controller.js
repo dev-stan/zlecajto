@@ -3,12 +3,10 @@ import Headroom from "headroom.js"
 
 export default class extends Controller {
   connect() {
-    console.log("Headroom controller connected")
-    // Wait for DOM and CSS to settle
     requestAnimationFrame(() => {
       const scroller = document.getElementById("messages") || window
 
-      const headroom = new Headroom(this.element, {
+      this.headroom = new Headroom(this.element, {
         tolerance: 5,
         offset: 0,
         classes: {
@@ -17,7 +15,15 @@ export default class extends Controller {
         },
         scroller: scroller
       })
-      headroom.init()
+
+      this.headroom.init()
     })
+  }
+
+  disconnect() {
+    if (this.headroom) {
+      this.headroom.destroy()
+      this.headroom = null
+    }
   }
 }

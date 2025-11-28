@@ -27,12 +27,13 @@ module Conversations
         {
           active: 'Zaakceptowano',
           cancelled: 'Anulowano',
-          wrong_submission: 'Zmieniono wykonawcę'
+          wrong_submission: 'Zmieniono wykonawcę',
+          completed: 'Zakończono'
         }[@status] || 'Status nieznany'
       end
 
       def status_color
-        @status == :active ? 'text-green-600' : 'text-red-600'
+        @status == :active || @status == :completed ? 'text-green-600' : 'text-red-600'
       end
 
       def formatted_task_salary

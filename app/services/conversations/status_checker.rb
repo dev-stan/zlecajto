@@ -12,6 +12,7 @@ module Conversations
 
       return :cancelled if conversation.task.cancelled?
       return :wrong_submission unless accepted_submission == participant_submission
+      return :completed if conversation.task.completed? && accepted_submission == participant_submission
 
       :active
     rescue StandardError

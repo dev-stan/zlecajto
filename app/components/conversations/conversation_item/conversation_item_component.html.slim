@@ -1,10 +1,17 @@
 = link_to conversation_path(conversation), class: "block" do
   .flex.items-center.gap-3.p-4.bg-white.rounded-2xl.mb-2
-    .w-1/4.flex.items-center.justify-center
-      = render Users::AvatarComponent.new \
-          user: other_user,
-          size: "l",
-          current_user: current_user
+    .w-1/4
+      .relative.inline-block
+        - if conversation.task.photos.any?
+          = image_tag conversation.task.photos.first.url,
+            class: "w-full aspect-square object-cover rounded-xl"
+
+        / Avatar inside same relative box
+        .absolute.bottom-0.right-0.translate-y-1/3.translate-x-1/5
+          = render Users::AvatarComponent.new \
+            user: other_user,
+            show_notification: false,
+            size: 'sm'
 
     .w-3/4.flex.flex-col
       p.font-bold.truncate = conversation.task.title
