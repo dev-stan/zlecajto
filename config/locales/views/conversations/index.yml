@@ -1,0 +1,10 @@
+pl:
+  conversations:
+    index:
+      title: "Wiadomości"
+      empty_state: "Nie masz jeszcze żadnych chatów. Gdy ktoś skontaktuje się z Tobą, pojawi się tutaj lista rozmów."
+en:
+  conversations:
+    index:
+      title: "Messages"
+      empty_state: "You don't have any chats yet. Once someone reaches out, your conversations will appear here."

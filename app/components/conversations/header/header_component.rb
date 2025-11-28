@@ -24,12 +24,7 @@ module Conversations
       end
 
       def status_text
-        {
-          active: 'Zaakceptowano',
-          cancelled: 'Anulowano',
-          wrong_submission: 'Zmieniono wykonawcę',
-          completed: 'Zakończono'
-        }[@status] || 'Status nieznany'
+        I18n.t("conversations.statuses.#{@status}", default: I18n.t('conversations.statuses.unknown'))
       end
 
       def status_color

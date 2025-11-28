@@ -5,8 +5,9 @@
         - if conversation.task.photos.any?
           = image_tag conversation.task.photos.first.url,
             class: "w-full aspect-square object-cover rounded-xl"
-
-        / Avatar inside same relative box
+        - else
+            i.fas.fa-image.text-gray-400.text-6xl
+            
         .absolute.bottom-0.right-0.translate-y-1/3.translate-x-1/5
           = render Users::AvatarComponent.new \
             user: other_user,
@@ -26,10 +27,10 @@
           .flex.items-center.gap-2.text-xs.text-gray-400.mt-1
             = l(last_message.created_at, format: :short)
             i aria-hidden="true" class=reading_icon_class
-            span.sr-only = (unread? ? "Nieprzeczytane" : "Przeczytane")
+            span.sr-only = (unread? ? t('.sr.unread') : t('.sr.read'))
         - else
           p.text-gray-400
             - if Conversations::StatusChecker.new(conversation).status == :active
-              | Napisz pierwszą wiadomość!
+              = t('.prompts.first_message')
             - else
-              | Konwersacja nieaktywna
+              = t('.prompts.inactive')

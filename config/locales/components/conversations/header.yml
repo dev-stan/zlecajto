@@ -1,0 +1,12 @@
+pl:
+  components:
+    conversations:
+      header:
+        confirm_completion: "Potwierdź wykonanie"
+        help: "Pomoc"
+en:
+  components:
+    conversations:
+      header:
+        confirm_completion: "Confirm completion"
+        help: "Help"

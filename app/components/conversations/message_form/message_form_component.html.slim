@@ -8,7 +8,7 @@
                 button class=btn_primary type="button" data-action="conversation-image-upload#chooseFiles"
                     i class="#{icon_base} fa-image"
                 
-                input class=input_classes type="text" data-conversation-target="input" placeholder="Wiadomość..."
+                input class=input_classes type="text" data-conversation-target="input" placeholder=t('.placeholder')
                 
                 button class=btn_primary type="submit"
                     i class="#{icon_base} fa-arrow-up"
@@ -19,4 +19,4 @@
     .fixed.inset-x-0.bottom-0.bg-white.px-3.py-4.z-50 style="padding-bottom: calc(1rem + env(safe-area-inset-bottom));"
         .border-2.border-blue-400.p-3.rounded-2xl.bg-white
             p.text-center.text-gray-500.font-medium
-                | Chat został zamknięty
+                = t('.closed_notice')
