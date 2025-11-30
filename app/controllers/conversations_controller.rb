@@ -27,6 +27,6 @@ class ConversationsController < ApplicationController
   def ensure_participant!
     return if @conversation.participant?(current_user)
 
-    redirect_to root_path, alert: 'Nie masz dostępu do tej rozmowy.'
+    redirect_to root_path, alert: I18n.t('conversations.alerts.access_denied')
   end
 end

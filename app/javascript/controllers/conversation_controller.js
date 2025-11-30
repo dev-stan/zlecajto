@@ -2,7 +2,15 @@ import { Controller } from "@hotwired/stimulus"
 import { createConversationChannel } from "../channels/conversation_channel"
 
 export default class extends Controller {
-  static targets = ["messages", "form", "input", "images"]
+  static targets = ["messages", "form", "input", "images", "footer"]
+
+  focusInput() {
+    this.footerTarget.classList.add("!pb-4")
+  }
+
+  blurInput() {
+    this.footerTarget.classList.remove("!pb-4")
+  }
 
   setVh() {
     let vh = window.innerHeight * 0.01;
@@ -14,6 +22,11 @@ export default class extends Controller {
     window.addEventListener('resize', this.setVh.bind(this));
     this.conversationId = this.element.dataset.conversationId
 
+    this.previousBodyOverflow = document.body.style.overflow
+    this.previousDocumentOverflow = document.documentElement.style.overflow
+    document.body.style.overflow = "hidden"
+    document.documentElement.style.overflow = "hidden"
+
     this.channel = createConversationChannel(
       this.conversationId,
       this.receiveMessage.bind(this)
@@ -23,6 +36,9 @@ export default class extends Controller {
   }
 
   disconnect() {
+    document.body.style.overflow = this.previousBodyOverflow || ""
+    document.documentElement.style.overflow = this.previousDocumentOverflow || ""
+
     if (this.channel) this.channel.unsubscribe()
   }
 

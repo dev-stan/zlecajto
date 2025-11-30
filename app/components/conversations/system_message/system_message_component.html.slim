@@ -1,3 +1,8 @@
-.bg-white.rounded-lg.flex.flex-col.items-center.gap-2.text-center.border-1.border-blue-200.p-10.mx-10.my-5
-  p.text-lg.font-medium(class="text-#{color}")= title
-  p.text-sm.text-gray-700 = subtitle
+.card.bg-blue-500.rounded-2xl.overflow-hidden.w-3/4.mx-auto.mb-8 class=@html_options[:class]
+  = image_tag @image_path,
+    alt: @alt,
+    class: 'w-full object-cover p-5'
+
+  .p-3.text-center.text-white
+    p.text-xl.font-bold.whitespace-nowrap= @title
+    p.text-lg.mt-2= @subtitle

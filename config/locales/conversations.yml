@@ -1,0 +1,20 @@
+pl:
+  conversations:
+    statuses:
+      active: "Zaakceptowano"
+      cancelled: "Anulowano"
+      wrong_submission: "Zmieniono wykonawcę"
+      completed: "Zakończono"
+      unknown: "Status nieznany"
+    alerts:
+      access_denied: "Nie masz dostępu do tej rozmowy."
+en:
+  conversations:
+    statuses:
+      active: "Accepted"
+      cancelled: "Cancelled"
+      wrong_submission: "Executor changed"
+      completed: "Completed"
+      unknown: "Status unknown"
+    alerts:
+      access_denied: "You do not have access to this conversation."

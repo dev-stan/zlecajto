@@ -1,16 +1,19 @@
 .flex.items-center.justify-between.px-4.py-2.pt-6
   .flex.items-center
     = link_to root_path, class: "flex items-center hover:text-primary text-2xl" do
-      i.fas.fa-arrow-left aria-label="Back"
+      i.fas.fa-arrow-left aria-label=t('shared.buttons.back')
 
   .flex-1.flex.justify-center
-    p.text-2xl.font-bold Wiadomości
+    p.text-2xl.font-bold = t('.title')
 
   .flex.items-center
     = render Users::AvatarComponent.new(user: current_user, size: 'sm', current_user: current_user)
 
 .p-5
-  - @conversations.each do |conversation|
-    = render Conversations::ConversationItem::ConversationItemComponent.new \
-        conversation: conversation,
-        current_user: current_user
+  - if @conversations.empty?
+    = render Layout::NoContentComponent.new(message: t('.empty_state'))
+  - else
+    - @conversations.each do |conversation|
+      = render Conversations::ConversationItem::ConversationItemComponent.new \
+          conversation: conversation,
+          current_user: current_user

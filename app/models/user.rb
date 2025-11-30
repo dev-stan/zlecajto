@@ -36,6 +36,16 @@ class User < ApplicationRecord
   def unread_notifications_for_task?(task) = notifications.unread.for_task(task).exists?
   def remember_me = true
 
+  def unread_messages_count
+    Conversation.for_user(self).count do |conversation|
+      conversation.unread_for?(self)
+    end
+  end
+
+  def unread_messages?
+    unread_messages_count.positive?
+  end
+
   # def phone_number
   #   return if super.blank?
   #

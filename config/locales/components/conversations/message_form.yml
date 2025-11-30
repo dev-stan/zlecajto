@@ -1,0 +1,12 @@
+pl:
+  components:
+    conversations:
+      message_form:
+        placeholder: "Wiadomość..."
+        closed_notice: "Chat został zamknięty"
+en:
+  components:
+    conversations:
+      message_form:
+        placeholder: "Message..."
+        closed_notice: "The chat has been closed"

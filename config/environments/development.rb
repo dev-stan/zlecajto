@@ -46,6 +46,8 @@ Rails.application.configure do
   config.active_job.queue_adapter = :sidekiq
 
   config.hosts << /.*\.ngrok-free\.app/
+  config.hosts << "jacketless-zahra-ungravitational.ngrok-free.dev"
+  config.hosts << "jacketless-zahra-ungravitational.ngrok-free.dev"
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :amazon

@@ -98,6 +98,8 @@ Rails.application.configure do
   # Enable DNS rebinding protection and other `Host` header attacks.
   config.hosts << 'zlecajto-91525bb17f39.herokuapp.com'
   config.hosts << 'www.zlecajto.pl'
+  config.hosts << "jacketless-zahra-ungravitational.ngrok-free.dev"
+  config.hosts << "jacketless-zahra-ungravitational.ngrok-free.dev"
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 end

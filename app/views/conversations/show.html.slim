@@ -1,24 +1,43 @@
-.flex.flex-col data-controller="conversation" data-conversation-id=@conversation.id style="height: calc(var(--vh) * 100);"
-  = render Conversations::Header::HeaderComponent.new(conversation: @conversation, current_user: current_user, status: @status)
+.flex.flex-col.overflow-hidden data-controller="conversation" data-conversation-id=@conversation.id style="height: 100%; position: fixed; top: 0; left: 0; right: 0; bottom: 0;"
+  section.relative.flex-1.flex.flex-col.min-h-0.overflow-hidden
+    = render Conversations::Header::HeaderComponent.new(conversation: @conversation, current_user: current_user, status: @status)
 
-  section.flex-1.flex.flex-col.overflow-hidden
-    .flex-1.min-h-0.overflow-y-auto.px-3.py-6.pb-20#messages data-conversation-target="messages"
+    .flex-1.min-h-0
+      .h-full.min-h-0.overflow-y-auto.px-3#messages data-conversation-target="messages"
+        - primary_scope = current_user == @conversation.task.user ? :task_owner : :submission_owner
         = render Conversations::SystemMessage::SystemMessageComponent.new \
-          title: 'Wybrano wykonawcę',
-          subtitle: 'Czas działać! Skontaktuj się z wykonawcą i ustał szczegóły',
-          color: :blue
+          title: t(".system_messages.#{primary_scope}.title"),
+          subtitle: t(".system_messages.#{primary_scope}.subtitle"),
+          color: :blue,
+          image_path: 'status_accepted.png',
+          html_options: { class: 'mt-24' },
+          alt: t(".system_messages.#{primary_scope}.alt")
 
         - @conversation.messages.each do |message|
           = render Messages::MessageComponent.new \
-            message: message, 
+            message: message,
             current_user: current_user
+          
         - if @status == :cancelled
           = render Conversations::SystemMessage::SystemMessageComponent.new \
-            title: 'Anulowano zlecenie',
-            subtitle: 'Zlecenie zostało anulowane.'
-        - if @status == :wrong_submission
+            title: t('.system_messages.statuses.cancelled.title'),
+            subtitle: t('.system_messages.statuses.cancelled.subtitle'),
+            color: :blue,
+            image_path: 'status_canceled.png',
+            alt: t('.system_messages.statuses.cancelled.alt')
+        - elsif @status == :wrong_submission
           = render Conversations::SystemMessage::SystemMessageComponent.new \
-            title: 'Zmieniono wykonawcę',
-            subtitle: 'Wygląda na to, że zmienił się wykonawca zlecenia'
-  .mt-15
-    = render Conversations::MessageForm::MessageFormComponent.new(conversation: @conversation, current_user: current_user, status: @status)
+            title: t('.system_messages.statuses.wrong_submission.title'),
+            subtitle: t('.system_messages.statuses.wrong_submission.subtitle'),
+            color: :blue,
+            image_path: 'status_tasker_changed.png',
+            alt: t('.system_messages.statuses.wrong_submission.alt')
+        - elsif @status == :completed
+          = render Conversations::SystemMessage::SystemMessageComponent.new \
+            title: t('.system_messages.statuses.completed.title'),
+            subtitle: t('.system_messages.statuses.completed.subtitle'),
+            color: :blue,
+            image_path: 'status_completed.png',
+            alt: t('.system_messages.statuses.completed.alt')
+  .h-20
+  = render Conversations::MessageForm::MessageFormComponent.new(conversation: @conversation, current_user: current_user, status: @status)

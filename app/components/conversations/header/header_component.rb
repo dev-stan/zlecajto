@@ -24,15 +24,11 @@ module Conversations
       end
 
       def status_text
-        {
-          active: 'Zaakceptowano',
-          cancelled: 'Anulowano',
-          wrong_submission: 'Zmieniono wykonawcę'
-        }[@status] || 'Status nieznany'
+        I18n.t("conversations.statuses.#{@status}", default: I18n.t('conversations.statuses.unknown'))
       end
 
       def status_color
-        @status == :active ? 'text-green-600' : 'text-red-600'
+        @status == :active || @status == :completed ? 'text-green-600' : 'text-red-600'
       end
 
       def formatted_task_salary
