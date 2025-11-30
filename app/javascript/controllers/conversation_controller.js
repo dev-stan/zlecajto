@@ -2,7 +2,15 @@ import { Controller } from "@hotwired/stimulus"
 import { createConversationChannel } from "../channels/conversation_channel"
 
 export default class extends Controller {
-  static targets = ["messages", "form", "input", "images"]
+  static targets = ["messages", "form", "input", "images", "footer"]
+
+  focusInput() {
+    this.footerTarget.classList.add("!pb-4")
+  }
+
+  blurInput() {
+    this.footerTarget.classList.remove("!pb-4")
+  }
 
   setVh() {
     let vh = window.innerHeight * 0.01;
@@ -37,7 +45,7 @@ export default class extends Controller {
   // Called by ActionCable when a message is broadcast
   receiveMessage(data) {
     this.messagesTarget.insertAdjacentHTML("beforeend", data.html)
-    setTimeout(() => this.scrollToBottom(), 50)
+    setTimeout(() => this.scrollToBottom(true), 50)
   }
 
   send(event) {
@@ -70,19 +78,25 @@ export default class extends Controller {
     // Tell the image controller to clear previews
     this.formTarget.dispatchEvent(new CustomEvent("conversation:sent"))
 
-    this.scrollToBottom()
+    this.scrollToBottom(true)
   }
 
-  scrollToBottom() {
-    if (!this.hasMessagesTarget) return;
-    const el = this.messagesTarget;
+  scrollToBottom(smooth = false) {
+    if (!this.hasMessagesTarget) return
+    console.log("Scrolling to bottom", { smooth })
+    const el = this.messagesTarget
 
-    requestAnimationFrame(() => {
-      // I need to scroll two times to ensure it works reliably ( IOS Safari quirk with viewport height changes )
-      el.scrollTo({ top: el.scrollHeight, behavior: "smooth" })
-      requestAnimationFrame(() => {
+    const doScroll = () => {
+      if (smooth) {
+        el.scrollTo({
+          top: el.scrollHeight,
+          behavior: "smooth"
+        })
+      } else {
         el.scrollTop = el.scrollHeight
-      })
-    })
+      }
+    }
+
+    requestAnimationFrame(doScroll)
   }
 }
