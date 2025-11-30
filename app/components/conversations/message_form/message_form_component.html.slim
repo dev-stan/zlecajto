@@ -1,5 +1,5 @@
 - if @status == :active
-    .fixed.inset-x-0.bottom-0.bg-white.px-3.py-4.z-50 style="padding-bottom: calc(1rem + env(safe-area-inset-bottom));"
+    .fixed.inset-x-0.bottom-0.bg-white.px-3.py-3.z-50
         form.flex.flex-col.gap-3 data-controller="conversation-image-upload" data-conversation-target="form" data-action="submit->conversation#send conversation:sent->conversation-image-upload#clear"
         
             .hidden data-conversation-image-upload-target="previews"
@@ -8,7 +8,7 @@
                 button class=btn_primary type="button" data-action="conversation-image-upload#chooseFiles"
                     i class="#{icon_base} fa-image"
                 
-                input class=input_classes type="text" data-conversation-target="input" placeholder=t('.placeholder')
+                input class=input_classes type="text" data-conversation-target="input" placeholder="Wiadomość..."
                 
                 button class=btn_primary type="submit"
                     i class="#{icon_base} fa-arrow-up"
@@ -16,7 +16,7 @@
                 input type="file" accept="image/*" multiple=true hidden=true data-conversation-image-upload-target="fileInput" data-action="change->conversation-image-upload#fileChanged"
                 input type="hidden" data-conversation-target="images" data-conversation-image-upload-target="imagesField"
 - else
-    .fixed.inset-x-0.bottom-0.bg-white.px-3.py-4.z-50 style="padding-bottom: calc(1rem + env(safe-area-inset-bottom));"
+    .fixed.inset-x-0.bottom-0.bg-white.px-3.py-4.z-50
         .border-2.border-blue-400.p-3.rounded-2xl.bg-white
             p.text-center.text-gray-500.font-medium
                 = t('.closed_notice')

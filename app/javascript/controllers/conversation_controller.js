@@ -37,7 +37,7 @@ export default class extends Controller {
   // Called by ActionCable when a message is broadcast
   receiveMessage(data) {
     this.messagesTarget.insertAdjacentHTML("beforeend", data.html)
-    setTimeout(() => this.scrollToBottom(true), 50)
+    setTimeout(() => this.scrollToBottom(), 50)
   }
 
   send(event) {
@@ -70,25 +70,19 @@ export default class extends Controller {
     // Tell the image controller to clear previews
     this.formTarget.dispatchEvent(new CustomEvent("conversation:sent"))
 
-    this.scrollToBottom(true)
+    this.scrollToBottom()
   }
 
-  scrollToBottom(smooth = false) {
-    if (!this.hasMessagesTarget) return
-    console.log("Scrolling to bottom", { smooth })
-    const el = this.messagesTarget
+  scrollToBottom() {
+    if (!this.hasMessagesTarget) return;
+    const el = this.messagesTarget;
 
-    const doScroll = () => {
-      if (smooth) {
-        el.scrollTo({
-          top: el.scrollHeight,
-          behavior: "smooth"
-        })
-      } else {
+    requestAnimationFrame(() => {
+      // I need to scroll two times to ensure it works reliably ( IOS Safari quirk with viewport height changes )
+      el.scrollTo({ top: el.scrollHeight, behavior: "smooth" })
+      requestAnimationFrame(() => {
         el.scrollTop = el.scrollHeight
-      }
-    }
-
-    requestAnimationFrame(doScroll)
+      })
+    })
   }
 }
