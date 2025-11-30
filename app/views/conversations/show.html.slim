@@ -1,10 +1,9 @@
-.flex.flex-col data-controller="conversation" data-conversation-id=@conversation.id style="height: calc(var(--vh) * 100);"
-  section.relative.flex-1.grid.grid-rows-1.grid-cols-1.min-h-0.overflow-hidden
-    .row-start-1.col-start-1.z-20.self-start.w-full
-      = render Conversations::Header::HeaderComponent.new(conversation: @conversation, current_user: current_user, status: @status)
+.flex.flex-col.overflow-hidden data-controller="conversation" data-conversation-id=@conversation.id style="height: calc(var(--vh) * 100);"
+  section.relative.flex-1.flex.flex-col.min-h-0.overflow-hidden
+    = render Conversations::Header::HeaderComponent.new(conversation: @conversation, current_user: current_user, status: @status)
 
-    .row-start-1.col-start-1.z-0.flex.flex-col.h-full.min-h-0
-      .flex-1.min-h-0.overflow-y-auto.px-3.py-6#messages data-conversation-target="messages"
+    .flex-1.min-h-0
+      .h-full.min-h-0.overflow-y-auto.px-3.py-6#messages data-conversation-target="messages"
         - primary_scope = current_user == @conversation.task.user ? :task_owner : :submission_owner
         = render Conversations::SystemMessage::SystemMessageComponent.new \
           title: t(".system_messages.#{primary_scope}.title"),

@@ -9,10 +9,6 @@ export default class extends Controller {
       this.headroom = new Headroom(this.element, {
         tolerance: 5,
         offset: 0,
-        classes: {
-          pinned: "slideDown",
-          unpinned: "slideUp",
-        },
         scroller: scroller
       })
 
