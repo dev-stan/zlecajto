@@ -22,14 +22,11 @@
         - if @status == :cancelled
           = render Conversations::SystemMessage::SystemMessageComponent.new \
             title: t('.system_messages.statuses.cancelled.title'),
-            subtitle: t('.system_messages.statuses.cancelled.subtitle'),
             color: :blue,
             image_path: 'status_canceled.png',
             alt: t('.system_messages.statuses.cancelled.alt')
         - elsif @status == :wrong_submission
           = render Conversations::SystemMessage::SystemMessageComponent.new \
-            title: t('.system_messages.statuses.wrong_submission.title'),
-            subtitle: t('.system_messages.statuses.wrong_submission.subtitle'),
             color: :blue,
             image_path: 'status_tasker_changed.png',
             alt: t('.system_messages.statuses.wrong_submission.alt')

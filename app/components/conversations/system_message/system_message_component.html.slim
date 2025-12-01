@@ -5,4 +5,5 @@
 
   .p-3.text-center.text-white
     p.text-xl.font-bold.whitespace-nowrap= @title
-    p.text-lg.mt-2= @subtitle
+    - if @subtitle.present?
+      p.text-lg.mt-2= @subtitle

@@ -21,7 +21,7 @@ pl:
             alt: "Zmieniono wykonawcę"
           completed:
             title: "Zlecenie zakończone"
-            subtitle: "Zlecenie zostało zakończone pomyślnie."
+            subtitle: "Dziękujemy za skorzystanie z naszej platformy!"
             alt: "Zlecenie zakończone"
 en:
   conversations:
