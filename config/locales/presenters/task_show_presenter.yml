@@ -6,7 +6,7 @@ pl:
         overdue: "Upłynął termin"
         completed: "Zlecenie zakończone"
         owner: "Zobacz detale zlecenia"
-        you_were_chosen: "Wybrano cię! Co dalej?"
+        you_were_chosen: "Wybrano cię, przejdź do chatu!"
         executor_chosen: "Wybrano już wykonawcę"
         already_applied: "Już aplikowałeś"
         apply: "Aplikuj"
