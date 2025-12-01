@@ -15,7 +15,8 @@
             size: 'sm'
 
     .w-3/4.flex.flex-col
-      p.font-bold.truncate = conversation.task.title
+      p.font-bold.truncate class=(unread? ? "text-black" : "text-gray-400")
+        = conversation.task.title
 
       .flex.flex-col.text-sm.w-full
         p class=status_class = status_text
