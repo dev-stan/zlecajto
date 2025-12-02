@@ -22,7 +22,14 @@ module Conversations
       end
 
       def unread?
-        conversation.unread_for?(current_user)
+        conversation.unread_for?(current_user) || unread_accepted_submission_notification?
+      end
+
+      def unread_accepted_submission_notification?
+        current_user.notifications
+                    .unread
+                    .accepted_submission
+                    .exists?(notifiable: conversation.submission)
       end
 
       def status_text
