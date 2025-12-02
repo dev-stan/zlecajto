@@ -8,7 +8,7 @@ module Conversations
         blue: 'blue-500'
       }.freeze
 
-      def initialize(title:, subtitle:, color: :red, image_path: nil, html_options: {}, alt: nil)
+      def initialize(title:, subtitle: nil, color: :red, image_path: nil, html_options: {}, alt: nil)
         super()
         @title = title
         @subtitle = subtitle

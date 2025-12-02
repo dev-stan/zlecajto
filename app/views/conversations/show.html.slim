@@ -5,30 +5,30 @@
     .flex-1.min-h-0
       .h-full.min-h-0.overflow-y-auto.px-3#messages data-conversation-target="messages"
         - primary_scope = current_user == @conversation.task.user ? :task_owner : :submission_owner
+
         = render Conversations::SystemMessage::SystemMessageComponent.new \
           title: t(".system_messages.#{primary_scope}.title"),
           subtitle: t(".system_messages.#{primary_scope}.subtitle"),
           color: :blue,
           image_path: 'status_accepted.png',
-          html_options: { class: 'mt-24' },
+          html_options: { class: current_user == @conversation.task.user ? 'mt-38' : 'mt-24' },
           alt: t(".system_messages.#{primary_scope}.alt")
+
 
         - @conversation.messages.each do |message|
           = render Messages::MessageComponent.new \
             message: message,
             current_user: current_user
-          
         - if @status == :cancelled
           = render Conversations::SystemMessage::SystemMessageComponent.new \
             title: t('.system_messages.statuses.cancelled.title'),
-            subtitle: t('.system_messages.statuses.cancelled.subtitle'),
             color: :blue,
             image_path: 'status_canceled.png',
             alt: t('.system_messages.statuses.cancelled.alt')
         - elsif @status == :wrong_submission
           = render Conversations::SystemMessage::SystemMessageComponent.new \
             title: t('.system_messages.statuses.wrong_submission.title'),
-            subtitle: t('.system_messages.statuses.wrong_submission.subtitle'),
+            subtitle: t('.system_messages.statuses.wrong_submission.subtitle_html', link: link_to('Skontaktuj', pages_contact_path, class: 'underline')),
             color: :blue,
             image_path: 'status_tasker_changed.png',
             alt: t('.system_messages.statuses.wrong_submission.alt')
@@ -40,4 +40,4 @@
             image_path: 'status_completed.png',
             alt: t('.system_messages.statuses.completed.alt')
   .h-20
-  = render Conversations::MessageForm::MessageFormComponent.new(conversation: @conversation, current_user: current_user, status: @status)
+    = render Conversations::MessageForm::MessageFormComponent.new(conversation: @conversation, current_user: current_user, status: @status)

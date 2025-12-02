@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-ruby '3.3.5'
+ruby '3.3.10'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'rails', '~> 7.1.5', '>= 7.1.5.1'
@@ -106,3 +106,4 @@ gem "activeadmin", "~> 3.3"
 gem 'browser'
 gem 'redis'
 gem "sassc", "~> 2.4"
+gem 'pry-remote'

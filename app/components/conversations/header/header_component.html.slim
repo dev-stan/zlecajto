@@ -8,7 +8,7 @@
 
   / SLIDING SECTION — removed from layout so it won’t leave background behind
   div class="bg-white z-0 pb-3 mt-[-1px]" data-controller="headroom" style="position: absolute; top: 100%; left: 0; right: 0;"
-    = link_to task_path(task), class: "block" do
+    = link_to "#{current_user == @conversation.task.user ? my_task_path(task) : task_path(task)}", class: "block" do
       .flex.gap-3.items-center.px-4
         .w-1/4.flex.items-center.justify-center
           - if task.photos.attached?
@@ -25,7 +25,7 @@
       .flex.justify-start.pb-4.pt-3.px-4.gap-2
         .w-3/5
           = render Ui::ButtonComponent.new \
-              text: t('.confirm_completion'),
+              text: t('components.conversations.header.confirm_completion'),
               path: helpers.confirm_task_complete_modal_path(task),
               size: :sm,
               variant: :green,
@@ -33,8 +33,8 @@
               html_options: { data: { turbo_frame: 'modal', turbo: true } }
         .w-2/5
           = render Ui::ButtonComponent.new \
-              text: t('.help'),
-              path: helpers.confirm_task_complete_modal_path(task),
+              text: t('components.conversations.header.help'),
+              path: helpers.pages_contact_path,
               size: :sm,
               variant: :primary_3,
               width: 100

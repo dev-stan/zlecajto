@@ -21,8 +21,14 @@ module Submissions
     end
 
     def create_conversation
-      Conversation.find_or_create_by!(submission_owner_id: @submission.user.id, task_owner_id: @submission.task.user.id,
-                                      task: @submission.task, submission: @submission)
+      @submission.with_lock do
+        Conversation.create_or_find_by!(
+          submission_owner_id: @submission.user_id,
+          task_owner_id: @task.user_id,
+          task_id: @task.id,
+          submission_id: @submission.id
+        )
+      end
     end
   end
 end

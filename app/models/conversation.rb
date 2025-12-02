@@ -8,8 +8,6 @@ class Conversation < ApplicationRecord
 
   has_many :messages, dependent: :destroy
 
-  validates :submission_owner_id, uniqueness: { scope: :task_owner_id }
-
   scope :between, lambda { |user1_id, user2_id|
     where(submission_owner_id: user1_id, task_owner_id: user2_id)
       .or(where(submission_owner_id: user2_id, task_owner_id: user1_id))

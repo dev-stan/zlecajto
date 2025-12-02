@@ -8,7 +8,7 @@ class ConversationsController < ApplicationController
     @hide_navbar = true
     @conversations = Conversation
                      .for_user(current_user)
-                     .includes(:task, :submission_owner, :task_owner)
+                     .includes(:task, :submission_owner, :task_owner, :submission)
                      .order(updated_at: :desc)
   end
 
@@ -16,9 +16,18 @@ class ConversationsController < ApplicationController
     @status = @conversation.status
     @hide_navbar = true
     @conversation.mark_seen_by(current_user)
+    mark_accepted_submission_notification_as_read
   end
 
   private
+
+  def mark_accepted_submission_notification_as_read
+    current_user.notifications
+                .unread
+                .accepted_submission
+                .find_by(notifiable: @conversation.submission)
+                &.mark_as_read!
+  end
 
   def set_conversation
     @conversation = Conversation.find(params[:id])
