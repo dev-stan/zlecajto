@@ -5,6 +5,7 @@ class Notification < ApplicationRecord
   belongs_to :notifiable, polymorphic: true, optional: true
 
   scope :unread, -> { where(read_at: nil) }
+  scope :accepted_submission, -> { where(subject: 'accepted_submission') }
 
   # Returns notifications whose notifiable is a Submission belonging to the given task
   scope :for_task, lambda { |task|
