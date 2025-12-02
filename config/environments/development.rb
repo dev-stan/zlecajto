@@ -46,6 +46,8 @@ Rails.application.configure do
   config.active_job.queue_adapter = :sidekiq
 
   config.hosts << /.*\.ngrok-free\.app/
+  config.hosts << "jacketless-zahra-ungravitational.ngrok-free.dev"
+  config.hosts << "jacketless-zahra-ungravitational.ngrok-free.dev"
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :amazon
@@ -85,4 +87,5 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
+  config.action_view.annotate_rendered_view_with_filenames = true
 end
