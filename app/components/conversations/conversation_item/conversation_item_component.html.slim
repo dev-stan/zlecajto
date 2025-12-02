@@ -15,7 +15,7 @@
             show_notification: false,
             size: 'sm'
 
-    .flex-1.min-w-0.flex.flex-col
+    .flex-1.min-w-0.flex.flex-col.ml-3
       p.font-bold.truncate class=(unread? ? "text-black" : "text-gray-400")
         = conversation.task.title
 
