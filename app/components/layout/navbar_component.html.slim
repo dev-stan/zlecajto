@@ -20,11 +20,15 @@ nav.sticky.top-0.left-0.right-0.bg-white.shadow-sm.z-50
       = link_to conversations_path, class: "relative inline-flex items-center justify-center p-2 rounded-md text-2xl hover:text-primary/80" do
         i.fas.fa-paper-plane.text-2xl aria-label="Conversations"
 
-        - if @user_signed_in && @current_user.unread_messages? || @current_user.notifications.unread.accepted_submission.any?
-          span.absolute.top-0.-right-1.flex.h-5.w-5.items-center.justify-center data-burger-menu-target="badge"
-            span.absolute.inline-flex.h-full.w-full.rounded-full.bg-red-400.opacity-75.animate-ping
-            span.relative.inline-flex.h-5.w-5.rounded-full.bg-red-500.text-white.text-sm.font-semibold.items-center.justify-center
-              = @current_user.unread_messages_count + @current_user.notifications.unread.accepted_submission.count
+        - if @user_signed_in
+          - unread_count = @current_user.unread_messages_count + @current_user.notifications.unread.accepted_submission.count
+
+          - if unread_count.positive?
+            span.absolute.top-0.-right-1.flex.h-5.w-5.items-center.justify-center data-burger-menu-target="badge"
+              span.absolute.inline-flex.h-full.w-full.rounded-full.bg-red-400.opacity-75.animate-ping
+              span.relative.inline-flex.h-5.w-5.rounded-full.bg-red-500.text-white.text-sm.font-semibold.items-center.justify-center
+                = unread_count
+
       
       = render Layout::BurgerMenuComponent.new(user_signed_in: @user_signed_in, current_user: @current_user)
 

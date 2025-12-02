@@ -17,7 +17,7 @@ pl:
             alt: "Anulowano zlecenie"
           wrong_submission:
             title: "Zmieniono wykonawcę"
-            subtitle: "Wykonawca został zmieniony."
+            subtitle_html: "Coś poszło nie tak? %{link} się z nami."
             alt: "Zmieniono wykonawcę"
           completed:
             title: "Zlecenie zakończone"

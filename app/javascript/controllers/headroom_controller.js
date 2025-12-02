@@ -7,7 +7,7 @@ export default class extends Controller {
       const scroller = document.getElementById("messages") || window
 
       this.headroom = new Headroom(this.element, {
-        tolerance: 5,
+        tolerance: 2,
         offset: 0,
         scroller: scroller
       })
