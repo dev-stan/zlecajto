@@ -1,6 +1,6 @@
 = link_to conversation_path(conversation), class: "block" do
   .flex.items-center.gap-3.p-4.bg-white.rounded-2xl.mb-2
-    .w-1/4.shrink-0
+    .w-1/4.md:w-24.shrink-0
       .relative.w-full
         - if conversation.task.photos.any?
           .w-full.aspect-square.rounded-xl.overflow-hidden.bg-gray-100
