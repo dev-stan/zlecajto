@@ -10,6 +10,8 @@ class Task < ApplicationRecord
   has_many :task_messages, dependent: :destroy
   has_many :conversations # should ideally have one - has more if submission.user changes
 
+  has_one :accepted_submission, -> { where(status: :accepted) }, class_name: 'Submission'
+
   enum status: {
     open: 'open',
     cancelled: 'cancelled',
@@ -30,10 +32,6 @@ class Task < ApplicationRecord
   validates :category, inclusion: { in: CATEGORIES }
   validates :timeslot, inclusion: { in: TIMESLOTS }
   validates :location, inclusion: { in: LOCATIONS }
-
-  def accepted_submission
-    submissions.where(status: :accepted).first
-  end
 
   # Ransack allowlist for ActiveAdmin
   def self.ransackable_attributes(_auth_object = nil)
