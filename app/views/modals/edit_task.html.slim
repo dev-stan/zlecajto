@@ -1,30 +1,30 @@
 = turbo_frame_tag 'modal' do
     = render Ui::FormModalComponent.new(title: t('.title')) do
-    = form_with model: @task, url: task_path(@task), method: :patch, data: { controller: 'form-validation', action: 'submit->form-validation#validate', turbo_frame: '_top' }, html: { class: "space-y-6", novalidate: true } do |f|
-      .space-y-4
-        .flex.flex-row.gap-3
-            div data-field-wrapper=""
-                = render Input::InputComponent.new(name: 'task[title]', label: t('.title_label'), value: @task.title, placeholder: t('.title_placeholder'), html_options: { class: 'w-full border-2 border-gray-300', required: true })
-            div data-field-wrapper=""
-                = render Input::InputComponent.new(name: 'task[salary]', type: 'number', label: t('.salary_label'), value: @task.salary, placeholder: t('.salary_placeholder'), html_options: { class: 'w-full border-2 border-gray-300' })
-        div data-field-wrapper=""
-            = render Input::InputComponent.new(name: 'task[description]', type: 'textarea', label: t('.description_label'), value: @task.description, placeholder: t('.description_placeholder'), rows: 3, html_options: { class: '', required: true })
+        = form_with model: @task, url: task_path(@task), method: :patch, data: { controller: 'form-validation', action: 'submit->form-validation#validate', turbo_frame: '_top' }, html: { class: "space-y-6", novalidate: true } do |f|
+            .space-y-4
+                .flex.flex-row.gap-3
+                    div data-field-wrapper=""
+                        = render Input::InputComponent.new(name: 'task[title]', label: t('.title_label'), value: @task.title, placeholder: t('.title_placeholder'), html_options: { class: 'w-full border-2 border-gray-300', required: true })
+                    div data-field-wrapper=""
+                        = render Input::InputComponent.new(name: 'task[salary]', type: 'number', label: t('.salary_label'), value: @task.salary, placeholder: t('.salary_placeholder'), html_options: { class: 'w-full border-2 border-gray-300' })
+                div data-field-wrapper=""
+                    = render Input::InputComponent.new(name: 'task[description]', type: 'textarea', label: t('.description_label'), value: @task.description, placeholder: t('.description_placeholder'), rows: 3, html_options: { class: '', required: true })
 
-        .flex.flex-row.gap-3 
-            .flex.flex-col
-                label.mb-1.block.text-base.font-medium.text-gray-700 = t('.category_label')
-                = render Input::SelectComponent.new(form: f, options: Task::CATEGORIES, selected: @task.category, label: t('.category_select'), field: :category)
-            .flex.flex-col
-                label.mb-1.block.text-base.font-medium.text-gray-700 = t('.location_label')
-                = render Input::SelectComponent.new(form: f, options: Task::LOCATIONS, selected: @task.location, label: t('.location_select'), field: :location)
-        .flex.flex-row.gap-3
-            .flex.flex-col
-                label.mb-1.block.text-base.font-medium.text-gray-700 = t('.timeslot_label')
-                = render Input::SelectComponent.new(form: f, options: Task::TIMESLOTS, selected: @task.timeslot, label: t('.timeslot_select'), field: :timeslot)
-            .flex.flex-col
-                label.mb-1.block.text-base.font-medium.text-gray-700 = t('.payment_label')
-                = render Input::SelectComponent.new(form: f, options: Task::PAYMENT_METHODS, selected: @task.payment_method, label: t('.payment_select'), field: :payment_method)
-        = hidden_field_tag :step, 200
-        .pt-4.border-t.border-gray-100.flex.items-center.justify-end.gap-3.w-full
-            = render(Ui::ButtonComponent.new(text: t('shared.buttons.cancel'), button: true, size: :sm, variant: :secondary, html_options: { class: 'w-2/5', data: { action: 'click->modal#close' } }))
-            = render(Ui::ButtonComponent.new(text: t('shared.buttons.save'), submit: true, size: :sm, variant: :green, html_options: { class: 'w-3/5' }))
+                .flex.flex-row.gap-3 
+                    .flex.flex-col
+                        label.mb-1.block.text-base.font-medium.text-gray-700 = t('.category_label')
+                        = render Input::SelectComponent.new(form: f, options: Task::CATEGORIES, selected: @task.category, label: t('.category_select'), field: :category)
+                    .flex.flex-col
+                        label.mb-1.block.text-base.font-medium.text-gray-700 = t('.location_label')
+                        = render Input::SelectComponent.new(form: f, options: Task::LOCATIONS, selected: @task.location, label: t('.location_select'), field: :location)
+                .flex.flex-row.gap-3
+                    .flex.flex-col
+                        label.mb-1.block.text-base.font-medium.text-gray-700 = t('.timeslot_label')
+                        = render Input::SelectComponent.new(form: f, options: Task::TIMESLOTS, selected: @task.timeslot, label: t('.timeslot_select'), field: :timeslot)
+                    .flex.flex-col
+                        label.mb-1.block.text-base.font-medium.text-gray-700 = t('.payment_label')
+                        = render Input::SelectComponent.new(form: f, options: Task::PAYMENT_METHODS, selected: @task.payment_method, label: t('.payment_select'), field: :payment_method)
+                = hidden_field_tag :step, 200
+                .pt-4.border-t.border-gray-100.flex.items-center.justify-end.gap-3.w-full
+                    = render(Ui::ButtonComponent.new(text: t('shared.buttons.cancel'), button: true, size: :sm, variant: :secondary, html_options: { class: 'w-2/5', data: { action: 'click->modal#close' } }))
+                    = render(Ui::ButtonComponent.new(text: t('shared.buttons.save'), submit: true, size: :sm, variant: :green, html_options: { class: 'w-3/5' }))
