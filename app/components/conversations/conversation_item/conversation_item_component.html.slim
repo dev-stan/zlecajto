@@ -29,10 +29,10 @@
           .flex.items-center.gap-2.text-xs.text-gray-400.mt-1
             = l(last_message.created_at, format: :short)
             i aria-hidden="true" class=reading_icon_class
-            span.sr-only = (unread? ? t('.sr.unread') : t('.sr.read'))
+            span.sr-only = (unread? ? t('components.conversations.conversation_item.sr.unread') : t('components.conversations.conversation_item.sr.read'))
         - else
           p.text-gray-400
             - if Conversations::StatusChecker.new(conversation).status == :active
-              = t('.prompts.first_message')
+              = t('components.conversations.conversation_item.prompts.first_message')
             - else
-              = t('.prompts.inactive')
+              = t('components.conversations.conversation_item.prompts.inactive')

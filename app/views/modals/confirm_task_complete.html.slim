@@ -1,8 +1,8 @@
 = turbo_frame_tag 'modal' do
-  = render Ui::ConfirmModalComponent.new(title: t('.title'),
-    body: t('.body'),
-    footer: t('.footer'),
-    confirm_text: t('.confirm_text'),
+  = render Ui::ConfirmModalComponent.new(title: t('modals.confirm_task_complete.title'),
+    body: t('modals.confirm_task_complete.body'),
+    footer: t('modals.confirm_task_complete.footer'),
+    confirm_text: t('modals.confirm_task_complete.confirm_text'),
     cancel_text: t('shared.buttons.cancel'),
     confirm_path: completed_task_path(@task),
     confirm_method: :get,
