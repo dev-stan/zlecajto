@@ -4,12 +4,21 @@ class ConversationsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_conversation, only: [:show]
   before_action :ensure_participant!, only: [:show]
+
+  STATUS_PRIORITY = {
+    active: 0,
+    completed: 1,
+    wrong_submission: 2,
+    cancelled: 3
+  }.freeze
+
   def index
     @hide_navbar = true
     @conversations = Conversation
                      .for_user(current_user)
-                     .includes(:task, :submission_owner, :task_owner, :submission)
+                     .includes(:submission_owner, :task_owner, :submission, task: :accepted_submission)
                      .order(updated_at: :desc)
+                     .sort_by { |conversation| STATUS_PRIORITY[conversation.status] || 4 }
   end
 
   def show

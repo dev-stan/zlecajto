@@ -8,7 +8,7 @@ module Conversations
 
     def status
       accepted_submission = conversation.task.accepted_submission
-      participant_submission = conversation.submission_for(conversation.submission_owner)
+      participant_submission = conversation.submission
 
       return :cancelled if conversation.task.cancelled?
       return :wrong_submission unless accepted_submission == participant_submission
