@@ -45,7 +45,7 @@ RSpec.describe Submission, type: :model do
 
   describe 'enums' do
     it 'defines expected statuses' do
-      expect(Submission.statuses.keys).to match_array(%w[pending accepted rejected])
+      expect(Submission.statuses.keys).to match_array(%w[pending cancell_chosen accepted rejected])
     end
   end
 
