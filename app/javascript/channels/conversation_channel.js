@@ -1,4 +1,4 @@
-import consumer from "./consumer"
+import consumer from "channels/consumer"
 
 export function createConversationChannel(conversationId, onReceived) {
   return consumer.subscriptions.create(

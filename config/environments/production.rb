@@ -43,7 +43,7 @@ Rails.application.configure do
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
   # config.action_cable.url = "wss://example.com/cable"
-  config.action_cable.allowed_request_origins = [ "https://www.zlecajto.pl", /https:\/\/zlecajto-.*\.herokuapp\.com/ ]
+  config.action_cable.allowed_request_origins = [ "https://www.zlecajto.pl", /https:\/\/zlecajto-.*\.herokuapp\.com/, /https:\/\/.*\.ngrok-free\.dev/, "http://localhost:3000", "https://localhost:3000" ]
 
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
   # Can be used together with config.force_ssl for Strict-Transport-Security and secure cookies.
@@ -100,6 +100,8 @@ Rails.application.configure do
   config.hosts << 'www.zlecajto.pl'
   config.hosts << "jacketless-zahra-ungravitational.ngrok-free.dev"
   config.hosts << "jacketless-zahra-ungravitational.ngrok-free.dev"
+  config.hosts << "localhost"
+  config.hosts << "127.0.0.1"
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 end
