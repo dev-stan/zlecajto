@@ -10,6 +10,8 @@ class ConversationChannel < ApplicationCable::Channel
     end
 
     stream_for [@conversation, current_user]
+  rescue => e
+    reject
   end
 
   def receive(data)

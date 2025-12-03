@@ -107,3 +107,4 @@ gem 'browser'
 gem 'redis'
 gem "sassc", "~> 2.4"
 gem 'pry-remote'
+gem 'localhost'

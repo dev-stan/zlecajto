@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
-import { createConversationChannel } from "../channels/conversation_channel"
+import { createConversationChannel } from "channels/conversation_channel"
 
 export default class extends Controller {
   static targets = ["messages", "form", "input", "images", "footer"]

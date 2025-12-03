@@ -16,7 +16,8 @@ module ApplicationCable
 
     def verified_user_from_cookie
       # Devise stores user id in a signed cookie
-      cookies.signed[:user_id] && User.find_by(id: cookies.signed[:user_id])
+      user_id = cookies.signed[:user_id]
+      user_id && User.find_by(id: user_id)
     end
   end
 end
