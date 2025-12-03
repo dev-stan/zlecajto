@@ -1,6 +1,8 @@
 pl:
   conversations:
     show:
+      contact_us: "Skontaktuj się z nami!"
+      something_wrong_html: "Coś poszło nie tak? %{link}"
       system_messages:
         task_owner:
           title: "Wybrano wykonawcę!"
@@ -17,7 +19,6 @@ pl:
             alt: "Anulowano zlecenie"
           wrong_submission:
             title: "Zmieniono wykonawcę"
-            subtitle_html: "Coś poszło nie tak? %{link} się z nami."
             alt: "Zmieniono wykonawcę"
           completed:
             title: "Zlecenie zakończone"
@@ -26,6 +27,8 @@ pl:
 en:
   conversations:
     show:
+      contact_us: "Contact us!"
+      something_wrong_html: "Something went wrong? %{link}"
       system_messages:
         task_owner:
           title: "Executor selected!"

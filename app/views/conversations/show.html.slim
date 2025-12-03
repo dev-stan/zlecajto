@@ -28,7 +28,6 @@ div class="flex flex-col overflow-hidden fixed inset-0 md:relative md:inset-auto
         - elsif @status == :wrong_submission
           = render Conversations::SystemMessage::SystemMessageComponent.new \
             title: t('.system_messages.statuses.wrong_submission.title'),
-            subtitle: t('.system_messages.statuses.wrong_submission.subtitle_html', link: link_to('Skontaktuj', pages_contact_path, class: 'underline')),
             color: :blue,
             image_path: 'status_tasker_changed.png',
             alt: t('.system_messages.statuses.wrong_submission.alt')
@@ -39,5 +38,9 @@ div class="flex flex-col overflow-hidden fixed inset-0 md:relative md:inset-auto
             color: :blue,
             image_path: 'status_completed.png',
             alt: t('.system_messages.statuses.completed.alt')
+        - if @status != :active
+          .mb-6.text-center.text-sm.text-gray-600
+            = t('.something_wrong_html', link: link_to(t('.contact_us'), pages_contact_path, class: 'underline'))
+            
   .h-20
     = render Conversations::MessageForm::MessageFormComponent.new(conversation: @conversation, current_user: current_user, status: @status)
