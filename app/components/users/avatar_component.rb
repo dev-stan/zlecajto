@@ -18,6 +18,8 @@ module Users
         [36, 36]
       when 'md'
         [48, 48]
+      when 'l'
+        [64, 64]
       when 'lg'
         [128, 128]
       else

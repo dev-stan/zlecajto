@@ -7,6 +7,7 @@ class Submission < ApplicationRecord
 
   belongs_to :task
   belongs_to :user
+  has_one :conversation, dependent: :destroy
 
   has_many :answers, dependent: :destroy
   has_many :notifications, as: :notifiable
@@ -15,7 +16,7 @@ class Submission < ApplicationRecord
   validates :user_id, uniqueness: { scope: :task_id, message: 'has already applied to this task' }
   validate :cannot_apply_to_own_task
 
-  enum status: { pending: 0, accepted: 1, rejected: 2 }
+  enum status: { pending: 0, accepted: 1, rejected: 2, cancell_chosen: 3 }
 
   scope :with_task, -> { includes(:task) }
 

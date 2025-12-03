@@ -1,12 +1,9 @@
 / Mobile burger menu for small screens
 nav.relative.flex.items-center data-controller="burger-menu"
   / Button acts as relative container for notification dot
-  button.relative.inline-flex.items-center.justify-center.p-2.rounded-md.text-blue-900.hover:bg-blue-100.focus:outline-none.focus:ring-2.focus:ring-inset.focus:ring-blue-500.md:hidden aria-label="Open main menu" data-action="click->burger-menu#toggle"
-    svg.h-8.w-8 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true"
-      g id="SVGRepo_iconCarrier"
-        path d="M4 18L20 18" stroke="#000000" stroke-width="2" stroke-linecap="round"
-        path d="M4 12L20 12" stroke="#000000" stroke-width="2" stroke-linecap="round"
-        path d="M4 6L20 6" stroke="#000000" stroke-width="2" stroke-linecap="round"
+  button.relative.inline-flex.items-center.justify-center.p-2.rounded-md aria-label="Open main menu" data-action="click->burger-menu#toggle"
+    i.fas.fa-bars.text-2xl
+
     / Pulsing notification dot (container + ping + foreground)
     / [todo] redundant check for current_user - null exceptions should be handled on a higher level 
     - if @user_signed_in && @current_user.unread_notifications_count > 0

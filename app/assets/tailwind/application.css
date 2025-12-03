@@ -42,7 +42,18 @@
 		}
 	}
 
+	.headroom {
+		will-change: transform;
+		transition: transform 300ms ease-in-out;
+	}
 
+	.headroom--unpinned {
+		transform: translateY(-100%);
+	}
+
+	.headroom--pinned {
+		transform: translateY(0);
+	}
 
 
 	/* Apply to overlay or dialog container as needed */
@@ -63,5 +74,11 @@
 	body {
 		font-family: 'Outfit', sans-serif;
 		background-color: #F3F7FA;
+	}
+
+	#messages {
+		overflow-y: auto;
+		overflow-x: hidden;
+		overscroll-behavior: contain;
 	}
 }

@@ -1,0 +1,9 @@
+.card.bg-blue-500.rounded-2xl.overflow-hidden.w-3/4.mx-auto.mb-8 class=@html_options[:class]
+  = image_tag @image_path,
+    alt: @alt,
+    class: 'w-full md:w-1/2 md:mx-auto block object-cover p-5'
+
+  .p-3.text-center.text-white
+    p.text-xl.font-bold.whitespace-nowrap= @title
+    - if @subtitle.present?
+      p.text-lg.mt-2= @subtitle

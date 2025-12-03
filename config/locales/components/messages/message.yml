@@ -1,0 +1,10 @@
+pl:
+  components:
+    messages:
+      message:
+        photo_alt: "Wiadomość - zdjęcie"
+en:
+  components:
+    messages:
+      message:
+        photo_alt: "Message photo"

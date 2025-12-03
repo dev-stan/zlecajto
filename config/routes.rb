@@ -82,6 +82,10 @@ Rails.application.routes.draw do
   get 'task_messages/create_from_session', to: 'task_messages#create_from_session',
                                            as: :create_from_session_task_message
 
+  resources :conversations, only: %i[show index] do
+    resources :messages, only: [:create]
+  end
+
   get 'my_tasks/:id', to: 'tasks#my_task', as: :my_task
 
   # Modals
@@ -94,6 +98,7 @@ Rails.application.routes.draw do
     get 'tasks/:id/delete_modal', action: :confirm_cancell_task, as: :confirm_cancell_task_modal
     get 'tasks/:id/task_message_modal', action: :new_task_message, as: :new_task_message_modal
     get 'task_messages/:id/photos_modal', action: :task_message_photos, as: :task_message_photos_modal
+    get 'messages/:id/photos_modal', action: :message_photos, as: :message_photos_modal
     get 'task_messages/:id/reply_modal', action: :reply_task_message, as: :reply_task_message_modal
     get 'submissions/:id/confirm_accept', action: :confirm_submission_accept, as: :confirm_submission_accept_modal
     get 'submissions/:id/answer_modal', action: :new_answer, as: :new_answer_modal

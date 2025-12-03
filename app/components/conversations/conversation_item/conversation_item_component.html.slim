@@ -1,0 +1,38 @@
+= link_to conversation_path(conversation), class: "block" do
+  .flex.items-center.gap-3.p-4.bg-white.rounded-2xl.mb-2
+    .w-1/4.md:w-24.shrink-0
+      .relative.w-full
+        - if conversation.task.photos.any?
+          .w-full.aspect-square.rounded-xl.overflow-hidden.bg-gray-100
+             = image_tag conversation.task.photos.first, class: "w-full h-full object-cover"
+        - else
+          .w-full.aspect-square.rounded-xl.overflow-hidden.bg-gray-100.flex.justify-center.items-center
+            i.fa-solid.fa-image.text-gray-300.text-3xl
+
+        .absolute.bottom-0.right-0.translate-y-1/3.translate-x-1/5
+          = render Users::AvatarComponent.new \
+            user: other_user,
+            show_notification: false,
+            size: 'sm'
+
+    .flex-1.min-w-0.flex.flex-col.ml-3
+      p.font-bold.truncate class=(unread? ? "text-black" : "text-gray-400")
+        = conversation.task.title
+
+      .flex.flex-col.text-sm.w-full
+        p class=status_class = status_text
+
+        - if last_message
+          p.truncate class=(unread? ? "text-black" : "text-gray-400")
+            = message_preview
+
+          .flex.items-center.gap-2.text-xs.text-gray-400.mt-1
+            = l(last_message.created_at, format: :short)
+            i aria-hidden="true" class=reading_icon_class
+            span.sr-only = (unread? ? t('components.conversations.conversation_item.sr.unread') : t('components.conversations.conversation_item.sr.read'))
+        - else
+          p.text-gray-400
+            - if Conversations::StatusChecker.new(conversation).status == :active
+              = t('components.conversations.conversation_item.prompts.first_message')
+            - else
+              = t('components.conversations.conversation_item.prompts.inactive')

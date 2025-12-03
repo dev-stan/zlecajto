@@ -1,0 +1,22 @@
+pl:
+  components:
+    conversations:
+      conversation_item:
+        sr:
+          unread: "Nieprzeczytane"
+          read: "Przeczytane"
+        prompts:
+          first_message: "Napisz pierwszą wiadomość!"
+          inactive: "Konwersacja nieaktywna"
+        sent_photo: "Wysłano zdjęcie"
+en:
+  components:
+    conversations:
+      conversation_item:
+        sr:
+          unread: "Unread"
+          read: "Read"
+        prompts:
+          first_message: "Send the first message!"
+          inactive: "Conversation inactive"
+        sent_photo: "Photo sent"

@@ -1,0 +1,53 @@
+pl:
+  conversations:
+    show:
+      contact_us: "Skontaktuj się z nami!"
+      something_wrong_html: "Coś poszło nie tak? %{link}"
+      system_messages:
+        task_owner:
+          title: "Wybrano wykonawcę!"
+          subtitle: "Skontaktuj się z wykonawcą i ustal szczegóły."
+          alt: "Wybrano wykonawcę"
+        submission_owner:
+          title: "Wybrano Cię!"
+          subtitle: "Skontaktuj się ze zleceniodawcą i ustal szczegóły."
+          alt: "Wybrano Cię"
+        statuses:
+          cancelled:
+            title: "Anulowano zlecenie"
+            subtitle: "Zlecenie zostało anulowane przez zleceniodawcę."
+            alt: "Anulowano zlecenie"
+          wrong_submission:
+            title: "Zmieniono wykonawcę"
+            alt: "Zmieniono wykonawcę"
+          completed:
+            title: "Zlecenie zakończone"
+            subtitle: "Dziękujemy za skorzystanie z naszej platformy!"
+            alt: "Zlecenie zakończone"
+en:
+  conversations:
+    show:
+      contact_us: "Contact us!"
+      something_wrong_html: "Something went wrong? %{link}"
+      system_messages:
+        task_owner:
+          title: "Executor selected!"
+          subtitle: "Reach out to the executor and agree on the details."
+          alt: "Executor selected"
+        submission_owner:
+          title: "You've been selected!"
+          subtitle: "Contact the task owner and agree on the details."
+          alt: "You've been selected"
+        statuses:
+          cancelled:
+            title: "Task cancelled"
+            subtitle: "The task was cancelled by the owner."
+            alt: "Task cancelled"
+          wrong_submission:
+            title: "Executor changed"
+            subtitle: "The executor has been changed."
+            alt: "Executor changed"
+          completed:
+            title: "Task completed"
+            subtitle: "The task was completed successfully."
+            alt: "Task completed"

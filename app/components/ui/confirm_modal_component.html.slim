@@ -17,6 +17,6 @@
       - else
         = render(Ui::ButtonComponent.new(text: cancel_text, size: :sm, button: true, variant: cancel_variant, html_options: { data: { action: 'click->modal#close' } }))
       - if confirm_path
-        = render(Ui::ButtonComponent.new(text: confirm_text, size: :sm,  path: confirm_path, method: confirm_method, variant: confirm_variant, html_options: { data: { turbo_frame: confirm_turbo_frame } }))
+        = render(Ui::ButtonComponent.new(text: confirm_text, size: :sm,  path: confirm_path, method: confirm_method, variant: confirm_variant, html_options: { data: { turbo_frame: confirm_turbo_frame }, turbo_confirm: "...", turbo_disable: true }))
       - else
         = render(Ui::ButtonComponent.new(text: confirm_text, size: :sm,  button: true, variant: confirm_variant))

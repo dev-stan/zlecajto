@@ -84,6 +84,16 @@ class ModalsController < ApplicationController
     respond_to(&:html)
   end
 
+  # GET /messages/:id/photos_modal
+  # Reuse task message photos modal for conversation messages
+  def message_photos
+    @message = Message.find(params[:id])
+    @photos = @message&.photos&.attached? ? @message.photos : []
+    @start_index = params[:index].to_i
+
+    render 'modals/task_message_photos'
+  end
+
   def choose_user_category
     @user = current_user
     respond_to(&:html)

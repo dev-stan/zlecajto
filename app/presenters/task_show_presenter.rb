@@ -37,7 +37,7 @@ class TaskShowPresenter
   def button_path
     return my_task_path(task) if owner?
     return '#' if completed_submission_for_current_user?
-    return accepted_submission_path(current_user_accepted_submission) if current_user_accepted_submission?
+    return conversation_path(accepted_submission.conversation) if current_user_accepted_submission?
     return '#' if accepted_submission_exists?
     return '#' if user_has_applied?
     return '#' if task.overdue? || task.cancelled?

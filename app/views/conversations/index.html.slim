@@ -1,0 +1,22 @@
+div class="flex flex-col md:max-w-2xl md:mx-auto md:my-20 md:rounded-lg md:bg-white md:min-h-[80vh]"
+  .flex.items-center.justify-between.px-4.py-2.pt-6
+    .flex.items-center
+      = link_to root_path, class: "flex items-center hover:text-primary text-2xl" do
+        i.fas.fa-arrow-left aria-label=t('shared.buttons.back')
+
+    .flex-1.flex.justify-center
+      p.text-2xl.font-bold = t('.title')
+
+    .flex.items-center
+      = link_to users_profile_path do 
+        = render Users::AvatarComponent.new(user: current_user, size: 'sm', current_user: current_user)
+
+  .p-5
+    - if @conversations.empty?
+      .md:mt-20
+        = render Layout::NoContentComponent.new(message: t('.empty_state'))
+    - else
+      - @conversations.each do |conversation|
+        = render Conversations::ConversationItem::ConversationItemComponent.new \
+            conversation: conversation,
+            current_user: current_user

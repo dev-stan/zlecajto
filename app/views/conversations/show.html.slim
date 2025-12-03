@@ -1,0 +1,46 @@
+div class="flex flex-col overflow-hidden fixed inset-0 md:relative md:inset-auto md:max-w-2xl md:mx-auto md:my-20 md:rounded-lg md:bg-white md:h-[80vh]" data-controller="conversation" data-conversation-id=@conversation.id
+  section.relative.flex-1.flex.flex-col.min-h-0.overflow-hidden
+    = render Conversations::Header::HeaderComponent.new(conversation: @conversation, current_user: current_user, status: @status)
+
+    .flex-1.min-h-0
+      .h-full.min-h-0.overflow-y-auto.px-3#messages data-conversation-target="messages"
+        - primary_scope = current_user == @conversation.task.user ? :task_owner : :submission_owner
+
+        = render Conversations::SystemMessage::SystemMessageComponent.new \
+          title: t(".system_messages.#{primary_scope}.title"),
+          subtitle: t(".system_messages.#{primary_scope}.subtitle"),
+          color: :blue,
+          image_path: 'status_accepted.png',
+          html_options: { class: current_user == @conversation.task.user ? 'mt-38' : 'mt-24' },
+          alt: t(".system_messages.#{primary_scope}.alt")
+
+
+        - @conversation.messages.each do |message|
+          = render Messages::MessageComponent.new \
+            message: message,
+            current_user: current_user
+        - if @status == :cancelled
+          = render Conversations::SystemMessage::SystemMessageComponent.new \
+            title: t('.system_messages.statuses.cancelled.title'),
+            color: :blue,
+            image_path: 'status_canceled.png',
+            alt: t('.system_messages.statuses.cancelled.alt')
+        - elsif @status == :wrong_submission
+          = render Conversations::SystemMessage::SystemMessageComponent.new \
+            title: t('.system_messages.statuses.wrong_submission.title'),
+            color: :blue,
+            image_path: 'status_tasker_changed.png',
+            alt: t('.system_messages.statuses.wrong_submission.alt')
+        - elsif @status == :completed
+          = render Conversations::SystemMessage::SystemMessageComponent.new \
+            title: t('.system_messages.statuses.completed.title'),
+            subtitle: t('.system_messages.statuses.completed.subtitle'),
+            color: :blue,
+            image_path: 'status_completed.png',
+            alt: t('.system_messages.statuses.completed.alt')
+        - if @status != :active
+          .mb-6.text-center.text-sm.text-gray-600
+            = t('.something_wrong_html', link: link_to(t('.contact_us'), pages_contact_path, class: 'underline'))
+            
+  .h-20
+    = render Conversations::MessageForm::MessageFormComponent.new(conversation: @conversation, current_user: current_user, status: @status)
