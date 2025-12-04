@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_01_231021) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_03_144625) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -87,6 +87,10 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_01_231021) do
     t.datetime "submission_owner_last_seen_at"
     t.datetime "task_owner_last_seen_at"
     t.bigint "submission_id", null: false
+    t.datetime "sender_last_seen_at"
+    t.datetime "recipient_last_seen_at"
+    t.index ["recipient_last_seen_at"], name: "index_conversations_on_recipient_last_seen_at"
+    t.index ["sender_last_seen_at"], name: "index_conversations_on_sender_last_seen_at"
     t.index ["submission_id"], name: "index_conversations_on_submission_id"
     t.index ["submission_owner_id", "task_owner_id", "task_id", "submission_id"], name: "index_unique_conversations", unique: true
     t.index ["submission_owner_id"], name: "index_conversations_on_submission_owner_id"
@@ -195,8 +199,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_01_231021) do
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
     t.string "role"
-    t.datetime "last_seen_at"
     t.string "categories", default: [], array: true
+    t.datetime "last_seen_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["last_seen_accepted_submission_at"], name: "index_users_on_last_seen_accepted_submission_at"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
