@@ -4,7 +4,9 @@ development:
   channel_prefix: zlecajto_development
 
 test:
-  adapter: test
+  adapter: redis
+  url: <%= ENV.fetch("REDISCLOUD_URL") %>
+  channel_prefix: zlecajto_test
 
 production:
   adapter: redis
