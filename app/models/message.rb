@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 class Message < ApplicationRecord
+  include Messages::Emailable
   belongs_to :conversation
   belongs_to :user
+  after_create_commit :send_new_message_email
 
   has_many_attached :photos
 
