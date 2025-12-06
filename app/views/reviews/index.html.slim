@@ -1,0 +1,68 @@
+- if @user && @user != current_user
+  .max-w-md.mx-auto.bg-gray-50.min-h-screen
+    / Profile Header
+    .flex.pt-12.pb-8.px-4.items-center
+        = render Users::AvatarComponent.new(user: @user, size: 'lg')
+        .flex.flex-col.ml-4
+            h1.text-2xl.font-bold.text-gray-900 = @user.display_name
+            p.text-sm.text-gray-500.mt-1
+                | On ZlecajTo since 
+                = l(@user.created_at.to_date, format: :default)
+
+
+    / Rating Summary
+    .px-6.mb-8
+      .flex.items-baseline.gap-3
+        span.text-5xl.font-bold.text-gray-900 = @average_rating
+        .flex.flex-col
+          span.text-lg.font-semibold.text-gray-900 Rating
+          span.text-sm.text-gray-500 = "from #{@reviews_count} reviews"
+
+    / Reviews List
+    .px-4.space-y-4.pb-12
+      - @reviews.each do |review|
+        .bg-white.rounded-2xl.p-5
+          .flex.items-start.gap-3.mb-3
+            = render Users::AvatarComponent.new(user: review.author, size: 'md')
+            .flex.flex-col
+              span.font-semibold.text-gray-900 = review.author.first_name
+              .flex.text-blue-500
+                - 5.times do |i|
+                  - if i < review.rating
+                    svg.w-5.h-5.fill-current viewBox="0 0 24 24"
+                      path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                  - else
+                    svg.w-5.h-5.text-gray-300.fill-current viewBox="0 0 24 24"
+                      path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+          
+          - if review.description.present?
+            p.text-gray-700.text-sm.leading-relaxed = review.description
+
+- else
+  .max-w-7xl.mx-auto.px-6.mt-8
+    h1.text-2xl.font-semibold.text-gray-900.text-center Moje opinie
+
+    - if @reviews.any?
+      .grid.grid-cols-1.md:grid-cols-2.gap-6.mt-8
+        - @reviews.each do |review|
+          .bg-white.shadow.rounded-lg.p-6
+            .flex.items-center.justify-between.mb-4
+              .flex.items-center
+                .font-medium.text-gray-900 = review.author.first_name
+                span.mx-2.text-gray-400 •
+                .text-sm.text-gray-500 = l(review.created_at, format: :short)
+              .flex.items-center
+                - review.rating.times do
+                  svg.w-5.h-5.text-yellow-400[fill="currentColor" viewBox="0 0 20 20"]
+                    path[d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"]
+            
+            - if review.description.present?
+              p.text-gray-700.mb-4 = review.description
+
+            .text-sm.text-gray-500
+              | Dotyczy zadania: 
+              = link_to review.task.title, task_path(review.task), class: "text-blue-600 hover:underline"
+
+    - else
+      .text-center.mt-12
+        p.text-gray-500 Nie masz jeszcze żadnych opinii.

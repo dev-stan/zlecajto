@@ -1,0 +1,21 @@
+.max-w-2xl.mx-auto.px-4.mt-8
+  h1.font-bold.text-3xl.mb-4 Dodaj opinię
+  p.text-base.text-gray-600.font-medium.mb-6 = "Oceń współpracę przy zadaniu: #{@task.title}"
+
+  = form_with model: @review, url: reviews_path, local: true, class: "space-y-6" do |form|
+    = form.hidden_field :task_id, value: @task.id
+
+    .space-y-2
+      = form.label :rating, 'Ocena', class: "block text-sm font-medium text-gray-700"
+      .relative
+        = form.select :rating, (1..5).map { |i| [i, i] }, { selected: 5 }, { class: "w-full bg-white rounded-lg px-3 py-3 appearance-none focus:outline-none focus:ring-2 focus:ring-blue-200 border-2 border-gray-300 text-gray-700" }
+        .pointer-events-none.absolute.inset-y-0.right-0.flex.items-center.px-2.text-gray-700
+          svg.fill-current.text-gray-500.h-4.w-4 viewBox="0 0 20 20"
+            path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+
+    .space-y-2
+      = render Input::InputComponent.new(name: 'review[description]', type: 'textarea', label: 'Komentarz', placeholder: 'Napisz kilka słów o współpracy...', rows: 5, html_options: { class: 'border-2 border-gray-300 w-full rounded-lg p-3' })
+
+    .flex.gap-4.justify-end.mt-8
+      = render Ui::ButtonComponent.new(text: 'Anuluj', path: task_path(@task), size: :md, variant: :secondary)
+      = render Ui::ButtonComponent.new(text: 'Dodaj opinię', submit: true, size: :md, variant: :primary)
