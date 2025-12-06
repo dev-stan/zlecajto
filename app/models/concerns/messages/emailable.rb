@@ -7,7 +7,7 @@ module Messages
 
     def send_new_message_email
       MailgunTemplateJob.perform_later(
-        to: user.email,
+        to: user.conversation.other_participant(user).email,
         template: 'chat_notification_new_message',
         subject: "Nowa wiadomość - #{conversation.task.title}",
         variables: {
