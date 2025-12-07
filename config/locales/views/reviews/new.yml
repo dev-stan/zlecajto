@@ -1,0 +1,18 @@
+pl:
+  reviews:
+    new:
+      title: "Dodaj opinię"
+      subtitle: "Oceń współpracę przy zadaniu: %{task_title}"
+      rating_label: "Ocena"
+      comment_label: "Komentarz"
+      comment_placeholder: "Napisz kilka słów o współpracy..."
+      submit: "Dodaj opinię"
+en:
+  reviews:
+    new:
+      title: "Add review"
+      subtitle: "Rate collaboration on task: %{task_title}"
+      rating_label: "Rating"
+      comment_label: "Comment"
+      comment_placeholder: "Write a few words about the collaboration..."
+      submit: "Add review"

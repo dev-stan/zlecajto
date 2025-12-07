@@ -6,8 +6,13 @@
       .flex.items-center
         i.fa.fa-envelope.fa-fw.text-base.text-gray-500.mr-2
         span.text-gray-600.text-base = "#{@user.email[0,9]}..."
-      - if @user.phone_number.present?
-        .flex.items-center.mt-1.mb-2
+
+      .flex.items-center.mt-1.mb-2
+        - if @user.received_reviews.any?
+          i.fa.fa-star.fa-fw.text-base.text-gray-500.mr-2
+          span.text-gray-600.text-base
+            = number_with_precision(@user.received_reviews.average(:rating), precision: 2)
+        - else
           i.fa.fa-phone.fa-fw.text-base.text-gray-500.mr-2
           span.text-gray-600.text-base = @user.phone_number
       .flex
@@ -15,6 +20,13 @@
           = render(Ui::BadgeComponent.new(text: t('shared.buttons.edit'), variant: :blue, html_options: { class: 'px-1.5 ml-0 mt-0 text-sm cursor-pointer' }))
         = link_to destroy_user_session_path, data: { turbo_method: :delete } do
           = render(Ui::BadgeComponent.new(text: t('shared.buttons.logout'), variant: :red, html_options: { class: 'px-1.5 ml-2 mt-0 text-sm cursor-pointer hidden md:block' }))
+
+  .max-w-md.mx-auto.py-4
+    .grid.grid-cols-3.gap-4.mx-4
+      = render Profiles::IconCard::IconCardComponent.new(label: 'Pomoc', icon: 'fa-phone', path: pages_contact_path)
+      = render Profiles::IconCard::IconCardComponent.new(label: 'Opinie', icon: 'fa-star', path: user_reviews_path(@user))
+      = render Profiles::IconCard::IconCardComponent.new(label: 'Wiadomości', icon: 'fa-paper-plane', path: conversations_path)
+
 
 
   .mx-auto.px-4

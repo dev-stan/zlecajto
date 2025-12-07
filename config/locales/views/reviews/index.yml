@@ -1,0 +1,14 @@
+pl:
+  reviews:
+    index:
+      member_since: "Na ZlecajTo od"
+      rating: "Ocena"
+      from_reviews: "z %{count} opinii"
+      no_reviews: "Tutaj pojawią się opinie od innych użytkowników. Na razie nie ma żadnych opinii."
+en:
+  reviews:
+    index:
+      member_since: "Member since"
+      rating: "Rating"
+      from_reviews: "from %{count} reviews"
+      no_reviews: "Reviews from other users will appear here. No reviews yet."

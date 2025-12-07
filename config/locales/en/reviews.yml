@@ -1,0 +1,6 @@
+en:
+  reviews:
+    create:
+      success: "Review was successfully added."
+      failure: "Could not add review."
+      error: "Could not add review: %{errors}"

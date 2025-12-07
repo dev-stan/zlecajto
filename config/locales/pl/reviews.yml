@@ -1,0 +1,6 @@
+pl:
+  reviews:
+    create:
+      success: "Opinia została dodana."
+      failure: "Nie można dodać opinii."
+      error: "Nie udało się dodać opinii: %{errors}"

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ReviewsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: %i[new create]
 
   def index
     if params[:user_id]
@@ -28,16 +28,16 @@ class ReviewsController < ApplicationController
     recipient = determine_recipient(@task)
 
     unless recipient
-      redirect_back fallback_location: root_path, alert: 'Nie można dodać opinii.'
+      redirect_back fallback_location: root_path, alert: t('reviews.create.failure')
       return
     end
 
     @review = Review.new(review_params.merge(author: current_user, recipient: recipient))
 
     if @review.save
-      redirect_to @task, notice: 'Opinia została dodana.'
+      redirect_to @task, notice: t('reviews.create.success')
     else
-      redirect_back fallback_location: @task, alert: "Nie udało się dodać opinii: #{@review.errors.full_messages.join(', ')}"
+      redirect_back fallback_location: @task, alert: t('reviews.create.error', errors: @review.errors.full_messages.join(', '))
     end
   end
 

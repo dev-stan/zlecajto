@@ -1,0 +1,18 @@
+pl:
+  activerecord:
+    attributes:
+      review:
+        rating: "Ocena"
+        description: "Opis"
+        author: "Autor"
+        recipient: "Odbiorca"
+        task: "Zadanie"
+en:
+  activerecord:
+    attributes:
+      review:
+        rating: "Rating"
+        description: "Description"
+        author: "Author"
+        recipient: "Recipient"
+        task: "Task"
