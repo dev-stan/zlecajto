@@ -5,10 +5,9 @@
     = render Users::AvatarComponent.new(user: @user, size: 'lg')
 
     .flex.flex-col
-      h1.text-2xl.font-bold.text-gray-900 = @user.display_name
-      p.text-sm.text-gray-500.mt-1
-        = t('.member_since')
-        = l(@user.created_at.to_date, format: :default)
+      h1.text-4xl.font-bold.text-gray-900 = @user.display_name
+      p.text-lg.text-gray-500.mt-1
+        = "#{t('.member_since')} #{l(@user.created_at.to_date, format: :default)}"
 
   - if @reviews.any?
     / average rating

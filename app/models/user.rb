@@ -61,7 +61,7 @@ class User < ApplicationRecord
   # end
 
   def display_name
-    "#{first_name.upcase} #{last_name.first.upcase if last_name.present?}"
+    "#{first_name.capitalize} #{last_name.first.upcase if last_name.present?}"
   end
 
   private

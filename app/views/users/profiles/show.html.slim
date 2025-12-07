@@ -11,7 +11,7 @@
         - if @user.received_reviews.any?
           i.fa.fa-star.fa-fw.text-base.text-gray-500.mr-2
           span.text-gray-600.text-base
-            = number_with_precision(@user.received_reviews.average(:rating), precision: 2)
+            = "#{number_with_precision(@user.received_reviews.average(:rating), precision: 1)} (#{@user.received_reviews.count})"
         - else
           i.fa.fa-phone.fa-fw.text-base.text-gray-500.mr-2
           span.text-gray-600.text-base = @user.phone_number
