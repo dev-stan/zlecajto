@@ -1,23 +1,28 @@
-.relative.inline-block
-  .rounded-full.flex.items-center.justify-center.overflow-hidden
-    - if @user&.profile_picture&.attached?
-      = image_tag @user.profile_picture.variant(resize_to_fill: image_size),
-        class: "w-full h-full object-cover",
-        alt: t('activerecord.attributes.user.profile_picture', default: 'Zdjęcie profilowe'),
-        loading: "lazy"
-    - else
-      - width, height = image_size
-      = image_tag "profile_picture.png",
-        width: width,
-        height: height,
-        class: "object-cover",
-        alt: "Profile",
-        loading: "lazy"
+- content = capture do
+  .relative.inline-block
+    .rounded-full.flex.items-center.justify-center.overflow-hidden
+      - if @user&.profile_picture&.attached?
+        = image_tag @user.profile_picture.variant(resize_to_fill: image_size),
+          class: "w-full h-full object-cover",
+          alt: t('activerecord.attributes.user.profile_picture', default: 'Zdjęcie profilowe'),
+          loading: "lazy"
+      - else
+        - width, height = image_size
+        = image_tag "profile_picture.png",
+          width: width,
+          height: height,
+          class: "object-cover",
+          alt: "Profile",
+          loading: "lazy"
 
-    / Tailwind ping animation badge (top-right)
-    / [todo] Actually display notifications!
-    - if @show_notification && @current_user&.unread_notifications_count > 0
-      span.absolute.top-0.-right-2.flex.h-5.w-5.items-center.justify-center
-        span.absolute.inline-flex.h-full.w-full.rounded-full.bg-red-400.opacity-75.animate-ping
-        span.relative.inline-flex.h-5.w-5.rounded-full.bg-red-500.text-white.text-sm.font-semibold.items-center.justify-center
-          = @current_user.unread_notifications_count
+      - if @show_notification && @current_user&.unread_notifications_count.to_i.positive?
+        span.absolute.top-0.-right-2.flex.h-5.w-5.items-center.justify-center
+          span.absolute.inline-flex.h-full.w-full.rounded-full.bg-red-400.opacity-75.animate-ping
+          span.relative.inline-flex.h-5.w-5.rounded-full.bg-red-500.text-white.text-sm.font-semibold.items-center.justify-center
+            = @current_user.unread_notifications_count
+
+- if path.present?
+  = link_to path do
+    = content
+- else
+  = content

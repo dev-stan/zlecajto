@@ -1,21 +1,38 @@
 .max-w-2xl.mx-auto.px-4.mt-8
-  h1.font-bold.text-3xl.mb-4 = t('.title')
-  p.text-base.text-gray-600.font-medium.mb-6 = t('.subtitle', task_title: @task.title)
+  / Task Card
+  = link_to task_path(@task) do
+    .bg-white.rounded-3xl.p-4.flex.items-center.gap-4.mb-12
+      - if @task.photos.attached?
+        = image_tag @task.photos.first.variant(resize_to_fill: [100, 100]), class: "w-16 h-16 rounded-xl object-cover"
+      - else
+        .w-16.h-16.bg-gray-200.rounded-xl.flex.items-center.justify-center
+          i.fa-solid.fa-image.text-gray-400.text-xl
 
-  = form_with model: @review, url: reviews_path, local: true, class: "space-y-6" do |form|
+      .flex.flex-col.gap-1
+        span.font-bold.text-gray-900 = @task.title
+        div
+          = render Ui::BadgeComponent.new(text: t("#{@task.status}"), variant: :green, html_options: { class: 'rounded-full px-3 py-0.5 text-xs font-medium' })
+
+  h2.text-2xl.font-bold.text-center.mb-2 = t('.how_do_you_rate')
+  p.text-center.text-gray-500.mb-8 = t('.review_help_text')
+
+  = form_with model: @review, url: reviews_path, local: true, class: "space-y-8" do |form|
     = form.hidden_field :task_id, value: @task.id
 
-    .space-y-2
-      = form.label :rating, t('.rating_label'), class: "block text-sm font-medium text-gray-700"
-      .relative
-        = form.select :rating, (1..5).map { |i| [i, i] }, { selected: 5 }, { class: "w-full bg-white rounded-lg px-3 py-3 appearance-none focus:outline-none focus:ring-2 focus:ring-blue-200 border-2 border-gray-300 text-gray-700" }
-        .pointer-events-none.absolute.inset-y-0.right-0.flex.items-center.px-2.text-gray-700
-          svg.fill-current.text-gray-500.h-4.w-4 viewBox="0 0 20 20"
-            path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+    / Star Rating
+    div(data-controller="star-rating" class="flex justify-center gap-4")
+      = form.hidden_field :rating, data: { star_rating_target: "input" }
+      - 1.upto(5) do |i|
+        button.text-4xl.transition-colors.focus:outline-none(
+          type="button"
+          data-action="star-rating#rate"
+          data-value=i
+          data-star-rating-target="star"
+        )
+          i.fa-regular.fa-star.text-gray-300
 
+    / Description
     .space-y-2
-      = render Input::InputComponent.new(name: 'review[description]', type: 'textarea', label: t('.comment_label'), placeholder: t('.comment_placeholder'), rows: 5, html_options: { class: 'border-2 border-gray-300 w-full rounded-lg p-3' })
-
-    .flex.gap-4.justify-end.mt-8
-      = render Ui::ButtonComponent.new(text: t('shared.buttons.cancel'), path: task_path(@task), size: :md, variant: :secondary)
-      = render Ui::ButtonComponent.new(text: t('.submit'), submit: true, size: :md, variant: :primary)
+      = render Input::InputComponent.new(name: 'review[description]', placeholder: t('.description_placeholder'), type: 'textarea', html_options: { class: 'rounded-xl'})
+    / Submit Button
+    = render Ui::ButtonComponent.new(text: t('.submit'), submit: true, size: :lg, variant: :primary, html_options: { class: 'w-full rounded-full py-4 text-lg font-semibold' })

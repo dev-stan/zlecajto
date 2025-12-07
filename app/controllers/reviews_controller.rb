@@ -6,20 +6,35 @@ class ReviewsController < ApplicationController
   def index
     if params[:user_id]
       @user = User.find(params[:user_id])
-      @reviews = @user.received_reviews
-                      .includes(:author, :task)
-                      .order(created_at: :desc)
-      @average_rating = @reviews.average(:rating)&.round(1) || 0
-      @reviews_count = @reviews.count
     else
-      @reviews = Review.where(recipient: current_user)
-                       .includes(:author, :task)
-                       .order(created_at: :desc)
+      @user = current_user
     end
+
+    @received_reviews = @user.received_reviews
+                             .includes(:author, :task)
+                             .order(created_at: :desc)
+
+    @authored_reviews = @user.authored_reviews
+                             .includes(:recipient, :task)
+                             .order(created_at: :desc)
+
+    @received_average_rating = @received_reviews.average(:rating)&.round(1) || 0
+    @received_reviews_count = @received_reviews.count
+
+    @authored_average_rating = @authored_reviews.average(:rating)&.round(1) || 0
+    @authored_reviews_count = @authored_reviews.count
   end
 
   def new
+    console
     @task = Task.find(params[:task_id])
+    @recipient = determine_recipient(@task)
+
+    unless @recipient
+      redirect_back fallback_location: root_path, alert: t('reviews.create.failure')
+      return
+    end
+
     @review = Review.new(task: @task)
   end
 
@@ -35,7 +50,7 @@ class ReviewsController < ApplicationController
     @review = Review.new(review_params.merge(author: current_user, recipient: recipient))
 
     if @review.save
-      redirect_to @task, notice: t('reviews.create.success')
+      redirect_to user_reviews_path(current_user, tab: 'authored'), notice: t('reviews.create.success')
     else
       redirect_back fallback_location: @task, alert: t('reviews.create.error', errors: @review.errors.full_messages.join(', '))
     end

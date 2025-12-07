@@ -4,7 +4,7 @@
     = link_to conversations_path do
       i.fas.fa-arrow-left.text-2xl aria-label=t('shared.buttons.back')
     p.text-2xl.font-bold = other_participant.display_name
-    = render Users::AvatarComponent.new(user: other_participant, size: 'sm', current_user: current_user)
+    = render Users::AvatarComponent.new(user: other_participant, size: 'sm', current_user: current_user, link_to_reviews: true)
 
   / SLIDING SECTION — removed from layout so it won’t leave background behind
   div class="bg-white z-0 pb-3 mt-[-1px]" data-controller="headroom" style="position: absolute; top: 100%; left: 0; right: 0;"

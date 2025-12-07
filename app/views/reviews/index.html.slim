@@ -1,42 +1,22 @@
-.max-w-md.mx-auto.min-h-screen.bg-transparent.sm:bg-gray-50.px-4
+.max-w-md.mx-auto.min-h-screen.px-4
 
   / user header
-  .flex.items-center.gap-4.pt-12.pb-8
+  .flex.flex-col.items-center.pt-12.pb-8
     = render Users::AvatarComponent.new(user: @user, size: 'lg')
+    
+    h1.text-4xl.font-bold.text-gray-900.text-center.mt-2 = @user.display_name
 
-    .flex.flex-col
-      h1.text-4xl.font-bold.text-gray-900 = @user.display_name
-      p.text-lg.text-gray-500.mt-1
-        = "#{t('.member_since')} #{l(@user.created_at.to_date, format: :default)}"
+  - active_tab = params[:tab] || 'received'
+  
+  = render Ui::TabsComponent.new(default_tab: active_tab) do |tabs|
+    - tabs.with_tab(id: 'received', label: t('.received_reviews_tab'), count: @received_reviews.any? ? @received_reviews.count : nil) do
+      - if @received_reviews.any?
+        = render 'list', reviews: @received_reviews, average_rating: @received_average_rating, reviews_count: @received_reviews_count
+      - else
+        = render Layout::NoContentComponent.new(message: t('.no_reviews'))
 
-  - if @reviews.any?
-    / average rating
-    .mb-8
-      .flex.items-baseline.gap-3
-        span.text-5xl.font-bold.text-gray-900 = @average_rating
-
-        .flex.flex-col
-          span.text-lg.font-semibold.text-gray-900 = t('.rating')
-          span.text-sm.text-gray-500 = t('.from_reviews', count: @reviews_count)
-
-    / reviews index
-    .space-y-4.pb-12
-      - @reviews.each do |review|
-
-        .bg-white.rounded-2xl.p-5.space-y-3
-          .flex.items-start.gap-3
-            = render Users::AvatarComponent.new(user: review.author, size: 'md')
-
-            .flex.flex-col
-              span.font-semibold.text-gray-900 = review.author.first_name
-
-              .flex class="rating rating-#{review.rating}"
-                - 5.times do |i|
-                  i.fa-solid.fa-star class=(i < review.rating ? 'text-primary' : 'text-gray-300')
-
-          - if review.description.present?
-            p.text-sm.leading-relaxed.text-gray-700 = review.description
-
-  - else
-    = render Layout::NoContentComponent.new \
-      message: t('.no_reviews')
+    - tabs.with_tab(id: 'authored', label: t('.authored_reviews_tab'), count: @authored_reviews.any? ? @authored_reviews.count : nil) do
+      - if @authored_reviews.any?
+        = render 'list', reviews: @authored_reviews, average_rating: @authored_average_rating, reviews_count: @authored_reviews_count
+      - else
+        = render Layout::NoContentComponent.new(message: t('.no_authored_reviews'))

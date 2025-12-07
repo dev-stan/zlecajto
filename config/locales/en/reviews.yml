@@ -4,3 +4,8 @@ en:
       success: "Review was successfully added."
       failure: "Could not add review."
       error: "Could not add review: %{errors}"
+    list:
+      rating: "Rating"
+      from_reviews:
+        one: "from 1 review"
+        other: "from %{count} reviews"
