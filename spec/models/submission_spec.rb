@@ -154,6 +154,26 @@ RSpec.describe Submission, type: :model do
 
         submission.save!
       end
+
+      context 'with various phone number formats' do
+        [
+          ['123456789', '+48123456789'],
+          ['+48 123456789', '+48123456789'],
+          ['+48123456789', '+48123456789'],
+          ['0123456789', '+48123456789']
+        ].each do |input_phone, expected_phone|
+          it "normalizes '#{input_phone}' to '#{expected_phone}' before sending" do
+            task_owner.update!(phone_number: input_phone)
+            
+            expect(External::Sms::SmsSender).to receive(:send_now).with(
+              to: expected_phone,
+              body: anything
+            )
+            
+            submission.save!
+          end
+        end
+      end
     end
   end
 end
