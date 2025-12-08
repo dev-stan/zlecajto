@@ -6,7 +6,7 @@ pl:
       received_reviews_tab: "Otrzymane"
       authored_reviews_tab: "Wystawione"
       authored_reviews_title: "Wystawione opinie"
-      no_authored_reviews: "Tutaj pojawią się opinie, które wystawisz innym użytkownikom. Na razie nie wystawiłeś(aś) żadnych opinii."
+      no_authored_reviews: "Tutaj pojawią się opinie wystawione innym użytkownikom."
 en:
   reviews:
     index:
