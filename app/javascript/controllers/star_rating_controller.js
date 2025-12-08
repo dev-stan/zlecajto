@@ -4,16 +4,16 @@ export default class extends Controller {
   static targets = ["input", "star"]
 
   connect() {
-    this.updateStars(false)
+    this.updateStars()
   }
 
   rate(event) {
     const rating = event.currentTarget.dataset.value
     this.inputTarget.value = rating
-    this.updateStars(true)
+    this.updateStars()
   }
 
-  updateStars(animate = false) {
+  updateStars() {
     const currentRating = parseInt(this.inputTarget.value) || 0
     this.starTargets.forEach((star, index) => {
       const starValue = index + 1
@@ -29,26 +29,16 @@ export default class extends Controller {
 
       if (isSelected && !isSolid) {
         // Becoming selected
-        if (animate) {
-          this.animateChange(icon, () => {
-            icon.classList.remove("fa-regular", "text-gray-300")
-            icon.classList.add("fa-solid", "text-primary")
-          })
-        } else {
+        this.animateChange(icon, () => {
           icon.classList.remove("fa-regular", "text-gray-300")
           icon.classList.add("fa-solid", "text-primary")
-        }
+        })
       } else if (!isSelected && isSolid) {
         // Becoming unselected
-        if (animate) {
-          this.animateChange(icon, () => {
-            icon.classList.remove("fa-solid", "text-primary")
-            icon.classList.add("fa-regular", "text-gray-300")
-          })
-        } else {
+        this.animateChange(icon, () => {
           icon.classList.remove("fa-solid", "text-primary")
           icon.classList.add("fa-regular", "text-gray-300")
-        }
+        })
       } else if (isSelected && isSolid) {
         // Ensure correct color if already selected (e.g. fixing previous gray-400)
         if (icon.classList.contains("text-gray-400")) {
