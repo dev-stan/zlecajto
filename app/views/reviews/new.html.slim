@@ -35,4 +35,4 @@
     .space-y-2
       = render Input::InputComponent.new(name: 'review[description]', placeholder: t('.description_placeholder'), type: 'textarea', html_options: { class: 'rounded-xl'})
     / Submit Button
-    = render Ui::ButtonComponent.new(text: t('.submit'), submit: true, size: :lg, variant: :primary, html_options: { class: 'w-full rounded-full py-4 text-lg font-semibold' })
+    = render Ui::ButtonComponent.new(text: t('.submit'), submit: true, size: :lg, variant: :primary, width: 100, html_options: { class: 'py-4' })
