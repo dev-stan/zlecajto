@@ -1,7 +1,6 @@
 
 # frozen_string_literal: true
 
-# app/presenters/task_show_presenter.rb
 class TaskShowPresenter
   include Rails.application.routes.url_helpers
 
@@ -12,7 +11,7 @@ class TaskShowPresenter
     @current_user = current_user
   end
 
-  # ========== Public API (used by views) ==========
+  # public api 
 
   def button_text
     t("button_text.#{button_state}")
@@ -49,8 +48,8 @@ class TaskShowPresenter
   end
 
   private
-
-  # ========== Configuration ==========
+  
+  # button config
 
   BUTTON_CONFIG = {
     cancelled: {
@@ -87,7 +86,7 @@ class TaskShowPresenter
     }
   }.freeze
 
-  # ========== State Determination ==========
+  # state determination
 
   def button_state
     @button_state ||= begin

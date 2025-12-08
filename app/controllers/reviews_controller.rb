@@ -2,13 +2,11 @@
 
 class ReviewsController < ApplicationController
   before_action :authenticate_user!, only: %i[new create]
+  before_action :set_task, only: %i[new create]
+  before_action :set_recipient, only: %i[new create]
 
   def index
-    if params[:user_id]
-      @user = User.find(params[:user_id])
-    else
-      @user = current_user
-    end
+    @user = params[:user_id] ? User.find(params[:user_id]) : current_user
 
     @received_reviews = @user.received_reviews
                              .includes(:author, :task)
@@ -26,43 +24,40 @@ class ReviewsController < ApplicationController
   end
 
   def new
-    @task = Task.find(params[:task_id])
-    @recipient = determine_recipient(@task)
-
-    unless @recipient
-      redirect_back fallback_location: root_path, alert: t('reviews.create.failure')
-      return
-    end
-
     @review = Review.new(task: @task)
   end
 
   def create
-    @task = Task.find(review_params[:task_id])
-    recipient = determine_recipient(@task)
-
-    unless recipient
-      redirect_back fallback_location: root_path, alert: t('reviews.create.failure')
-      return
-    end
-
-    @review = Review.new(review_params.merge(author: current_user, recipient: recipient))
+    @review = Review.new(review_params.merge(author: current_user, recipient: @recipient))
 
     if @review.save
       redirect_to user_reviews_path(current_user, tab: 'authored'), notice: t('reviews.create.success')
     else
-      redirect_back fallback_location: @task, alert: t('reviews.create.error', errors: @review.errors.full_messages.join(', '))
+      redirect_back fallback_location: @task,
+                    alert: t('reviews.create.error', errors: @review.errors.full_messages.join(', '))
     end
   end
 
   private
 
-  def determine_recipient(task)
-    if task.user_id == current_user.id
-      task.accepted_submission&.user
-    elsif task.accepted_submission&.user_id == current_user.id
-      task.user
-    end
+  def set_task
+    @task = if action_name == 'create'
+              Task.find(review_params[:task_id])
+            else
+              Task.find(params[:task_id])
+            end
+  end
+
+  def set_recipient
+    @recipient = if @task.user_id == current_user.id
+                   @task.accepted_submission&.user
+                 elsif @task.accepted_submission&.user_id == current_user.id
+                   @task.user
+                 end
+
+    return if @recipient
+
+    redirect_back fallback_location: root_path, alert: t('reviews.create.failure')
   end
 
   def review_params
