@@ -3,6 +3,7 @@ pl:
     index:
       member_since: "Na ZlecajTo od"
       no_reviews: "Tutaj pojawią się opinie od innych użytkowników. Na razie nie ma żadnych opinii."
+      user_reviews: "Opinie użytkownika"
       received_reviews_tab: "Otrzymane"
       authored_reviews_tab: "Wystawione"
       authored_reviews_title: "Wystawione opinie"
@@ -12,6 +13,7 @@ en:
     index:
       member_since: "Member since"
       no_reviews: "Reviews from other users will appear here. No reviews yet."
+      user_reviews: "User reviews"
       received_reviews_tab: "Received"
       authored_reviews_tab: "Given"
       authored_reviews_title: "Given reviews"

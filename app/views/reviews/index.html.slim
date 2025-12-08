@@ -5,6 +5,7 @@
     = render Users::AvatarComponent.new(user: @user, size: 'lg')
     
     h1.text-4xl.font-bold.text-gray-900.text-center.mt-2 = @user.display_name
+    p.text-md.text-gray-500 = t('.user_reviews')
 
   - active_tab = params[:tab] || 'received'
   
