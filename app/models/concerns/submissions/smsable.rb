@@ -10,7 +10,7 @@ module Submissions
     def send_new_submission_sms
       External::Sms::SmsSender.send_now(
         to: task.user.phone_number,
-        body: I18n.t('models.submission.sms.new_submission', name: user.first_name, title: task.title, note: note,
+        body: I18n.t('models.submission.sms.new_submission', first_name: user.first_name.capitalize, task_title: task.title, note: note,
                                                              url: task_url(task.id))
       )
     end

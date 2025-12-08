@@ -2,7 +2,7 @@
 
 class Submission < ApplicationRecord
   include Submissions::Emailable
-  # include Submissions::Smsable
+  include Submissions::Smsable
   include Submissions::Notifiable
 
   belongs_to :task
@@ -35,7 +35,7 @@ class Submission < ApplicationRecord
       .order(created_at: :desc)
   }
 
-  # after_create :send_new_submission_sms
+  after_create :send_new_submission_sms
   after_create :send_new_submission_email
   after_create :create_new_submission_notification
 

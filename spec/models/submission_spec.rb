@@ -133,4 +133,47 @@ RSpec.describe Submission, type: :model do
       expect(Submission.ransackable_associations).to match_array(expected)
     end
   end
+
+  describe 'callbacks' do
+    describe '#send_new_submission_sms' do
+      let(:task_owner) { create(:user, phone_number: '48123456789') }
+      let(:task) { create(:task, user: task_owner, title: 'Test Task') }
+      let(:applicant) { create(:user, first_name: 'John') }
+      let(:submission) { build(:submission, task: task, user: applicant, note: 'I can do it') }
+
+      before do
+        allow(submission).to receive(:send_new_submission_email)
+        allow(submission).to receive(:create_new_submission_notification)
+      end
+
+      it 'sends an SMS with correct details using External::Sms::SmsSender' do
+        expect(External::Sms::SmsSender).to receive(:send_now).with(
+          to: '+48123456789',
+          body: include('John', 'Test Task', 'I can do it')
+        )
+
+        submission.save!
+      end
+
+      context 'with various phone number formats' do
+        [
+          ['123456789', '+48123456789'],
+          ['+48 123456789', '+48123456789'],
+          ['+48123456789', '+48123456789'],
+          ['0123456789', '+48123456789']
+        ].each do |input_phone, expected_phone|
+          it "normalizes '#{input_phone}' to '#{expected_phone}' before sending" do
+            task_owner.update!(phone_number: input_phone)
+            
+            expect(External::Sms::SmsSender).to receive(:send_now).with(
+              to: expected_phone,
+              body: anything
+            )
+            
+            submission.save!
+          end
+        end
+      end
+    end
+  end
 end

@@ -131,4 +131,26 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe '#phone_number' do
+    it 'normalizes "123456789" to "+48123456789"' do
+      user = build(:user, phone_number: '123456789')
+      expect(user.phone_number).to eq('+48123456789')
+    end
+
+    it 'normalizes "+48 123456789" to "+48123456789"' do
+      user = build(:user, phone_number: '+48 123456789')
+      expect(user.phone_number).to eq('+48123456789')
+    end
+
+    it 'normalizes "+48123456789" to "+48123456789"' do
+      user = build(:user, phone_number: '+48123456789')
+      expect(user.phone_number).to eq('+48123456789')
+    end
+
+    it 'normalizes "0123456789" to "+48123456789"' do
+      user = build(:user, phone_number: '0123456789')
+      expect(user.phone_number).to eq('+48123456789')
+    end
+  end
 end
