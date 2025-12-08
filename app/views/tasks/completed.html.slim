@@ -27,7 +27,3 @@
     .w-full.space-y-4
       = render Ui::ButtonComponent.new(text: t('.leave_review'), path: new_review_path(task_id: @task.id), variant: :primary_2, size: :lg, width: 100)
       = render Ui::ButtonComponent.new(text: t('.browse_tasks'), path: tasks_path, variant: :green, size: :lg, width: 100)
-
-    / Return link
-    .mt-auto.pt-8
-      = link_to t('.return_to_task'), task_path(@task), class: "text-gray-400 font-medium hover:text-gray-600 text-sm transition-colors"
