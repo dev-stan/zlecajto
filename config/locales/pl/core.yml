@@ -5,12 +5,12 @@ pl:
     abbr_month_names: [~, sty, lut, mar, kwi, maj, cze, lip, sie, wrz, paź, lis, gru]
     month_names: [~, styczeń, luty, marzec, kwiecień, maj, czerwiec, lipiec, sierpień, wrzesień, październik, listopad, grudzień]
     formats:
-      default: "%d.%m.%Y"
+      default: "%d/%m/%Y"
       short: "%d %b"
       long: "%d %B %Y"
   time:
     formats:
-      default: "%d.%m.%Y %H:%M"
+      default: "%d/%m/%Y %H:%M"
       short: "%d %b %H:%M"
       long: "%d %B %Y %H:%M"
   activerecord:
@@ -24,12 +24,12 @@ en:
     abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
     month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
     formats:
-      default: "%d.%m.%Y"
+      default: "%d/%m/%Y"
       short: "%d %b"
       long: "%d %B %Y"
   time:
     formats:
-      default: "%d.%m.%Y %H:%M"
+      default: "%d/%m/%Y %H:%M"
       short: "%d %b %H:%M"
       long: "%d %B %Y %H:%M"
   activerecord:

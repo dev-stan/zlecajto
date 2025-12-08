@@ -8,6 +8,13 @@ class User < ApplicationRecord
   has_many :submissions
   has_many :answers
   has_many :notifications
+  
+  has_many :authored_reviews, class_name: "Review",
+                              foreign_key: "author_id",
+                              dependent: :destroy
+  has_many :received_reviews, class_name: "Review",
+                              foreign_key: "recipient_id",
+                              dependent: :destroy
 
   # Updated associations for renamed conversation columns
   has_many :conversations_as_submission_owner,
@@ -54,7 +61,7 @@ class User < ApplicationRecord
   # end
 
   def display_name
-    "#{first_name} #{last_name.first.upcase if last_name.present?}"
+    "#{first_name.capitalize} #{last_name.first.upcase if last_name.present?}"
   end
 
   private

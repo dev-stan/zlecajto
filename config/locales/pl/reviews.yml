@@ -1,0 +1,23 @@
+pl:
+  reviews:
+    create:
+      success: "Opinia została dodana."
+      failure: "Nie można dodać opinii."
+      error: "Nie udało się dodać opinii: %{errors}"
+    list:
+      rating: "Ocena"
+      from_reviews:
+        one: "z 1 opinii"
+        few: "z %{count} opinii"
+        many: "z %{count} opinii"
+        other: "z %{count} opinii"
+    new:
+      title: "Dodaj opinię"
+      subtitle: "Oceń współpracę przy zleceniu %{task_title}"
+      how_do_you_rate: "Jak oceniasz współpracę?"
+      review_help_text: "Twoja opinia pomoże innym wybrać zaufanego wykonawcę."
+      description_placeholder: "Napisz kilka zdań, co poszło dobrze, a co można poprawić..."
+      submit: "Dodaj opinię"
+      rating_label: "Ocena"
+      comment_label: "Komentarz"
+      comment_placeholder: "Napisz coś więcej..."

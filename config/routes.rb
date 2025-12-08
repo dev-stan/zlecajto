@@ -78,6 +78,13 @@ Rails.application.routes.draw do
   # Answers
   resources :answers, only: [:create]
 
+  # Reviews
+  resources :reviews, only: %i[index create new]
+
+  resources :users, only: [] do
+    resources :reviews, only: [:index]
+  end
+
   # Task messages from session
   get 'task_messages/create_from_session', to: 'task_messages#create_from_session',
                                            as: :create_from_session_task_message

@@ -44,41 +44,12 @@
   .mt-10
     - requested_tab = params[:tab].presence
     - active_tab = requested_tab || (@task.submissions.any? ? 'submissions' : 'questions')
-    div data-controller="tabs" data-tabs-initial-tab=active_tab
-      .flex.flex-row.justify-center
-        nav.flex role="tablist"
-          / Submissions tab
-          .relative.inline-block
-            button.py-3.px-6.text-md.font-semibold.transition(
-              data-action="tabs#show"
-              data-tabs-target="tab"
-              data-tab="submissions"
-              role="tab" 
-              aria-selected=(active_tab == 'submissions')
-              class=(active_tab == 'submissions' ? 'text-black' : 'text-gray-500')
-            )
-              = t('.submissions_tab')
-              - if @task.submissions.any?
-                span.ml-2.inline-flex.items-center.justify-center.text-base.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @task.submissions.count
-              div(data-tabs-target="indicator" data-tab="submissions")
+    
+    = render Ui::TabsComponent.new(default_tab: active_tab) do |tabs|
+      - tabs.with_tab(id: 'submissions', label: t('.submissions_tab'), count: @task.submissions.any? ? @task.submissions.count : nil) do
+        .space-y-6
+          = render 'tasks/show/submissions', task: @task
 
-          / Questions
-          .relative.inline-block
-            button.py-3.px-6.text-md.font-semibold.transition(
-              data-action="tabs#show"
-              data-tabs-target="tab"
-              data-tab="questions"
-              role="tab"
-              aria-selected=(active_tab == 'questions')
-              class=(active_tab == 'questions' ? 'text-black' : 'text-gray-500')
-            ) 
-              = t('.questions_tab')
-              - if @task.task_messages.root.any?
-                span.ml-2.inline-flex.items-center.justify-center.text-base.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @task.task_messages.root.count
-              div(data-tabs-target="indicator" data-tab="questions")
-
-      .mt-4
-      .space-y-6 data-tabs-target="panel" data-tab="submissions" class=(active_tab == 'submissions' ? '' : 'hidden')
-        = render 'tasks/show/submissions', task: @task
-      .space-y-6 data-tabs-target="panel" data-tab="questions" class=(active_tab == 'questions' ? '' : 'hidden')
-        = render 'tasks/show/questions', task: @task
+      - tabs.with_tab(id: 'questions', label: t('.questions_tab'), count: @task.task_messages.root.any? ? @task.task_messages.root.count : nil) do
+        .space-y-6
+          = render 'tasks/show/questions', task: @task

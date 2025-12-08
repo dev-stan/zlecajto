@@ -1,0 +1,38 @@
+.max-w-2xl.mx-auto.px-4.mt-8
+  / Task Card
+  = link_to task_path(@task) do
+    .bg-white.rounded-3xl.p-4.flex.items-center.gap-4.mb-12
+      - if @task.photos.attached?
+        = image_tag @task.photos.first.variant(resize_to_fill: [100, 100]), class: "w-16 h-16 rounded-xl object-cover"
+      - else
+        .w-16.h-16.bg-gray-200.rounded-xl.flex.items-center.justify-center
+          i.fa-solid.fa-image.text-gray-400.text-xl
+
+      .flex.flex-col.gap-1
+        span.font-bold.text-gray-900 = @task.title
+        div
+          = render Ui::BadgeComponent.new(text: t("tasks.status.#{@task.status}"), variant: :green, html_options: { class: 'rounded-full px-3 py-0.5 text-xs font-medium' })
+
+  h2.text-2xl.font-bold.text-center.mb-2 = t('.how_do_you_rate')
+  p.text-center.text-gray-500.mb-8 = t('.review_help_text')
+
+  = form_with model: @review, url: reviews_path, local: true, class: "space-y-8" do |form|
+    = form.hidden_field :task_id, value: @task.id
+
+    / Star Rating
+    div(data-controller="star-rating" class="flex justify-center gap-4")
+      = form.hidden_field :rating, data: { star_rating_target: "input" }
+      - 1.upto(5) do |i|
+        button.text-4xl.transition-colors.focus:outline-none(
+          type="button"
+          data-action="star-rating#rate"
+          data-value=i
+          data-star-rating-target="star"
+        )
+          i.fas.fa-star.text-gray-300
+
+    / Description
+    .space-y-2
+      = render Input::InputComponent.new(name: 'review[description]', placeholder: t('.description_placeholder'), type: 'textarea', html_options: { class: 'rounded-xl'})
+    / Submit Button
+    = render Ui::ButtonComponent.new(text: t('.submit'), submit: true, size: :lg, variant: :primary, width: 100, html_options: { class: 'py-4' })

@@ -2,15 +2,24 @@
 
 module Users
   class AvatarComponent < ApplicationComponent
-    def initialize(user:, size: 'md', show_notification: false, current_user: nil)
+    def initialize(user:, size: 'md', show_notification: false, current_user: nil, link_to_reviews: false)
       super()
       @user = user
       @size = size
       @show_notification = show_notification
       @current_user = current_user
+      @link_to_reviews = link_to_reviews
     end
 
     private
+
+    def path
+      if @link_to_reviews
+        user_reviews_path(@user)
+      else
+        nil
+      end
+    end
 
     def image_size
       case @size

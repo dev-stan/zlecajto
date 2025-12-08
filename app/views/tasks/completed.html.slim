@@ -1,6 +1,29 @@
-.flex.flex-col.items-center.justify-center.min-h-screen.p-10
-    h1.text-7xl.font-bold = t('.heading')
-    p.text-lg.mt-3.font-bold.mb-3 = t('.completed_notice')
-    = image_tag "thumbs_up.gif", width: 300, height: 300, class: "object-cover rounded-xl", alt: "Profile", loading: "lazy"
-    = render Ui::ButtonComponent.new(text: t('shared.buttons.create_task'), path: new_task_path, variant: :secondary, size: :md, html_options: { class: 'w-full mt-5' })
-    = render Ui::ButtonComponent.new(text: t('shared.buttons.browse_tasks'), path: tasks_path, variant: :primary, size: :md, html_options: { class: 'w-full mt-5' })
+.max-w-md.mx-auto.min-h-screen.flex.flex-col
+  / Content
+  .flex-1.flex.flex-col.items-center.px-6.pt-8.pb-8
+    / Icon
+    .mb-6.bg-blue-100.rounded-full.p-6
+      = image_tag "zlecajto_favicon.png", class: "w-16 h-16 object-contain rounded-full"
+    
+    / Headings
+    h2.text-2xl.font-bold.text-gray-900.mb-3.text-center = t('.heading')
+    p.text-center.text-gray-500.mb-10.leading-relaxed = t('.subheading')
+
+    / Task Card
+    = link_to task_path(@task), class: "w-full mb-8 block hover:opacity-95 transition-opacity" do
+      .bg-white.rounded-3xl.p-4.flex.items-center.gap-4
+        - if @task.photos.attached?
+          = image_tag @task.photos.first.variant(resize_to_fill: [100, 100]), class: "w-16 h-16 rounded-xl object-cover"
+        - else
+          .w-12.h-12.bg-gray-200.rounded-xl.flex.items-center.justify-center
+            i.fa-solid.fa-image.text-gray-400.text-sm
+
+        .flex.flex-col.gap-1.flex-1
+          span.font-bold.text-gray-900 = @task.title
+          div.flex.items-center.gap-2.flex-wrap
+            = render Ui::BadgeComponent.new(text: t("tasks.status.#{@task.status}"), variant: :green, html_options: { class: 'text-xs' })
+
+    / Buttons
+    .w-full.space-y-4
+      = render Ui::ButtonComponent.new(text: t('.leave_review'), path: new_review_path(task_id: @task.id), variant: :primary_2, size: :lg, width: 100)
+      = render Ui::ButtonComponent.new(text: t('.browse_tasks'), path: tasks_path, variant: :green, size: :lg, width: 100)

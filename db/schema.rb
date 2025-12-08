@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_03_144625) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_06_212341) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -124,11 +124,16 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_03_144625) do
   end
 
   create_table "reviews", force: :cascade do |t|
-    t.string "title"
-    t.text "description"
     t.bigint "task_id", null: false
+    t.bigint "author_id", null: false
+    t.bigint "recipient_id", null: false
+    t.text "description"
+    t.integer "rating"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_reviews_on_author_id"
+    t.index ["recipient_id"], name: "index_reviews_on_recipient_id"
+    t.index ["task_id", "author_id", "recipient_id"], name: "index_reviews_on_task_and_users", unique: true
     t.index ["task_id"], name: "index_reviews_on_task_id"
   end
 
@@ -216,6 +221,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_03_144625) do
   add_foreign_key "messages", "users"
   add_foreign_key "notifications", "users"
   add_foreign_key "reviews", "tasks"
+  add_foreign_key "reviews", "users", column: "author_id"
+  add_foreign_key "reviews", "users", column: "recipient_id"
   add_foreign_key "submissions", "tasks"
   add_foreign_key "submissions", "users"
   add_foreign_key "task_messages", "task_messages", column: "parent_id"

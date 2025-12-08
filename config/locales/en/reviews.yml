@@ -1,0 +1,21 @@
+en:
+  reviews:
+    create:
+      success: "Review was successfully added."
+      failure: "Could not add review."
+      error: "Could not add review: %{errors}"
+    list:
+      rating: "Rating"
+      from_reviews:
+        one: "from 1 review"
+        other: "from %{count} reviews"
+    new:
+      title: "Add review"
+      subtitle: "Rate collaboration on %{task_title}"
+      how_do_you_rate: "How do you rate the collaboration?"
+      review_help_text: "Your review will help others choose a trusted executor."
+      description_placeholder: "Write a few sentences about what went well and what could be improved..."
+      submit: "Add review"
+      rating_label: "Rating"
+      comment_label: "Comment"
+      comment_placeholder: "Write something more..."

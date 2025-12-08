@@ -1,10 +1,18 @@
 pl:
   tasks:
     completed:
-      heading: "Udało się!"
-      completed_notice: "Twoje zlecenie zostało wykonane"
+      header_title: "Zadanie zakończone"
+      heading: "Świetna robota!"
+      subheading: "Zlecenie zostało pomyślnie zakończone. Co chcesz zrobić dalej?"
+      leave_review: "Zostaw opinię"
+      browse_tasks: "Przeglądaj zlecenia"
+      return_to_task: "Wróć do zlecenia"
 en:
   tasks:
     completed:
-      heading: "Success!"
-      completed_notice: "Your task has been completed"
+      header_title: "Task completed"
+      heading: "Great job!"
+      subheading: "Your task has been successfully completed. What do you want to do next?"
+      leave_review: "Leave review"
+      browse_tasks: "Browse tasks"
+      return_to_task: "Return to task"

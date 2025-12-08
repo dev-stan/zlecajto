@@ -17,6 +17,12 @@ pl:
       creation_error: "Wystąpił problem z utworzeniem zadania. Spróbuj ponownie."
     show:
       submissions: "Oferty"
+    status:
+      open: "Otwarte"
+      cancelled: "Anulowane"
+      accepted: "W trakcie"
+      completed: "Zakończone"
+      overdue: "Przeterminowane"
     form:
       title_placeholder: "Krótki tytuł"
       description_placeholder: "Opisz dokładnie zadanie..."
@@ -38,6 +44,12 @@ en:
       creation_error: "There was a problem creating the task. Please try again."
     show:
       submissions: "Submissions"
+    status:
+      open: "Otwarte"
+      cancelled: "Anulowane"
+      accepted: "W trakcie"
+      completed: "Zakończone"
+      overdue: "Przeterminowane"
     form:
       title_placeholder: "Short title"
       description_placeholder: "Describe the task in detail..."

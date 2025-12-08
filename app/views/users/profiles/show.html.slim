@@ -6,8 +6,13 @@
       .flex.items-center
         i.fa.fa-envelope.fa-fw.text-base.text-gray-500.mr-2
         span.text-gray-600.text-base = "#{@user.email[0,9]}..."
-      - if @user.phone_number.present?
-        .flex.items-center.mt-1.mb-2
+
+      .flex.items-center.mt-1.mb-2
+        - if @user.received_reviews.any?
+          i.fa.fa-star.fa-fw.text-base.text-gray-500.mr-2
+          span.text-gray-600.text-base
+            = "#{number_with_precision(@user.received_reviews.average(:rating), precision: 1)} (#{@user.received_reviews.count})"
+        - else
           i.fa.fa-phone.fa-fw.text-base.text-gray-500.mr-2
           span.text-gray-600.text-base = @user.phone_number
       .flex
@@ -16,95 +21,69 @@
         = link_to destroy_user_session_path, data: { turbo_method: :delete } do
           = render(Ui::BadgeComponent.new(text: t('shared.buttons.logout'), variant: :red, html_options: { class: 'px-1.5 ml-2 mt-0 text-sm cursor-pointer hidden md:block' }))
 
+  .max-w-md.mx-auto.py-4
+    .grid.grid-cols-3.gap-4.mx-4
+      = render Profiles::IconCard::IconCardComponent.new(label: 'Pomoc', icon: 'fa-phone', path: pages_contact_path)
+      = render Profiles::IconCard::IconCardComponent.new(label: 'Opinie', icon: 'fa-star', path: user_reviews_path(@user))
+      = render Profiles::IconCard::IconCardComponent.new(label: 'Wiadomości', icon: 'fa-paper-plane', path: conversations_path)
+
+
 
   .mx-auto.px-4
     - requested_tab = params[:tab].presence
     - active_tab = requested_tab || (@tasks.any? ? 'tasks' : 'submissions')
-    div data-controller="tabs" data-tabs-initial-tab=active_tab
-      .flex.flex-row.justify-center
-        nav.flex role="tablist"
-          / Tasks tab
-          .relative.inline-block
-            button.py-3.px-6.text-md.font-semibold.transition(
-              data-action="tabs#show"
-              data-tabs-target="tab"
-              data-tab="tasks"
-              role="tab"
-              aria-selected=(active_tab == 'tasks')
-              class=(active_tab == 'tasks' ? 'text-black' : 'text-gray-500')
-            )
-              = t('.tasks_tab')
-              - if @tasks.any?
-                span.ml-2.inline-flex.items-center.justify-center.text-base.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @tasks.count
-              div(data-tabs-target="indicator" data-tab="tasks")
+    
+    = render Ui::TabsComponent.new(default_tab: active_tab) do |tabs|
+      - tabs.with_tab(id: 'tasks', label: t('.tasks_tab'), count: @tasks.any? ? @tasks.count : nil) do
+        .mt-4
+        .space-y-6
+          - if @open_tasks.any?
+            / By default no divider for this section
+            main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
+              = render Tasks::IndexComponent.new(task_array: @open_tasks, current_user: current_user, show_notification: true, path: :my_task_path)
+          - if @accepted_tasks.any?
+            = render Ui::DividerWithLabelComponent.new(label: t('.executor_chosen_divider'))
+            main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
+              = render Tasks::IndexComponent.new(task_array: @accepted_tasks, current_user: current_user, show_notification: true, path: :my_task_path)
+          - if @completed_tasks.any?
+            = render Ui::DividerWithLabelComponent.new(label: t('.completed_tasks_divider'))
+            main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
+              = render Tasks::IndexComponent.new(task_array: @completed_tasks, current_user: current_user, show_notification: true, path: :my_task_path)
+          - if @overdue_tasks.any?
+            = render Ui::DividerWithLabelComponent.new(label: t('.overdue_tasks_divider'))
+            main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
+              = render Tasks::IndexComponent.new(task_array: @overdue_tasks, current_user: current_user, show_notification: true, path: :my_task_path)
+          - if @cancelled_tasks.any?
+            = render Ui::DividerWithLabelComponent.new(label: t('.deleted_tasks_divider'))
+            main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
+              = render Tasks::IndexComponent.new(task_array: @cancelled_tasks, current_user: current_user, show_notification: true, path: :my_task_path)
+          - if @tasks.empty?
+            .text-center.py-12
+              p.text-gray-500.mb-4 = t('.my_tasks_empty')
+              = render Ui::ButtonComponent.new(text: t('.my_tasks_new'), path: new_task_path, variant: :primary)
 
-          / Submissions tab
-          .relative.inline-block
-            button.py-3.px-6.text-md.font-semibold.transition(
-              data-action="tabs#show"
-              data-tabs-target="tab"
-              data-tab="submissions"
-              role="tab"
-              aria-selected=(active_tab == 'submissions')
-              class=(active_tab == 'submissions' ? 'text-black' : 'text-gray-500')
-            )
-              = t('.submissions_tab')
-              - if @submissions.any?
-                span.ml-2.inline-flex.items-center.justify-center.text-base.font-semibold.bg-gray-200.text-gray-700.rounded-full.h-5.px-2 = @submissions.count
-              div(data-tabs-target="indicator" data-tab="submissions")
-
-
-      .border-t.border-gray-400.-mx-4
-      / Tasks panel
-      .mt-4
-      .space-y-6 data-tabs-target="panel" data-tab="tasks" class=(active_tab == 'tasks' ? '' : 'hidden')
-        - if @open_tasks.any?
-          / By default no divider for this section
-          main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
-            = render Tasks::IndexComponent.new(task_array: @open_tasks, current_user: current_user, show_notification: true, path: :my_task_path)
-        - if @accepted_tasks.any?
-          = render Ui::DividerWithLabelComponent.new(label: t('.executor_chosen_divider'))
-          main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
-            = render Tasks::IndexComponent.new(task_array: @accepted_tasks, current_user: current_user, show_notification: true, path: :my_task_path)
-        - if @completed_tasks.any?
-          = render Ui::DividerWithLabelComponent.new(label: t('.completed_tasks_divider'))
-          main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
-            = render Tasks::IndexComponent.new(task_array: @completed_tasks, current_user: current_user, show_notification: true, path: :my_task_path)
-        - if @overdue_tasks.any?
-          = render Ui::DividerWithLabelComponent.new(label: t('.overdue_tasks_divider'))
-          main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
-            = render Tasks::IndexComponent.new(task_array: @overdue_tasks, current_user: current_user, show_notification: true, path: :my_task_path)
-        - if @cancelled_tasks.any?
-          = render Ui::DividerWithLabelComponent.new(label: t('.deleted_tasks_divider'))
-          main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
-            = render Tasks::IndexComponent.new(task_array: @cancelled_tasks, current_user: current_user, show_notification: true, path: :my_task_path)
-        - if @tasks.empty?
-          .text-center.py-12
-            p.text-gray-500.mb-4 = t('.my_tasks_empty')
-            = render Ui::ButtonComponent.new(text: t('.my_tasks_new'), path: new_task_path, variant: :primary)
-
-      / Submissions panel
-      .space-y-6 data-tabs-target="panel" data-tab="submissions" class=(active_tab == 'submissions' ? '' : 'hidden')
-        - if @accepted_submissions.any?
-          = render Ui::DividerWithLabelComponent.new(label: t('.accepted_submissions_divider'))
-          main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
-            = render Tasks::IndexComponent.new(task_array: @accepted_submissions.map(&:task), current_user: current_user, show_notification: true)
-        - if @open_submissions.any?
-          = render Ui::DividerWithLabelComponent.new(label: t('.pending_submissions_divider'))
-          main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
-            = render Tasks::IndexComponent.new(task_array: @open_submissions.map(&:task), current_user: current_user, show_notification: true)
-        - if @completed_submissions.any?
-          = render Ui::DividerWithLabelComponent.new(label: t('.completed_submissions_divider'))
-          main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
-            = render Tasks::IndexComponent.new(task_array: @completed_submissions.map(&:task), current_user: current_user, show_notification: true)
-        - if @rejected_submissions.any?
-          = render Ui::DividerWithLabelComponent.new(label: t('.rejected_submissions_divider'))
-          main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
-            = render Tasks::IndexComponent.new(task_array: @rejected_submissions.map(&:task), current_user: current_user, show_notification: true)
-        - if @submissions.empty?
-          .text-center.py-12
-            p.text-gray-500.mb-4 = t('.no_submissions_notice')
-            = render Ui::ButtonComponent.new(text: t('shared.buttons.browse_tasks'), path: tasks_path, variant: :secondary)
+      - tabs.with_tab(id: 'submissions', label: t('.submissions_tab'), count: @submissions.any? ? @submissions.count : nil) do
+        .space-y-6
+          - if @accepted_submissions.any?
+            = render Ui::DividerWithLabelComponent.new(label: t('.accepted_submissions_divider'))
+            main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
+              = render Tasks::IndexComponent.new(task_array: @accepted_submissions.map(&:task), current_user: current_user, show_notification: true)
+          - if @open_submissions.any?
+            = render Ui::DividerWithLabelComponent.new(label: t('.pending_submissions_divider'))
+            main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
+              = render Tasks::IndexComponent.new(task_array: @open_submissions.map(&:task), current_user: current_user, show_notification: true)
+          - if @completed_submissions.any?
+            = render Ui::DividerWithLabelComponent.new(label: t('.completed_submissions_divider'))
+            main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
+              = render Tasks::IndexComponent.new(task_array: @completed_submissions.map(&:task), current_user: current_user, show_notification: true)
+          - if @rejected_submissions.any?
+            = render Ui::DividerWithLabelComponent.new(label: t('.rejected_submissions_divider'))
+            main.grid.grid-cols-1.md:grid-cols-3.gap-4.my-5
+              = render Tasks::IndexComponent.new(task_array: @rejected_submissions.map(&:task), current_user: current_user, show_notification: true)
+          - if @submissions.empty?
+            .text-center.py-12
+              p.text-gray-500.mb-4 = t('.no_submissions_notice')
+              = render Ui::ButtonComponent.new(text: t('shared.buttons.browse_tasks'), path: tasks_path, variant: :secondary)
 - else
   .h-screen.flex.flex-col.items-center.justify-center.text-center.px-4.-mt-24
     p.text-3xl.font-semibold.px-10 = t('.login_required_message')

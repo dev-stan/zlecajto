@@ -2,6 +2,7 @@ pl:
   presenters:
     task_show_presenter:
       button_text:
+        leave_review: "Oceń współpracę"
         cancelled: "Usunięto zlecenie"
         overdue: "Upłynął termin"
         completed: "Zlecenie zakończone"
@@ -20,6 +21,7 @@ en:
   presenters:
     task_show_presenter:
       button_text:
+        leave_review: "Leave a review"
         cancelled: "Task cancelled"
         overdue: "Deadline passed"
         completed: "Task completed"

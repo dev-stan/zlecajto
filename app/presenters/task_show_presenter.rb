@@ -1,3 +1,4 @@
+
 # frozen_string_literal: true
 
 class TaskShowPresenter
@@ -10,69 +11,34 @@ class TaskShowPresenter
     @current_user = current_user
   end
 
-  def button_text
-    return t('button_text.cancelled') if task.cancelled?
-    return t('button_text.overdue') if task.overdue?
-    return t('button_text.completed') if task.completed?
-    return t('button_text.owner') if owner?
-    return t('button_text.you_were_chosen') if current_user_accepted_submission?
-    return t('button_text.executor_chosen') if accepted_submission_exists?
-    return t('button_text.already_applied') if user_has_applied?
+  # public api 
 
-    t('button_text.apply')
+  def button_text
+    t("button_text.#{button_state}")
   end
 
   def button_variant
-    return :red if task.cancelled?
-    return :red    if task.overdue?
-    return :green  if task.completed?
-    return :primary if owner?
-    return :green  if current_user_accepted_submission?
-    return :red    if accepted_submission_exists?
-    return :primary if user_has_applied?
-
-    :primary
+    BUTTON_CONFIG.dig(button_state, :variant) || :primary
   end
 
   def button_path
-    return my_task_path(task) if owner?
-    return '#' if completed_submission_for_current_user?
-    return conversation_path(accepted_submission.conversation) if current_user_accepted_submission?
-    return '#' if accepted_submission_exists?
-    return '#' if user_has_applied?
-    return '#' if task.overdue? || task.cancelled?
-
-    new_task_submission_path(task)
+    path_handler = BUTTON_CONFIG.dig(button_state, :path) || ->(p) { p.send(:new_task_submission_path, p.task) }
+    path_handler.call(self)
   end
 
   def submissions_header
-    return t('submissions_header.completed') if task.completed?
-    return t('submissions_header.overdue') if task.overdue?
-
-    return unless accepted_submission
-    return t('submissions_header.chosen_owner') if owner?
-    return t('submissions_header.chosen_for_you') if accepted_submission.user == current_user
-
-    t('submissions_header.chosen_executor') if task.submissions.accepted.exists?
+    return nil unless header_state
+    t("submissions_header.#{header_state}")
   end
 
-  # Owner or the submission owner can either reply or (owner only) accept
   def can_reply_or_accept?(submission)
-    (can_reply?(submission) || can_accept?(submission)) && !task.cancelled? && !task.completed? && !task.overdue?
+    task_is_active? && (can_reply?(submission) || can_accept?(submission))
   end
 
-  # Owner may accept a submission only if the task isn't completed and no one is accepted yet
-  # and the given submission is not already the accepted one.
   def can_accept?(submission)
-    return false unless owner?
-    return false if task.completed?
-    return false if accepted_submission.present? # someone already accepted
-
-    # guard against accepting the same submission again:
-    submission.id != accepted_submission&.id
+    owner? && task_is_active? && !accepted_submission.present?
   end
 
-  # Either owner or the submission author can reply
   def can_reply?(submission)
     owner? || submission.user == current_user
   end
@@ -82,6 +48,79 @@ class TaskShowPresenter
   end
 
   private
+  
+  # button config
+
+  BUTTON_CONFIG = {
+    cancelled: {
+      variant: :red,
+      path: ->(_) { '#' }
+    },
+    overdue: {
+      variant: :red,
+      path: ->(_) { '#' }
+    },
+    leave_review: {
+      variant: :green,
+      path: ->(p) { p.send(:new_review_path, task_id: p.task.id) }
+    },
+    completed: {
+      variant: :green,
+      path: ->(_) { '#' }
+    },
+    owner: {
+      variant: :primary,
+      path: ->(p) { p.send(:my_task_path, p.task) }
+    },
+    you_were_chosen: {
+      variant: :green,
+      path: ->(p) { p.send(:conversation_path, p.send(:accepted_submission).conversation) }
+    },
+    executor_chosen: {
+      variant: :red,
+      path: ->(_) { '#' }
+    },
+    already_applied: {
+      variant: :primary,
+      path: ->(_) { '#' }
+    }
+  }.freeze
+
+  # state determination
+
+  def button_state
+    @button_state ||= begin
+      return :cancelled if task.cancelled?
+      return :overdue if task.overdue?
+      return :leave_review if needs_review?
+      return :completed if task.completed?
+      return :owner if owner?
+      return :you_were_chosen if current_user_accepted_submission?
+      return :executor_chosen if accepted_submission_exists?
+      return :already_applied if user_has_applied?
+      
+      :apply
+    end
+  end
+
+  def header_state
+    @header_state ||= begin
+      return :completed if task.completed?
+      return :overdue if task.overdue?
+      return nil unless accepted_submission_exists?
+      return :chosen_owner if owner?
+      return :chosen_for_you if accepted_submission.user == current_user
+      return :chosen_executor if accepted_submission_exists?
+      
+      nil
+    end
+  end
+
+  # ========== Helpers ==========
+
+  def task_is_active?
+    !task.cancelled? && !task.completed? && !task.overdue?
+  end
 
   def t(key, **opts)
     I18n.t("presenters.task_show_presenter.#{key}", **opts)
@@ -96,22 +135,30 @@ class TaskShowPresenter
   end
 
   def accepted_submission_exists?
-    task.submissions.accepted.exists?
+    accepted_submission.present?
   end
 
   def accepted_submission
     @accepted_submission ||= task.submissions.accepted.first
   end
 
-  def current_user_accepted_submission
-    @current_user_accepted_submission ||= task.submissions.accepted.find_by(user_id: current_user&.id)
-  end
-
   def current_user_accepted_submission?
-    current_user_accepted_submission.present?
+    accepted_submission&.user == current_user
   end
 
-  def completed_submission_for_current_user?
-    task.completed? && current_user_accepted_submission?
+  def needs_review?
+    return false unless task.completed?
+    return false unless current_user.present?
+    return false unless participated_in_task?
+    
+    !current_user_has_reviewed?
+  end
+
+  def participated_in_task?
+    owner? || current_user_accepted_submission?
+  end
+
+  def current_user_has_reviewed?
+    current_user.authored_reviews.exists?(task: task)
   end
 end

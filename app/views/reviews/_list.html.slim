@@ -1,0 +1,39 @@
+/ average rating header
+.mb-8
+  .flex.items-center.gap-2
+    span.text-5xl.font-bold.text-gray-900 = average_rating
+
+    .flex.flex-col
+      span.text-lg.font-semibold.text-gray-900.leading-tight = t('.rating')
+      span.text-md.text-gray-500.leading-tight = t('.from_reviews', count: reviews_count)
+
+/ reviews list
+.space-y-4.pb-12
+  - reviews.each do |review|
+    - display_user = (review.author_id == @user.id) ? review.recipient : review.author
+
+    .p-6.rounded-3xl.bg-white.space-y-4
+      .flex.items-start.gap-4
+        = render Users::AvatarComponent.new(user: display_user, size: 'md')
+
+        .flex.flex-col
+          .flex.items-center.gap-2
+            span.font-bold.text-gray-900 = display_user.display_name
+            
+            .flex.gap-1
+              - 5.times do |i|
+                - if i < review.rating
+                  i.fa-solid.fa-star.text-primary.text-xs
+                - else
+                  i.fa-regular.fa-star.text-gray-900.text-xs
+
+          span.text-md.text-gray-400 = review.created_at.strftime("%d.%m.%Y")
+
+      - if review.description.present?
+        p.text-lg.text-gray-900.leading-relaxed = review.description
+
+      - if review.task
+        = link_to task_path(review.task) do
+        .inline-flex.items-center.px-4.py-2.bg-gray-200.rounded-full.text-md.text-gray-600.max-w-full
+            span.font-bold.mr-1 Zlecenie:
+            span.truncate= review.task.title
