@@ -3,8 +3,8 @@ pl:
     submission:
       sms:
         new_submission: |-
-          %{name} właśnie zgłosił(a) się do Twojego zadania:
-          "%{title}"
+          %{first_name} właśnie zgłosił(a) się do Twojego zadania:
+          "%{task_title}"
 
           %{note}
 
@@ -16,8 +16,8 @@ en:
     submission:
       sms:
         new_submission: |-
-          %{name} just applied to your task:
-          "%{title}"
+          %{first_name} just applied to your task:
+          "%{task_title}"
 
           %{note}
 

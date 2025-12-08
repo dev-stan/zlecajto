@@ -53,12 +53,12 @@ class User < ApplicationRecord
     unread_messages_count.positive?
   end
 
-  # def phone_number
-  #   return if super.blank?
-  #
-  #   number = super.to_s.strip.gsub(/\D/, '') # remove all non-digit chars
-  #   number.start_with?('48') ? "+#{number}" : "+48#{number.sub(/^0/, '')}"
-  # end
+  def phone_number
+    return if super.blank?
+  
+    number = super.to_s.strip.gsub(/\D/, '') # remove all non-digit chars
+    number.start_with?('48') ? "+#{number}" : "+48#{number.sub(/^0/, '')}"
+  end
 
   def display_name
     "#{first_name.capitalize} #{last_name.first.upcase if last_name.present?}"
