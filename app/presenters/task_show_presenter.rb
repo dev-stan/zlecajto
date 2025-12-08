@@ -40,6 +40,8 @@ class TaskShowPresenter
   end
 
   def can_reply?(submission)
+    return false unless current_user
+
     owner? || submission.user == current_user
   end
 
@@ -74,7 +76,10 @@ class TaskShowPresenter
     },
     you_were_chosen: {
       variant: :green,
-      path: ->(p) { p.send(:conversation_path, p.send(:accepted_submission).conversation) }
+      path: ->(p) { 
+        conversation = p.send(:accepted_submission)&.conversation
+        conversation ? p.send(:conversation_path, conversation) : '#'
+      }
     },
     executor_chosen: {
       variant: :red,
@@ -108,11 +113,11 @@ class TaskShowPresenter
       return :completed if task.completed?
       return :overdue if task.overdue?
       return nil unless accepted_submission_exists?
+
       return :chosen_owner if owner?
-      return :chosen_for_you if accepted_submission.user == current_user
-      return :chosen_executor if accepted_submission_exists?
+      return :chosen_for_you if current_user && accepted_submission.user == current_user
       
-      nil
+      :chosen_executor
     end
   end
 
@@ -143,6 +148,8 @@ class TaskShowPresenter
   end
 
   def current_user_accepted_submission?
+    return false unless current_user
+
     accepted_submission&.user == current_user
   end
 

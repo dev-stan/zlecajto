@@ -18,7 +18,7 @@ h3.text-lg.font-semibold.text-gray-900.mt-3 = @presenter.submissions_header
               = turbo_frame_tag "answers_#{submission.id}" do
                 = render 'tasks/show/answers', submission: submission
               - if controller_name == 'tasks' && action_name == 'my_task'
-                - if @task.completed? && @task.reviews.none?(author: current_user)
+                - if @task.completed? && @task.reviews.none?(author: current_user) && submission == accepted_submission
                     = render Ui::ButtonComponent.new(text: t('.leave_review'), variant: :green, size: :sm, width: 100, path: new_review_path(task_id: @task.id))
                 - elsif @task.completed?
                     = render Ui::ButtonComponent.new(text: t('.task_completed'), variant: :green, size: :sm, width: 100, path: '#')
