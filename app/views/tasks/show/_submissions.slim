@@ -6,7 +6,7 @@ h3.text-lg.font-semibold.text-gray-900.mt-3 = @presenter.submissions_header
   ul.space-y-4.mt-3
     - @task.submissions.sort_by { |s| s == accepted_submission ? 0 : 1 }.each do |submission|
       li
-        = link_to conversation_path(submission.conversation), class: 'no-underline' do
+        = link_to submission.conversation ? conversation_path(submission.conversation) : '#', class: 'no-underline' do
           = render Cards::CardComponent.new(padding: 'p-4', shadow: false, html_options: { class: 'rounded-xl bg-white' }) do
             .flex-col
               .flex.items-center.gap-2.mb-2
