@@ -2,8 +2,6 @@ pl:
   reviews:
     index:
       member_since: "Na ZlecajTo od"
-      rating: "Ocena ogólna"
-      from_reviews: "na podstawie %{count} opinii"
       no_reviews: "Tutaj pojawią się opinie od innych użytkowników. Na razie nie ma żadnych opinii."
       received_reviews_tab: "Otrzymane"
       authored_reviews_tab: "Wystawione"
@@ -13,8 +11,6 @@ en:
   reviews:
     index:
       member_since: "Member since"
-      rating: "Rating"
-      from_reviews: "from %{count} reviews"
       no_reviews: "Reviews from other users will appear here. No reviews yet."
       received_reviews_tab: "Received"
       authored_reviews_tab: "Given"

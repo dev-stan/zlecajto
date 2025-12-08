@@ -25,6 +25,7 @@ class TasksController < ApplicationController
   end
 
   def my_task
+    console
     @presenter = TaskShowPresenter.new(@task, current_user)
     # [todo] this looks like shit, refactor me
     current_user.notifications.unread.for_task(@task).first&.mark_as_read!

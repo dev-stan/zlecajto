@@ -24,6 +24,7 @@ pl:
         go_to_photo: "Przejdź do zdjęcia #%{index}"
       submissions:
         executor: "Wykonawca"
+        leave_review: "Oceń współpracę"
         task_completed: "Zlecenie zakończone!"
         contact_executor: "Kontakt z wykonawcą"
         confirm_completion: "Potwierdź wykonanie"
@@ -67,6 +68,7 @@ en:
         go_to_photo: "Go to photo #%{index}"
       submissions:
         executor: "Executor"
+        leave_review: "Leave review"
         task_completed: "Task completed!"
         contact_executor: "Contact executor"
         confirm_completion: "Confirm completion"

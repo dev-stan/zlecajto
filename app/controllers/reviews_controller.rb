@@ -26,7 +26,6 @@ class ReviewsController < ApplicationController
   end
 
   def new
-    console
     @task = Task.find(params[:task_id])
     @recipient = determine_recipient(@task)
 

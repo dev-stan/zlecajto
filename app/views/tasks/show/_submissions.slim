@@ -18,9 +18,11 @@ h3.text-lg.font-semibold.text-gray-900.mt-3 = @presenter.submissions_header
               = turbo_frame_tag "answers_#{submission.id}" do
                 = render 'tasks/show/answers', submission: submission
               - if controller_name == 'tasks' && action_name == 'my_task'
-                - if @task.completed?
+                - if @task.completed? && @task.reviews.none?(author: current_user)
+                    = render Ui::ButtonComponent.new(text: t('.leave_review'), variant: :green, size: :sm, width: 100, path: new_review_path(task_id: @task.id))
+                - elsif @task.completed?
                     = render Ui::ButtonComponent.new(text: t('.task_completed'), variant: :green, size: :sm, width: 100, path: '#')
-                - if submission == accepted_submission && !@task.completed?
+                - elsif submission == accepted_submission && !@task.completed?
                   .flex.flex-col.gap-3
                     = render Ui::ButtonComponent.new(text: t('.contact_executor'), variant: :blue, size: :sm, width: 100, path: conversation_path(submission.conversation))
                     .flex.gap-2

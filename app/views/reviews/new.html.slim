@@ -11,7 +11,7 @@
       .flex.flex-col.gap-1
         span.font-bold.text-gray-900 = @task.title
         div
-          = render Ui::BadgeComponent.new(text: t("#{@task.status}"), variant: :green, html_options: { class: 'rounded-full px-3 py-0.5 text-xs font-medium' })
+          = render Ui::BadgeComponent.new(text: t("tasks.status.#{@task.status}"), variant: :green, html_options: { class: 'rounded-full px-3 py-0.5 text-xs font-medium' })
 
   h2.text-2xl.font-bold.text-center.mb-2 = t('.how_do_you_rate')
   p.text-center.text-gray-500.mb-8 = t('.review_help_text')

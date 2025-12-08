@@ -3,7 +3,7 @@
 class Task < ApplicationRecord
   include Tasks::Emailable
   belongs_to :user
-
+  has_many :reviews, dependent: :destroy
   has_many :submissions, dependent: :destroy
   has_many :notifications, as: :notifiable
   has_many_attached :photos
