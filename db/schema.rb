@@ -127,7 +127,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_06_212341) do
     t.bigint "task_id", null: false
     t.bigint "author_id", null: false
     t.bigint "recipient_id", null: false
-    t.string "title"
     t.text "description"
     t.integer "rating"
     t.datetime "created_at", null: false

@@ -6,7 +6,6 @@ class CreateReviews < ActiveRecord::Migration[7.1]
       t.references :author,    null: false, foreign_key: { to_table: :users }
       t.references :recipient, null: false, foreign_key: { to_table: :users }
 
-      t.string  :title
       t.text    :description
       t.integer :rating
 
