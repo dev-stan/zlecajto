@@ -9,12 +9,13 @@ Rails.application.routes.draw do
   # Admin
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-
   # Sidekiq Web UI, only for admins
   authenticate :user, ->(u) { u.admin? } do
-    post '/scaler/scale_worker', to: 'sidekiq_scaler#scale'
     mount Sidekiq::Web => '/sidekiq'
   end
+
+  # Custom heroku scaler
+  post '/scaler/scale_worker', to: 'sidekiq_scaler#scale'
 
   # Static pages
   root 'pages#home'
