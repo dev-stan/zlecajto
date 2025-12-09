@@ -1,0 +1,15 @@
+= turbo_frame_tag "modal" do
+  div data-controller="modal"
+    .fixed.inset-0.z-50.bg-black/50.flex.items-center.justify-center.p-4.animate-fade-in.transition-colors.duration-200.ease-out data-modal-target="overlay"
+      .relative.bg-white.rounded-2xl.shadow-xl.max-w-2xl.mx-4.w-full.animate-fade-in.p-6.md:p-8 data-modal-target="content"
+        h2.text-2xl.font-bold.mb-4.text-gray-900 = t('modals.cookie_consent.title')
+        
+        p.text-gray-600.mb-6.leading-relaxed.text-base
+          == t('modals.cookie_consent.body_html', cookie_settings_url: cookie_settings_modal_path, privacy_policy_url: pages_privacy_path)
+
+        .flex.flex-col.sm:flex-row.justify-between.items-center.gap-4.mt-8
+          = render Ui::ButtonComponent.new(text: t('modals.cookie_consent.buttons.settings'), path: cookie_settings_modal_path, variant: :transparent, size: :lg, html_options: { data: { turbo_frame: "modal" } })
+          
+          .flex.flex-col.items-center.sm:flex-row.gap-3.w-full.sm:w-auto
+            = render Ui::ButtonComponent.new(text: t('modals.cookie_consent.buttons.reject_all'), path: create_cookie_consent_path(consent_type: 'reject_all'), method: :post, variant: :transparent, size: :lg)
+            = render Ui::ButtonComponent.new(text: t('modals.cookie_consent.buttons.accept_all'), path: create_cookie_consent_path(consent_type: 'accept_all'), method: :post, variant: :primary, size: :lg)

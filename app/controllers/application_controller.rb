@@ -2,6 +2,7 @@
 
 class ApplicationController < ActionController::Base
   include LoginRedirect
+  before_action :check_cookie_consent
   before_action :set_whats_new_cookie
   before_action :ensure_persistent_login
   before_action :set_current_user
@@ -28,6 +29,12 @@ class ApplicationController < ActionController::Base
 
   def set_whats_new_cookie
     @show_whats_new_modal = cookies[:whats_new_version] != WHATS_NEW_VERSION
+  end
+
+  def check_cookie_consent
+    return if cookies[:cookie_consent_level].present?
+
+    @show_cookie_consent_modal = true
   end
 
   private

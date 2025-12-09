@@ -1,0 +1,73 @@
+en:
+  modals:
+    cookie_consent:
+      title: "We value your privacy"
+      body_html: "We use essential cookies to make our site work properly and keep your account secure. With your consent, we also use cookies for analytics and marketing so we can improve our services and show you relevant content. You can manage your choices in <a href='%{cookie_settings_url}' class='text-primary hover:text-primary underline cursor-pointer' data-turbo-frame='modal'>Cookie settings</a> at any time. For more details, please see our <a href='%{privacy_policy_url}' class='text-primary hover:text-primary underline' target='_blank'>Privacy Policy</a>."
+      buttons:
+        settings: "Cookie settings"
+        reject_all: "Reject all"
+        accept_all: "Accept all"
+    cookie_settings:
+      title: "Cookie settings"
+      body: "We use essential cookies to run this site securely and reliably. With your consent, we also use optional cookies to understand how visitors use our site so we can improve it. You can adjust your choices here before we place any optional cookies."
+      essential:
+        title: "Essential cookies"
+        subtitle: "Required for the website to work"
+        status: "Always on"
+        description: "These cookies are necessary for core site functions and cannot be turned off. They help us:"
+        list:
+          login: "Keep you logged in and manage your session securely"
+          settings: "Remember your basic settings (such as language and privacy choices)"
+          security: "Protect the site from fraud and abuse"
+      statistics:
+        title: "Statistics cookies"
+        subtitle: "Help us understand how the site is used"
+        status_off: "Off (default)"
+        description: "These optional cookies collect anonymous usage data so we can measure and improve our website. Before you consent, no statistics cookies are placed. If you enable them, we will use this data to:"
+        list:
+          visits: "Count visits and see which pages are viewed and in what order"
+          clicks: "Measure clicks, scrolls and time spent on each page"
+          device: "Understand the type of device, browser and operating system you use"
+          region: "Estimate your approximate region (based on shortened IP address)"
+      footer_html: "You can change or withdraw your consent at any time by reopening Cookie settings. For more details, read our <a href='%{privacy_policy_url}' class='text-primary hover:text-primary underline' target='_blank'>Privacy Policy</a>."
+      buttons:
+        reject_non_essential: "Reject non-essential"
+        save_preferences: "Save preferences"
+        accept_all: "Accept all"
+
+pl:
+  modals:
+    cookie_consent:
+      title: "Szanujemy Twoją prywatność"
+      body_html: "Używamy niezbędnych plików cookie, aby nasza strona działała prawidłowo i aby Twoje konto było bezpieczne. Za Twoją zgodą używamy również plików cookie do analityki, abyśmy mogli ulepszać nasze usługi. Możesz zarządzać swoimi wyborami w <a href='%{cookie_settings_url}' class='text-primary hover:text-primary underline cursor-pointer' data-turbo-frame='modal'>Ustawieniach plików cookie</a> w dowolnym momencie. Aby uzyskać więcej informacji, zapoznaj się z naszą <a href='%{privacy_policy_url}' class='text-primary hover:text-primary underline' target='_blank'>Polityką prywatności</a>."
+      buttons:
+        settings: "Ustawienia plików cookie"
+        reject_all: "Nie zgadzam się"
+        accept_all: "Zgadzam się"
+    cookie_settings:
+      title: "Ustawienia plików cookie"
+      body: "Używamy niezbędnych plików cookie, aby ta strona działała bezpiecznie i niezawodnie. Za Twoją zgodą używamy również opcjonalnych plików cookie, aby zrozumieć, w jaki sposób odwiedzający korzystają z naszej strony, dzięki czemu możemy ją ulepszać. Możesz dostosować swoje wybory tutaj, zanim umieścimy jakiekolwiek opcjonalne pliki cookie."
+      essential:
+        title: "Niezbędne pliki cookie"
+        subtitle: "Wymagane do działania strony"
+        status: "Zawsze włączone"
+        description: "Te pliki cookie są niezbędne do podstawowych funkcji strony i nie można ich wyłączyć. Pomagają nam:"
+        list:
+          login: "Utrzymać Twoje zalogowanie i bezpiecznie zarządzać sesją"
+          settings: "Zapamiętać Twoje podstawowe ustawienia (takie jak język i wybory dotyczące prywatności)"
+          security: "Chronić stronę przed oszustwami i nadużyciami"
+      statistics:
+        title: "Statystyczne pliki cookie"
+        subtitle: "Pomóż nam zrozumieć, jak używana jest strona"
+        status_off: "Wyłączone (domyślnie)"
+        description: "Te opcjonalne pliki cookie zbierają anonimowe dane o użytkowaniu, dzięki czemu możemy mierzyć i ulepszać naszą stronę. Zanim wyrazisz zgodę, żadne statystyczne pliki cookie nie są umieszczane. Jeśli je włączysz, użyjemy tych danych do:"
+        list:
+          visits: "Liczenia wizyt i sprawdzania, które strony są wyświetlane i w jakiej kolejności"
+          clicks: "Mierzenia kliknięć, przewijania i czasu spędzonego na każdej stronie"
+          device: "Zrozumienia typu urządzenia, przeglądarki i systemu operacyjnego, którego używasz"
+          region: "Oszacowania Twojego przybliżonego regionu (na podstawie skróconego adresu IP)"
+      footer_html: "Możesz zmienić lub wycofać swoją zgodę w dowolnym momencie, ponownie otwierając Ustawienia plików cookie. Aby uzyskać więcej szczegółów, przeczytaj naszą <a href='%{privacy_policy_url}' class='text-primary hover:text-primary underline' target='_blank'>Politykę prywatności</a>."
+      buttons:
+        reject_non_essential: "Odrzuć nieobowiązkowe"
+        save_preferences: "Zapisz preferencje"
+        accept_all: "Zgadzam się"
