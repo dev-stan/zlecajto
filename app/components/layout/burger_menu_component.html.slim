@@ -53,6 +53,9 @@ nav.relative.flex.items-center data-controller="burger-menu"
     = link_to pages_privacy_path, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
       i.fas.fa-user-shield.fa-fw.mr-2
       = t('components.layout.burger_menu.privacy')
+    = link_to cookie_settings_modal_path, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2', data: { turbo_frame: 'modal' } do
+      i.fas.fa-cookie-bite.fa-fw.mr-2
+      = t('components.layout.burger_menu.cookie_settings')
     - if @user_signed_in
       = link_to confirm_user_logout_path, data: { turbo_frame: 'modal' }, class: 'w-full text-left text-gray-600 font-semibold mb-2 block flex items-center gap-2' do
           i.fas.fa-sign-out-alt.fa-fw.mr-2

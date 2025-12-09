@@ -15,7 +15,8 @@ module Ui
       success: 'bg-primary text-primary',
       green: 'bg-light-green text-emerald-700 border-2 border-emerald-200',
       red: 'bg-red-200 text-red-800 border-2 border-red-300',
-      blue: 'bg-blue-200 text-blue-800 border-2 border-blue-300'
+      blue: 'bg-blue-200 text-blue-800 border-2 border-blue-300',
+      transparent: 'bg-transparent text-black hover:bg-gray-100'
     }.freeze
 
     SIZES = {

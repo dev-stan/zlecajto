@@ -95,9 +95,14 @@ Rails.application.routes.draw do
 
   get 'my_tasks/:id', to: 'tasks#my_task', as: :my_task
 
+  # Cookie consent
+  post 'cookie_consent', to: 'cookie_consents#create', as: :create_cookie_consent
+
   # Modals
   scope controller: :modals do
     get 'users/profile/choose_category', action: :choose_user_category, as: :choose_user_category_modal
+    get 'cookie_consent', action: :cookie_consent, as: :cookie_consent_modal
+    get 'cookie_settings', action: :cookie_settings, as: :cookie_settings_modal
     get 'users/sign_out/confirm', action: :confirm_logout, as: :confirm_user_logout
     get 'users/profile/edit_modal', action: :edit_profile, as: :edit_profile_modal
     get 'tasks/:id/edit_modal', action: :edit_task, as: :edit_task_modal

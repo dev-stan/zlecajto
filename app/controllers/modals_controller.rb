@@ -99,6 +99,14 @@ class ModalsController < ApplicationController
     respond_to(&:html)
   end
 
+  def cookie_consent
+    respond_to(&:html)
+  end
+
+  def cookie_settings
+    respond_to(&:html)
+  end
+
   # Clears the global modal frame
   def destroy
     respond_to do |format|
