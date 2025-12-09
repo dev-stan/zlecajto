@@ -67,4 +67,4 @@
             
             .flex.flex-col.items-center.sm:flex-row.gap-3.w-full.sm:w-auto
                 = render Ui::ButtonComponent.new(text: t('modals.cookie_settings.buttons.reject_non_essential'), path: create_cookie_consent_path(consent_type: 'reject_non_essential'), variant: :transparent, html_options: { data: { turbo_method: :post } })
-                = render Ui::ButtonComponent.new(text: t('modals.cookie_settings.buttons.accept_all'), path: create_cookie_consent_path(consent_type: 'accept_all'), variant: :green, size: :lg, html_options: { data: { turbo_method: :post } })
+                = render Ui::ButtonComponent.new(text: t('modals.cookie_settings.buttons.accept_all'), path: create_cookie_consent_path(consent_type: 'accept_all'), variant: :primary, size: :lg, html_options: { data: { turbo_method: :post } })
