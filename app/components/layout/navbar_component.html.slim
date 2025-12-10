@@ -1,5 +1,5 @@
 nav.sticky.top-0.left-0.right-0.bg-white.shadow-sm.z-50
-  .max-w-7xl.mx-auto.h-16.flex.items-center.justify-between.gap-4.px-4.relative
+  .max-w-7xl.mx-auto.h-16.flex.items-center.justify-between.gap-.px-4.relative
     / Left: Back arrow
     .absolute.left-0.top-0.h-full.flex.items-center.pl-2
       - if current_page?(root_path)
@@ -33,11 +33,12 @@ nav.sticky.top-0.left-0.right-0.bg-white.shadow-sm.z-50
       = render Layout::BurgerMenuComponent.new(user_signed_in: @user_signed_in, current_user: @current_user)
 
     / Right side - Desktop Menu (hidden on mobile)
-    .hidden.md:flex.items-center.gap-1.absolute.right-0.top-0.h-full.pr-2
-      = link_to conversations_path, class: "relative inline-flex items-center justify-center p-2 rounded-md text-2xl hover:text-primary/80 mr-2" do
-        i.fas.fa-paper-plane.text-2xl aria-label="Conversations"
+    .hidden.md:flex.items-center.gap-3.absolute.right-0.top-0.h-full.pr-2
+      - if @user_signed_in
+        = link_to conversations_path, class: "relative inline-flex items-center justify-center p-2 rounded-md text-2xl hover:text-primary/80 mr-2" do
+          i.fas.fa-paper-plane.text-2xl aria-label="Conversations"
 
-        - if @user_signed_in
+          
           - unread_count = @current_user.unread_messages_count + @current_user.notifications.unread.accepted_submission.count
 
           - if unread_count.positive?
@@ -47,15 +48,15 @@ nav.sticky.top-0.left-0.right-0.bg-white.shadow-sm.z-50
                 = unread_count
 
       = render(Ui::ButtonComponent.new(text: t('components.layout.navbar.new_task'), path: new_task_path, size: :sm))
-      = render(Ui::ButtonComponent.new(text: t('components.layout.navbar.start_earning'), path: tasks_path, size: :sm, variant: :ghost))
+      = render(Ui::ButtonComponent.new(text: t('components.layout.navbar.start_earning'), path: tasks_path, size: :sm, variant: :primary_2))
       - if @user_signed_in
         .ml-4.flex.items-center
           = link_to users_profile_path do
             = render(Users::AvatarComponent.new(user: @current_user, show_notification: true,current_user: @current_user))
       - else
         .flex.items-center.gap-2
-          = link_to t('components.layout.navbar.login'), helpers.new_user_session_path
-          = link_to t('components.layout.navbar.register'), helpers.new_user_registration_path
+          = render(Ui::ButtonComponent.new(text: t('components.layout.navbar.login'), path: helpers.new_user_session_path, size: :sm, variant: :transparent))
+          = render(Ui::ButtonComponent.new(text: t('components.layout.navbar.register'), path: helpers.new_user_registration_path, size: :sm))
 
   / Red testing banner below navbar
 = link_to 'https://tally.so/r/w4e2KB', target: '_blank', rel: 'noopener' do
