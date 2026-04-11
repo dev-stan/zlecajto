@@ -8,19 +8,21 @@ module Ui
       blue: 'bg-blue-100 text-blue-800 border-blue-200',
       yellow: 'bg-yellow-100 text-yellow-800 border-yellow-200',
       gray: 'bg-gray-100 text-gray-800 border-gray-200',
-      violet: 'bg-violet-100 text-violet-800 border-violet-200'
+      violet: 'bg-violet-100 text-violet-800 border-violet-200',
+      white: 'bg-white text-gray-800 border-gray-200'
     }.freeze
 
-    def initialize(text:, variant: :gray, html_options: {})
+    def initialize(text:, variant: :gray, emoji: nil, html_options: {})
       super()
       @text = text
       @variant = variant.to_sym
+      @emoji = emoji
       @html_options = html_options
     end
 
     private
 
-    attr_reader :text, :variant, :html_options
+    attr_reader :text, :variant, :emoji, :html_options
 
     def badge_classes
       merge_classes(
