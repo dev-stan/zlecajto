@@ -102,6 +102,9 @@ Rails.application.configure do
   config.hosts << "jacketless-zahra-ungravitational.ngrok-free.dev"
   config.hosts << "localhost"
   config.hosts << "127.0.0.1"
+# Allow direct IP access and local dokku routing names
+  config.hosts << "95.217.14.131"
+  config.hosts << ".vatican-bot"
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 end
