@@ -2,16 +2,6 @@
 - is_task_owner = current_user == task.user
 
 = turbo_frame_tag 'task_messages' do
-  - if !is_task_owner && !task.cancelled?
-    .flex.items-center.justify-between.mt-3
-      = render(Ui::ButtonComponent.new(text: t('.ask_question'),
-        variant: :green,
-        size: :sm,
-        width: 100,
-        path: new_task_message_modal_path(task),
-        method: :get,
-        html_options: { class: 'md:hidden', data: { turbo_frame: 'modal', turbo: true } }))
-
   - if root_messages.any?
     ul.space-y-4.mt-3
       - root_messages.each do |message|

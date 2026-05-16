@@ -9,7 +9,7 @@
 
 
 // Container
-.relative.w-full.mx-auto.mb-10.md:w-3/4.md:mt-10
+.relative.w-full.mx-auto.mb-10.md:w-3/4.md:mt-10 style="padding-bottom: 6rem;"
   .flex.flex-col.md:flex-row.md:items-start.gap-8.md:px-0
     // Left column: media + main content
     .flex-1.flex.flex-col
@@ -49,9 +49,15 @@
     .w-full.md:w-72.flex-shrink-0.md:sticky.md:top-8.space-y-6.hidden.md:block
       = render 'tasks/show/apply_card', task: @task, existing_submission: existing_submission, accepted_submission_for_current_user: accepted_submission_for_current_user
       = render 'tasks/show/support_card'
-  // Mobile bottom bar
-  .flex.gap-4.fixed.bottom-2.left-0.w-full.bg-transparent.z-25.p-4.justify-center.items-center.md:justify-end
+
+  .flex.gap-4.fixed.bottom-3.left-0.right-0.mx-4.bg-white.rounded-4xl.shadow-xl.z-25.p-4.justify-center.items-center.md:hidden
     = render Ui::ButtonComponent.new(text: @presenter.button_text,
         variant: @presenter.button_variant,
         path: @presenter.button_path,
-        html_options: { class: 'w-full py-3 block md:hidden' })
+        html_options: { class: 'flex-1 py-3 block' })
+    - if current_user != @task.user && !@task.cancelled?
+      = render Ui::ButtonComponent.new(text: t('tasks.show.questions.ask_question'),
+          variant: :green,
+          path: new_task_message_modal_path(@task),
+          method: :get,
+          html_options: { class: 'flex-1 py-3 block', data: { turbo_frame: 'modal', turbo: true } })
